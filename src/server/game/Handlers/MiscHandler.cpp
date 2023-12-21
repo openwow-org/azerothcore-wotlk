@@ -474,8 +474,13 @@ void WorldSession::HandleLogoutRequestOpcode(WorldPackets::Character::LogoutRequ
     SetLogoutStartTime(GameTime::GetGameTime().count());
 }
 
-void WorldSession::HandlePlayerLogoutOpcode(WorldPackets::Character::PlayerLogout& /*playerLogout*/)
+void WorldSession::HandlePlayerLogout(WorldPacket& msg)
 {
+    if (!IsGMAccount()) {
+        SendNotification(LANG_PERMISSION_DENIED);
+        return;
+    }
+    LogoutPlayer(true);
 }
 
 void WorldSession::HandleLogoutCancelOpcode(WorldPackets::Character::LogoutCancel& /*logoutCancel*/)

@@ -602,7 +602,7 @@ public:
     void HandleLootMasterGiveOpcode(WorldPacket& recvPacket);
     void HandleWhoOpcode(WorldPacket& recvPacket);
     void HandleLogoutRequestOpcode(WorldPackets::Character::LogoutRequest& logoutRequest);
-    void HandlePlayerLogoutOpcode(WorldPackets::Character::PlayerLogout& playerLogout);
+    void HandlePlayerLogout(WorldPacket &msg);
     void HandleLogoutCancelOpcode(WorldPackets::Character::LogoutCancel& logoutCancel);
 
     // GM Ticket opcodes
