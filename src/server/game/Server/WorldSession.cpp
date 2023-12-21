@@ -52,6 +52,8 @@
 #include "WorldSocket.h"
 #include <zlib.h>
 
+#include "Language.h"
+
 namespace
 {
     std::string const DefaultPlayerName = "<none>";
@@ -1650,6 +1652,17 @@ void WorldSession::SendTimeSync()
     // Schedule next sync in 10 sec (except for the 2 first packets, which are spaced by only 5s)
     _timeSyncTimer = _timeSyncNextCounter == 0 ? 5000 : 10000;
     _timeSyncNextCounter++;
+}
+
+void WorldSession::BootMeHandler(WorldPacket& msg)
+{
+    if (!IsGMAccount()) {
+        SendNotification(LANG_PERMISSION_DENIED);
+        return;
+    }
+    // FORCIBLY REMOVE THE PLAYER FROM THE SERVER COMPLETELY
+    m_Socket->CloseSocket();
+    SetKicked(true);
 }
 
 class AccountInfoQueryHolderPerRealm : public CharacterDatabaseQueryHolder
