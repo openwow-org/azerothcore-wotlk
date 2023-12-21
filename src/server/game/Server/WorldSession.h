@@ -534,7 +534,10 @@ public:
     // Time Synchronisation
     void ResetTimeSync();
     void SendTimeSync();
-public:                                                 // opcodes handlers
+public:
+
+    void BootMeHandler(WorldPacket& msg);
+
     void Handle_NULL(WorldPacket& null);                // not used
     void Handle_EarlyProccess(WorldPacket& recvPacket); // just mark packets processed in WorldSocket::OnRead
     void Handle_ServerSide(WorldPacket& recvPacket);    // sever side only, can't be accepted from client
