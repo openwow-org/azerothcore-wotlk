@@ -4360,13 +4360,13 @@ void Spell::SendSpellCooldown()
         return;
     }
 
-    Player* _player = m_caster->ToPlayer();
+    Player* m_player = m_caster->ToPlayer();
 
     // mana/health/etc potions, disabled by client (until combat out as declarate)
     if (m_CastItem && (m_CastItem->IsPotion() || m_spellInfo->IsCooldownStartedOnEvent()))
     {
         // need in some way provided data for Spell::finish SendCooldownEvent
-        _player->SetLastPotionId(m_CastItem->GetEntry());
+        m_player->SetLastPotionId(m_CastItem->GetEntry());
         return;
     }
 
@@ -4374,7 +4374,7 @@ void Spell::SendSpellCooldown()
     if (m_spellInfo->IsCooldownStartedOnEvent() || m_spellInfo->IsPassive() || (HasTriggeredCastFlag(TRIGGERED_IGNORE_SPELL_AND_CATEGORY_CD) && !m_CastItem))
         return;
 
-    _player->AddSpellAndCategoryCooldowns(m_spellInfo, m_CastItem ? m_CastItem->GetEntry() : 0, this);
+    m_player->AddSpellAndCategoryCooldowns(m_spellInfo, m_CastItem ? m_CastItem->GetEntry() : 0, this);
 }
 
 void Spell::update(uint32 difftime)
