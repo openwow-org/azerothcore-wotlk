@@ -695,6 +695,8 @@ bool ReservedNames(std::wstring& name);
 bool ProfanityNames(std::wstring& name);
 bool normalizePlayerName(std::string& name);
 
+void FormatCharacterName(char* name);
+
 struct LanguageDesc
 {
     Language lang_id;
