@@ -1610,7 +1610,7 @@ void Player::ProcessDelayedOperations()
 
     if (m_DelayedOperations & DELAYED_RESURRECT_PLAYER)
     {
-        ResurrectPlayer(0.0f, false);
+        Resurrect(0.0f, false);
 
         if (GetMaxHealth() > m_resurrectHealth)
             SetHealth(m_resurrectHealth);
@@ -4402,7 +4402,7 @@ void Player::BuildPlayerRepop()
     sScriptMgr->OnPlayerReleasedGhost(this);
 }
 
-void Player::ResurrectPlayer(float restore_percent, bool applySickness)
+void Player::Resurrect(float restore_percent, bool applySickness)
 {
     WorldPacket data(SMSG_DEATH_RELEASE_LOC, 4 * 4);        // remove spirit healer position
     data << uint32(-1);
@@ -4863,7 +4863,7 @@ void Player::RepopAtGraveyard()
     // Xinef: Get Transport Check is not needed
     if ((!IsAlive() && zone && zone->flags & AREA_FLAG_NEED_FLY) /*|| GetTransport()*/ || GetPositionZ() < GetMap()->GetMinHeight(GetPositionX(), GetPositionY()))
     {
-        ResurrectPlayer(0.5f);
+        Resurrect(0.5f);
         SpawnCorpseBones();
     }
 
@@ -12768,7 +12768,7 @@ void Player::ResurectUsingRequestData()
         return;
     }
 
-    ResurrectPlayer(0.0f, false);
+    Resurrect(0.0f, false);
 
     if (GetMaxHealth() > m_resurrectHealth)
         SetHealth(m_resurrectHealth);
