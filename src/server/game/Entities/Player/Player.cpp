@@ -3265,7 +3265,7 @@ bool Player::IsNeedCastPassiveSpellAtLearn(SpellInfo const* spellInfo) const
             (!form && spellInfo->HasAttribute(SPELL_ATTR2_ALLOW_WHILE_NOT_SHAPESHIFTED)));
 }
 
-void Player::learnSpell(uint32 spellId, bool temporary /*= false*/, bool learnFromSkill /*= false*/)
+void Player::LearnSpell(uint32 spellId, bool temporary /*= false*/, bool learnFromSkill /*= false*/)
 {
     // Xinef: don't allow to learn active spell once more
     if (HasActiveSpell(spellId))
@@ -3293,7 +3293,7 @@ void Player::learnSpell(uint32 spellId, bool temporary /*= false*/, bool learnFr
         // pussywizard: next ranks must not be in current spec (otherwise no need to learn already learnt)
         PlayerSpellMap::iterator itr = m_spells.find(nextSpell);
         if (itr != m_spells.end() && itr->second->State != PLAYERSPELL_REMOVED && !itr->second->IsInSpec(m_activeSpec))
-            learnSpell(nextSpell, temporary);
+            LearnSpell(nextSpell, temporary);
     }
 
     // xinef: if we learn new spell, check all spells requiring this spell, if we have such a spell, and it is not in current spec - learn it
@@ -3302,7 +3302,7 @@ void Player::learnSpell(uint32 spellId, bool temporary /*= false*/, bool learnFr
     {
         PlayerSpellMap::iterator itr2 = m_spells.find(itr->second);
         if (itr2 != m_spells.end() && itr2->second->State != PLAYERSPELL_REMOVED && !itr2->second->IsInSpec(m_activeSpec))
-            learnSpell(itr2->first, temporary);
+            LearnSpell(itr2->first, temporary);
     }
 }
 
@@ -11797,7 +11797,7 @@ void Player::LearnCustomSpells()
         }
         else                                               // but send in normal spell in game learn case
         {
-            learnSpell(tspell);
+            LearnSpell(tspell);
         }
     }
 }
@@ -11999,7 +11999,7 @@ void Player::learnSkillRewardedSpells(uint32 skill_id, uint32 skill_value)
             }
             else
             {
-                learnSpell(pAbility->Spell, true, true);
+                LearnSpell(pAbility->Spell, true, true);
             }
         }
     }
@@ -13605,7 +13605,7 @@ bool Player::canFlyInZone(uint32 mapid, uint32 zone, SpellInfo const* bySpell)
 
 void Player::learnSpellHighRank(uint32 spellid)
 {
-    learnSpell(spellid);
+    LearnSpell(spellid);
 
     if (uint32 next = sSpellMgr->GetNextSpellInChain(spellid))
         learnSpellHighRank(next);
@@ -13991,7 +13991,7 @@ void Player::LearnTalent(uint32 talentId, uint32 talentRank, bool command /*= fa
     if (talentInfo->addToSpellBook)
         if (!spellInfo->HasAttribute(SPELL_ATTR0_PASSIVE) && !spellInfo->HasEffect(SPELL_EFFECT_LEARN_SPELL))
         {
-            learnSpell(spellId);
+            LearnSpell(spellId);
             learned = true;
         }
 
@@ -14001,7 +14001,7 @@ void Player::LearnTalent(uint32 talentId, uint32 talentRank, bool command /*= fa
     for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
         if (spellInfo->Effects[i].Effect == SPELL_EFFECT_LEARN_SPELL)
             if (sSpellMgr->IsAdditionalTalentSpell(spellInfo->Effects[i].TriggerSpell))
-                learnSpell(spellInfo->Effects[i].TriggerSpell);
+                LearnSpell(spellInfo->Effects[i].TriggerSpell);
 
     addTalent(spellId, GetActiveSpecMask(), currentTalentRank);
 
