@@ -126,7 +126,7 @@ WorldSession::WorldSession(uint32 id, uint32_t accountFlags, std::string&& name,
     _skipQueue(skipQueue),
     _accountId(id),
     m_accountFlags(accountFlags),
-    _accountName(std::move(name)),
+    m_accountName(std::move(name)),
     m_expansion(expansion),
     m_total_time(TotalTime),
     _logoutTime(0),
@@ -186,6 +186,12 @@ WorldSession::~WorldSession()
         delete packet;
 
     LoginDatabase.Execute("UPDATE account SET online = 0 WHERE id = {};", GetAccountId());     // One-time query
+}
+
+//===========================================================================
+char const* WorldSession::GetAccountName()
+{
+    return m_accountName.c_str();
 }
 
 //===========================================================================
