@@ -1286,7 +1286,7 @@ bool ScriptMgr::CanUnequipItem(Player* player, uint16 pos, bool swap)
     return true;
 }
 
-bool ScriptMgr::CanUseItem(Player* player, ItemTemplate const* proto, InventoryResult& result)
+bool ScriptMgr::CanUseItem(Player* player, ItemTemplate const* proto, BAG_RESULT& result)
 {
     auto ret = IsValidBoolScript<PlayerScript>([&](PlayerScript* script)
     {
