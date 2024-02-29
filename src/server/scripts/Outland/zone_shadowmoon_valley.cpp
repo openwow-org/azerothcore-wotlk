@@ -752,7 +752,7 @@ public:
         {
             ItemPosCountVec dest;
             uint8 msg = player->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, ITEM_FLAUNISS_PACK, 1, nullptr);
-            if (msg == EQUIP_ERR_OK)
+            if (msg == BAG_OK)
             {
                 player->StoreNewItem(dest, ITEM_FLAUNISS_PACK, true);
             }
@@ -761,7 +761,7 @@ public:
         {
             ItemPosCountVec dest;
             uint8 msg = player->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, ITEM_KAGROSHS_PACK, 1, nullptr);
-            if (msg == EQUIP_ERR_OK)
+            if (msg == BAG_OK)
             {
                 player->StoreNewItem(dest, ITEM_KAGROSHS_PACK, true);
             }
