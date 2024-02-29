@@ -296,17 +296,17 @@ uint8 Player::FindEquipSlot(ItemTemplate const* proto, uint32 slot, bool swap) c
     return NULL_SLOT;
 }
 
-InventoryResult Player::CanUnequipItems(uint32 item, uint32 count) const
+BAG_RESULT Player::CanUnequipItems(uint32 item, uint32 count) const
 {
     uint32 tempcount = 0;
 
-    InventoryResult res = EQUIP_ERR_OK;
+    BAG_RESULT res = EQUIP_ERR_OK;
 
     for (uint8 i = EQUIPMENT_SLOT_START; i < INVENTORY_SLOT_BAG_END; ++i)
         if (Item* pItem = GetItemByPos(INVENTORY_SLOT_BAG_0, i))
             if (pItem->GetEntry() == item)
             {
-                InventoryResult ires = CanUnequipItem(INVENTORY_SLOT_BAG_0 << 8 | i, false);
+                BAG_RESULT ires = CanUnequipItem(INVENTORY_SLOT_BAG_0 << 8 | i, false);
                 if (ires == EQUIP_ERR_OK)
                 {
                     tempcount += pItem->GetCount();
@@ -823,7 +823,7 @@ bool Player::HasItemOrGemWithLimitCategoryEquipped(uint32 limitCategory, uint32 
     return false;
 }
 
-InventoryResult Player::CanTakeMoreSimilarItems(uint32 entry, uint32 count, Item* pItem, uint32* no_space_count) const
+BAG_RESULT Player::CanTakeMoreSimilarItems(uint32 entry, uint32 count, Item* pItem, uint32* no_space_count) const
 {
     ItemTemplate const* pProto = sObjectMgr->GetItemTemplate(entry);
     if (!pProto)
@@ -932,7 +932,7 @@ bool Player::IsTotemCategoryCompatiableWith(ItemTemplate const* pProto, uint32 r
     return true;
 }
 
-InventoryResult Player::CanStoreItem_InSpecificSlot(uint8 bag, uint8 slot, ItemPosCountVec& dest, ItemTemplate const* pProto, uint32& count, bool swap, Item* pSrcItem) const
+BAG_RESULT Player::CanStoreItem_InSpecificSlot(uint8 bag, uint8 slot, ItemPosCountVec& dest, ItemTemplate const* pProto, uint32& count, bool swap, Item* pSrcItem) const
 {
     Item* pItem2 = GetItemByPos(bag, slot);
 
@@ -983,7 +983,7 @@ InventoryResult Player::CanStoreItem_InSpecificSlot(uint8 bag, uint8 slot, ItemP
     else
     {
         // can be merged at least partly
-        InventoryResult res  = pItem2->CanBeMergedPartlyWith(pProto);
+        BAG_RESULT res  = pItem2->CanBeMergedPartlyWith(pProto);
         if (res != EQUIP_ERR_OK)
             return res;
 
@@ -1003,7 +1003,7 @@ InventoryResult Player::CanStoreItem_InSpecificSlot(uint8 bag, uint8 slot, ItemP
     return EQUIP_ERR_OK;
 }
 
-InventoryResult Player::CanStoreItem_InBag(uint8 bag, ItemPosCountVec& dest, ItemTemplate const* pProto, uint32& count, bool merge, bool non_specialized, Item* pSrcItem, uint8 skip_bag, uint8 skip_slot) const
+BAG_RESULT Player::CanStoreItem_InBag(uint8 bag, ItemPosCountVec& dest, ItemTemplate const* pProto, uint32& count, bool merge, bool non_specialized, Item* pSrcItem, uint8 skip_bag, uint8 skip_slot) const
 {
     // skip specific bag already processed in first called CanStoreItem_InBag
     if (bag == skip_bag)
@@ -1073,7 +1073,7 @@ InventoryResult Player::CanStoreItem_InBag(uint8 bag, ItemPosCountVec& dest, Ite
     return EQUIP_ERR_OK;
 }
 
-InventoryResult Player::CanStoreItem_InInventorySlots(uint8 slot_begin, uint8 slot_end, ItemPosCountVec& dest, ItemTemplate const* pProto, uint32& count, bool merge, Item* pSrcItem, uint8 skip_bag, uint8 skip_slot) const
+BAG_RESULT Player::CanStoreItem_InInventorySlots(uint8 slot_begin, uint8 slot_end, ItemPosCountVec& dest, ItemTemplate const* pProto, uint32& count, bool merge, Item* pSrcItem, uint8 skip_bag, uint8 skip_slot) const
 {
     //this is never called for non-bag slots so we can do this
     if (pSrcItem && pSrcItem->IsNotEmptyBag())
@@ -1124,7 +1124,7 @@ InventoryResult Player::CanStoreItem_InInventorySlots(uint8 slot_begin, uint8 sl
     return EQUIP_ERR_OK;
 }
 
-InventoryResult Player::CanStoreItem(uint8 bag, uint8 slot, ItemPosCountVec& dest, uint32 entry, uint32 count, Item* pItem, bool swap, uint32* no_space_count) const
+BAG_RESULT Player::CanStoreItem(uint8 bag, uint8 slot, ItemPosCountVec& dest, uint32 entry, uint32 count, Item* pItem, bool swap, uint32* no_space_count) const
 {
     LOG_DEBUG("entities.player.items", "STORAGE: CanStoreItem bag = {}, slot = {}, item = {}, count = {}", bag, slot, entry, count);
 
@@ -1161,7 +1161,7 @@ InventoryResult Player::CanStoreItem(uint8 bag, uint8 slot, ItemPosCountVec& des
 
     // check count of items (skip for auto move for same player from bank)
     uint32 no_similar_count = 0;                            // can't store this amount similar items
-    InventoryResult res = CanTakeMoreSimilarItems(entry, count, pItem, &no_similar_count);
+    BAG_RESULT res = CanTakeMoreSimilarItems(entry, count, pItem, &no_similar_count);
     if (res != EQUIP_ERR_OK)
     {
         if (count == no_similar_count)
@@ -1562,7 +1562,7 @@ InventoryResult Player::CanStoreItem(uint8 bag, uint8 slot, ItemPosCountVec& des
 }
 
 //////////////////////////////////////////////////////////////////////////
-InventoryResult Player::CanStoreItems(Item** pItems, int count) const
+BAG_RESULT Player::CanStoreItems(Item** pItems, int count) const
 {
     Item* pItem2;
 
@@ -1634,7 +1634,7 @@ InventoryResult Player::CanStoreItems(Item** pItems, int count) const
         ItemTemplate const* pBagProto;
 
         // item is 'one item only'
-        InventoryResult res = CanTakeMoreSimilarItems(pItem);
+        BAG_RESULT res = CanTakeMoreSimilarItems(pItem);
         if (res != EQUIP_ERR_OK)
             return res;
 
@@ -1814,13 +1814,13 @@ InventoryResult Player::CanStoreItems(Item** pItems, int count) const
 }
 
 //////////////////////////////////////////////////////////////////////////
-InventoryResult Player::CanEquipNewItem(uint8 slot, uint16& dest, uint32 item, bool swap) const
+BAG_RESULT Player::CanEquipNewItem(uint8 slot, uint16& dest, uint32 item, bool swap) const
 {
     dest = 0;
     Item* pItem = Item::CreateItem(item, 1, this);
     if (pItem)
     {
-        InventoryResult result = CanEquipItem(slot, dest, pItem, swap);
+        BAG_RESULT result = CanEquipItem(slot, dest, pItem, swap);
         delete pItem;
         return result;
     }
@@ -1828,7 +1828,7 @@ InventoryResult Player::CanEquipNewItem(uint8 slot, uint16& dest, uint32 item, b
     return EQUIP_ERR_ITEM_NOT_FOUND;
 }
 
-InventoryResult Player::CanEquipItem(uint8 slot, uint16& dest, Item* pItem, bool swap, bool not_loading) const
+BAG_RESULT Player::CanEquipItem(uint8 slot, uint16& dest, Item* pItem, bool swap, bool not_loading) const
 {
     dest = 0;
     if (pItem)
@@ -1848,7 +1848,7 @@ InventoryResult Player::CanEquipItem(uint8 slot, uint16& dest, Item* pItem, bool
                 return EQUIP_ERR_DONT_OWN_THAT_ITEM;
 
             // check count of items (skip for auto move for same player from bank)
-            InventoryResult res = CanTakeMoreSimilarItems(pItem);
+            BAG_RESULT res = CanTakeMoreSimilarItems(pItem);
             if (res != EQUIP_ERR_OK)
                 return res;
 
@@ -1930,7 +1930,7 @@ InventoryResult Player::CanEquipItem(uint8 slot, uint16& dest, Item* pItem, bool
             if (ignore == uint8(NULL_SLOT) || pItem != GetItemByPos(INVENTORY_SLOT_BAG_0, ignore))
                 ignore = eslot;
 
-            InventoryResult res2 = CanEquipUniqueItem(pItem, swap ? ignore : uint8(NULL_SLOT));
+            BAG_RESULT res2 = CanEquipUniqueItem(pItem, swap ? ignore : uint8(NULL_SLOT));
             if (res2 != EQUIP_ERR_OK)
                 return res2;
 
@@ -1999,7 +1999,7 @@ InventoryResult Player::CanEquipItem(uint8 slot, uint16& dest, Item* pItem, bool
     return !swap ? EQUIP_ERR_ITEM_NOT_FOUND : EQUIP_ERR_ITEMS_CANT_BE_SWAPPED;
 }
 
-InventoryResult Player::CanUnequipItem(uint16 pos, bool swap) const
+BAG_RESULT Player::CanUnequipItem(uint16 pos, bool swap) const
 {
     if (!sScriptMgr->CanUnequipItem(const_cast<Player*>(this), pos, swap))
         return EQUIP_ERR_CANT_DO_RIGHT_NOW;
@@ -2047,7 +2047,7 @@ InventoryResult Player::CanUnequipItem(uint16 pos, bool swap) const
     return EQUIP_ERR_OK;
 }
 
-InventoryResult Player::CanBankItem(uint8 bag, uint8 slot, ItemPosCountVec& dest, Item* pItem, bool swap, bool not_loading) const
+BAG_RESULT Player::CanBankItem(uint8 bag, uint8 slot, ItemPosCountVec& dest, Item* pItem, bool swap, bool not_loading) const
 {
     if (!pItem)
         return swap ? EQUIP_ERR_ITEMS_CANT_BE_SWAPPED : EQUIP_ERR_ITEM_NOT_FOUND;
@@ -2076,7 +2076,7 @@ InventoryResult Player::CanBankItem(uint8 bag, uint8 slot, ItemPosCountVec& dest
     }
 
     // check count of items (skip for auto move for same player from bank)
-    InventoryResult res = CanTakeMoreSimilarItems(pItem);
+    BAG_RESULT res = CanTakeMoreSimilarItems(pItem);
     if (res != EQUIP_ERR_OK)
         return res;
 
@@ -2234,7 +2234,7 @@ InventoryResult Player::CanBankItem(uint8 bag, uint8 slot, ItemPosCountVec& dest
     return EQUIP_ERR_BANK_FULL;
 }
 
-InventoryResult Player::CanUseItem(Item* pItem, bool not_loading) const
+BAG_RESULT Player::CanUseItem(Item* pItem, bool not_loading) const
 {
     if (pItem)
     {
@@ -2252,7 +2252,7 @@ InventoryResult Player::CanUseItem(Item* pItem, bool not_loading) const
             if (pItem->IsBindedNotWith(this))
                 return EQUIP_ERR_DONT_OWN_THAT_ITEM;
 
-            InventoryResult res = CanUseItem(pProto);
+            BAG_RESULT res = CanUseItem(pProto);
             if (res != EQUIP_ERR_OK)
                 return res;
 
@@ -2290,7 +2290,7 @@ InventoryResult Player::CanUseItem(Item* pItem, bool not_loading) const
     return EQUIP_ERR_ITEM_NOT_FOUND;
 }
 
-InventoryResult Player::CanUseItem(ItemTemplate const* proto) const
+BAG_RESULT Player::CanUseItem(ItemTemplate const* proto) const
 {
     // Used by group, function NeedBeforeGreed, to know if a prototype can be used by a player
 
@@ -2342,7 +2342,7 @@ InventoryResult Player::CanUseItem(ItemTemplate const* proto) const
         return EQUIP_ERR_CANT_DO_RIGHT_NOW;
     }
 
-    InventoryResult result = EQUIP_ERR_OK;
+    BAG_RESULT result = EQUIP_ERR_OK;
 
     if (!sScriptMgr->CanUseItem(const_cast<Player*>(this), proto, result))
     {
@@ -2352,7 +2352,7 @@ InventoryResult Player::CanUseItem(ItemTemplate const* proto) const
     return EQUIP_ERR_OK;
 }
 
-InventoryResult Player::CanRollForItemInLFG(ItemTemplate const* proto, WorldObject const* lootedObject) const
+BAG_RESULT Player::CanRollForItemInLFG(ItemTemplate const* proto, WorldObject const* lootedObject) const
 {
     if (!GetGroup() || !GetGroup()->isLFGGroup(true))
         return EQUIP_ERR_OK;    // not in LFG group
@@ -2477,7 +2477,7 @@ InventoryResult Player::CanRollForItemInLFG(ItemTemplate const* proto, WorldObje
     return EQUIP_ERR_OK;
 }
 
-InventoryResult Player::CanUseAmmo(uint32 item) const
+BAG_RESULT Player::CanUseAmmo(uint32 item) const
 {
     LOG_DEBUG("entities.player.items", "STORAGE: CanUseAmmo item = {}", item);
     if (!IsAlive())
@@ -2490,7 +2490,7 @@ InventoryResult Player::CanUseAmmo(uint32 item) const
         if (pProto->InventoryType != INVTYPE_AMMO)
             return EQUIP_ERR_ONLY_AMMO_CAN_GO_HERE;
 
-        InventoryResult res = CanUseItem(pProto);
+        BAG_RESULT res = CanUseItem(pProto);
         if (res != EQUIP_ERR_OK)
             return res;
 
@@ -2517,7 +2517,7 @@ void Player::SetAmmo(uint32 item)
         return;
 
     // check ammo
-    InventoryResult msg = CanUseAmmo(item);
+    BAG_RESULT msg = CanUseAmmo(item);
     if (msg != EQUIP_ERR_OK)
     {
         SendEquipError(msg, nullptr, nullptr, item);
@@ -3494,7 +3494,7 @@ void Player::SplitItem(uint16 src, uint16 dst, uint32 count)
         pSrcItem->SetCount(pSrcItem->GetCount() - count);
 
         ItemPosCountVec dest;
-        InventoryResult msg = CanStoreItem(dstbag, dstslot, dest, pNewItem, false);
+        BAG_RESULT msg = CanStoreItem(dstbag, dstslot, dest, pNewItem, false);
         if (msg != EQUIP_ERR_OK)
         {
             delete pNewItem;
@@ -3514,7 +3514,7 @@ void Player::SplitItem(uint16 src, uint16 dst, uint32 count)
         pSrcItem->SetCount(pSrcItem->GetCount() - count);
 
         ItemPosCountVec dest;
-        InventoryResult msg = CanBankItem(dstbag, dstslot, dest, pNewItem, false);
+        BAG_RESULT msg = CanBankItem(dstbag, dstslot, dest, pNewItem, false);
         if (msg != EQUIP_ERR_OK)
         {
             delete pNewItem;
@@ -3534,7 +3534,7 @@ void Player::SplitItem(uint16 src, uint16 dst, uint32 count)
         pSrcItem->SetCount(pSrcItem->GetCount() - count);
 
         uint16 dest;
-        InventoryResult msg = CanEquipItem(dstslot, dest, pNewItem, false);
+        BAG_RESULT msg = CanEquipItem(dstslot, dest, pNewItem, false);
         if (msg != EQUIP_ERR_OK)
         {
             delete pNewItem;
@@ -3586,7 +3586,7 @@ void Player::SwapItem(uint16 src, uint16 dst)
     if (IsEquipmentPos(src) || IsBagPos(src))
     {
         // bags can be swapped with empty bag slots, or with empty bag (items move possibility checked later)
-        InventoryResult msg = CanUnequipItem(src, !IsBagPos(src) || IsBagPos(dst) || (pDstItem && pDstItem->ToBag() && pDstItem->ToBag()->IsEmpty()));
+        BAG_RESULT msg = CanUnequipItem(src, !IsBagPos(src) || IsBagPos(dst) || (pDstItem && pDstItem->ToBag() && pDstItem->ToBag()->IsEmpty()));
         if (msg != EQUIP_ERR_OK)
         {
             SendEquipError(msg, pSrcItem, pDstItem);
@@ -3631,7 +3631,7 @@ void Player::SwapItem(uint16 src, uint16 dst)
         if (IsEquipmentPos(dst) || IsBagPos(dst))
         {
             // bags can be swapped with empty bag slots, or with empty bag (items move possibility checked later)
-            InventoryResult msg = CanUnequipItem(dst, !IsBagPos(dst) || IsBagPos(src) || (pSrcItem->ToBag() && pSrcItem->ToBag()->IsEmpty()));
+            BAG_RESULT msg = CanUnequipItem(dst, !IsBagPos(dst) || IsBagPos(src) || (pSrcItem->ToBag() && pSrcItem->ToBag()->IsEmpty()));
             if (msg != EQUIP_ERR_OK)
             {
                 SendEquipError(msg, pSrcItem, pDstItem);
@@ -3649,7 +3649,7 @@ void Player::SwapItem(uint16 src, uint16 dst)
         if (IsInventoryPos(dst))
         {
             ItemPosCountVec dest;
-            InventoryResult msg = CanStoreItem(dstbag, dstslot, dest, pSrcItem, false);
+            BAG_RESULT msg = CanStoreItem(dstbag, dstslot, dest, pSrcItem, false);
             if (msg != EQUIP_ERR_OK)
             {
                 SendEquipError(msg, pSrcItem, nullptr);
@@ -3665,7 +3665,7 @@ void Player::SwapItem(uint16 src, uint16 dst)
         else if (IsBankPos(dst))
         {
             ItemPosCountVec dest;
-            InventoryResult msg = CanBankItem(dstbag, dstslot, dest, pSrcItem, false);
+            BAG_RESULT msg = CanBankItem(dstbag, dstslot, dest, pSrcItem, false);
             if (msg != EQUIP_ERR_OK)
             {
                 SendEquipError(msg, pSrcItem, nullptr);
@@ -3680,7 +3680,7 @@ void Player::SwapItem(uint16 src, uint16 dst)
         else if (IsEquipmentPos(dst))
         {
             uint16 dest;
-            InventoryResult msg = CanEquipItem(dstslot, dest, pSrcItem, false);
+            BAG_RESULT msg = CanEquipItem(dstslot, dest, pSrcItem, false);
             if (msg != EQUIP_ERR_OK)
             {
                 SendEquipError(msg, pSrcItem, nullptr);
@@ -3698,7 +3698,7 @@ void Player::SwapItem(uint16 src, uint16 dst)
     // attempt merge to / fill target item
     if (!pSrcItem->IsBag() && !pDstItem->IsBag())
     {
-        InventoryResult msg;
+        BAG_RESULT msg;
         ItemPosCountVec sDest;
         uint16 eDest = 0;
         if (IsInventoryPos(dst))
@@ -3753,7 +3753,7 @@ void Player::SwapItem(uint16 src, uint16 dst)
     }
 
     // impossible merge/fill, do real swap
-    InventoryResult msg = EQUIP_ERR_OK;
+    BAG_RESULT msg = EQUIP_ERR_OK;
 
     // check src->dest move possibility
     ItemPosCountVec sDest;
@@ -4036,7 +4036,7 @@ void Player::RemoveItemFromBuyBackSlot(uint32 slot, bool del)
     }
 }
 
-void Player::SendEquipError(InventoryResult msg, Item* pItem, Item* pItem2, uint32 itemid)
+void Player::SendEquipError(BAG_RESULT msg, Item* pItem, Item* pItem2, uint32 itemid)
 {
     LOG_DEBUG("network", "WORLD: Sent SMSG_INVENTORY_CHANGE_FAILURE ({})", msg);
     WorldPacket data(SMSG_INVENTORY_CHANGE_FAILURE, (msg == EQUIP_ERR_CANT_EQUIP_LEVEL_I ? 22 : 18));

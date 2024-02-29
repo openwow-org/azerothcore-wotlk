@@ -637,7 +637,7 @@ void Loot::FillNotNormalLootFor(Player* player)
             if (ItemTemplate const* proto = sObjectMgr->GetItemTemplate(item->itemid))
                 if (proto->IsCurrencyToken())
                 {
-                    InventoryResult msg;
+                    BAG_RESULT msg;
                     player->StoreLootItem(i, this, msg);
                 }
     }
