@@ -1681,7 +1681,7 @@ public:
         ItemPosCountVec dest;
         BAG_RESULT msg = playerTarget->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, itemId, count, &noSpaceForCount);
 
-        if (msg != EQUIP_ERR_OK) // convert to possible store amount
+        if (msg != BAG_OK) // convert to possible store amount
             count -= noSpaceForCount;
 
         if (!count || dest.empty()) // can't add any
@@ -1748,7 +1748,7 @@ public:
                 ItemPosCountVec dest;
                 BAG_RESULT msg = playerTarget->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, itemTemplate.ItemId, 1);
 
-                if (msg == EQUIP_ERR_OK)
+                if (msg == BAG_OK)
                 {
                     Item* item = playerTarget->StoreNewItem(dest, itemTemplate.ItemId, true);
 
