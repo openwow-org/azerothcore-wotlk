@@ -1457,7 +1457,7 @@ void Group::CountTheRoll(Rolls::iterator rollI, Map* allowedMap)
                     {
                         item->is_blocked = false;
                         item->rollWinnerGUID = player->GetGUID();
-                        player->SendEquipError(msg, nullptr, nullptr, roll->itemid);
+                        player->SendInventoryChangeFailure(msg, nullptr, nullptr, roll->itemid);
                     }
                 }
             }
@@ -1527,7 +1527,7 @@ void Group::CountTheRoll(Rolls::iterator rollI, Map* allowedMap)
                         {
                             item->is_blocked = false;
                             item->rollWinnerGUID = player->GetGUID();
-                            player->SendEquipError(msg, nullptr, nullptr, roll->itemid);
+                            player->SendInventoryChangeFailure(msg, nullptr, nullptr, roll->itemid);
                         }
                     }
                     else if (rollvote == DISENCHANT)
@@ -1554,7 +1554,7 @@ void Group::CountTheRoll(Rolls::iterator rollI, Map* allowedMap)
                             for(uint32 i = 0; i < max_slot; i++)
                             {
                                 LootItem* lootItem = loot.LootItemInSlot(i, player);
-                                player->SendEquipError(msg, nullptr, nullptr, lootItem->itemid);
+                                player->SendInventoryChangeFailure(msg, nullptr, nullptr, lootItem->itemid);
                                 player->SendItemRetrievalMail(lootItem->itemid, lootItem->count);
                             }
                         }
