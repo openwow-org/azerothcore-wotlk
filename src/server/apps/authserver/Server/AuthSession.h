@@ -18,7 +18,7 @@
 #ifndef __AUTHSESSION_H__
 #define __AUTHSESSION_H__
 
-#include <WowServices/AccountInfo.h>
+#include "../../../game/WowServices/AccountInfo.h"
 #include "AsyncCallbackProcessor.h"
 #include "BigNumber.h"
 #include "ByteBuffer.h"
@@ -35,6 +35,21 @@ using boost::asio::ip::tcp;
 
 class Field;
 struct AuthHandler;
+
+enum eAuthCmd
+{
+    AUTH_LOGON_CHALLENGE = 0x00,
+    AUTH_LOGON_PROOF = 0x01,
+    AUTH_RECONNECT_CHALLENGE = 0x02,
+    AUTH_RECONNECT_PROOF = 0x03,
+    REALM_LIST = 0x10,
+    XFER_INITIATE = 0x30,
+    XFER_DATA = 0x31,
+    XFER_ACCEPT = 0x32,
+    XFER_RESUME = 0x33,
+    XFER_CANCEL = 0x34,
+    NUM_AUTH_CMD
+};
 
 enum AuthStatus
 {
@@ -76,6 +91,9 @@ public:
     bool Update() override;
 
     void SendPacket(ByteBuffer& packet);
+
+    static int SetMessageHandler(unsigned int msgId,int(*handler)(void* formal,unsigned int msgId,unsigned int eventTime,ByteBuffer* msg));
+    static int ClearMessageHandler(unsigned int msgId);
 
 protected:
     void ReadHandler() override;

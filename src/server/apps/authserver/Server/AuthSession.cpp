@@ -35,21 +35,9 @@
 
 using boost::asio::ip::tcp;
 
-enum eAuthCmd
-{
-    AUTH_LOGON_CHALLENGE = 0x00,
-    AUTH_LOGON_PROOF = 0x01,
-    AUTH_RECONNECT_CHALLENGE = 0x02,
-    AUTH_RECONNECT_PROOF = 0x03,
-    REALM_LIST = 0x10,
-    XFER_INITIATE = 0x30,
-    XFER_DATA = 0x31,
-    XFER_ACCEPT = 0x32,
-    XFER_RESUME = 0x33,
-    XFER_CANCEL = 0x34
-};
-
 #pragma pack(push, 1)
+
+static std::map<eAuthCmd, int(*)(void*,unsigned int,unsigned int,ByteBuffer*)> s_handlers;
 
 typedef struct AUTH_LOGON_CHALLENGE_C
 {
@@ -876,4 +864,30 @@ bool AuthSession::VerifyVersion(uint8 const* a, int32 aLength, Acore::Crypto::SH
     version.Finalize();
 
     return (versionProof == version.GetDigest());
+}
+
+int AuthSession::SetMessageHandler(unsigned int msgId,int(*handler)(void* formal,unsigned int msgId,unsigned int eventTime,ByteBuffer* msg)) {
+    if (msgId >= NUM_AUTH_CMD) {
+        // TODO: handle error
+        return 0;
+    }
+    if (!handler) {
+        // TODO: handle error
+        return 0;
+    }
+    if (s_handlers.contains(static_cast<eAuthCmd>(msgId))) {
+        // TODO: handle error
+        return 0;
+    }
+    s_handlers[static_cast<eAuthCmd>(msgId)] = handler;
+    return 1;
+}
+
+int AuthSession::ClearMessageHandler(unsigned int msgId) {
+    if (msgId >= NUM_AUTH_CMD) {
+        // TODO: handle error
+        return 0;
+    }
+    s_handlers[static_cast<eAuthCmd>(msgId)] = 0;
+    return 1;
 }

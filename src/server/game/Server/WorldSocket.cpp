@@ -34,6 +34,8 @@
 
 using boost::asio::ip::tcp;
 
+std::map<Opcodes, int(*)(WorldSession* ses,unsigned int msgId,unsigned int eventTime,WorldPacket* msg)> g_wsHandlers;
+
 WorldSocket::WorldSocket(tcp::socket&& socket)
     : Socket(std::move(socket)), _OverSpeedPings(0), _worldSession(nullptr), _authed(false), _sendBufferSize(4096)
 {
@@ -701,4 +703,30 @@ bool WorldSocket::HandlePing(WorldPacket& recvPacket)
     SendPacketAndLogOpcode(packet);
 
     return true;
+}
+
+int WorldSocket::SetMessageHandler(unsigned int msgId,int(*handler)(WorldSession* ses,unsigned int msgId,unsigned int eventTime,WorldPacket* msg)) {
+    if (msgId >= NUM_MSG_TYPES) {
+        // TODO: handle error
+        return 0;
+    }
+    if (!handler) {
+        // TODO: handle error
+        return 0;
+    }
+    if (g_wsHandlers.contains(static_cast<Opcodes>(msgId))) {
+        // TODO: handle error
+        return 0;
+    }
+    g_wsHandlers[static_cast<Opcodes>(msgId)] = handler;
+    return 1;
+}
+
+int WorldSocket::ClearMessageHandler(unsigned int msgId) {
+    if (msgId >= NUM_MSG_TYPES) {
+        // TODO: handle error
+        return 0;
+    }
+    g_wsHandlers[static_cast<Opcodes>(msgId)] = 0;
+    return 1;
 }

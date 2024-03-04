@@ -30,6 +30,8 @@
 
 using boost::asio::ip::tcp;
 
+extern std::map<Opcodes, int(*)(WorldSession* ses,unsigned int msgId,unsigned int eventTime,WorldPacket* msg)> g_wsHandlers;
+
 class EncryptablePacket : public WorldPacket
 {
 public:
@@ -81,6 +83,9 @@ public:
     void SendPacket(WorldPacket const& packet);
 
     void SetSendBufferSize(std::size_t sendBufferSize) { _sendBufferSize = sendBufferSize; }
+
+    static int SetMessageHandler(unsigned int msgId,int(*handler)(WorldSession* ses,unsigned int msgId,unsigned int eventTime,WorldPacket* msg));
+    static  int ClearMessageHandler(unsigned int msgId);
 
 protected:
     void OnClose() override;
