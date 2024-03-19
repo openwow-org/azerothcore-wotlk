@@ -33,7 +33,6 @@
 #include "Player.h"
 #include "ScriptMgr.h"
 #include "SharedDefines.h"
-#include "SocialMgr.h"
 #include "SpellAuras.h"
 #include "UpdateFieldFlags.h"
 #include "Util.h"

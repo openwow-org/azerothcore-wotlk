@@ -22,7 +22,6 @@
 #include "Opcodes.h"
 #include "Player.h"
 #include "ScriptMgr.h"
-#include "SocialMgr.h"
 #include "Spell.h"
 #include "SpellMgr.h"
 #include "World.h"
@@ -619,7 +618,7 @@ void WorldSession::HandleInitiateTradeOpcode(WorldPacket& recvPacket)
         return;
     }
 
-    if (pOther->GetSocial()->HasIgnore(GetPlayer()->GetGUID()))
+    if (pOther->FriendListPtr()->IsIgnored(GetPlayer()->GetGUID()))
     {
         SendTradeStatus(TRADE_STATUS_IGNORE_YOU);
         return;
@@ -709,7 +708,7 @@ void WorldSession::HandleSetTradeItemOpcode(WorldPacket& recvPacket)
     }
 
     // PlayerScript Hook for checking traded items if we want to filter them in a custom module
-    if (!sScriptMgr->CanSetTradeItem(_player, item, tradeSlot))
+    if (!sScriptMgr->CanSetTradeItem(m_player, item, tradeSlot))
     {
         // Do not send TRADE_STATUS_TRADE_CANCELED because it will cause double display of "Transaction canceled" notification
         // On the trade initiator screen
