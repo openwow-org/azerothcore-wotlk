@@ -155,7 +155,7 @@ public:
 
         void MoveInLineOfSight(Unit* who) override
         {
-            if (!who || me->getStandState() != UNIT_STAND_STATE_SLEEP || who->GetTypeId() != TYPEID_PLAYER || me->GetDistance2d(who) > 90.0f || who->ToPlayer()->IsGameMaster())
+            if (!who || me->GetStandState() != UNIT_STAND_STATE_SLEEP || who->GetTypeId() != TYPEID_PLAYER || me->GetDistance2d(who) > 90.0f || who->ToPlayer()->IsGameMaster())
                 return;
 
             me->SetInCombatWithZone();
@@ -215,7 +215,7 @@ public:
 
         void UpdateAI(uint32 diff) override
         {
-            if (me->getStandState() == UNIT_STAND_STATE_SLEEP)
+            if (me->GetStandState() == UNIT_STAND_STATE_SLEEP)
                 return;
 
             events.Update(diff);
