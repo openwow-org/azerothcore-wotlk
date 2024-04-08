@@ -120,7 +120,7 @@ public:
             if (Unit* summoner = _owner.ToTempSummon()->GetSummonerUnit())
             {
                 summoner->GetAI()->DoAction(_action);
-                _owner.SetStandState(UNIT_STAND_STATE_SUBMERGED);
+                _owner.SetStandState(UNIT_SUBMERGED);
                 _owner.DespawnOrUnsummon(200);
             }
         return true;
@@ -150,31 +150,31 @@ public:
         void Reset() override
         {
             BossAI::Reset();
-            me->SetStandState(UNIT_STAND_STATE_SLEEP);
+            me->SetStandState(UNIT_SLEEPING);
         }
 
         void MoveInLineOfSight(Unit* who) override
         {
-            if (!who || me->GetStandState() != UNIT_STAND_STATE_SLEEP || who->GetTypeId() != TYPEID_PLAYER || me->GetDistance2d(who) > 90.0f || who->ToPlayer()->IsGameMaster())
+            if (!who || me->GetStandState() != UNIT_SLEEPING || who->GetTypeId() != TYPEID_PLAYER || me->GetDistance2d(who) > 90.0f || who->ToPlayer()->IsGameMaster())
                 return;
 
             me->SetInCombatWithZone();
             events.ScheduleEvent(EVENT_ESSENCE_OF_SUFFERING, 5000); // 15000);
-            me->SetStandState(UNIT_STAND_STATE_STAND);
+            me->SetStandState(UNIT_STANDING);
         }
 
         void DoAction(int32 param) override
         {
             if (param == ACTION_ESSENCE_OF_SUFFERING)
             {
-                me->SetStandState(UNIT_STAND_STATE_STAND);
+                me->SetStandState(UNIT_STANDING);
                 events.ScheduleEvent(EVENT_SUCK_ESSENCE, 1000);
                 events.ScheduleEvent(EVENT_SPAWN_ENSLAVED_SOULS, 8000);
                 events.ScheduleEvent(EVENT_ESSENCE_OF_DESIRE, 38000);
             }
             else if (param == ACTION_ESSENCE_OF_DESIRE)
             {
-                me->SetStandState(UNIT_STAND_STATE_STAND);
+                me->SetStandState(UNIT_STANDING);
                 events.ScheduleEvent(EVENT_SUCK_ESSENCE, 1000);
                 events.ScheduleEvent(EVENT_SPAWN_ENSLAVED_SOULS, 8000);
                 events.ScheduleEvent(EVENT_ESSENCE_OF_ANGER, 38000);
@@ -215,30 +215,30 @@ public:
 
         void UpdateAI(uint32 diff) override
         {
-            if (me->GetStandState() == UNIT_STAND_STATE_SLEEP)
+            if (me->GetStandState() == UNIT_SLEEPING)
                 return;
 
             events.Update(diff);
             switch (events.ExecuteEvent())
             {
                 case EVENT_SUCK_ESSENCE:
-                    me->SetStandState(UNIT_STAND_STATE_STAND);
+                    me->SetStandState(UNIT_STANDING);
                     break;
                 case EVENT_ENGAGE_ESSENCE:
                     summons.DoAction(ACTION_ENGAGE_ESSENCE);
                     break;
                 case EVENT_ESSENCE_OF_SUFFERING:
-                    me->SetStandState(UNIT_STAND_STATE_SUBMERGED);
+                    me->SetStandState(UNIT_SUBMERGED);
                     me->CastSpell(me, SPELL_SUMMON_ESSENCE_OF_SUFFERING, false);
                     break;
                 case EVENT_ESSENCE_OF_DESIRE:
                     summons.DespawnAll();
-                    me->SetStandState(UNIT_STAND_STATE_SUBMERGED);
+                    me->SetStandState(UNIT_SUBMERGED);
                     me->CastSpell(me, SPELL_SUMMON_ESSENCE_OF_DESIRE, false);
                     break;
                 case EVENT_ESSENCE_OF_ANGER:
                     summons.DespawnAll();
-                    me->SetStandState(UNIT_STAND_STATE_SUBMERGED);
+                    me->SetStandState(UNIT_SUBMERGED);
                     me->CastSpell(me, SPELL_SUMMON_ESSENCE_OF_ANGER, false);
                     break;
                 case EVENT_SPAWN_ENSLAVED_SOULS:

@@ -283,7 +283,7 @@ public:
                 me->SetPhaseMask(1, true);
                 me->SetNpcFlag(UNIT_NPC_FLAG_GOSSIP);
                 me->SetFaction(FACTION_FRIENDLY);
-                me->SetStandState(UNIT_STAND_STATE_SIT_HIGH_CHAIR);
+                me->SetStandState(UNIT_SITTINGCHAIRHIGH);
                 me->RemoveAura(SPELL_NEFARIANS_BARRIER);
                 me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
             }
@@ -501,7 +501,7 @@ public:
                 events.ScheduleEvent(EVENT_START_EVENT, 4s);
                 me->SetFaction(FACTION_DRAGONFLIGHT_BLACK);
                 me->RemoveNpcFlag(UNIT_NPC_FLAG_GOSSIP);
-                me->SetStandState(UNIT_STAND_STATE_STAND);
+                me->SetStandState(UNIT_STANDING);
                 me->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
                 me->SetImmuneToPC(true);
             }
@@ -629,7 +629,7 @@ struct boss_nefarian : public BossAI
                     summon->Respawn();
                     summon->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
                     summon->SetReactState(REACT_AGGRESSIVE);
-                    summon->SetStandState(UNIT_STAND_STATE_STAND);
+                    summon->SetStandState(UNIT_STANDING);
                     DoZoneInCombat(summon);
                 }
             }
@@ -986,7 +986,7 @@ struct npc_drakonid_spawner : public ScriptedAI
                 {
                     construct->UpdateEntry(NPC_BONE_CONSTRUCT, true);
                     construct->SetReactState(REACT_PASSIVE);
-                    construct->SetStandState(UNIT_STAND_STATE_DEAD);
+                    construct->SetStandState(UNIT_DEAD);
                     construct->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
                     construct->SetCorpseRemoveTime(DAY * IN_MILLISECONDS);
                     construct->SetVisible(true);
