@@ -1389,7 +1389,7 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
         LOG_DEBUG("maps", "Player {} is being teleported to map {}", GetName(), mapid);
 
     // xinef: do this here in case teleport failed in above checks
-    if (!(options & TELE_TO_NOT_LEAVE_TAXI) && IsInFlight())
+    if (!(options & TELE_TO_NOT_LEAVE_TAXI) && IsOnTaxi())
     {
         GetMotionMaster()->MovementExpired();
         CleanupAfterTaxiFlight();
@@ -2091,7 +2091,7 @@ Creature* Player::GetNPCIfCanInteractWith(ObjectGuid guid, uint32 npcflagmask)
     if (!IsInWorld())
         return nullptr;
 
-    if (IsInFlight())
+    if (IsOnTaxi())
         return nullptr;
 
     // exist (we need look pets also for some interaction (quest/etc)
@@ -2165,8 +2165,8 @@ GameObject* Player::GetGameObjectIfCanInteractWith(ObjectGuid guid, GameobjectTy
 
 bool Player::IsFalling() const
 {
-    // Xinef: Added !IsInFlight check
-    return GetPositionZ() < m_lastFallZ && !IsInFlight();
+    // Xinef: Added !IsOnTaxi check
+    return GetPositionZ() < m_lastFallZ && !IsOnTaxi();
 }
 
 void Player::SetInWater(bool apply)
@@ -5649,7 +5649,7 @@ void Player::CheckAreaExploreAndOutdoor()
     if (!IsAlive())
         return;
 
-    if (IsInFlight())
+    if (IsOnTaxi())
         return;
 
     bool isOutdoor = IsOutdoors();
@@ -6336,7 +6336,7 @@ void Player::CheckDuelDistance(time_t currTime)
 
 bool Player::IsOutdoorPvPActive()
 {
-    return IsAlive() && !HasInvisibilityAura() && !HasStealthAura() && IsPvP() && !HasUnitMovementFlag(MOVEMENTFLAG_FLYING) && !IsInFlight();
+    return IsAlive() && !HasInvisibilityAura() && !HasStealthAura() && IsPvP() && !HasUnitMovementFlag(MOVEMENTFLAG_FLYING) && !IsOnTaxi();
 }
 
 void Player::DuelComplete(DuelCompleteType type)

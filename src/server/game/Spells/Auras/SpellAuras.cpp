@@ -668,7 +668,7 @@ void Aura::UpdateTargetMap(Unit* caster, bool apply)
             // persistent area aura does not hit flying targets
             if (GetType() == DYNOBJ_AURA_TYPE)
             {
-                if (itr->first->IsInFlight())
+                if (itr->first->IsOnTaxi())
                     addUnit = false;
 
                 switch( GetId() )
