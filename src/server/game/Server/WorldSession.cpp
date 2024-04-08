@@ -1011,7 +1011,7 @@ void WorldSession::SaveTutorialsData(CharacterDatabaseTransaction trans)
     m_TutorialsChanged = false;
 }
 
-void WorldSession::ReadMovementInfo(WorldPacket& data, MovementInfo* mi)
+void WorldSession::ReadMovementInfo(WorldPacket& data, CMovement* mi)
 {
     data >> mi->m_moveFlags;
     data >> mi->m_moveFlags2;
@@ -1124,7 +1124,7 @@ void WorldSession::ReadMovementInfo(WorldPacket& data, MovementInfo* mi)
 #undef REMOVE_VIOLATING_FLAGS
 }
 
-void WorldSession::WriteMovementInfo(WorldPacket* data, MovementInfo* mi)
+void WorldSession::WriteMovementInfo(WorldPacket* data, CMovement* mi)
 {
     *data << mi->guid.WriteAsPacked();
 

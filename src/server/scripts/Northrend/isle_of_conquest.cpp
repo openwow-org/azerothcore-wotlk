@@ -440,7 +440,7 @@ public:
         void HandleTriggerSpell(AuraEffect const* /*aurEff*/)
         {
             if (Player* target = GetTarget()->ToPlayer())
-                if (target->m_movementInfo.fallTime > 2500 && !target->GetTransport())
+                if (target->m_movement.fallTime > 2500 && !target->GetTransport())
                     target->CastSpell(target, SPELL_PARACHUTE_IC, true);
         }
 
