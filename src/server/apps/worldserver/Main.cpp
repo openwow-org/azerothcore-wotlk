@@ -423,6 +423,7 @@ int main(int argc, char** argv)
 
     // Shutdown starts here
     threadPool.reset();
+    FriendListDestroy();
 
     sLog->SetSynchronous();
 
