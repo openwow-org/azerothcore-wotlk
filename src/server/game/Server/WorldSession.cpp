@@ -53,6 +53,8 @@
 #include "WorldSocket.h"
 #include <zlib.h>
 
+#define CAMP_TIME_SECONDS 20  // The time it takes for a character to log out
+
 namespace
 {
     std::string const DefaultPlayerName = "<none>";
@@ -138,7 +140,7 @@ WorldSession::WorldSession(uint32 id, uint32_t accountFlags, std::string&& name,
     m_accountName(std::move(name)),
     m_expansion(expansion),
     m_total_time(TotalTime),
-    _logoutTime(0),
+    m_logoutRequestTime(0),
     m_inQueue(false),
     m_playerLoading(false),
     m_loggingOut(false),
@@ -195,6 +197,29 @@ WorldSession::~WorldSession()
         delete packet;
 
     LoginDatabase.Execute("UPDATE account SET online = 0 WHERE id = {};", GetAccountId());     // One-time query
+}
+
+//===========================================================================
+void WorldSession::CharacterLogout (bool instant) {
+  Player* const player = ActivePlayer();
+  if (!player) return;
+
+  this->m_loggingOut = true;
+
+  if (instant)
+    CharacterRemoveFromGame(true);
+  else {
+    // Start the logout timer
+    this->m_logoutRequestTime = time(nullptr);
+
+    // Force the player to sit
+    if (player->GetStandState() == UNIT_STANDING)
+      player->SetStandState(UNIT_SITTING);
+
+    // Root and stun the player to prevent further control during logout
+    player->SetMovement(MOVE_ROOT);
+    player->SetUnitFlag(UNIT_FLAG_STUNNED);
+  }
 }
 
 //===========================================================================
@@ -532,7 +557,7 @@ bool WorldSession::Update(uint32 diff, PacketFilter& updater)
             _warden->Update(diff);
         }
 
-        if (currentTime >= (_logoutTime+20) && !m_playerLoading)
+        if (currentTime >= (m_logoutRequestTime+CAMP_TIME_SECONDS) && m_loggingOut)
         {
             CharacterRemoveFromGame(true);
         }
@@ -768,7 +793,7 @@ void WorldSession::CharacterRemoveFromGame(bool save)
     m_loggingOut = false;
     m_playerSave = false;
     m_playerRecentlyLogout = true;
-    SetLogoutStartTime(0);
+    m_logoutRequestTime = 0;
 }
 
 /// Kick a player out of the World
@@ -1101,8 +1126,12 @@ void WorldSession::ReadMovementInfo(WorldPacket& data, CMovement* mi)
     // Cannot walk on water without SPELL_AURA_WATER_WALK
     if ((mi->m_moveFlags & MOVEMENTFLAG_WATERWALKING) != 0 &&
         !mover->HasAuraType(SPELL_AURA_WATER_WALK) &&
-        !mover->HasAuraType(SPELL_AURA_GHOST)) {
-      KickPlayer("User sent illegal move flags");
+        !mover->HasAuraType(SPELL_AURA_GHOST) &&
+        !mover->isDead()) {
+      mi->m_moveFlags &= ~MOVEMENTFLAG_WATERWALKING;
+      // TODO: The client sends this flag on player repop.
+      // Investigate a possible resolution
+      //KickPlayer("User sent illegal move flags");
     }
 
     // Cannot feather fall without SPELL_AURA_FEATHER_FALL
