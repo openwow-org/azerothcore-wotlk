@@ -13431,7 +13431,7 @@ void Unit::Mount(uint32 mount, uint32 VehicleId, uint32 creatureEntry)
                 SendMessageToSet(&data, true);
 
                 data.Initialize(SMSG_ON_CANCEL_EXPECTED_RIDE_VEHICLE_AURA, 0);
-                player->GetSession()->SendPacket(&data);
+                player->GetSession()->Send(&data);
 
                 // mounts can also have accessories
                 GetVehicleKit()->InstallAllAccessories(false);
@@ -13459,7 +13459,7 @@ void Unit::Mount(uint32 mount, uint32 VehicleId, uint32 creatureEntry)
         data << GetPackGUID();
         data << uint32(GameTime::GetGameTime().count());   // Packet counter
         data << player->GetCollisionHeight();
-        player->GetSession()->SendPacket(&data);
+        player->GetSession()->Send(&data);
     }
 
     RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_MOUNT);
@@ -13479,7 +13479,7 @@ void Unit::Dismount()
         data << GetPackGUID();
         data << uint32(GameTime::GetGameTime().count());   // Packet counter
         data << thisPlayer->GetCollisionHeight();
-        thisPlayer->GetSession()->SendPacket(&data);
+        thisPlayer->GetSession()->Send(&data);
     }
 
     WorldPacket data(SMSG_DISMOUNT, 8);
@@ -16831,7 +16831,7 @@ void Unit::SendPetActionFeedback(uint8 msg)
 
     WorldPacket data(SMSG_PET_ACTION_FEEDBACK, 1);
     data << uint8(msg);
-    owner->ToPlayer()->GetSession()->SendPacket(&data);
+    owner->ToPlayer()->GetSession()->Send(&data);
 }
 
 void Unit::SendPetTalk(uint32 pettalk)
@@ -16843,7 +16843,7 @@ void Unit::SendPetTalk(uint32 pettalk)
     WorldPacket data(SMSG_PET_ACTION_SOUND, 8 + 4);
     data << GetGUID();
     data << uint32(pettalk);
-    owner->ToPlayer()->GetSession()->SendPacket(&data);
+    owner->ToPlayer()->GetSession()->Send(&data);
 }
 
 void Unit::SendPetAIReaction(ObjectGuid guid)
@@ -16855,7 +16855,7 @@ void Unit::SendPetAIReaction(ObjectGuid guid)
     WorldPacket data(SMSG_AI_REACTION, 8 + 4);
     data << guid;
     data << uint32(AI_REACTION_HOSTILE);
-    owner->ToPlayer()->GetSession()->SendPacket(&data);
+    owner->ToPlayer()->GetSession()->Send(&data);
 }
 
 ///----------End of Pet responses methods----------
@@ -16952,7 +16952,7 @@ void Unit::SetStandState(uint8 state)
     {
         WorldPacket data(SMSG_STANDSTATE_UPDATE, 1);
         data << (uint8)state;
-        ToPlayer()->GetSession()->SendPacket(&data);
+        ToPlayer()->GetSession()->Send(&data);
     }
 }
 
@@ -19377,7 +19377,7 @@ void Unit::KnockbackFrom(float x, float y, float speedXY, float speedZ)
         data << float(speedXY);                                 // Horizontal speed
         data << float(-speedZ);                                 // Z Movement speed (vertical)
 
-        player->GetSession()->SendPacket(&data);
+        player->GetSession()->Send(&data);
 
         if (player->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) || player->HasAuraType(SPELL_AURA_FLY))
             player->SetCanFly(true, true);
@@ -19736,7 +19736,7 @@ void Unit::JumpTo(float speedXY, float speedZ, bool forward)
         data << float(speedXY);                                 // Horizontal speed
         data << float(-speedZ);                                 // Z Movement speed (vertical)
 
-        ToPlayer()->GetSession()->SendPacket(&data);
+        ToPlayer()->GetSession()->Send(&data);
     }
 }
 
@@ -19894,7 +19894,7 @@ void Unit::_EnterVehicle(Vehicle* vehicle, int8 seatId, AuraApplication const* a
             bg->EventPlayerDroppedFlag(player);
 
         WorldPacket data(SMSG_ON_CANCEL_EXPECTED_RIDE_VEHICLE_AURA, 0);
-        player->GetSession()->SendPacket(&data);
+        player->GetSession()->Send(&data);
     }
 
     ASSERT(!m_vehicle);
