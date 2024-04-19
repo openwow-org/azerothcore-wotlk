@@ -35,7 +35,7 @@ public:
             stmt->SetData(0, player->GetGUID().GetCounter());
             stmt->SetData(1, servMail.second.id);
 
-            WorldSession* mySess = player->GetSession();
+            User* mySess = player->User();
             mySess->GetQueryProcessor().AddCallback(CharacterDatabase.AsyncQuery(stmt)
                 .WithPreparedCallback([mySess, servMail](PreparedQueryResult result)
                     {

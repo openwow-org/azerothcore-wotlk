@@ -19,7 +19,7 @@
 #include "Player.h"
 #include "ScriptedCreature.h"
 #include "SpellScriptLoader.h"
-#include "WorldSession.h"
+#include "User.h"
 #include "sunwell_plateau.h"
 
 enum Yells

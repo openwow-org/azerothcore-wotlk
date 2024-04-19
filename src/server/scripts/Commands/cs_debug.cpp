@@ -438,7 +438,7 @@ public:
         }
 
         data.hexlike();
-        player->GetSession()->Send(&data);
+        player->User()->Send(&data);
         handler->PSendSysMessage(LANG_COMMAND_OPCODESENT, data.GetOpcode(), unit->GetName().c_str());
         return true;
     }

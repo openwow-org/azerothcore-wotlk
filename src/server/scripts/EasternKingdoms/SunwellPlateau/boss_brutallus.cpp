@@ -19,7 +19,7 @@
 #include "CreatureScript.h"
 #include "ScriptedCreature.h"
 #include "SpellScriptLoader.h"
-#include "WorldSession.h"
+#include "User.h"
 #include "sunwell_plateau.h"
 
 enum Quotes
@@ -431,7 +431,7 @@ public:
                             WorldPacket pkt;
                             go->BuildValuesUpdateBlockForPlayer(&data, i->GetSource());
                             data.BuildPacket(pkt);
-                            i->GetSource()->GetSession()->Send(&pkt);
+                            i->GetSource()->User()->Send(&pkt);
                         }
                 }
             }
@@ -474,7 +474,7 @@ public:
                             WorldPacket pkt;
                             go->BuildValuesUpdateBlockForPlayer(&data, i->GetSource());
                             data.BuildPacket(pkt);
-                            i->GetSource()->GetSession()->Send(&pkt);
+                            i->GetSource()->User()->Send(&pkt);
                         }
                 }
             }

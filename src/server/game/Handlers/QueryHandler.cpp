@@ -26,9 +26,9 @@
 #include "Player.h"
 #include "World.h"
 #include "WorldPacket.h"
-#include "WorldSession.h"
+#include "User.h"
 
-void WorldSession::SendNameQueryOpcode(ObjectGuid guid)
+void User::SendNameQueryOpcode(ObjectGuid guid)
 {
     CharacterCacheEntry const* playerData = sCharacterCache->GetCharacterCacheByGuid(guid);
 
@@ -64,7 +64,7 @@ void WorldSession::SendNameQueryOpcode(ObjectGuid guid)
     Send(&data);
 }
 
-void WorldSession::HandleNameQueryOpcode(WorldPacket& recvData)
+void User::HandleNameQueryOpcode(WorldPacket& recvData)
 {
     ObjectGuid guid;
     recvData >> guid;
@@ -75,12 +75,12 @@ void WorldSession::HandleNameQueryOpcode(WorldPacket& recvData)
     SendNameQueryOpcode(guid);
 }
 
-void WorldSession::HandleQueryTimeOpcode(WorldPacket& /*recvData*/)
+void User::HandleQueryTimeOpcode(WorldPacket& /*recvData*/)
 {
     SendQueryTimeResponse();
 }
 
-void WorldSession::SendQueryTimeResponse()
+void User::SendQueryTimeResponse()
 {
     auto timeResponse = sWorld->GetNextDailyQuestsResetTime() - GameTime::GetGameTime();
 
@@ -91,7 +91,7 @@ void WorldSession::SendQueryTimeResponse()
 }
 
 /// Only _static_ data is sent in this packet !!!
-void WorldSession::HandleCreatureQueryOpcode(WorldPacket& recvData)
+void User::HandleCreatureQueryOpcode(WorldPacket& recvData)
 {
     uint32 entry;
     recvData >> entry;
@@ -157,7 +157,7 @@ void WorldSession::HandleCreatureQueryOpcode(WorldPacket& recvData)
 }
 
 /// Only _static_ data is sent in this packet !!!
-void WorldSession::HandleGameObjectQueryOpcode(WorldPacket& recvData)
+void User::HandleGameObjectQueryOpcode(WorldPacket& recvData)
 {
     uint32 entry;
     recvData >> entry;
@@ -217,7 +217,7 @@ void WorldSession::HandleGameObjectQueryOpcode(WorldPacket& recvData)
     }
 }
 
-void WorldSession::HandleCorpseQueryOpcode(WorldPacket& /*recvData*/)
+void User::HandleCorpseQueryOpcode(WorldPacket& /*recvData*/)
 {
     if (!m_player->HasCorpse())
     {
@@ -265,7 +265,7 @@ void WorldSession::HandleCorpseQueryOpcode(WorldPacket& /*recvData*/)
     Send(&data);
 }
 
-void WorldSession::HandleNpcTextQueryOpcode(WorldPacket& recvData)
+void User::HandleNpcTextQueryOpcode(WorldPacket& recvData)
 {
     uint32 textID;
     ObjectGuid guid;
@@ -352,7 +352,7 @@ void WorldSession::HandleNpcTextQueryOpcode(WorldPacket& recvData)
 }
 
 /// Only _static_ data is sent in this packet !!!
-void WorldSession::HandlePageTextQueryOpcode(WorldPacket& recvData)
+void User::HandlePageTextQueryOpcode(WorldPacket& recvData)
 {
     uint32 pageID;
     recvData >> pageID;
@@ -390,7 +390,7 @@ void WorldSession::HandlePageTextQueryOpcode(WorldPacket& recvData)
     }
 }
 
-void WorldSession::HandleCorpseMapPositionQuery(WorldPacket& recvData)
+void User::HandleCorpseMapPositionQuery(WorldPacket& recvData)
 {
     LOG_DEBUG("network", "WORLD: Recv CMSG_CORPSE_MAP_POSITION_QUERY");
 
@@ -405,7 +405,7 @@ void WorldSession::HandleCorpseMapPositionQuery(WorldPacket& recvData)
     Send(&data);
 }
 
-void WorldSession::HandleQuestPOIQuery(WorldPacket& recvData)
+void User::HandleQuestPOIQuery(WorldPacket& recvData)
 {
     uint32 count;
     recvData >> count; // quest count, max=25

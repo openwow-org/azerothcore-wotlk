@@ -24,7 +24,7 @@
 #include "Util.h"
 #include "WardenModuleMac.h"
 #include "WorldPacket.h"
-#include "WorldSession.h"
+#include "User.h"
 
 WardenMac::WardenMac() : Warden()
 {
@@ -32,7 +32,7 @@ WardenMac::WardenMac() : Warden()
 
 WardenMac::~WardenMac() = default;
 
-void WardenMac::Init(WorldSession* pClient, SessionKey const& K)
+void WardenMac::Init(User* pClient, SessionKey const& K)
 {
     _session = pClient;
     // Generate Warden Key
