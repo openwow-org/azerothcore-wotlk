@@ -2780,7 +2780,7 @@ Item* Player::EquipItem(uint16 pos, Item* pItem, bool update)
 
                     WorldPacket data;
                     BuildCooldownPacket(data, SPELL_COOLDOWN_FLAG_INCLUDE_GCD, cooldownSpell, 0);
-                    GetSession()->SendPacket(&data);
+                    GetSession()->Send(&data);
                 }
             }
         }
@@ -4075,7 +4075,7 @@ void Player::SendInventoryChangeFailure(BAG_RESULT msg, Item* pItem /*= nullptr*
                 break;
         }
     }
-    GetSession()->SendPacket(&data);
+    GetSession()->Send(&data);
 }
 
 void Player::SendBuyError(BuyResult msg, Creature* creature, uint32 item, uint32 param)
@@ -4087,7 +4087,7 @@ void Player::SendBuyError(BuyResult msg, Creature* creature, uint32 item, uint32
     if (param > 0)
         data << uint32(param);
     data << uint8(msg);
-    GetSession()->SendPacket(&data);
+    GetSession()->Send(&data);
 }
 
 void Player::SendSellError(SellResult msg, Creature* creature, ObjectGuid guid, uint32 param)
@@ -4099,7 +4099,7 @@ void Player::SendSellError(SellResult msg, Creature* creature, ObjectGuid guid, 
     if (param > 0)
         data << uint32(param);
     data << uint8(msg);
-    GetSession()->SendPacket(&data);
+    GetSession()->Send(&data);
 }
 
 void Player::TradeCancel(bool sendback)
@@ -4783,7 +4783,7 @@ void Player::SendItemPush(Item* item, uint32 count, bool received, bool created,
     if (broadcast && GetGroup())
         GetGroup()->BroadcastPacket(&data, true);
     else
-        GetSession()->SendPacket(&data);
+        GetSession()->Send(&data);
 }
 
 /*********************************************************/
@@ -6525,7 +6525,7 @@ void Player::BindToInstance()
 
     WorldPacket data(SMSG_INSTANCE_SAVE_CREATED, 4);
     data << uint32(0);
-    GetSession()->SendPacket(&data);
+    GetSession()->Send(&data);
     sInstanceSaveMgr->PlayerBindToInstance(this->GetGUID(), mapSave, true, this);
 }
 
@@ -6560,7 +6560,7 @@ void Player::SendRaidInfo()
         }
     }
     data.put<uint32>(p_counter, counter);
-    GetSession()->SendPacket(&data);
+    GetSession()->Send(&data);
 }
 
 /*
@@ -6587,7 +6587,7 @@ void Player::SendSavedInstances()
     //Send opcode 811. true or false means, whether you have current raid/heroic instances
     data.Initialize(SMSG_UPDATE_INSTANCE_OWNERSHIP);
     data << uint32(hasBeenSaved);
-    GetSession()->SendPacket(&data);
+    GetSession()->Send(&data);
 
     if (!hasBeenSaved)
         return;
@@ -6601,7 +6601,7 @@ void Player::SendSavedInstances()
             {
                 data.Initialize(SMSG_UPDATE_LAST_INSTANCE);
                 data << uint32(itr->second.save->GetMapId());
-                GetSession()->SendPacket(&data);
+                GetSession()->Send(&data);
             }
         }
     }

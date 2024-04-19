@@ -238,7 +238,7 @@ public:
             data << uint32(*failArg2);
         }
 
-        handler->GetSession()->SendPacket(&data);
+        handler->GetSession()->Send(&data);
         return true;
     }
 
@@ -438,7 +438,7 @@ public:
         }
 
         data.hexlike();
-        player->GetSession()->SendPacket(&data);
+        player->GetSession()->Send(&data);
         handler->PSendSysMessage(LANG_COMMAND_OPCODESENT, data.GetOpcode(), unit->GetName().c_str());
         return true;
     }
@@ -473,7 +473,7 @@ public:
         data << "test";
         data << uint32(0);
         data << uint32(0);
-        handler->GetSession()->SendPacket(&data);
+        handler->GetSession()->Send(&data);
         return true;
     }
 
@@ -481,7 +481,7 @@ public:
     {
         WorldPacket data;
         ChatHandler::BuildChatPacket(data, type, LANG_UNIVERSAL, handler->GetPlayer(), handler->GetPlayer(), "testtest", 0, "chan");
-        handler->GetSession()->SendPacket(&data);
+        handler->GetSession()->Send(&data);
         return true;
     }
 
