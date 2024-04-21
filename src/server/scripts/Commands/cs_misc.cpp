@@ -793,7 +793,7 @@ public:
                 _player->SaveRecallPosition();
             }
 
-            if (_player->TeleportTo(targetPlayer->GetMapId(), targetPlayer->GetPositionX(), targetPlayer->GetPositionY(), targetPlayer->GetPositionZ() + 0.25f, _player->GetOrientation(), TELE_TO_GM_MODE, targetPlayer))
+            if (_player->Teleport(targetPlayer->GetMapId(), targetPlayer->GetPositionX(), targetPlayer->GetPositionY(), targetPlayer->GetPositionZ() + 0.25f, _player->GetOrientation(), TELE_TO_GM_MODE, targetPlayer))
             {
                 _player->SetPhaseMask(targetPlayer->GetPhaseMask() | 1, false);
             }
@@ -830,7 +830,7 @@ public:
                 _player->SaveRecallPosition();
             }
 
-            _player->TeleportTo(map, x, y, z, _player->GetOrientation());
+            _player->Teleport(map, x, y, z, _player->GetOrientation());
         }
 
         return true;
@@ -933,7 +933,7 @@ public:
             // before GM
             float x, y, z;
             handler->GetSession()->GetPlayer()->GetClosePoint(x, y, z, targetPlayer->GetObjectSize());
-            targetPlayer->TeleportTo(handler->GetSession()->GetPlayer()->GetMapId(), x, y, z, targetPlayer->GetOrientation(), 0, handler->GetSession()->GetPlayer());
+            targetPlayer->Teleport(handler->GetSession()->GetPlayer()->GetMapId(), x, y, z, targetPlayer->GetOrientation(), 0, handler->GetSession()->GetPlayer());
         }
         else
         {
@@ -1058,7 +1058,7 @@ public:
             // before GM
             float x, y, z;
             handler->GetSession()->GetPlayer()->GetClosePoint(x, y, z, player->GetObjectSize());
-            player->TeleportTo(handler->GetSession()->GetPlayer()->GetMapId(), x, y, z, player->GetOrientation(), 0, handler->GetSession()->GetPlayer());
+            player->Teleport(handler->GetSession()->GetPlayer()->GetMapId(), x, y, z, player->GetOrientation(), 0, handler->GetSession()->GetPlayer());
         }
 
         return true;
@@ -1277,7 +1277,7 @@ public:
             targetPlayer->CleanupAfterTaxiFlight();
         }
 
-        targetPlayer->TeleportTo(targetPlayer->m_recallMap, targetPlayer->m_recallX, targetPlayer->m_recallY, targetPlayer->m_recallZ, targetPlayer->m_recallO);
+        targetPlayer->Teleport(targetPlayer->m_recallMap, targetPlayer->m_recallX, targetPlayer->m_recallY, targetPlayer->m_recallZ, targetPlayer->m_recallO);
         return true;
     }
 
@@ -1409,7 +1409,7 @@ public:
 
         if (location->empty() || *location == "inn")
         {
-            player->TeleportTo(player->m_homebindMapId, player->m_homebindX, player->m_homebindY, player->m_homebindZ, player->m_homebindO);
+            player->Teleport(player->m_homebindMapId, player->m_homebindX, player->m_homebindY, player->m_homebindZ, player->m_homebindO);
             return true;
         }
 
@@ -1421,7 +1421,7 @@ public:
 
         if (*location == "startzone")
         {
-            player->TeleportTo(player->GetStartPosition());
+            player->Teleport(player->GetStartPosition());
             return true;
         }
 
