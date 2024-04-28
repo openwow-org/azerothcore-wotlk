@@ -5211,7 +5211,7 @@ bool Player::LoadFromDB(ObjectGuid playerGuid, CharacterDatabaseQueryHolder cons
             {
                 m_transport = nullptr;
                 m_movement.transport.Reset();
-                m_movement.m_moveFlags &= ~MOVEMENTFLAG_ONTRANSPORT;
+                m_movement.m_moveFlags &= ~MOVEFLAG_IMMOBILIZED;
                 RelocateToHomebind();
             }
             else
@@ -5219,7 +5219,7 @@ bool Player::LoadFromDB(ObjectGuid playerGuid, CharacterDatabaseQueryHolder cons
                 Relocate(x, y, z, o);
                 mapId = m_transport->GetMapId();
                 m_transport->AddPassenger(this);
-                AddUnitMovementFlag(MOVEMENTFLAG_ONTRANSPORT);
+                AddUnitMovementFlag(MOVEFLAG_IMMOBILIZED);
             }
         }
         else
