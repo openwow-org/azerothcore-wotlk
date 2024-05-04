@@ -556,7 +556,7 @@ private:
         // Bag slots
         for (uint8 i = INVENTORY_SLOT_BAG_START; i < INVENTORY_SLOT_BAG_END; ++i)
         {
-            Bag* pBag = (Bag*)playerTarget->GetItemByPos(INVENTORY_SLOT_BAG_0, i);
+            CGBag* pBag = (CGBag*)playerTarget->GetItemByPos(INVENTORY_SLOT_BAG_0, i);
             if (pBag)
             {
                 for (uint8 j = 0; j < pBag->GetBagSize(); ++j)
@@ -596,7 +596,7 @@ private:
         // Bank bagslots
         for (uint8 i = BANK_SLOT_BAG_START; i < BANK_SLOT_BAG_END; ++i)
         {
-            Bag* pBag = (Bag*)playerTarget->GetItemByPos(INVENTORY_SLOT_BAG_0, i);
+            CGBag* pBag = (CGBag*)playerTarget->GetItemByPos(INVENTORY_SLOT_BAG_0, i);
             if (pBag)
             {
                 for (uint8 j = 0; j < pBag->GetBagSize(); ++j)
@@ -688,7 +688,7 @@ private:
         // Standard bag slots
         for (uint8 i = INVENTORY_SLOT_BAG_START; i < INVENTORY_SLOT_BAG_END; ++i)
         {
-            Bag* pBag = (Bag*)playerTarget->GetItemByPos(INVENTORY_SLOT_BAG_0, i);
+            CGBag* pBag = (CGBag*)playerTarget->GetItemByPos(INVENTORY_SLOT_BAG_0, i);
             if (pBag)
             {
                 playerTarget->DestroyItem(INVENTORY_SLOT_BAG_0, i, true);
@@ -710,7 +710,7 @@ private:
         // Bank bags
         for (uint8 i = BANK_SLOT_BAG_START; i < BANK_SLOT_BAG_END; ++i)
         {
-            Bag* pBag = (Bag*)playerTarget->GetItemByPos(INVENTORY_SLOT_BAG_0, i);
+            CGBag* pBag = (CGBag*)playerTarget->GetItemByPos(INVENTORY_SLOT_BAG_0, i);
             if (pBag)
             {
                 // prevent no empty ?
