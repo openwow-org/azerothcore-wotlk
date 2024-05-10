@@ -92,6 +92,10 @@ static BOOL PlayerCreateItemCheatHandler (User*         user,
                                           Opcodes       msgId,
                                           uint32_t      eventTime,
                                           WorldPacket*  msg);
+static BOOL OnGodMode (User*         user,
+                       Opcodes       msgId,
+                       uint          eventTime,
+                       WorldPacket*  msg);
 static BOOL PlayerLearnSpellCheatHandler (User*         user,
                                           Opcodes       msgId,
                                           uint          eventTime,
@@ -173,6 +177,7 @@ Player::Player(class User* user): Unit(true), m_mover(this)
     m_ingametime = 0;
 
     m_ExtraFlags = 0;
+    m_cheatFlags = 0;
 
     m_spellModTakingSpell = nullptr;
     //m_pad = 0;
@@ -777,6 +782,9 @@ bool Player::IsImmuneToEnvironmentalDamage()
 
 uint32 Player::EnvironmentalDamage(EnviromentalDamage type, uint32 damage)
 {
+    if ((m_cheatFlags & CHEAT_GODMODE) != 0)
+      return damage;
+
     if (IsImmuneToEnvironmentalDamage())
         return 0;
 
@@ -16361,6 +16369,34 @@ static BOOL PlayerCreateItemCheatHandler (User*         user,
 }
 
 //===========================================================================
+static BOOL OnGodMode (User*         user,
+                       Opcodes       msgId,
+                       uint          eventTime,
+                       WorldPacket*  msg) {
+
+  if (!user->IsGMAccount()) {
+    user->SendNotification(LANG_PERMISSION_DENIED);
+    return FALSE;
+  }
+
+  if (Player* plr = user->ActivePlayer()) {
+    auto enable = msg->read<uint>();
+
+    if (enable)
+      plr->m_cheatFlags |= CHEAT_GODMODE;
+    else
+      plr->m_cheatFlags &= ~CHEAT_GODMODE;
+
+    // Send the the response message
+    WorldPacket netMessage (SMSG_GODMODE, sizeof(uchar));
+    netMessage << (uchar)enable;
+    user->Send(&netMessage);
+  }
+
+  return TRUE;
+}
+
+//===========================================================================
 static BOOL PlayerLearnSpellCheatHandler (User*         user,
                                           Opcodes       msgId,
                                           uint          eventTime,
@@ -16452,6 +16488,7 @@ void PlayerInitialize () {
   if (s_initialized) return;
 
   WorldSocket::SetMessageHandler(CMSG_CREATEITEM, PlayerCreateItemCheatHandler);
+  WorldSocket::SetMessageHandler(CMSG_GODMODE, OnGodMode);
   WorldSocket::SetMessageHandler(CMSG_LEARN_SPELL, PlayerLearnSpellCheatHandler);
   WorldSocket::SetMessageHandler(CMSG_LOGOUT_REQUEST, PlayerLogoutRequestHandler);
   WorldSocket::SetMessageHandler(CMSG_LOGOUT_CANCEL, PlayerLogoutCancelHandler);
@@ -16464,6 +16501,7 @@ void PlayerDestroy () {
   if (!s_initialized) return;
 
   WorldSocket::ClearMessageHandler(CMSG_CREATEITEM);
+  WorldSocket::ClearMessageHandler(CMSG_GODMODE);
   WorldSocket::ClearMessageHandler(CMSG_LEARN_SPELL);
   WorldSocket::ClearMessageHandler(CMSG_LOGOUT_REQUEST);
   WorldSocket::ClearMessageHandler(CMSG_LOGOUT_CANCEL);
