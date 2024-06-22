@@ -157,7 +157,7 @@ inline Unit* Map::_GetScriptUnit(Object* obj, bool isSource, const ScriptInfo* s
     Unit* unit = nullptr;
     if (!obj)
         LOG_ERROR("maps.script", "{} {} object is nullptr.", scriptInfo->GetDebugInfo(), isSource ? "source" : "target");
-    else if (!obj->isType(TYPEMASK_UNIT))
+    else if (!obj->isType(TYPE_UNIT))
         LOG_ERROR("maps.script", "{} {} object is not unit (TypeId: {}, Entry: {}, GUID: {}), skipping.",
                        scriptInfo->GetDebugInfo(), isSource ? "source" : "target", obj->GetTypeId(), obj->GetEntry(), obj->GetGUID().ToString());
     else
@@ -236,7 +236,7 @@ inline void Map::_ScriptProcessDoor(Object* source, Object* target, const Script
         LOG_ERROR("maps.script", "{} door guid is not specified.", scriptInfo->GetDebugInfo());
     else if (!source)
         LOG_ERROR("maps.script", "{} source object is nullptr.", scriptInfo->GetDebugInfo());
-    else if (!source->isType(TYPEMASK_UNIT))
+    else if (!source->isType(TYPE_UNIT))
         LOG_ERROR("maps.script", "{} source object is not unit ({}), skipping.", scriptInfo->GetDebugInfo(), source->GetGUID().ToString());
     else
     {
@@ -255,7 +255,7 @@ inline void Map::_ScriptProcessDoor(Object* source, Object* target, const Script
             {
                 pDoor->UseDoorOrButton(nTimeToToggle);
 
-                if (target && target->isType(TYPEMASK_GAMEOBJECT))
+                if (target && target->isType(TYPE_GAMEOBJECT))
                 {
                     GameObject* goTarget = target->ToGameObject();
                     if (goTarget && goTarget->GetGoType() == GAMEOBJECT_TYPE_BUTTON)
@@ -697,13 +697,13 @@ void Map::ScriptsProcess()
                             break;
                     }
 
-                    if (!uSource || !uSource->isType(TYPEMASK_UNIT))
+                    if (!uSource || !uSource->isType(TYPE_UNIT))
                     {
                         LOG_ERROR("maps.script", "{} no source unit found for spell {}", step.script->GetDebugInfo(), step.script->CastSpell.SpellID);
                         break;
                     }
 
-                    if (!uTarget || !uTarget->isType(TYPEMASK_UNIT))
+                    if (!uTarget || !uTarget->isType(TYPE_UNIT))
                     {
                         LOG_ERROR("maps.script", "{} no target unit found for spell {}", step.script->GetDebugInfo(), step.script->CastSpell.SpellID);
                         break;

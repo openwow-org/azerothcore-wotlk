@@ -64,7 +64,7 @@ enum ConditionTypes
     CONDITION_NEAR_CREATURE             = 29,           // creature entry   distance       dead               true if there is a creature of entry in range
     CONDITION_NEAR_GAMEOBJECT           = 30,           // gameobject entry distance       GoState            true if there is a gameobject of entry in range (param3 can check for GoState, 0 = dont't check, 1 = Ready , 2 = Not Ready)
     CONDITION_OBJECT_ENTRY_GUID         = 31,           // TypeID           entry          guid/Attackable    true if object is type TypeID and the entry is 0 or matches entry of the object or matches guid of the object
-    CONDITION_TYPE_MASK                 = 32,           // TypeMask         0              0                  true if object is type object's TypeMask matches provided TypeMask
+    CONDITION_TYPE_MASK                 = 32,           // OBJECT_TYPE         0              0                  true if object is type object's OBJECT_TYPE matches provided OBJECT_TYPE
     CONDITION_RELATION_TO               = 33,           // ConditionTarget  RelationType   0                  true if object is in given relation with object specified by ConditionTarget
     CONDITION_REACTION_TO               = 34,           // ConditionTarget  rankMask       0                  true if object's reaction matches rankMask object specified by ConditionTarget
     CONDITION_DISTANCE_TO               = 35,           // ConditionTarget  distance       ComparisonType     true if object and ConditionTarget are within distance given by parameters

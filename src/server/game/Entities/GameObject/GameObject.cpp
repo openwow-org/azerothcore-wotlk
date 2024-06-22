@@ -42,7 +42,7 @@
 GameObject::GameObject() : WorldObject(false), MovableMapObject(),
     m_model(nullptr), m_goValue(), m_AI(nullptr)
 {
-    m_objectType |= TYPEMASK_GAMEOBJECT;
+    m_objectType |= TYPE_GAMEOBJECT;
     m_objectTypeId = TYPEID_GAMEOBJECT;
 
     m_updateFlag = (UPDATEFLAG_LOWGUID | UPDATEFLAG_STATIONARY_POSITION | UPDATEFLAG_POSITION | UPDATEFLAG_ROTATION);
@@ -1278,7 +1278,7 @@ bool GameObject::IsAlwaysVisibleFor(WorldObject const* seer) const
         Unit* owner = GetOwner();
         if (owner)
         {
-            if (seer->isType(TYPEMASK_UNIT) && owner->IsFriendlyTo(seer->ToUnit()))
+            if (seer->isType(TYPE_UNIT) && owner->IsFriendlyTo(seer->ToUnit()))
                 return true;
         }
     }

@@ -146,30 +146,30 @@ Object* ObjectAccessor::GetObjectByTypeMask(WorldObject const& p, ObjectGuid con
     switch (guid.GetHigh())
     {
         case HighGuid::Item:
-            if (typemask & TYPEMASK_ITEM && p.GetTypeId() == TYPEID_PLAYER)
+            if (typemask & TYPE_ITEM && p.GetTypeId() == TYPEID_PLAYER)
                 return ((Player const&)p).GetItemByGuid(guid);
             break;
         case HighGuid::Player:
-            if (typemask & TYPEMASK_PLAYER)
+            if (typemask & TYPE_PLAYER)
                 return GetPlayer(p, guid);
             break;
         case HighGuid::Transport:
         case HighGuid::Mo_Transport:
         case HighGuid::GameObject:
-            if (typemask & TYPEMASK_GAMEOBJECT)
+            if (typemask & TYPE_GAMEOBJECT)
                 return GetGameObject(p, guid);
             break;
         case HighGuid::Unit:
         case HighGuid::Vehicle:
-            if (typemask & TYPEMASK_UNIT)
+            if (typemask & TYPE_UNIT)
                 return GetCreature(p, guid);
             break;
         case HighGuid::Pet:
-            if (typemask & TYPEMASK_UNIT)
+            if (typemask & TYPE_UNIT)
                 return GetPet(p, guid);
             break;
         case HighGuid::DynamicObject:
-            if (typemask & TYPEMASK_DYNAMICOBJECT)
+            if (typemask & TYPE_DYNAMICOBJECT)
                 return GetDynamicObject(p, guid);
             break;
         default:

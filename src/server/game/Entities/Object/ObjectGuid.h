@@ -43,17 +43,27 @@ enum TypeID
 
 #define NUM_CLIENT_OBJECT_TYPES             8
 
-enum TypeMask
-{
-    TYPEMASK_OBJECT         = 0x0001,
-    TYPEMASK_ITEM           = 0x0002,
-    TYPEMASK_CONTAINER      = 0x0006,             // TYPEMASK_ITEM | 0x0004
-    TYPEMASK_UNIT           = 0x0008,             // creature
-    TYPEMASK_PLAYER         = 0x0010,
-    TYPEMASK_GAMEOBJECT     = 0x0020,
-    TYPEMASK_DYNAMICOBJECT  = 0x0040,
-    TYPEMASK_CORPSE         = 0x0080,
-    TYPEMASK_SEER           = TYPEMASK_PLAYER | TYPEMASK_UNIT | TYPEMASK_DYNAMICOBJECT
+enum OBJECT_TYPE {
+  TYPE_OBJECT             = 0x1,
+  HIER_TYPE_OBJECT        = 0x1,
+  TYPE_ITEM               = 0x2,
+  HIER_TYPE_ITEM          = 0x3,
+  TYPE_CONTAINER          = 0x4,
+  HIER_TYPE_CONTAINER     = 0x7,
+  TYPE_UNIT               = 0x8,
+  HIER_TYPE_UNIT          = 0x9,
+  TYPE_PLAYER             = 0x10,
+  HIER_TYPE_PLAYER        = 0x19,
+  TYPE_GAMEOBJECT         = 0x20,
+  HIER_TYPE_GAMEOBJECT    = 0x21,
+  TYPE_DYNAMICOBJECT      = 0x40,
+  HIER_TYPE_DYNAMICOBJECT = 0x41,
+  TYPE_CORPSE             = 0x80,
+  HIER_TYPE_CORPSE        = 0x81,
+  TYPE_AIGROUP            = 0x100,
+  HIER_TYPE_AI_GROUP      = 0x101,
+  TYPE_AREATRIGGER        = 0x200,
+  HIER_TYPE_AREATRIGGER   = 0x201
 };
 
 enum class HighGuid

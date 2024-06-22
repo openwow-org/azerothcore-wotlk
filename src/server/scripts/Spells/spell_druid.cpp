@@ -1078,7 +1078,7 @@ class spell_dru_t10_restoration_4p_bonus : public SpellScript
             targets.remove(GetExplTargetUnit());
             std::list<Unit*> tempTargets;
             for (std::list<WorldObject*>::const_iterator itr = targets.begin(); itr != targets.end(); ++itr)
-                if ((*itr)->isType(TYPEMASK_UNIT | TYPEMASK_PLAYER) && GetCaster()->IsInRaidWith((*itr)->ToUnit()) && !(*itr)->ToUnit()->GetAuraEffect(SPELL_AURA_PERIODIC_HEAL, SPELLFAMILY_DRUID, 64, EFFECT_0))
+                if ((*itr)->isType(TYPE_UNIT | TYPE_PLAYER) && GetCaster()->IsInRaidWith((*itr)->ToUnit()) && !(*itr)->ToUnit()->GetAuraEffect(SPELL_AURA_PERIODIC_HEAL, SPELLFAMILY_DRUID, 64, EFFECT_0))
                     tempTargets.push_back((*itr)->ToUnit());
 
             if (tempTargets.empty())

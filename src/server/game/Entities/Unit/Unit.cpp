@@ -230,7 +230,7 @@ Unit::Unit(bool isWorldObject) : WorldObject(isWorldObject),
 #ifdef _MSC_VER
 #pragma warning(default:4355)
 #endif
-    m_objectType |= TYPEMASK_UNIT;
+    m_objectType |= TYPE_UNIT;
     m_objectTypeId = TYPEID_UNIT;
 
     m_updateFlag = (UPDATEFLAG_LIVING | UPDATEFLAG_STATIONARY_POSITION);
@@ -13905,7 +13905,7 @@ bool Unit::_IsValidAttackTarget(Unit const* target, SpellInfo const* bySpell, Wo
             || (!target->HasUnitFlag(UNIT_FLAG_PLAYER_CONTROLLED) && IsImmuneToNPC())
             || (HasUnitFlag(UNIT_FLAG_PLAYER_CONTROLLED) && target->IsImmuneToPC())
             // check if this is a world trigger cast - GOs are using world triggers to cast their spells, so we need to ignore their immunity flag here, this is a temp workaround, needs removal when go cast is implemented properly
-            || ((GetEntry() != WORLD_TRIGGER && (!obj || !obj->isType(TYPEMASK_GAMEOBJECT | TYPEMASK_DYNAMICOBJECT))) && target->HasUnitFlag(UNIT_FLAG_PLAYER_CONTROLLED) && IsImmuneToPC()))
+            || ((GetEntry() != WORLD_TRIGGER && (!obj || !obj->isType(TYPE_GAMEOBJECT | TYPE_DYNAMICOBJECT))) && target->HasUnitFlag(UNIT_FLAG_PLAYER_CONTROLLED) && IsImmuneToPC()))
         return false;
 
     // CvC case - can attack each other only when one of them is hostile

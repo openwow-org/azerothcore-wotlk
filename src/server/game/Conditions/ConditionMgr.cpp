@@ -689,13 +689,13 @@ uint32 Condition::GetSearcherTypeMaskForCondition()
         }
         break;
     case CONDITION_TYPE_MASK:
-        if (ConditionValue1 & TYPEMASK_UNIT)
+        if (ConditionValue1 & TYPE_UNIT)
             mask |= GRID_MAP_TYPE_MASK_CREATURE | GRID_MAP_TYPE_MASK_PLAYER;
-        if (ConditionValue1 & TYPEMASK_PLAYER)
+        if (ConditionValue1 & TYPE_PLAYER)
             mask |= GRID_MAP_TYPE_MASK_PLAYER;
-        if (ConditionValue1 & TYPEMASK_GAMEOBJECT)
+        if (ConditionValue1 & TYPE_GAMEOBJECT)
             mask |= GRID_MAP_TYPE_MASK_GAMEOBJECT;
-        if (ConditionValue1 & TYPEMASK_CORPSE)
+        if (ConditionValue1 & TYPE_CORPSE)
             mask |= GRID_MAP_TYPE_MASK_CORPSE;
         break;
     case CONDITION_RELATION_TO:
@@ -2207,7 +2207,7 @@ bool ConditionMgr::isConditionTypeValid(Condition* cond)
     }
     case CONDITION_TYPE_MASK:
     {
-        if (!cond->ConditionValue1 || (cond->ConditionValue1 & ~(TYPEMASK_UNIT | TYPEMASK_PLAYER | TYPEMASK_GAMEOBJECT | TYPEMASK_CORPSE)))
+        if (!cond->ConditionValue1 || (cond->ConditionValue1 & ~(TYPE_UNIT | TYPE_PLAYER | TYPE_GAMEOBJECT | TYPE_CORPSE)))
         {
             LOG_ERROR("sql.sql", "TypeMask condition has invalid typemask set ({}), skipped", cond->ConditionValue2);
             return false;

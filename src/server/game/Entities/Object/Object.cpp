@@ -71,7 +71,7 @@ constexpr float VisibilityDistances[AsUnderlyingType(VisibilityDistanceType::Max
 Object::Object() : m_PackGUID(sizeof(uint64) + 1)
 {
     m_objectTypeId      = TYPEID_OBJECT;
-    m_objectType        = TYPEMASK_OBJECT;
+    m_objectType        = TYPE_OBJECT;
 
     m_uint32Values      = nullptr;
     m_valuesCount       = 0;
@@ -106,7 +106,7 @@ Object::~Object()
     if (IsInWorld())
     {
         LOG_FATAL("entities.object", "Object::~Object - {} deleted but still in world!!", GetGUID().ToString());
-        if (isType(TYPEMASK_ITEM))
+        if (isType(TYPE_ITEM))
             LOG_FATAL("entities.object", "Item slot {}", ((Item*)this)->GetSlot());
         ABORT();
     }
@@ -201,7 +201,7 @@ void Object::BuildCreateUpdateBlockForPlayer(UpdateData* data, Player* target) c
     if (flags & UPDATEFLAG_STATIONARY_POSITION)
     {
         // UPDATETYPE_CREATE_OBJECT2 dynamic objects, corpses...
-        if (isType(TYPEMASK_DYNAMICOBJECT) || isType(TYPEMASK_CORPSE) || isType(TYPEMASK_PLAYER))
+        if (isType(TYPE_DYNAMICOBJECT) || isType(TYPE_CORPSE) || isType(TYPE_PLAYER))
             updatetype = UPDATETYPE_CREATE_OBJECT2;
 
         // UPDATETYPE_CREATE_OBJECT2 for pets...
@@ -209,7 +209,7 @@ void Object::BuildCreateUpdateBlockForPlayer(UpdateData* data, Player* target) c
             updatetype = UPDATETYPE_CREATE_OBJECT2;
 
         // UPDATETYPE_CREATE_OBJECT2 for some gameobject types...
-        if (isType(TYPEMASK_GAMEOBJECT))
+        if (isType(TYPE_GAMEOBJECT))
         {
             switch (((GameObject*)this)->GetGoType())
             {
@@ -226,7 +226,7 @@ void Object::BuildCreateUpdateBlockForPlayer(UpdateData* data, Player* target) c
             }
         }
 
-        if (isType(TYPEMASK_UNIT))
+        if (isType(TYPE_UNIT))
         {
             if (((Unit*)this)->GetVictim())
                 flags |= UPDATEFLAG_HAS_TARGET;
@@ -275,7 +275,7 @@ void Object::DestroyForPlayer(Player* target, bool onDeath) const
 {
     ASSERT(target);
 
-    if (isType(TYPEMASK_UNIT) || isType(TYPEMASK_PLAYER))
+    if (isType(TYPE_UNIT) || isType(TYPE_PLAYER))
     {
         if (Battleground* bg = target->GetBattleground())
         {
@@ -345,7 +345,7 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
     Unit const* unit = nullptr;
     WorldObject const* object = nullptr;
 
-    if (isType(TYPEMASK_UNIT))
+    if (isType(TYPE_UNIT))
         unit = ToUnit();
     else
         object = ((WorldObject*)this);
@@ -1531,7 +1531,7 @@ void WorldObject::UpdateGroundPositionZ(float x, float y, float &z) const
 {
     float new_z = GetMapHeight(x, y, z);
     if (new_z > INVALID_HEIGHT)
-        z = new_z + (isType(TYPEMASK_UNIT) ? static_cast<Unit const*>(this)->GetHoverHeight() : 0.0f);
+        z = new_z + (isType(TYPE_UNIT) ? static_cast<Unit const*>(this)->GetHoverHeight() : 0.0f);
 }
 
 /**
@@ -1985,14 +1985,14 @@ bool WorldObject::CanDetectStealthOf(WorldObject const* obj, bool checkAlert) co
         return true;
 
     // dead players shouldnt be able to detect stealth on arenas
-    if (isType(TYPEMASK_PLAYER))
+    if (isType(TYPE_PLAYER))
         if (!ToPlayer()->IsAlive())
             return false;
 
     float distance = GetExactDist(obj);
     float combatReach = 0.0f;
 
-    if (isType(TYPEMASK_UNIT))
+    if (isType(TYPE_UNIT))
         combatReach = ((Unit*)this)->GetCombatReach();
 
     if (distance < combatReach)
@@ -2006,7 +2006,7 @@ bool WorldObject::CanDetectStealthOf(WorldObject const* obj, bool checkAlert) co
         if (!(obj->m_stealth.GetFlags() & (1 << i)))
             continue;
 
-        if (isType(TYPEMASK_UNIT))
+        if (isType(TYPE_UNIT))
             if (((Unit*)this)->HasAuraTypeWithMiscvalue(SPELL_AURA_DETECT_STEALTH, i))
                 return true;
 
@@ -2020,7 +2020,7 @@ bool WorldObject::CanDetectStealthOf(WorldObject const* obj, bool checkAlert) co
 
         // Apply modifiers
         detectionValue += m_stealthDetect.GetValue(StealthType(i));
-        if (obj->isType(TYPEMASK_GAMEOBJECT))
+        if (obj->isType(TYPE_GAMEOBJECT))
         {
             detectionValue += 30; // pussywizard: increase detection range for gameobjects (ie. traps)
             if (Unit* owner = ((GameObject*)obj)->GetOwner())
@@ -2946,7 +2946,7 @@ void WorldObject::DestroyForNearbyPlayers()
         if (!player->HaveAtClient(this))
             continue;
 
-        if (isType(TYPEMASK_UNIT) && ((Unit*)this)->GetCharmerGUID() == player->GetGUID()) /// @todo: this is for puppet
+        if (isType(TYPE_UNIT) && ((Unit*)this)->GetCharmerGUID() == player->GetGUID()) /// @todo: this is for puppet
             continue;
 
         DestroyForPlayer(player);
@@ -3114,7 +3114,7 @@ float WorldObject::GetMapHeight(float x, float y, float z, bool vmap/* = true*/,
 float WorldObject::GetMapWaterOrGroundLevel(float x, float y, float z, float* ground/* = nullptr*/) const
 {
     return GetMap()->GetWaterOrGroundLevel(GetPhaseMask(), x, y, z, ground,
-        isType(TYPEMASK_UNIT) ? !static_cast<Unit const*>(this)->HasAuraType(SPELL_AURA_WATER_WALK) : false,
+        isType(TYPE_UNIT) ? !static_cast<Unit const*>(this)->HasAuraType(SPELL_AURA_WATER_WALK) : false,
         std::max(GetCollisionHeight(),  Z_OFFSET_FIND_HEIGHT));
 }
 
