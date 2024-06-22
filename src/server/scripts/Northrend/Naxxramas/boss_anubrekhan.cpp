@@ -146,7 +146,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->GetTypeId() != ID_PLAYER)
+            if (victim->GetObjectTypeID() != ID_PLAYER)
                 return;
 
             Talk(SAY_SLAY);
@@ -184,7 +184,7 @@ public:
 
         void MoveInLineOfSight(Unit* who) override
         {
-            if (!sayGreet && who->GetTypeId() == ID_PLAYER)
+            if (!sayGreet && who->GetObjectTypeID() == ID_PLAYER)
             {
                 Talk(SAY_GREET);
                 sayGreet = true;

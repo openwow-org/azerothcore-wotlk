@@ -29,7 +29,7 @@ DynamicObject::DynamicObject(bool isWorldObject) : WorldObject(isWorldObject), M
     _aura(nullptr), _removedAura(nullptr), _caster(nullptr), _duration(0), _isViewpoint(false), _updateViewerVisibilityTimer(0)
 {
     m_objectType |= TYPE_DYNAMICOBJECT;
-    m_objectTypeId = ID_DYNAMICOBJECT;
+    m_typeId = ID_DYNAMICOBJECT;
 
     m_updateFlag = (UPDATEFLAG_LOWGUID | UPDATEFLAG_STATIONARY_POSITION | UPDATEFLAG_POSITION);
 

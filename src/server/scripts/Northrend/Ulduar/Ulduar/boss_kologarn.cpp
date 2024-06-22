@@ -174,7 +174,7 @@ public:
 
         void MoveInLineOfSight(Unit* who) override
         {
-            if (who->GetTypeId() == ID_PLAYER && me->GetExactDist2d(who) < 45.0f && me->getStandState() == UNIT_STAND_STATE_SUBMERGED)
+            if (who->GetObjectTypeID() == ID_PLAYER && me->GetExactDist2d(who) < 45.0f && me->getStandState() == UNIT_STAND_STATE_SUBMERGED)
             {
                 me->SetStandState(UNIT_STAND_STATE_STAND);
                 if (Unit* arm = ObjectAccessor::GetCreature(*me, _left))
@@ -675,7 +675,7 @@ public:
         if (target == _victim && _me->GetThreatMgr().GetThreatListSize() > 1)
             return true;
 
-        if (target->GetTypeId() != ID_PLAYER)
+        if (target->GetObjectTypeID() != ID_PLAYER)
             return true;
 
         return false;
@@ -697,7 +697,7 @@ public:
 
         bool Load() override
         {
-            if (GetCaster()->GetTypeId() != ID_UNIT)
+            if (GetCaster()->GetObjectTypeID() != ID_UNIT)
                 return false;
             return true;
         }

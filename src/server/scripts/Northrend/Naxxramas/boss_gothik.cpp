@@ -313,7 +313,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->GetTypeId() != ID_PLAYER)
+            if (who->GetObjectTypeID() != ID_PLAYER)
                 return;
 
             Talk(SAY_KILL);
@@ -606,7 +606,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->GetTypeId() == ID_PLAYER && me->GetInstanceScript())
+            if (who->GetObjectTypeID() == ID_PLAYER && me->GetInstanceScript())
             {
                 me->GetInstanceScript()->SetData(DATA_IMMORTAL_FAIL, 0);
             }

@@ -129,7 +129,7 @@ public:
 
         bool Load() override
         {
-            return GetCaster()->GetTypeId() == ID_UNIT;
+            return GetCaster()->GetObjectTypeID() == ID_UNIT;
         }
 
         void HandleEffectApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)

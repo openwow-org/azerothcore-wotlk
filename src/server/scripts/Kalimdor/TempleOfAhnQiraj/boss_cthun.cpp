@@ -189,7 +189,7 @@ struct boss_eye_of_cthun : public BossAI
 
     void MoveInLineOfSight(Unit* who) override
     {
-        if (who->GetTypeId() == ID_PLAYER && !me->IsInCombat())
+        if (who->GetObjectTypeID() == ID_PLAYER && !me->IsInCombat())
         {
             // Z checks are necessary here because AQ maps do funky stuff.
             if (me->IsWithinLOSInMap(who) && me->IsWithinDist2d(who, 90.0f) && who->GetPositionZ() > 100.0f)

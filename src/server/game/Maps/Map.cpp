@@ -69,8 +69,8 @@ Map::~Map()
     {
         WorldObject* obj = *i_worldObjects.begin();
         ASSERT(obj->IsWorldObject());
-        LOG_DEBUG("maps", "Map::~Map: WorldObject TypeId is not a corpse! ({})", static_cast<uint8>(obj->GetTypeId()));
-        //ASSERT(obj->GetTypeId() == ID_CORPSE);
+        LOG_DEBUG("maps", "Map::~Map: WorldObject TypeId is not a corpse! ({})", static_cast<uint8>(obj->GetObjectTypeID()));
+        //ASSERT(obj->GetObjectTypeID() == ID_CORPSE);
         obj->RemoveFromWorld();
         obj->ResetMap();
     }
@@ -587,7 +587,7 @@ bool Map::AddToMap(T* obj, bool checkTransport)
     obj->AddToWorld();
 
     if (checkTransport)
-        if (!(obj->GetTypeId() == ID_GAMEOBJECT && obj->ToGameObject()->IsTransport())) // dont add transport to transport ;d
+        if (!(obj->GetObjectTypeID() == ID_GAMEOBJECT && obj->ToGameObject()->IsTransport())) // dont add transport to transport ;d
             if (Transport* transport = GetTransportForPos(obj->GetPhaseMask(), obj->GetPositionX(), obj->GetPositionY(), obj->GetPositionZ(), obj))
                 transport->AddPassenger(obj, true);
 
@@ -602,7 +602,7 @@ bool Map::AddToMap(T* obj, bool checkTransport)
 
     // Xinef: little hack for vehicles, accessories have to be added after visibility update so they wont fall off the vehicle, moved from Creature::AIM_Initialize
     // Initialize vehicle, this is done only for summoned npcs, DB creatures are handled by grid loaders
-    if (obj->GetTypeId() == ID_UNIT)
+    if (obj->GetObjectTypeID() == ID_UNIT)
         if (Vehicle* vehicle = obj->ToCreature()->GetVehicleKit())
             vehicle->Reset();
     return true;
@@ -941,7 +941,7 @@ void Map::AfterPlayerUnlinkFromMap()
 template<class T>
 void Map::RemoveFromMap(T* obj, bool remove)
 {
-    bool inWorld = obj->IsInWorld() && obj->GetTypeId() >= ID_UNIT && obj->GetTypeId() <= ID_GAMEOBJECT;
+    bool inWorld = obj->IsInWorld() && obj->GetObjectTypeID() >= ID_UNIT && obj->GetObjectTypeID() <= ID_GAMEOBJECT;
     obj->RemoveFromWorld();
 
     if (obj->isActiveObject())
@@ -2657,8 +2657,8 @@ void Map::AddObjectToSwitchList(WorldObject* obj, bool on)
 {
     ASSERT(obj->GetMapId() == GetId() && obj->GetInstanceId() == GetInstanceId());
     // i_objectsToSwitch is iterated only in Map::RemoveAllObjectsInRemoveList() and it uses
-    // the contained objects only if GetTypeId() == ID_UNIT , so we can return in all other cases
-    if (obj->GetTypeId() != ID_UNIT && obj->GetTypeId() != ID_GAMEOBJECT)
+    // the contained objects only if GetObjectTypeID() == ID_UNIT , so we can return in all other cases
+    if (obj->GetObjectTypeID() != ID_UNIT && obj->GetObjectTypeID() != ID_GAMEOBJECT)
         return;
 
     std::map<WorldObject*, bool>::iterator itr = i_objectsToSwitch.find(obj);
@@ -2681,7 +2681,7 @@ void Map::RemoveAllObjectsInRemoveList()
 
         if (!obj->IsPermanentWorldObject())
         {
-            switch (obj->GetTypeId())
+            switch (obj->GetObjectTypeID())
             {
                 case ID_UNIT:
                     SwitchGridContainers<Creature>(obj->ToCreature(), on);
@@ -2702,7 +2702,7 @@ void Map::RemoveAllObjectsInRemoveList()
         WorldObject* obj = *itr;
         i_objectsToRemove.erase(itr);
 
-        switch (obj->GetTypeId())
+        switch (obj->GetObjectTypeID())
         {
             case ID_CORPSE:
                 {
@@ -2729,7 +2729,7 @@ void Map::RemoveAllObjectsInRemoveList()
                 RemoveFromMap(obj->ToCreature(), true);
                 break;
             default:
-                LOG_ERROR("maps", "Non-grid object (TypeId: {}) is in grid object remove list, ignored.", obj->GetTypeId());
+                LOG_ERROR("maps", "Non-grid object (TypeId: {}) is in grid object remove list, ignored.", obj->GetObjectTypeID());
                 break;
         }
     }

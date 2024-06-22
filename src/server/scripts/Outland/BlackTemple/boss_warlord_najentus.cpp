@@ -93,7 +93,7 @@ struct boss_najentus : public BossAI
 
     void KilledUnit(Unit* victim) override
     {
-        if (victim->GetTypeId() == ID_PLAYER && _canTalk)
+        if (victim->GetObjectTypeID() == ID_PLAYER && _canTalk)
         {
             Talk(SAY_SLAY);
             _canTalk = false;

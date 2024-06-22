@@ -151,7 +151,7 @@ struct boss_volazj : public BossAI
 
     void KilledUnit(Unit* victim) override
     {
-        if (victim->GetTypeId() == ID_PLAYER)
+        if (victim->GetObjectTypeID() == ID_PLAYER)
         {
             switch (urand(0, 2))
             {
@@ -347,7 +347,7 @@ class spell_herald_volzaj_insanity : public SpellScript
 {
     PrepareSpellScript(spell_herald_volzaj_insanity);
 
-    bool Load() override { return GetCaster()->GetTypeId() == ID_UNIT; }
+    bool Load() override { return GetCaster()->GetObjectTypeID() == ID_UNIT; }
 
     void HandleDummyEffect(std::list<WorldObject*>& targets)
     {
@@ -362,7 +362,7 @@ class spell_herald_volzaj_insanity : public SpellScript
         {
             targets.remove_if([this](WorldObject* targetObj) -> bool
             {
-                return !targetObj || targetObj->GetTypeId() != ID_PLAYER || !targetObj->ToPlayer()->IsInCombatWith(GetCaster()) ||
+                return !targetObj || targetObj->GetObjectTypeID() != ID_PLAYER || !targetObj->ToPlayer()->IsInCombatWith(GetCaster()) ||
                         targetObj->GetDistance(GetCaster()) >= (MAX_VISIBILITY_DISTANCE * 2);
             });
         }
@@ -466,7 +466,7 @@ class spell_volazj_whisper : public SpellScript
         });
     }
 
-    bool Load() override { return GetCaster()->GetTypeId() == ID_UNIT; }
+    bool Load() override { return GetCaster()->GetObjectTypeID() == ID_UNIT; }
 
     void HandleScriptEffect(SpellEffIndex /* effIndex */)
     {

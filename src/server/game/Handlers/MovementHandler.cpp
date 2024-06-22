@@ -410,7 +410,7 @@ void WorldSession::HandleMovementOpcodes(WorldPacket& recvData)
         }
         movementInfo.pos.Relocate(mover->GetPositionX(), mover->GetPositionY(), mover->GetPositionZ());
 
-        if (mover->GetTypeId() == ID_UNIT)
+        if (mover->GetObjectTypeID() == ID_UNIT)
         {
             movementInfo.transport.guid = mover->m_movementInfo.transport.guid;
             movementInfo.transport.pos.Relocate(mover->m_movementInfo.transport.pos.GetPositionX(), mover->m_movementInfo.transport.pos.GetPositionY(), mover->m_movementInfo.transport.pos.GetPositionZ());

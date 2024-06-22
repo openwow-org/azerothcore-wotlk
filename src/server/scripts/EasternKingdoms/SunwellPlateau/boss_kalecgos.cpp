@@ -227,7 +227,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->GetTypeId() == ID_PLAYER && roll_chance_i(50))
+            if (victim->GetObjectTypeID() == ID_PLAYER && roll_chance_i(50))
                 Talk(SAY_EVIL_SLAY);
         }
 
@@ -537,7 +537,7 @@ public:
 
         void KilledUnit(Unit* target) override
         {
-            if (target->GetTypeId() == ID_PLAYER)
+            if (target->GetObjectTypeID() == ID_PLAYER)
                 Talk(SAY_SATH_SLAY);
         }
 

@@ -129,7 +129,7 @@ class spell_the_flag_of_ownership : public SpellScript
     void HandleScript(SpellEffIndex  /*effIndex*/)
     {
         Unit* caster = GetCaster();
-        if (!caster || caster->GetTypeId() != ID_PLAYER)
+        if (!caster || caster->GetObjectTypeID() != ID_PLAYER)
             return;
         Player* target = GetHitPlayer();
         if (!target)
@@ -145,7 +145,7 @@ class spell_the_flag_of_ownership : public SpellScript
     {
         for( std::list<WorldObject*>::iterator itr = targets.begin(); itr != targets.end(); )
         {
-            if ((*itr)->GetTypeId() != ID_PLAYER || (*itr)->ToPlayer()->IsAlive())
+            if ((*itr)->GetObjectTypeID() != ID_PLAYER || (*itr)->ToPlayer()->IsAlive())
             {
                 targets.erase(itr);
                 itr = targets.begin();
@@ -634,7 +634,7 @@ class spell_gen_area_aura_select_players : public AuraScript
 
     bool CheckAreaTarget(Unit* target)
     {
-        return target->GetTypeId() == ID_PLAYER;
+        return target->GetObjectTypeID() == ID_PLAYER;
     }
     void Register() override
     {
@@ -1665,7 +1665,7 @@ class spell_gen_pet_summoned : public SpellScript
 
     bool Load() override
     {
-        return GetCaster()->GetTypeId() == ID_PLAYER;
+        return GetCaster()->GetObjectTypeID() == ID_PLAYER;
     }
 
     void HandleScript(SpellEffIndex /*effIndex*/)
@@ -1807,7 +1807,7 @@ class spell_gen_feign_death_all_flags : public AuraScript
         target->SetUnitFlag2(UNIT_FLAG2_FEIGN_DEATH);
         target->SetUnitFlag(UNIT_FLAG_PREVENT_EMOTES_FROM_CHAT_TEXT);
 
-        if (target->GetTypeId() == ID_UNIT)
+        if (target->GetObjectTypeID() == ID_UNIT)
             target->ToCreature()->SetReactState(REACT_PASSIVE);
     }
 
@@ -1818,7 +1818,7 @@ class spell_gen_feign_death_all_flags : public AuraScript
         target->RemoveUnitFlag2(UNIT_FLAG2_FEIGN_DEATH);
         target->RemoveUnitFlag(UNIT_FLAG_PREVENT_EMOTES_FROM_CHAT_TEXT);
 
-        if (target->GetTypeId() == ID_UNIT)
+        if (target->GetObjectTypeID() == ID_UNIT)
             target->ToCreature()->InitializeReactState();
     }
 
@@ -1842,7 +1842,7 @@ class spell_gen_feign_death_no_dyn_flag : public AuraScript
         target->SetUnitFlag2(UNIT_FLAG2_FEIGN_DEATH);
         target->SetUnitFlag(UNIT_FLAG_PREVENT_EMOTES_FROM_CHAT_TEXT);
 
-        if (target->GetTypeId() == ID_UNIT)
+        if (target->GetObjectTypeID() == ID_UNIT)
             target->ToCreature()->SetReactState(REACT_PASSIVE);
     }
 
@@ -1852,7 +1852,7 @@ class spell_gen_feign_death_no_dyn_flag : public AuraScript
         target->RemoveUnitFlag2(UNIT_FLAG2_FEIGN_DEATH);
         target->RemoveUnitFlag(UNIT_FLAG_PREVENT_EMOTES_FROM_CHAT_TEXT);
 
-        if (target->GetTypeId() == ID_UNIT)
+        if (target->GetObjectTypeID() == ID_UNIT)
             target->ToCreature()->InitializeReactState();
     }
 
@@ -1875,7 +1875,7 @@ class spell_gen_feign_death_no_prevent_emotes : public AuraScript
         target->SetUnitFlag2(UNIT_FLAG2_FEIGN_DEATH);
         target->SetUnitFlag(UNIT_FLAG_PREVENT_EMOTES_FROM_CHAT_TEXT);
 
-        if (target->GetTypeId() == ID_UNIT)
+        if (target->GetObjectTypeID() == ID_UNIT)
             target->ToCreature()->SetReactState(REACT_PASSIVE);
     }
 
@@ -1885,7 +1885,7 @@ class spell_gen_feign_death_no_prevent_emotes : public AuraScript
         target->RemoveUnitFlag2(UNIT_FLAG2_FEIGN_DEATH);
         target->RemoveUnitFlag(UNIT_FLAG_PREVENT_EMOTES_FROM_CHAT_TEXT);
 
-        if (target->GetTypeId() == ID_UNIT)
+        if (target->GetObjectTypeID() == ID_UNIT)
             target->ToCreature()->InitializeReactState();
     }
 
@@ -1916,7 +1916,7 @@ class spell_gen_teleporting : public SpellScript
     void HandleScript(SpellEffIndex /* effIndex */)
     {
         Unit* target = GetHitUnit();
-        if (target->GetTypeId() != ID_PLAYER)
+        if (target->GetObjectTypeID() != ID_PLAYER)
             return;
 
         // return from top
@@ -1948,7 +1948,7 @@ class spell_pvp_trinket_wotf_shared_cd : public SpellScript
 
     bool Load() override
     {
-        return GetCaster()->GetTypeId() == ID_PLAYER;
+        return GetCaster()->GetObjectTypeID() == ID_PLAYER;
     }
 
     bool Validate(SpellInfo const* /*spellInfo*/) override
@@ -2072,7 +2072,7 @@ class spell_gen_divine_storm_cd_reset : public SpellScript
 
     bool Load() override
     {
-        return GetCaster()->GetTypeId() == ID_PLAYER;
+        return GetCaster()->GetObjectTypeID() == ID_PLAYER;
     }
 
     bool Validate(SpellInfo const* /*spellInfo*/) override
@@ -2103,7 +2103,7 @@ class spell_gen_profession_research : public SpellScript
 
     bool Load() override
     {
-        return GetCaster()->GetTypeId() == ID_PLAYER;
+        return GetCaster()->GetObjectTypeID() == ID_PLAYER;
     }
 
     SpellCastResult CheckRequirement()
@@ -2333,7 +2333,7 @@ class spell_gen_seaforium_blast : public SpellScript
     bool Load() override
     {
         // OriginalCaster is always available in Spell::prepare
-        return GetOriginalCaster()->GetTypeId() == ID_PLAYER;
+        return GetOriginalCaster()->GetObjectTypeID() == ID_PLAYER;
     }
 
     void AchievementCredit(SpellEffIndex /*effIndex*/)
@@ -2476,7 +2476,7 @@ class spell_gen_vehicle_scaling_aura: public AuraScript
 
     bool Load() override
     {
-        return GetCaster() && GetCaster()->GetTypeId() == ID_PLAYER && GetOwner()->GetTypeId() == ID_UNIT;
+        return GetCaster() && GetCaster()->GetObjectTypeID() == ID_PLAYER && GetOwner()->GetObjectTypeID() == ID_UNIT;
     }
 
     void CalculateAmount(AuraEffect const* /*aurEff*/, int32& amount, bool& /*canBeRecalculated*/)
@@ -2522,7 +2522,7 @@ class spell_gen_oracle_wolvar_reputation : public SpellScript
 
     bool Load() override
     {
-        return GetCaster()->GetTypeId() == ID_PLAYER;
+        return GetCaster()->GetObjectTypeID() == ID_PLAYER;
     }
 
     void HandleDummy(SpellEffIndex effIndex)
@@ -2642,7 +2642,7 @@ class spell_gen_spirit_healer_res : public SpellScript
 
     bool Load() override
     {
-        return GetOriginalCaster() && GetOriginalCaster()->GetTypeId() == ID_PLAYER;
+        return GetOriginalCaster() && GetOriginalCaster()->GetObjectTypeID() == ID_PLAYER;
     }
 
     void HandleDummy(SpellEffIndex /* effIndex */)
@@ -3218,7 +3218,7 @@ class spell_gen_tournament_duel : public SpellScript
             }
             else if (Unit* unitTarget = GetHitUnit())
             {
-                if (unitTarget->GetCharmer() && unitTarget->GetCharmer()->GetTypeId() == ID_PLAYER && unitTarget->GetCharmer()->HasAura(SPELL_ON_TOURNAMENT_MOUNT))
+                if (unitTarget->GetCharmer() && unitTarget->GetCharmer()->GetObjectTypeID() == ID_PLAYER && unitTarget->GetCharmer()->HasAura(SPELL_ON_TOURNAMENT_MOUNT))
                     rider->CastSpell(unitTarget->GetCharmer(), SPELL_MOUNTED_DUEL, true);
             }
         }
@@ -3425,7 +3425,7 @@ class spell_gen_on_tournament_mount : public AuraScript
     bool Load() override
     {
         _pennantSpellId = 0;
-        return GetCaster() && GetCaster()->GetTypeId() == ID_PLAYER;
+        return GetCaster() && GetCaster()->GetObjectTypeID() == ID_PLAYER;
     }
 
     void HandleApplyEffect(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
@@ -3605,7 +3605,7 @@ class spell_gen_tournament_pennant : public AuraScript
 
     bool Load() override
     {
-        return GetCaster() && GetCaster()->GetTypeId() == ID_PLAYER;
+        return GetCaster() && GetCaster()->GetObjectTypeID() == ID_PLAYER;
     }
 
     void HandleApplyEffect(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
@@ -3702,7 +3702,7 @@ class spell_gen_despawn_self : public SpellScript
 
     bool Load() override
     {
-        return GetCaster()->GetTypeId() == ID_UNIT;
+        return GetCaster()->GetObjectTypeID() == ID_UNIT;
     }
 
     void HandleDummy(SpellEffIndex effIndex)
@@ -3928,7 +3928,7 @@ public:
     {
         if (GetCaster())
             if (Unit* owner = GetCaster()->GetOwner())
-                if (owner->GetTypeId() == ID_PLAYER) /// @todo this check is maybe wrong
+                if (owner->GetObjectTypeID() == ID_PLAYER) /// @todo this check is maybe wrong
                     owner->ToPlayer()->RemovePet(nullptr, PET_SAVE_NOT_IN_SLOT, true);
     }
 

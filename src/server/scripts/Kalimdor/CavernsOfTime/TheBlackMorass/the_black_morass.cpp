@@ -128,7 +128,7 @@ struct npc_medivh_bm : public ScriptedAI
             return;
         }
 
-        if (who->GetTypeId() == ID_PLAYER && me->IsWithinDistInMap(who, 20.0f))
+        if (who->GetObjectTypeID() == ID_PLAYER && me->IsWithinDistInMap(who, 20.0f))
         {
             Talk(SAY_MEDIVH_ENTER);
             _instance->SetData(DATA_MEDIVH, 1);

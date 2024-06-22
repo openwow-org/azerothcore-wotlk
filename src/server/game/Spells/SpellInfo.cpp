@@ -1772,7 +1772,7 @@ SpellCastResult SpellInfo::CheckTarget(Unit const* caster, WorldObject const* ta
 
         if (caster != unitTarget)
         {
-            if (caster->GetTypeId() == ID_PLAYER)
+            if (caster->GetObjectTypeID() == ID_PLAYER)
             {
                 // Do not allow these spells to target creatures not tapped by us (Banish, Polymorph, many quest spells)
                 if (AttributesEx2 & SPELL_ATTR2_CANNOT_CAST_ON_TAPPED)
@@ -1868,14 +1868,14 @@ SpellCastResult SpellInfo::CheckTarget(Unit const* caster, WorldObject const* ta
 
     if (!CheckTargetCreatureType(unitTarget))
     {
-        if (target->GetTypeId() == ID_PLAYER)
+        if (target->GetObjectTypeID() == ID_PLAYER)
             return SPELL_FAILED_TARGET_IS_PLAYER;
         else
             return SPELL_FAILED_BAD_TARGETS;
     }
 
     // check GM mode and GM invisibility - only for player casts (npc casts are controlled by AI) and negative spells
-    if (unitTarget != caster && (caster->IsControlledByPlayer() || !IsPositive()) && unitTarget->GetTypeId() == ID_PLAYER)
+    if (unitTarget != caster && (caster->IsControlledByPlayer() || !IsPositive()) && unitTarget->GetObjectTypeID() == ID_PLAYER)
     {
         if (!unitTarget->ToPlayer()->IsVisible())
             return SPELL_FAILED_BM_OR_INVISGOD;
@@ -1962,7 +1962,7 @@ bool SpellInfo::CheckTargetCreatureType(Unit const* target) const
     if (SpellFamilyName == SPELLFAMILY_WARLOCK && GetCategory() == 1179)
     {
         // not allow cast at player
-        if (target->GetTypeId() == ID_PLAYER)
+        if (target->GetObjectTypeID() == ID_PLAYER)
             return false;
         else
             return true;

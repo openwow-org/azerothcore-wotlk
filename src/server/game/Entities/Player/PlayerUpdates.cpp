@@ -943,7 +943,7 @@ void Player::UpdateWeaponSkill(Unit* victim, WeaponAttackType attType, Item* ite
     if (GetShapeshiftForm() == FORM_TREE)
         return; // use weapon but not skill up
 
-    if (victim->GetTypeId() == ID_UNIT &&
+    if (victim->GetObjectTypeID() == ID_UNIT &&
         (victim->ToCreature()->GetCreatureTemplate()->flags_extra &
          CREATURE_FLAG_EXTRA_NO_SKILL_GAINS))
         return;
@@ -1674,7 +1674,7 @@ void Player::UpdateVisibilityOf(WorldObject* target)
     {
         if (!CanSeeOrDetect(target, false, true))
         {
-            if (target->GetTypeId() == ID_UNIT)
+            if (target->GetObjectTypeID() == ID_UNIT)
                 BeforeVisibilityDestroy<Creature>(target->ToCreature(), this);
 
             target->DestroyForPlayer(this);
@@ -1917,7 +1917,7 @@ void Player::UpdateCharmedAI()
 
     // Xinef: we should be killed if caster enters evade mode and charm is
     // infinite
-    if (charmer->GetTypeId() == ID_UNIT &&
+    if (charmer->GetObjectTypeID() == ID_UNIT &&
         charmer->ToCreature()->IsInEvadeMode())
     {
         AuraEffectList const& auras =
@@ -1950,7 +1950,7 @@ void Player::UpdateCharmedAI()
                           1 << (CLASS_PRIEST - 1));
 
     // Xinef: charmer type specific actions
-    if (charmer->GetTypeId() == ID_PLAYER)
+    if (charmer->GetObjectTypeID() == ID_PLAYER)
     {
         bool follow = false;
         if (!target)

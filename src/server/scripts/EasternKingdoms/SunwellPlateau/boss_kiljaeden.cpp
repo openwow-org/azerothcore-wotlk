@@ -361,7 +361,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->GetTypeId() == ID_PLAYER && events.GetNextEventTime(EVENT_NO_KILL_TALK) == 0)
+            if (victim->GetObjectTypeID() == ID_PLAYER && events.GetNextEventTime(EVENT_NO_KILL_TALK) == 0)
                 Talk(SAY_KJ_SLAY);
         }
 
@@ -1107,7 +1107,7 @@ public:
             WorldObject* target = targets.front();
 
             targets.clear();
-            if (target && target->GetTypeId() == ID_UNIT)
+            if (target && target->GetObjectTypeID() == ID_UNIT)
             {
                 target->ToCreature()->AI()->SetData(1, GetCaster()->getClass());
                 targets.push_back(target);
@@ -1164,7 +1164,7 @@ public:
 
         void HandleRemove(AuraEffect const*  /*aurEff*/, AuraEffectHandleModes /*mode*/)
         {
-            if (GetUnitOwner()->GetTypeId() == ID_UNIT)
+            if (GetUnitOwner()->GetObjectTypeID() == ID_UNIT)
                 GetUnitOwner()->ToCreature()->AI()->DoAction(ACTION_NO_KILL_TALK);
 
             GetUnitOwner()->CastSpell(GetUnitOwner(), SPELL_DARKNESS_OF_A_THOUSAND_SOULS_DAMAGE, true);

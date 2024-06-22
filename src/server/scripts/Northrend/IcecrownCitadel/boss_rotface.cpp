@@ -216,7 +216,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->GetTypeId() == ID_PLAYER)
+            if (victim->GetObjectTypeID() == ID_PLAYER)
                 Talk(SAY_KILL);
         }
 
@@ -360,7 +360,7 @@ public:
             if (!summoner)
                 return;
 
-            if (summoner->GetTypeId() != ID_UNIT)
+            if (summoner->GetObjectTypeID() != ID_UNIT)
             {
                 return;
             }
@@ -672,7 +672,7 @@ public:
                     if (Creature* rotface = ObjectAccessor::GetCreature(*GetCaster(), instance->GetGuidData(DATA_ROTFACE)))
                         if (rotface->IsAlive())
                         {
-                            if (GetCaster()->GetTypeId() == ID_UNIT)
+                            if (GetCaster()->GetObjectTypeID() == ID_UNIT)
                                 GetCaster()->ToCreature()->AI()->Talk(EMOTE_UNSTABLE_EXPLOSION);
                             rotface->AI()->Talk(SAY_UNSTABLE_EXPLOSION);
                         }
@@ -735,7 +735,7 @@ public:
                         if (Creature* rotface = ObjectAccessor::GetCreature(*GetCaster(), instance->GetGuidData(DATA_ROTFACE)))
                             if (rotface->IsAlive())
                             {
-                                if (GetCaster()->GetTypeId() == ID_UNIT)
+                                if (GetCaster()->GetObjectTypeID() == ID_UNIT)
                                     GetCaster()->ToCreature()->AI()->Talk(EMOTE_UNSTABLE_EXPLOSION);
                                 rotface->AI()->Talk(SAY_UNSTABLE_EXPLOSION);
                             }
@@ -852,7 +852,7 @@ public:
         {
             PreventDefaultAction();
             Unit* target = GetTarget();
-            if (target->GetTypeId() != ID_UNIT)
+            if (target->GetObjectTypeID() != ID_UNIT)
                 return;
 
             target->SetVisible(false);

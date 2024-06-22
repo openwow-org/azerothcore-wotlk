@@ -458,7 +458,7 @@ public:
             {
                 Position pos = LightOfDawnFightPos[urand(0, 9)];
                 if (Unit* target = cr->SelectNearbyTarget(nullptr, 10.0f))
-                    if (target->GetTypeId() == ID_UNIT)
+                    if (target->GetObjectTypeID() == ID_UNIT)
                         target->GetMotionMaster()->MoveCharge(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), me->GetSpeed(MOVE_RUN));
                 cr->GetMotionMaster()->MoveCharge(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), me->GetSpeed(MOVE_RUN));
             }

@@ -290,7 +290,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->GetTypeId() == ID_PLAYER)
+            if (victim->GetObjectTypeID() == ID_PLAYER)
                 Talk(SAY_SLAY);
         }
 
@@ -542,7 +542,7 @@ public:
 
     bool OnCheck(Player*  /*player*/, Unit* target, uint32 /*criteria_id*/) override
     {
-        if (!target || target->GetTypeId() != ID_UNIT)
+        if (!target || target->GetObjectTypeID() != ID_UNIT)
             return false;
         return !!target->ToCreature()->AI()->GetData(1337);
     }

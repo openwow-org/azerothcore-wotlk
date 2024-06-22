@@ -895,7 +895,7 @@ public:
 
         void PassengerBoarded(Unit* pass, int8  /*seat*/, bool apply) override
         {
-            if (pass && !apply && pass->GetTypeId() == ID_PLAYER)
+            if (pass && !apply && pass->GetObjectTypeID() == ID_PLAYER)
             {
                 Player* plr = pass->ToPlayer();
                 float speed = plr->GetDistance(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ()) / (1.0f * 0.001f);
@@ -1259,7 +1259,7 @@ public:
                 return;
             if (apply)
             {
-                if (who->GetTypeId() == ID_PLAYER)
+                if (who->GetObjectTypeID() == ID_PLAYER)
                 {
                     who->ApplySpellImmune(0, IMMUNITY_ID, SPELL_ARCANE_OVERLOAD_DMG, true);
                     who->ApplySpellImmune(0, IMMUNITY_ID, SPELL_SURGE_OF_POWER_DMG, true);
@@ -1287,7 +1287,7 @@ public:
                 me->SetCanFly(false);
                 me->GetMotionMaster()->MoveLand(0, me->GetPositionX(), me->GetPositionY(), 267.24f, 10.0f);
 
-                if (who->GetTypeId() == ID_PLAYER)
+                if (who->GetObjectTypeID() == ID_PLAYER)
                 {
                     who->ApplySpellImmune(0, IMMUNITY_ID, SPELL_ARCANE_OVERLOAD_DMG, false);
                     who->ApplySpellImmune(0, IMMUNITY_ID, SPELL_SURGE_OF_POWER_DMG, false);
@@ -1457,7 +1457,7 @@ public:
                 me->SetDisableGravity(false);
                 me->SendMovementFlagUpdate();
             }
-            else if (pass && pass->GetTypeId() == ID_PLAYER && me->IsAlive())
+            else if (pass && pass->GetObjectTypeID() == ID_PLAYER && me->IsAlive())
             {
                 me->SetDisplayId(11686); // prevents nasty falling animation at despawn
                 me->DespawnOrUnsummon(1);

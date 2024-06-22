@@ -162,7 +162,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->GetTypeId() == ID_PLAYER)
+            if (victim->GetObjectTypeID() == ID_PLAYER)
                 Talk(SAY_KILL);
         }
 
@@ -295,13 +295,13 @@ public:
 
         bool Load() override
         {
-            return GetCaster()->GetTypeId() == ID_UNIT;
+            return GetCaster()->GetObjectTypeID() == ID_UNIT;
         }
 
         void HandleScript(SpellEffIndex /*effIndex*/)
         {
             Unit* caster = GetCaster();
-            if (caster->GetTypeId() != ID_UNIT)
+            if (caster->GetObjectTypeID() != ID_UNIT)
                 return;
 
             // Get Inhaled Blight id for our difficulty
@@ -416,7 +416,7 @@ public:
 
     bool OnCheck(Player* /*source*/, Unit* target, uint32 /*criteria_id*/) override
     {
-        if (target && target->GetTypeId() == ID_UNIT)
+        if (target && target->GetObjectTypeID() == ID_UNIT)
             return target->ToCreature()->AI()->GetData(DATA_INOCULATED_STACK) < 3;
 
         return false;

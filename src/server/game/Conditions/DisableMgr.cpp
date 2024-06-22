@@ -325,8 +325,8 @@ namespace DisableMgr
                     uint8 spellFlags = itr->second.flags;
                     if (unit)
                     {
-                        if ((spellFlags & SPELL_DISABLE_PLAYER && unit->GetTypeId() == ID_PLAYER) ||
-                                (unit->GetTypeId() == ID_UNIT && ((unit->IsPet() && spellFlags & SPELL_DISABLE_PET) || spellFlags & SPELL_DISABLE_CREATURE)))
+                        if ((spellFlags & SPELL_DISABLE_PLAYER && unit->GetObjectTypeID() == ID_PLAYER) ||
+                                (unit->GetObjectTypeID() == ID_UNIT && ((unit->IsPet() && spellFlags & SPELL_DISABLE_PET) || spellFlags & SPELL_DISABLE_CREATURE)))
                         {
                             if (spellFlags & SPELL_DISABLE_MAP)
                             {

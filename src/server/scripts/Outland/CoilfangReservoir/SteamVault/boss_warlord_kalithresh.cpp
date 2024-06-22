@@ -62,7 +62,7 @@ struct boss_warlord_kalithresh : public BossAI
 
     void MoveInLineOfSight(Unit* who) override
     {
-        if (!_introDone && who->GetTypeId() == ID_PLAYER && me->IsWithinDistInMap(who, 35.0f))
+        if (!_introDone && who->GetObjectTypeID() == ID_PLAYER && me->IsWithinDistInMap(who, 35.0f))
         {
             Talk(SAY_INTRO);
             _introDone = true;

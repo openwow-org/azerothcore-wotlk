@@ -312,13 +312,13 @@ bool Condition::Meets(ConditionSourceInfo& sourceInfo)
             if (object->ToUnit()->HasUnitFlag(UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE))
                 break;
 
-        if (uint32(object->GetTypeId()) == ConditionValue1)
+        if (uint32(object->GetObjectTypeID()) == ConditionValue1)
         {
             condMeets = !ConditionValue2 || (object->GetEntry() == ConditionValue2);
 
             if (ConditionValue3 > 1)
             {
-                switch (object->GetTypeId())
+                switch (object->GetObjectTypeID())
                 {
                     case ID_UNIT:
                         condMeets &= object->ToCreature()->GetSpawnId() == ConditionValue3;

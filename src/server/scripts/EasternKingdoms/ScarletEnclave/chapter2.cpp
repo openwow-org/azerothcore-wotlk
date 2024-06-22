@@ -77,7 +77,7 @@ public:
 
         void SpellHit(Unit* caster, SpellInfo const* spell) override
         {
-            if (spell->Id == SPELL_PERSUASIVE_STRIKE && caster->GetTypeId() == ID_PLAYER && me->IsAlive() && !speechCounter)
+            if (spell->Id == SPELL_PERSUASIVE_STRIKE && caster->GetObjectTypeID() == ID_PLAYER && me->IsAlive() && !speechCounter)
             {
                 if (Player* player = caster->ToPlayer())
                 {
@@ -678,7 +678,7 @@ public:
         void MoveInLineOfSight(Unit* who) override
 
         {
-            if (PlayerGUID || who->GetTypeId() != ID_PLAYER || !who->IsWithinDist(me, INTERACTION_DISTANCE))
+            if (PlayerGUID || who->GetObjectTypeID() != ID_PLAYER || !who->IsWithinDist(me, INTERACTION_DISTANCE))
                 return;
 
             if (MeetQuestCondition(who->ToPlayer()))

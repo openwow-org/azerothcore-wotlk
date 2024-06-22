@@ -211,7 +211,7 @@ public:
         {
             //will update once TargetGUID is 0. In case noone actually moves(not likely) and this is 0
             //when UpdateAI needs it, it will be forced to select randomPoint
-            if (!TargetGUID && who->GetTypeId() == ID_PLAYER)
+            if (!TargetGUID && who->GetObjectTypeID() == ID_PLAYER)
                 TargetGUID = who->GetGUID();
         }
 
@@ -334,7 +334,7 @@ public:
             ThreatContainer::StorageType::const_iterator itr = t_list.begin();
 
             if (Unit* target = ObjectAccessor::GetUnit(*me, (*itr)->getUnitGuid()))
-                if (target->IsAlive() && target->GetTypeId() == ID_PLAYER)
+                if (target->IsAlive() && target->GetObjectTypeID() == ID_PLAYER)
                     spellEffectTargets.push_back(target);
 
             for (auto iter = spellEffectTargets.begin(); iter != spellEffectTargets.end(); ++iter)
@@ -366,7 +366,7 @@ public:
         {
             Talk(SAY_SLAY);
 
-            if (victim && victim->GetTypeId() == ID_PLAYER)
+            if (victim && victim->GetObjectTypeID() == ID_PLAYER)
                 GainSoulCharge(victim->ToPlayer());
         }
 

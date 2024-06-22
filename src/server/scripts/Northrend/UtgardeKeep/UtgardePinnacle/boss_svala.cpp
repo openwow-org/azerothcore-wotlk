@@ -205,7 +205,7 @@ public:
                 instance->DoUpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_KILL_CREATURE, 26555, 1, nullptr);
             }
 
-            if (victim->GetTypeId() == ID_PLAYER)
+            if (victim->GetObjectTypeID() == ID_PLAYER)
                 Talk(SAY_SLAY);
         }
 
@@ -409,7 +409,7 @@ public:
         {
             if (Unit* unitTarget = GetHitUnit())
             {
-                if (unitTarget->GetTypeId() != ID_UNIT)
+                if (unitTarget->GetObjectTypeID() != ID_UNIT)
                     return;
 
                 Unit::DealDamage(GetCaster(), unitTarget, 7000, nullptr, DIRECT_DAMAGE);

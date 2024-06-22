@@ -217,7 +217,7 @@ private:
     {
         Unit* target = SelectTarget(SelectTargetMethod::Random, 0, [this](Unit* target) -> bool
             {
-                if (target->GetTypeId() != ID_PLAYER || target->getPowerType() != Powers::POWER_MANA)
+                if (target->GetObjectTypeID() != ID_PLAYER || target->getPowerType() != Powers::POWER_MANA)
                     return false;
                 if (me->IsWithinMeleeRange(target) || me->GetVictim() == target)
                     return false;
@@ -299,7 +299,7 @@ class spell_enveloping_webs : public SpellScript
     {
         Unit* caster = GetCaster();
         Unit* hitUnit = GetHitUnit();
-        if (caster && hitUnit && hitUnit->GetTypeId() == ID_PLAYER)
+        if (caster && hitUnit && hitUnit->GetObjectTypeID() == ID_PLAYER)
         {
             caster->GetThreatMgr().ModifyThreatByPercent(hitUnit, -100);
         }

@@ -53,7 +53,7 @@ void VisibleNotifier::SendToSelf()
             {
                 vis_guids.erase((*itr)->GetGUID());
 
-                switch ((*itr)->GetTypeId())
+                switch ((*itr)->GetObjectTypeID())
                 {
                     case ID_GAMEOBJECT:
                         i_player.UpdateVisibilityOf((*itr)->ToGameObject(), i_data, i_visibleNow);
@@ -160,7 +160,7 @@ inline void CreatureUnitRelocationWorker(Creature* c, Unit* u)
         {
             c->AI()->MoveInLineOfSight_Safe(u);
         }
-        else if (u->GetTypeId() == ID_PLAYER && u->HasStealthAura() && c->IsAIEnabled && c->CanSeeOrDetect(u, false, true, true))
+        else if (u->GetObjectTypeID() == ID_PLAYER && u->HasStealthAura() && c->IsAIEnabled && c->CanSeeOrDetect(u, false, true, true))
         {
             c->AI()->TriggerAlert(u);
         }

@@ -107,7 +107,7 @@ public:
 
     bool operator()(Unit const* target) const
     {
-        return target && target->GetTypeId() == ID_PLAYER && _me->IsInRange(target, 10.0f, 40.0f, true);
+        return target && target->GetObjectTypeID() == ID_PLAYER && _me->IsInRange(target, 10.0f, 40.0f, true);
     }
 
 private:
@@ -607,7 +607,7 @@ public:
             _sharedHealth = 0;
             _sharedHealthMax = 0;
             _targetCount = 0;
-            return GetCaster()->GetTypeId() == ID_UNIT;
+            return GetCaster()->GetObjectTypeID() == ID_UNIT;
         }
 
         void HandleDummy(SpellEffIndex effIndex)

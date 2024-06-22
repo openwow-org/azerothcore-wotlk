@@ -1548,7 +1548,7 @@ public:
 
         void MoveInLineOfSight(Unit* who) override
         {
-            if (!allowTimer && !locked && (who->GetTypeId() == ID_PLAYER || who->IsPet()) && me->GetDistance(who) < 15.0f)
+            if (!allowTimer && !locked && (who->GetObjectTypeID() == ID_PLAYER || who->IsPet()) && me->GetDistance(who) < 15.0f)
                 InfectMe(2000);
 
             ScriptedAI::MoveInLineOfSight(who);

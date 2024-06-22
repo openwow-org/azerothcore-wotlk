@@ -360,14 +360,14 @@ class spell_dk_master_of_ghouls : public AuraScript
     void HandleEffectApply(AuraEffect const*  /*aurEff*/, AuraEffectHandleModes /*mode*/)
     {
         Unit* target = GetTarget();
-        if (target->GetTypeId() == ID_PLAYER)
+        if (target->GetObjectTypeID() == ID_PLAYER)
             target->ToPlayer()->SetShowDKPet(true);
     }
 
     void HandleEffectRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
     {
         Unit* target = GetTarget();
-        if (target->GetTypeId() == ID_PLAYER)
+        if (target->GetObjectTypeID() == ID_PLAYER)
             target->ToPlayer()->SetShowDKPet(false);
     }
 
@@ -606,7 +606,7 @@ class spell_dk_dancing_rune_weapon : public AuraScript
 
     bool CheckProc(ProcEventInfo& eventInfo)
     {
-        if (!eventInfo.GetActor() || !eventInfo.GetActionTarget() || !eventInfo.GetActionTarget()->IsAlive() || eventInfo.GetActor()->GetTypeId() != ID_PLAYER)
+        if (!eventInfo.GetActor() || !eventInfo.GetActionTarget() || !eventInfo.GetActionTarget()->IsAlive() || eventInfo.GetActor()->GetObjectTypeID() != ID_PLAYER)
             return false;
 
         SpellInfo const* spellInfo = eventInfo.GetSpellInfo();
@@ -780,7 +780,7 @@ class spell_dk_pet_scaling : public AuraScript
             amount = CalculatePct(std::max<int32>(0, owner->GetTotalAttackPowerValue(BASE_ATTACK)), modifier);
 
             // xinef: Update appropriate player field
-            if (owner->GetTypeId() == ID_PLAYER)
+            if (owner->GetObjectTypeID() == ID_PLAYER)
                 owner->SetUInt32Value(PLAYER_PET_SPELL_POWER, (uint32)amount);
         }
     }
@@ -1014,7 +1014,7 @@ class spell_dk_blood_boil : public SpellScript
     bool Load() override
     {
         _executed = false;
-        return GetCaster()->GetTypeId() == ID_PLAYER && GetCaster()->getClass() == CLASS_DEATH_KNIGHT;
+        return GetCaster()->GetObjectTypeID() == ID_PLAYER && GetCaster()->getClass() == CLASS_DEATH_KNIGHT;
     }
 
     void HandleAfterHit()
@@ -1291,7 +1291,7 @@ class spell_dk_death_grip : public SpellScript
         Unit* caster = GetCaster();
         Unit* target = GetExplTargetUnit();
 
-        if (target->GetTypeId() == ID_PLAYER && caster->GetExactDist(target) < 8.0f) // xinef: should be 8.0f, but we have to add target size (1.5f)
+        if (target->GetObjectTypeID() == ID_PLAYER && caster->GetExactDist(target) < 8.0f) // xinef: should be 8.0f, but we have to add target size (1.5f)
             return SPELL_FAILED_TOO_CLOSE;
 
         if (caster->HasUnitState(UNIT_STATE_JUMPING) || caster->HasUnitMovementFlag(MOVEMENTFLAG_FALLING))
@@ -1569,7 +1569,7 @@ class spell_dk_icebound_fortitude : public AuraScript
     bool Load() override
     {
         Unit* caster = GetCaster();
-        return caster && caster->GetTypeId() == ID_PLAYER;
+        return caster && caster->GetObjectTypeID() == ID_PLAYER;
     }
 
     void CalculateAmount(AuraEffect const* /*aurEff*/, int32& amount, bool& /*canBeRecalculated*/)
@@ -1881,7 +1881,7 @@ class spell_dk_raise_dead : public SpellScript
     {
         _result = SPELL_CAST_OK;
         _corpse = false;
-        return GetCaster()->GetTypeId() == ID_PLAYER;
+        return GetCaster()->GetObjectTypeID() == ID_PLAYER;
     }
 
     SpellCastResult CheckCast()

@@ -174,7 +174,7 @@ class spell_pal_divine_intervention : public AuraScript
 
     void HandleRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
     {
-        if (!GetTarget()->IsInCombat() && GetTarget()->GetTypeId() == ID_PLAYER)
+        if (!GetTarget()->IsInCombat() && GetTarget()->GetObjectTypeID() == ID_PLAYER)
             GetTarget()->RemoveAurasDueToSpell(GetTarget()->ToPlayer()->GetTeamId() == TEAM_ALLIANCE ? 57723 : 57724);
     }
 
@@ -325,7 +325,7 @@ private:
     {
         healPct = GetSpellInfo()->Effects[EFFECT_1].CalcValue();
         absorbPct = GetSpellInfo()->Effects[EFFECT_0].CalcValue();
-        return GetUnitOwner()->GetTypeId() == ID_PLAYER;
+        return GetUnitOwner()->GetObjectTypeID() == ID_PLAYER;
     }
 
     void CalculateAmount(AuraEffect const* /*aurEff*/, int32& amount, bool& /*canBeRecalculated*/)
@@ -514,7 +514,7 @@ class spell_pal_divine_sacrifice : public AuraScript
     {
         if (Unit* caster = GetCaster())
         {
-            if (caster->GetTypeId() == ID_PLAYER)
+            if (caster->GetObjectTypeID() == ID_PLAYER)
             {
                 if (caster->ToPlayer()->GetGroup())
                     groupSize = caster->ToPlayer()->GetGroup()->GetMembersCount();
@@ -1017,7 +1017,7 @@ class spell_pal_righteous_defense : public SpellScript
     SpellCastResult CheckCast()
     {
         Unit* caster = GetCaster();
-        if (caster->GetTypeId() != ID_PLAYER)
+        if (caster->GetObjectTypeID() != ID_PLAYER)
             return SPELL_FAILED_DONT_REPORT;
 
         if (Unit* target = GetExplTargetUnit())

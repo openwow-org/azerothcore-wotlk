@@ -90,7 +90,7 @@ struct boss_aeonus : public BossAI
 
     void MoveInLineOfSight(Unit* who) override
     {
-        if (who->GetTypeId() == ID_UNIT && who->GetEntry() == NPC_TIME_KEEPER)
+        if (who->GetObjectTypeID() == ID_UNIT && who->GetEntry() == NPC_TIME_KEEPER)
         {
             if (me->IsWithinDistInMap(who, 20.0f))
             {

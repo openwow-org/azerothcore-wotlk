@@ -118,7 +118,7 @@ class spell_pri_shadowfiend_scaling : public AuraScript
             amount = CalculatePct(std::max<int32>(0, shadow), 30);
 
             // xinef: Update appropriate player field
-            if (owner->GetTypeId() == ID_PLAYER)
+            if (owner->GetObjectTypeID() == ID_PLAYER)
                 owner->SetUInt32Value(PLAYER_PET_SPELL_POWER, (uint32)amount);
         }
     }
@@ -379,7 +379,7 @@ class spell_pri_lightwell : public SpellScript
 
     bool Load() override
     {
-        return GetCaster()->GetTypeId() == ID_UNIT;
+        return GetCaster()->GetObjectTypeID() == ID_UNIT;
     }
 
     void HandleScriptEffect(SpellEffIndex /* effIndex */)
@@ -552,7 +552,7 @@ class spell_pri_penance : public SpellScript
 
     bool Load() override
     {
-        return GetCaster()->GetTypeId() == ID_PLAYER;
+        return GetCaster()->GetObjectTypeID() == ID_PLAYER;
     }
 
     bool Validate(SpellInfo const* spellInfo) override
@@ -782,7 +782,7 @@ class spell_pri_renew : public AuraScript
 
     bool Load() override
     {
-        return GetCaster() && GetCaster()->GetTypeId() == ID_PLAYER;
+        return GetCaster() && GetCaster()->GetObjectTypeID() == ID_PLAYER;
     }
 
     bool Validate(SpellInfo const* /*spellInfo*/) override

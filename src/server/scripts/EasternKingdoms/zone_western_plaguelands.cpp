@@ -140,7 +140,7 @@ public:
         void MoveInLineOfSight(Unit* who) override
 
         {
-            if (!who || who->GetTypeId() != ID_PLAYER)
+            if (!who || who->GetObjectTypeID() != ID_PLAYER)
                 return;
 
             if (me->FindNearestGameObject(GO_BEACON_TORCH, 10.0f))

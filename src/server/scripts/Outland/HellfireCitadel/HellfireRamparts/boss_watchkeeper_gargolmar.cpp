@@ -99,7 +99,7 @@ struct boss_watchkeeper_gargolmar : public BossAI
     {
         if (!_taunted)
         {
-            if (who->GetTypeId() == ID_PLAYER)
+            if (who->GetObjectTypeID() == ID_PLAYER)
             {
                 _taunted = true;
                 Talk(SAY_TAUNT);

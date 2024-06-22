@@ -54,7 +54,7 @@ public:
         Player* player = handler->GetSession()->GetPlayer();
         Creature* creatureTarget = handler->getSelectedCreature();
 
-        if (!creatureTarget || creatureTarget->IsPet() || creatureTarget->GetTypeId() == ID_PLAYER)
+        if (!creatureTarget || creatureTarget->IsPet() || creatureTarget->GetObjectTypeID() == ID_PLAYER)
         {
             handler->SendErrorMessage(LANG_SELECT_CREATURE);
             return false;

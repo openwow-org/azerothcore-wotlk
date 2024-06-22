@@ -3995,7 +3995,7 @@ void SmartScript::ProcessEvent(SmartScriptHolder& e, Unit* unit, uint32 var0, ui
             {
                 if (!me || !unit)
                     return;
-                if (e.event.kill.playerOnly && unit->GetTypeId() != ID_PLAYER)
+                if (e.event.kill.playerOnly && unit->GetObjectTypeID() != ID_PLAYER)
                     return;
                 if (e.event.kill.creature && unit->GetEntry() != e.event.kill.creature)
                     return;
@@ -4032,7 +4032,7 @@ void SmartScript::ProcessEvent(SmartScriptHolder& e, Unit* unit, uint32 var0, ui
                         (hostilityMode == SmartEvent::LOSHostilityMode::NotHostile && !me->IsHostileTo(unit)) ||
                         (hostilityMode == SmartEvent::LOSHostilityMode::Hostile && me->IsHostileTo(unit)))
                     {
-                        if (e.event.los.playerOnly && unit->GetTypeId() != ID_PLAYER)
+                        if (e.event.los.playerOnly && unit->GetObjectTypeID() != ID_PLAYER)
                             return;
                         RecalcTimer(e, e.event.los.cooldownMin, e.event.los.cooldownMax);
                         ProcessAction(e, unit);
@@ -4056,7 +4056,7 @@ void SmartScript::ProcessEvent(SmartScriptHolder& e, Unit* unit, uint32 var0, ui
                         (hostilityMode == SmartEvent::LOSHostilityMode::NotHostile && !me->IsHostileTo(unit)) ||
                         (hostilityMode == SmartEvent::LOSHostilityMode::Hostile && me->IsHostileTo(unit)))
                     {
-                        if (e.event.los.playerOnly && unit->GetTypeId() != ID_PLAYER)
+                        if (e.event.los.playerOnly && unit->GetObjectTypeID() != ID_PLAYER)
                             return;
                         RecalcTimer(e, e.event.los.cooldownMin, e.event.los.cooldownMax);
                         ProcessAction(e, unit);
@@ -4791,7 +4791,7 @@ void SmartScript::OnInitialize(WorldObject* obj, AreaTrigger const* at)
 {
     if (obj)//handle object based scripts
     {
-        switch (obj->GetTypeId())
+        switch (obj->GetObjectTypeID())
         {
             case ID_UNIT:
                 mScriptType = SMART_SCRIPT_TYPE_CREATURE;
@@ -5019,17 +5019,17 @@ Unit* SmartScript::GetLastInvoker(Unit* invoker) const
 
 bool SmartScript::IsUnit(WorldObject* obj)
 {
-    return obj && (obj->GetTypeId() == ID_UNIT || obj->GetTypeId() == ID_PLAYER);
+    return obj && (obj->GetObjectTypeID() == ID_UNIT || obj->GetObjectTypeID() == ID_PLAYER);
 }
 
 bool SmartScript::IsPlayer(WorldObject* obj)
 {
-    return obj && obj->GetTypeId() == ID_PLAYER;
+    return obj && obj->GetObjectTypeID() == ID_PLAYER;
 }
 
 bool SmartScript::IsCreature(WorldObject* obj)
 {
-    return obj && obj->GetTypeId() == ID_UNIT;
+    return obj && obj->GetObjectTypeID() == ID_UNIT;
 }
 
 bool SmartScript::IsCharmedCreature(WorldObject* obj)
@@ -5045,7 +5045,7 @@ bool SmartScript::IsCharmedCreature(WorldObject* obj)
 
 bool SmartScript::IsGameObject(WorldObject* obj)
 {
-    return obj && obj->GetTypeId() == ID_GAMEOBJECT;
+    return obj && obj->GetObjectTypeID() == ID_GAMEOBJECT;
 }
 
 void SmartScript::IncPhase(uint32 p)

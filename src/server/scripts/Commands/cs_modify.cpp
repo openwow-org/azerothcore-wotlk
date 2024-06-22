@@ -355,7 +355,7 @@ public:
             return false;
         }
 
-        if (target->GetTypeId() == ID_PLAYER)
+        if (target->GetObjectTypeID() == ID_PLAYER)
         {
             // check online security
             if (handler->HasLowerSecurity(target->ToPlayer()))
@@ -370,7 +370,7 @@ public:
         else if (target->IsPet())
         {
             Unit* owner = target->GetOwner();
-            if (owner && owner->GetTypeId() == ID_PLAYER && ((Pet*)target)->IsPermanentPetFor(owner->ToPlayer()))
+            if (owner && owner->GetObjectTypeID() == ID_PLAYER && ((Pet*)target)->IsPermanentPetFor(owner->ToPlayer()))
             {
                 // check online security
                 if (handler->HasLowerSecurity(owner->ToPlayer()))
@@ -666,7 +666,7 @@ public:
         }
 
         // check online security
-        if (target->GetTypeId() == ID_PLAYER && handler->HasLowerSecurity(target->ToPlayer()))
+        if (target->GetObjectTypeID() == ID_PLAYER && handler->HasLowerSecurity(target->ToPlayer()))
         {
             return false;
         }
@@ -843,7 +843,7 @@ public:
         {
             target = handler->GetSession()->GetPlayer();
         }
-        else if (target->GetTypeId() == ID_PLAYER && handler->HasLowerSecurity(target->ToPlayer())) // check online security
+        else if (target->GetObjectTypeID() == ID_PLAYER && handler->HasLowerSecurity(target->ToPlayer())) // check online security
         {
             return false;
         }
@@ -860,7 +860,7 @@ public:
         {
             target = handler->GetSession()->GetPlayer();
         }
-        else if (target->GetTypeId() == ID_PLAYER && handler->HasLowerSecurity(target->ToPlayer())) // check online security
+        else if (target->GetObjectTypeID() == ID_PLAYER && handler->HasLowerSecurity(target->ToPlayer())) // check online security
         {
             return false;
         }
@@ -877,7 +877,7 @@ public:
         {
             target = handler->GetSession()->GetPlayer();
         }
-        else if (target->GetTypeId() == ID_PLAYER && handler->HasLowerSecurity(target->ToPlayer())) // check online security
+        else if (target->GetObjectTypeID() == ID_PLAYER && handler->HasLowerSecurity(target->ToPlayer())) // check online security
         {
             return false;
         }

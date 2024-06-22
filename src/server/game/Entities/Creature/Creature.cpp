@@ -1859,18 +1859,18 @@ bool Creature::CanStartAttack(Unit const* who) const
         return false;
 
     // This set of checks is should be done only for creatures
-    if ((IsImmuneToNPC() && who->GetTypeId() != ID_PLAYER) ||      // flag is valid only for non player characters
-        (IsImmuneToPC() && who->GetTypeId() == ID_PLAYER))         // immune to PC and target is a player, return false
+    if ((IsImmuneToNPC() && who->GetObjectTypeID() != ID_PLAYER) ||      // flag is valid only for non player characters
+        (IsImmuneToPC() && who->GetObjectTypeID() == ID_PLAYER))         // immune to PC and target is a player, return false
     {
         return false;
     }
 
     if (Unit* owner = who->GetOwner())
-        if (owner->GetTypeId() == ID_PLAYER && IsImmuneToPC())     // immune to PC and target has player owner
+        if (owner->GetObjectTypeID() == ID_PLAYER && IsImmuneToPC())     // immune to PC and target has player owner
             return false;
 
     // Do not attack non-combat pets
-    if (who->GetTypeId() == ID_UNIT && who->GetCreatureType() == CREATURE_TYPE_NON_COMBAT_PET)
+    if (who->GetObjectTypeID() == ID_UNIT && who->GetCreatureType() == CREATURE_TYPE_NON_COMBAT_PET)
         return false;
 
     if (!CanFly() && (GetDistanceZ(who) > CREATURE_Z_ATTACK_RANGE + m_CombatDistance))                    // too much Z difference, skip very costy vmap calculations here
@@ -2436,7 +2436,7 @@ bool Creature::CanAssistTo(Unit const* u, Unit const* enemy, bool checkfaction /
         return false;
 
     // pussywizard: or if enemy is in evade mode
-    if (enemy && enemy->GetTypeId() == ID_UNIT && enemy->ToCreature()->IsInEvadeMode())
+    if (enemy && enemy->GetObjectTypeID() == ID_UNIT && enemy->ToCreature()->IsInEvadeMode())
         return false;
 
     // we don't need help from non-combatant ;)
@@ -2574,7 +2574,7 @@ bool Creature::CanCreatureAttack(Unit const* victim, bool skipDistCheck) const
         return false;
 
     // pussywizard: or if enemy is in evade mode
-    if (victim->GetTypeId() == ID_UNIT && victim->ToCreature()->IsInEvadeMode())
+    if (victim->GetObjectTypeID() == ID_UNIT && victim->ToCreature()->IsInEvadeMode())
         return false;
 
     // cannot attack if is during 5 second grace period, unless being attacked

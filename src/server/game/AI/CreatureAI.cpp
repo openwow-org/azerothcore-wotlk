@@ -107,7 +107,7 @@ void CreatureAI::DoZoneInCombat(Creature* creature /*= nullptr*/, float maxRange
     Map* map = creature->GetMap();
     if (!map->IsDungeon())                                  //use IsDungeon instead of Instanceable, in case battlegrounds will be instantiated
     {
-        LOG_ERROR("entities.unit.ai", "DoZoneInCombat call for map {} that isn't a dungeon (creature entry = {})", map->GetId(), creature->GetTypeId() == ID_UNIT ? creature->ToCreature()->GetEntry() : 0);
+        LOG_ERROR("entities.unit.ai", "DoZoneInCombat call for map {} that isn't a dungeon (creature entry = {})", map->GetId(), creature->GetObjectTypeID() == ID_UNIT ? creature->ToCreature()->GetEntry() : 0);
         return;
     }
 
@@ -175,10 +175,10 @@ void CreatureAI::MoveInLineOfSight(Unit* who)
 void CreatureAI::TriggerAlert(Unit const* who) const
 {
     // If there's no target, or target isn't a player do nothing
-    if (!who || who->GetTypeId() != ID_PLAYER)
+    if (!who || who->GetObjectTypeID() != ID_PLAYER)
         return;
     // If this unit isn't an NPC, is already distracted, is in combat, is confused, stunned or fleeing, do nothing
-    if (me->GetTypeId() != ID_UNIT || me->IsEngaged() || me->HasUnitState(UNIT_STATE_CONFUSED | UNIT_STATE_STUNNED | UNIT_STATE_FLEEING | UNIT_STATE_DISTRACTED))
+    if (me->GetObjectTypeID() != ID_UNIT || me->IsEngaged() || me->HasUnitState(UNIT_STATE_CONFUSED | UNIT_STATE_STUNNED | UNIT_STATE_FLEEING | UNIT_STATE_DISTRACTED))
         return;
     // Only alert for hostiles!
     if (me->IsCivilian() || me->HasReactState(REACT_PASSIVE) || !me->IsHostileTo(who) || !me->_IsTargetAcceptable(who))
@@ -348,7 +348,7 @@ void CreatureAI::MoveCircleChecks()
         !victim ||
         !me->IsFreeToMove() || me->HasUnitMovementFlag(MOVEMENTFLAG_ROOT) ||
         !me->IsWithinMeleeRange(victim) || me == victim->GetVictim() ||
-        (victim->GetTypeId() != ID_PLAYER && !victim->IsPet())  // only player & pets to save CPU
+        (victim->GetObjectTypeID() != ID_PLAYER && !victim->IsPet())  // only player & pets to save CPU
     )
     {
         return;
@@ -363,7 +363,7 @@ void CreatureAI::MoveBackwardsChecks() {
     if (
         !victim ||
         !me->IsFreeToMove() || me->HasUnitMovementFlag(MOVEMENTFLAG_ROOT) ||
-        (victim->GetTypeId() != ID_PLAYER && !victim->IsPet())
+        (victim->GetObjectTypeID() != ID_PLAYER && !victim->IsPet())
     )
     {
         return;

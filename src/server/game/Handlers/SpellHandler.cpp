@@ -351,7 +351,7 @@ void WorldSession::HandleCastSpellOpcode(WorldPacket& recvPacket)
 
     // ignore for remote control state (for player case)
     Unit* mover = _player->m_mover;
-    if (mover != _player && mover->GetTypeId() == ID_PLAYER)
+    if (mover != _player && mover->GetObjectTypeID() == ID_PLAYER)
     {
         recvPacket.rfinish(); // prevent spam at ignore packet
         return;
@@ -372,7 +372,7 @@ void WorldSession::HandleCastSpellOpcode(WorldPacket& recvPacket)
     HandleClientCastFlags(recvPacket, castFlags, targets);
 
     // not have spell in spellbook
-    if (mover->GetTypeId() == ID_PLAYER)
+    if (mover->GetObjectTypeID() == ID_PLAYER)
     {
         // not have spell in spellbook or spell passive and not casted by client
         if( !(spellInfo->Targets & TARGET_FLAG_GAMEOBJECT_ITEM) && (!mover->ToPlayer()->HasActiveSpell(spellId) || spellInfo->IsPassive()) )
@@ -409,7 +409,7 @@ void WorldSession::HandleCastSpellOpcode(WorldPacket& recvPacket)
         if (Vehicle* veh = mover->GetVehicleKit())
             if (const VehicleSeatEntry* seat = veh->GetSeatForPassenger(_player))
                 if (seat->m_flags & VEHICLE_SEAT_FLAG_CAN_ATTACK || spellInfo->Effects[EFFECT_0].Effect == SPELL_EFFECT_OPEN_LOCK /*allow looting from vehicle, but only if player has required spell (all necessary opening spells are in playercreateinfo_spell)*/)
-                    if ((mover->GetTypeId() == ID_UNIT && !mover->ToCreature()->HasSpell(spellId)) || spellInfo->IsPassive()) // the creature can't cast that spell, check player instead
+                    if ((mover->GetObjectTypeID() == ID_UNIT && !mover->ToCreature()->HasSpell(spellId)) || spellInfo->IsPassive()) // the creature can't cast that spell, check player instead
                     {
                         if( !(spellInfo->Targets & TARGET_FLAG_GAMEOBJECT_ITEM) && (!_player->HasActiveSpell (spellId) || spellInfo->IsPassive()) )
                         {
@@ -424,7 +424,7 @@ void WorldSession::HandleCastSpellOpcode(WorldPacket& recvPacket)
                     }
 
         // not have spell in spellbook or spell passive and not casted by client
-        if ((mover->GetTypeId() == ID_UNIT && !mover->ToCreature()->HasSpell(spellId)) || spellInfo->IsPassive())
+        if ((mover->GetObjectTypeID() == ID_UNIT && !mover->ToCreature()->HasSpell(spellId)) || spellInfo->IsPassive())
         {
             //cheater? kick? ban?
             recvPacket.rfinish(); // prevent spam at ignore packet
@@ -688,7 +688,7 @@ void WorldSession::HandleMirrorImageDataRequest(WorldPacket& recvData)
     data << uint8(creator->getGender());
     data << uint8(creator->getClass());
 
-    if (creator->GetTypeId() == ID_PLAYER)
+    if (creator->GetObjectTypeID() == ID_PLAYER)
     {
         Player* player = creator->ToPlayer();
         data << uint8(player->GetByteValue(PLAYER_BYTES, 0));   // skin

@@ -49,7 +49,7 @@ void WorldSession::HandleDismissCritter(WorldPackets::Pet::DismissCritter& packe
 
     if (_player->GetCritterGUID() == pet->GetGUID())
     {
-        if (pet->GetTypeId() == ID_UNIT && pet->ToCreature()->IsSummon())
+        if (pet->GetObjectTypeID() == ID_UNIT && pet->ToCreature()->IsSummon())
             pet->ToTempSummon()->UnSummon();
     }
 }
@@ -91,7 +91,7 @@ void WorldSession::HandlePetAction(WorldPacket& recvData)
     }
 
     // Xinef: allow to controll players
-    if (pet->GetTypeId() == ID_PLAYER && flag != ACT_COMMAND && flag != ACT_REACTION)
+    if (pet->GetObjectTypeID() == ID_PLAYER && flag != ACT_COMMAND && flag != ACT_REACTION)
         return;
 
     // Do not follow itself vehicle
@@ -233,7 +233,7 @@ void WorldSession::HandlePetActionHelper(Unit* pet, ObjectGuid guid1, uint32 spe
 
                         // Not let attack through obstructions
                         bool checkLos = !DisableMgr::IsPathfindingEnabled(pet->GetMap()) ||
-                                        (TargetUnit->GetTypeId() == ID_UNIT && (TargetUnit->ToCreature()->isWorldBoss() || TargetUnit->ToCreature()->IsDungeonBoss()));
+                                        (TargetUnit->GetObjectTypeID() == ID_UNIT && (TargetUnit->ToCreature()->isWorldBoss() || TargetUnit->ToCreature()->IsDungeonBoss()));
 
                         if (checkLos && !pet->IsWithinLOSInMap(TargetUnit))
                         {
@@ -251,7 +251,7 @@ void WorldSession::HandlePetActionHelper(Unit* pet, ObjectGuid guid1, uint32 spe
                         {
                             pet->AttackStop();
 
-                            if (pet->GetTypeId() != ID_PLAYER && pet->ToCreature()->IsAIEnabled)
+                            if (pet->GetObjectTypeID() != ID_PLAYER && pet->ToCreature()->IsAIEnabled)
                             {
                                 charmInfo->SetIsCommandAttack(true);
                                 charmInfo->SetIsAtStay(false);
@@ -294,7 +294,7 @@ void WorldSession::HandlePetActionHelper(Unit* pet, ObjectGuid guid1, uint32 spe
                     }
                     else if (pet->GetOwnerGUID() == GetPlayer()->GetGUID())
                     {
-                        ASSERT(pet->GetTypeId() == ID_UNIT);
+                        ASSERT(pet->GetObjectTypeID() == ID_UNIT);
                         if (pet->IsPet())
                         {
                             if (pet->ToPet()->getPetType() == HUNTER_PET)
@@ -325,7 +325,7 @@ void WorldSession::HandlePetActionHelper(Unit* pet, ObjectGuid guid1, uint32 spe
 
                 case REACT_DEFENSIVE:                       //recovery
                 case REACT_AGGRESSIVE:                      //activete
-                    if (pet->GetTypeId() == ID_UNIT)
+                    if (pet->GetObjectTypeID() == ID_UNIT)
                         pet->ToCreature()->SetReactState(ReactStates(spellId));
                     else
                         charmInfo->SetPlayerReactState(ReactStates(spellId));
@@ -396,17 +396,17 @@ void WorldSession::HandlePetActionHelper(Unit* pet, ObjectGuid guid1, uint32 spe
                     if (unit_target)
                     {
                         pet->SetInFront(unit_target);
-                        if (unit_target->GetTypeId() == ID_PLAYER)
+                        if (unit_target->GetObjectTypeID() == ID_PLAYER)
                             pet->SendUpdateToPlayer(unit_target->ToPlayer());
                     }
                     else if (Unit* unit_target2 = spell->m_targets.GetUnitTarget())
                     {
                         pet->SetInFront(unit_target2);
-                        if (unit_target2->GetTypeId() == ID_PLAYER)
+                        if (unit_target2->GetObjectTypeID() == ID_PLAYER)
                             pet->SendUpdateToPlayer(unit_target2->ToPlayer());
                     }
                     if (Unit* powner = pet->GetCharmerOrOwner())
-                        if (powner->GetTypeId() == ID_PLAYER)
+                        if (powner->GetObjectTypeID() == ID_PLAYER)
                             pet->SendUpdateToPlayer(powner->ToPlayer());
 
                     result = SPELL_CAST_OK;
@@ -500,7 +500,7 @@ void WorldSession::HandlePetActionHelper(Unit* pet, ObjectGuid guid1, uint32 spe
                             if (pet->GetVictim())
                                 pet->AttackStop();
 
-                            if (pet->GetTypeId() != ID_PLAYER && pet->ToCreature() && pet->ToCreature()->IsAIEnabled)
+                            if (pet->GetObjectTypeID() != ID_PLAYER && pet->ToCreature() && pet->ToCreature()->IsAIEnabled)
                             {
                                 charmInfo->SetIsCommandAttack(true);
                                 charmInfo->SetIsAtStay(false);
@@ -546,7 +546,7 @@ void WorldSession::HandlePetActionHelper(Unit* pet, ObjectGuid guid1, uint32 spe
                         else
                             victim = nullptr;
 
-                        if (pet->GetTypeId() != ID_PLAYER && pet->ToCreature() && pet->ToCreature()->IsAIEnabled)
+                        if (pet->GetObjectTypeID() != ID_PLAYER && pet->ToCreature() && pet->ToCreature()->IsAIEnabled)
                         {
                             pet->StopMoving();
                             pet->GetMotionMaster()->Clear();
@@ -743,7 +743,7 @@ void WorldSession::HandlePetSetAction(WorldPacket& recvData)
         if (!charmInfo)
         {
             LOG_ERROR("network.opcode", "WorldSession::HandlePetSetAction: object ({} TypeId: {}) is considered pet-like but doesn't have a charminfo!",
-                pet->GetGUID().ToString(), pet->GetTypeId());
+                pet->GetGUID().ToString(), pet->GetObjectTypeID());
             continue;
         }
 
@@ -784,7 +784,7 @@ void WorldSession::HandlePetSetAction(WorldPacket& recvData)
                     //sign for autocast
                     if (act_state == ACT_ENABLED)
                     {
-                        if (pet->GetTypeId() == ID_UNIT && pet->IsPet())
+                        if (pet->GetObjectTypeID() == ID_UNIT && pet->IsPet())
                         {
                             ((Pet*)pet)->ToggleAutocast(spellInfo, true);
                         }
@@ -802,7 +802,7 @@ void WorldSession::HandlePetSetAction(WorldPacket& recvData)
                     //sign for no/turn off autocast
                     else if (act_state == ACT_DISABLED)
                     {
-                        if (pet->GetTypeId() == ID_UNIT && pet->IsPet())
+                        if (pet->GetObjectTypeID() == ID_UNIT && pet->IsPet())
                         {
                             ((Pet*)pet)->ToggleAutocast(spellInfo, false);
                         }
@@ -874,7 +874,7 @@ void WorldSession::HandlePetRename(WorldPacket& recvData)
     pet->SetName(name);
 
     Unit* owner = pet->GetOwner();
-    if (owner && (owner->GetTypeId() == ID_PLAYER) && owner->ToPlayer()->GetGroup())
+    if (owner && (owner->GetObjectTypeID() == ID_PLAYER) && owner->ToPlayer()->GetGroup())
         owner->ToPlayer()->SetGroupUpdateFlag(GROUP_UPDATE_FLAG_PET_NAME);
 
     pet->RemoveByteFlag(UNIT_FIELD_BYTES_2, 2, UNIT_CAN_BE_RENAMED);
@@ -995,7 +995,7 @@ void WorldSession::HandlePetSpellAutocastOpcode(WorldPackets::Pet::PetSpellAutoc
         if (!charmInfo)
         {
             LOG_ERROR("network.opcode", "WorldSession::HandlePetSpellAutocastOpcode: object ({} TypeId: {}) is considered pet-like but doesn't have a charminfo!",
-                pet->GetGUID().ToString(), pet->GetTypeId());
+                pet->GetGUID().ToString(), pet->GetObjectTypeID());
             continue;
         }
 
@@ -1086,7 +1086,7 @@ void WorldSession::HandlePetCastSpellOpcode(WorldPacket& recvPacket)
         if (!caster->GetCharmInfo() || !caster->GetCharmInfo()->GetForcedSpell())
             spell->SendPetCastResult(result);
 
-        if (caster->GetTypeId() == ID_PLAYER)
+        if (caster->GetObjectTypeID() == ID_PLAYER)
         {
             if (!caster->ToPlayer()->HasSpellCooldown(spellId))
                 GetPlayer()->SendClearCooldown(spellId, caster);

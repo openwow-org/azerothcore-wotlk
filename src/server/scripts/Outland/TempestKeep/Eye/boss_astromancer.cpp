@@ -98,7 +98,7 @@ struct boss_high_astromancer_solarian : public BossAI
 
     void KilledUnit(Unit* victim) override
     {
-        if (victim->GetTypeId() == ID_PLAYER && roll_chance_i(50))
+        if (victim->GetObjectTypeID() == ID_PLAYER && roll_chance_i(50))
         {
             Talk(SAY_KILL);
         }

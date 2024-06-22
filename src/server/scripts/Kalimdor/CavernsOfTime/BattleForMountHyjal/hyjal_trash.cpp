@@ -190,7 +190,7 @@ hyjal_trashAI::hyjal_trashAI(Creature* creature) : npc_escortAI(creature)
 
 void hyjal_trashAI::DamageTaken(Unit* done_by, uint32& damage, DamageEffectType, SpellSchoolMask)
 {
-    if (done_by && (done_by->GetTypeId() == ID_PLAYER || done_by->IsPet()))
+    if (done_by && (done_by->GetObjectTypeID() == ID_PLAYER || done_by->IsPet()))
     {
         damageTaken += damage;
         instance->SetData(DATA_RAIDDAMAGE, damage);//store raid's damage

@@ -183,7 +183,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->GetTypeId() != ID_PLAYER)
+            if (victim->GetObjectTypeID() != ID_PLAYER)
                 return;
 
             Talk(SAY_SLAY);
@@ -475,7 +475,7 @@ public:
         {
             if (_attackGUID)
                 ScriptedAI::MoveInLineOfSight(who);
-            else if (_isActive && who->GetTypeId() == ID_PLAYER)
+            else if (_isActive && who->GetObjectTypeID() == ID_PLAYER)
             {
                 if ((who->GetPositionX() < me->GetPositionX() || who->GetPositionY() < -220.0f) && me->GetDistance2d(who) < 40)
                 {

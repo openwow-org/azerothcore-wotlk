@@ -304,11 +304,11 @@ bool AchievementCriteriaData::Meets(uint32 criteria_id, Player const* source, Un
         case ACHIEVEMENT_CRITERIA_DATA_TYPE_NONE:
             return true;
         case ACHIEVEMENT_CRITERIA_DATA_TYPE_T_CREATURE:
-            if (!target || target->GetTypeId() != ID_UNIT)
+            if (!target || target->GetObjectTypeID() != ID_UNIT)
                 return false;
             return target->GetEntry() == creature.id;
         case ACHIEVEMENT_CRITERIA_DATA_TYPE_T_PLAYER_CLASS_RACE:
-            if (!target || target->GetTypeId() != ID_PLAYER)
+            if (!target || target->GetObjectTypeID() != ID_PLAYER)
                 return false;
             if (classRace.class_id && classRace.class_id != target->ToPlayer()->getClass())
                 return false;
@@ -316,7 +316,7 @@ bool AchievementCriteriaData::Meets(uint32 criteria_id, Player const* source, Un
                 return false;
             return true;
         case ACHIEVEMENT_CRITERIA_DATA_TYPE_S_PLAYER_CLASS_RACE:
-            if (!source || source->GetTypeId() != ID_PLAYER)
+            if (!source || source->GetObjectTypeID() != ID_PLAYER)
                 return false;
             if (classRace.class_id && classRace.class_id != source->ToPlayer()->getClass())
                 return false;
@@ -324,7 +324,7 @@ bool AchievementCriteriaData::Meets(uint32 criteria_id, Player const* source, Un
                 return false;
             return true;
         case ACHIEVEMENT_CRITERIA_DATA_TYPE_T_PLAYER_LESS_HEALTH:
-            if (!target || target->GetTypeId() != ID_PLAYER)
+            if (!target || target->GetObjectTypeID() != ID_PLAYER)
                 return false;
             return !target->HealthAbovePct(health.percent);
         case ACHIEVEMENT_CRITERIA_DATA_TYPE_T_PLAYER_DEAD:
@@ -371,7 +371,7 @@ bool AchievementCriteriaData::Meets(uint32 criteria_id, Player const* source, Un
             return source->GetMap()->GetPlayersCountExceptGMs() <= map_players.maxcount;
         case ACHIEVEMENT_CRITERIA_DATA_TYPE_T_TEAM:
         {
-            if (!target || target->GetTypeId() != ID_PLAYER)
+            if (!target || target->GetObjectTypeID() != ID_PLAYER)
                 return false;
 
             // DB data compatibility...
@@ -1474,7 +1474,7 @@ void AchievementMgr::UpdateAchievementCriteria(AchievementCriteriaTypes type, ui
                             continue;
 
                         // map specific case (BG in fact) expected player targeted damage/heal
-                        if (!unit || unit->GetTypeId() != ID_PLAYER)
+                        if (!unit || unit->GetObjectTypeID() != ID_PLAYER)
                             continue;
                     }
 

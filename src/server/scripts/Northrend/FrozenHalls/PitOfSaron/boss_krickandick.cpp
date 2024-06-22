@@ -117,7 +117,7 @@ public:
         {
             if (!target || !spell)
                 return;
-            if (spell->Id == SPELL_PURSUIT && target->GetTypeId() == ID_PLAYER)
+            if (spell->Id == SPELL_PURSUIT && target->GetObjectTypeID() == ID_PLAYER)
             {
                 Talk(EMOTE_ICK_CHASE, target);
                 AttackStart(target);
@@ -264,7 +264,7 @@ public:
                 if (me->GetReactState() == REACT_PASSIVE)
                     me->SetReactState(REACT_AGGRESSIVE);
 
-            if (who->GetTypeId() == ID_PLAYER)
+            if (who->GetObjectTypeID() == ID_PLAYER)
                 if (Creature* k = GetKrick())
                     k->AI()->Talk(SAY_SLAY);
         }
@@ -472,7 +472,7 @@ public:
         {
             PreventDefaultAction();
             if (Unit* caster = GetCaster())
-                if (caster->GetTypeId() == ID_UNIT)
+                if (caster->GetObjectTypeID() == ID_UNIT)
                 {
                     Map::PlayerList const& players = caster->GetMap()->GetPlayers();
                     for (Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
@@ -513,7 +513,7 @@ public:
                     target->RemoveAurasDueToSpell(SPELL_HASTY_GROW);
                     target->RemoveAurasDueToSpell(SPELL_AUTO_GROW);
                     target->RemoveAurasDueToSpell(SPELL_EXPLODING_ORB_VISUAL);
-                    if (target->GetTypeId() == ID_UNIT)
+                    if (target->GetObjectTypeID() == ID_UNIT)
                         target->ToCreature()->DespawnOrUnsummon(2000);
                 }
         }

@@ -500,7 +500,7 @@ struct boss_twin_valkyrAI : public ScriptedAI
 
     void KilledUnit(Unit* who) override
     {
-        if( who->GetTypeId() == ID_PLAYER )
+        if( who->GetObjectTypeID() == ID_PLAYER )
         {
             int32 id = urand(0, 1) ? SAY_KILL_PLAYER_1 : SAY_KILL_PLAYER_2;
             Talk(id);

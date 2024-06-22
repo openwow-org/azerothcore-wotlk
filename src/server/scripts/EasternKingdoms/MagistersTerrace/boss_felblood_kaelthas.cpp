@@ -140,7 +140,7 @@ struct boss_felblood_kaelthas : public ScriptedAI
 
     void MoveInLineOfSight(Unit* who) override
     {
-        if (!introSpeak && me->IsWithinDistInMap(who, 40.0f) && who->GetTypeId() == ID_PLAYER)
+        if (!introSpeak && me->IsWithinDistInMap(who, 40.0f) && who->GetObjectTypeID() == ID_PLAYER)
         {
             Talk(SAY_AGGRO);
             introSpeak = true;

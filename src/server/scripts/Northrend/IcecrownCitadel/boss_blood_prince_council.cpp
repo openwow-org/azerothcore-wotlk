@@ -343,7 +343,7 @@ public:
 
         void DamageDealt(Unit* target, uint32& damage, DamageEffectType  /*damageType*/) override
         {
-            if (target->GetTypeId() != ID_PLAYER)
+            if (target->GetObjectTypeID() != ID_PLAYER)
                 return;
 
             if (damage > RAID_MODE<uint32>(23000, 25000, 23000, 25000))
@@ -352,7 +352,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->GetTypeId() == ID_PLAYER)
+            if (victim->GetObjectTypeID() == ID_PLAYER)
                 Talk(SAY_KELESETH_KILL);
         }
 
@@ -613,7 +613,7 @@ public:
 
         void DamageDealt(Unit* target, uint32& damage, DamageEffectType  /*damageType*/) override
         {
-            if (target->GetTypeId() != ID_PLAYER)
+            if (target->GetObjectTypeID() != ID_PLAYER)
                 return;
 
             if (damage > RAID_MODE<uint32>(23000, 25000, 23000, 25000))
@@ -622,7 +622,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->GetTypeId() == ID_PLAYER)
+            if (victim->GetObjectTypeID() == ID_PLAYER)
                 Talk(SAY_TALDARAM_KILL);
         }
 
@@ -907,7 +907,7 @@ public:
 
         void DamageDealt(Unit* target, uint32& damage, DamageEffectType  /*damageType*/) override
         {
-            if (target->GetTypeId() != ID_PLAYER)
+            if (target->GetObjectTypeID() != ID_PLAYER)
                 return;
 
             if (damage > RAID_MODE<uint32>(23000, 25000, 23000, 25000))
@@ -916,7 +916,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->GetTypeId() == ID_PLAYER)
+            if (victim->GetObjectTypeID() == ID_PLAYER)
                 Talk(SAY_VALANAR_KILL);
         }
 
@@ -1102,7 +1102,7 @@ public:
             if (_introDone)
                 return;
 
-            if (who->GetTypeId() != ID_PLAYER || me->GetExactDist2d(who) > 100.0f)
+            if (who->GetObjectTypeID() != ID_PLAYER || me->GetExactDist2d(who) > 100.0f)
             {
                 return;
             }
@@ -1335,7 +1335,7 @@ public:
 
         void DamageDealt(Unit* target, uint32& damage, DamageEffectType  /*damageType*/) override
         {
-            if (target->GetTypeId() != ID_PLAYER)
+            if (target->GetObjectTypeID() != ID_PLAYER)
             {
                 return;
             }
@@ -1451,7 +1451,7 @@ public:
 
         void HandleDummyTick(AuraEffect const* aurEff)
         {
-            if (GetTarget()->GetTypeId() == ID_PLAYER && GetTarget()->isMoving())
+            if (GetTarget()->GetObjectTypeID() == ID_PLAYER && GetTarget()->isMoving())
             {
                 GetTarget()->CastSpell(GetTarget(), SPELL_SHADOW_PRISON_DAMAGE, true, nullptr, aurEff);
             }
@@ -1539,7 +1539,7 @@ public:
 
         bool Load() override
         {
-            if (GetCaster()->GetTypeId() != ID_UNIT)
+            if (GetCaster()->GetObjectTypeID() != ID_UNIT)
             {
                 return false;
             }
@@ -1623,7 +1623,7 @@ public:
         void HandleDummyTick(AuraEffect const* /*aurEff*/)
         {
             Unit* target = GetTarget();
-            if (target->GetTypeId() != ID_UNIT)
+            if (target->GetObjectTypeID() != ID_UNIT)
                 return;
 
             if (Creature* bomb = target->FindNearestCreature(NPC_KINETIC_BOMB, 1.0f, true))

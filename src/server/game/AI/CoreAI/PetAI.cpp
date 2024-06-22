@@ -32,7 +32,7 @@ int32 PetAI::Permissible(Creature const* creature)
 {
     if (creature->HasUnitTypeMask(UNIT_MASK_CONTROLABLE_GUARDIAN))
     {
-        if (reinterpret_cast<Guardian const*>(creature)->GetOwner()->GetTypeId() == ID_PLAYER)
+        if (reinterpret_cast<Guardian const*>(creature)->GetOwner()->GetObjectTypeID() == ID_PLAYER)
             return PERMIT_BASE_PROACTIVE;
         return PERMIT_BASE_REACTIVE;
     }
@@ -209,7 +209,7 @@ void PetAI::UpdateAI(uint32 diff)
     // Autocast (casted only in combat or persistent spells in any state)
     if (!me->HasUnitState(UNIT_STATE_CASTING))
     {
-        if (owner && owner->GetTypeId() == ID_PLAYER && me->GetCharmInfo()->GetForcedSpell() && me->GetCharmInfo()->GetForcedTarget())
+        if (owner && owner->GetObjectTypeID() == ID_PLAYER && me->GetCharmInfo()->GetForcedSpell() && me->GetCharmInfo()->GetForcedTarget())
         {
             owner->ToPlayer()->GetSession()->HandlePetActionHelper(me, me->GetGUID(), std::abs(me->GetCharmInfo()->GetForcedSpell()), ACT_ENABLED, me->GetCharmInfo()->GetForcedTarget());
 
@@ -331,10 +331,10 @@ void PetAI::UpdateAI(uint32 diff)
             if (!me->HasInArc(M_PI, target))
             {
                 me->SetInFront(target);
-                if (target && target->GetTypeId() == ID_PLAYER)
+                if (target && target->GetObjectTypeID() == ID_PLAYER)
                     me->SendUpdateToPlayer(target->ToPlayer());
 
-                if (owner && owner->GetTypeId() == ID_PLAYER)
+                if (owner && owner->GetObjectTypeID() == ID_PLAYER)
                     me->SendUpdateToPlayer(owner->ToPlayer());
             }
 
@@ -358,7 +358,7 @@ void PetAI::UpdateAllies()
 
     if (!owner)
         return;
-    else if (owner->GetTypeId() == ID_PLAYER)
+    else if (owner->GetObjectTypeID() == ID_PLAYER)
         group = owner->ToPlayer()->GetGroup();
 
     //only pet and owner/not in group->ok
@@ -612,7 +612,7 @@ void PetAI::DoAttack(Unit* target, bool chase)
 
             if (_canMeleeAttack())
             {
-                float angle = combatRange == 0.f && target->GetTypeId() != ID_PLAYER && !target->IsPet() ? float(M_PI) : 0.f;
+                float angle = combatRange == 0.f && target->GetObjectTypeID() != ID_PLAYER && !target->IsPet() ? float(M_PI) : 0.f;
                 float tolerance = combatRange == 0.f ? float(M_PI_4) : float(M_PI * 2);
                 me->GetMotionMaster()->MoveChase(target, ChaseRange(0.f, combatRange), ChaseAngle(angle, tolerance));
             }

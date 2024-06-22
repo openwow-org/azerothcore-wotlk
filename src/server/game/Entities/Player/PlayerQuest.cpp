@@ -427,7 +427,7 @@ void Player::AddQuestAndCheckCompletion(Quest const* quest, Object* questGiver)
     if (!questGiver)
         return;
 
-    switch (questGiver->GetTypeId())
+    switch (questGiver->GetObjectTypeID())
     {
         case ID_UNIT:
             sScriptMgr->OnQuestAccept(this, questGiver->ToCreature(), quest);
@@ -551,7 +551,7 @@ void Player::AddQuest(Quest const* quest, Object* questGiver)
         uint32 timeAllowed = quest->GetTimeAllowed();
 
         // shared timed quest
-        if (questGiver && questGiver->GetTypeId() == ID_PLAYER)
+        if (questGiver && questGiver->GetObjectTypeID() == ID_PLAYER)
             timeAllowed = questGiver->ToPlayer()->getQuestStatusMap()[quest_id].Timer / IN_MILLISECONDS;
 
         AddTimedQuest(quest_id);
@@ -1585,7 +1585,7 @@ QuestGiverStatus Player::GetQuestDialogStatus(Object* questgiver)
 
     sScriptMgr->GetDialogStatus(this, questgiver);
 
-    switch (questgiver->GetTypeId())
+    switch (questgiver->GetObjectTypeID())
     {
         case ID_GAMEOBJECT:
         {
@@ -1607,7 +1607,7 @@ QuestGiverStatus Player::GetQuestDialogStatus(Object* questgiver)
         }
         default:
             // it's impossible, but check
-            //LOG_ERROR("entities.player.quest", "GetQuestDialogStatus called for unexpected type {}", questgiver->GetTypeId());
+            //LOG_ERROR("entities.player.quest", "GetQuestDialogStatus called for unexpected type {}", questgiver->GetObjectTypeID());
             return DIALOG_STATUS_NONE;
     }
 

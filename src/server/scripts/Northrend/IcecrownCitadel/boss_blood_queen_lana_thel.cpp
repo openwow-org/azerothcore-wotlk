@@ -268,7 +268,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->GetTypeId() == ID_PLAYER)
+            if (victim->GetObjectTypeID() == ID_PLAYER)
                 Talk(SAY_KILL);
         }
 
@@ -889,7 +889,7 @@ public:
                 return;
             }
 
-            if (GetCaster()->GetTypeId() != ID_PLAYER || GetCaster()->GetMapId() != 631)
+            if (GetCaster()->GetObjectTypeID() != ID_PLAYER || GetCaster()->GetMapId() != 631)
                 return;
             InstanceScript* instance = GetCaster()->GetInstanceScript();
             if (!instance || instance->GetBossState(DATA_BLOOD_QUEEN_LANA_THEL) != IN_PROGRESS)

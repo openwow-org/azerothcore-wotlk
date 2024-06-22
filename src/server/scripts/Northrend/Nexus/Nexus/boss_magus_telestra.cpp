@@ -241,7 +241,7 @@ public:
 
         bool Load() override
         {
-            return GetUnitOwner()->GetTypeId() == ID_UNIT;
+            return GetUnitOwner()->GetObjectTypeID() == ID_UNIT;
         }
 
         void HandleApply(AuraEffect const*  /*aurEff*/, AuraEffectHandleModes /*mode*/)

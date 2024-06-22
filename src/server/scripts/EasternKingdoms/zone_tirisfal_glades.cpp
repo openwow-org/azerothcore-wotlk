@@ -109,7 +109,7 @@ public:
 
                 m_uiPhase = 1;
 
-                if (pDoneBy->GetTypeId() == ID_PLAYER)
+                if (pDoneBy->GetObjectTypeID() == ID_PLAYER)
                 {
                     m_uiPlayerGUID = pDoneBy->GetGUID();
                 }
@@ -118,7 +118,7 @@ public:
                     if (Unit* owner = pDoneBy->GetOwner())
                     {
                         // not sure if this is needed.
-                        if (owner->GetTypeId() == ID_PLAYER)
+                        if (owner->GetObjectTypeID() == ID_PLAYER)
                         {
                             m_uiPlayerGUID = owner->GetGUID();
                         }

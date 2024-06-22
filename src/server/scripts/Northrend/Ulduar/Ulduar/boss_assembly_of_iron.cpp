@@ -310,7 +310,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->GetTypeId() != ID_PLAYER)
+            if (who->GetObjectTypeID() != ID_PLAYER)
                 return;
 
             if (_phase == 3)
@@ -488,7 +488,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->GetTypeId() != ID_PLAYER)
+            if (who->GetObjectTypeID() != ID_PLAYER)
                 return;
 
             Talk(SAY_MOLGEIM_SLAY);
@@ -706,7 +706,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->GetTypeId() != ID_PLAYER || urand(0, 2))
+            if (who->GetObjectTypeID() != ID_PLAYER || urand(0, 2))
                 return;
 
             Talk(SAY_BRUNDIR_SLAY);

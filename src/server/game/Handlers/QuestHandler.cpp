@@ -51,7 +51,7 @@ void WorldSession::HandleQuestgiverStatusQueryOpcode(WorldPacket& recvData)
         return;
     }
 
-    switch (questGiver->GetTypeId())
+    switch (questGiver->GetObjectTypeID())
     {
         case ID_UNIT:
             {
@@ -70,7 +70,7 @@ void WorldSession::HandleQuestgiverStatusQueryOpcode(WorldPacket& recvData)
                 break;
             }
         default:
-            LOG_ERROR("network.opcode", "QuestGiver called for unexpected type {}", questGiver->GetTypeId());
+            LOG_ERROR("network.opcode", "QuestGiver called for unexpected type {}", questGiver->GetObjectTypeID());
             break;
     }
 
@@ -122,8 +122,8 @@ void WorldSession::HandleQuestgiverAcceptQuestOpcode(WorldPacket& recvData)
     Object* object = ObjectAccessor::GetObjectByTypeMask(*_player, guid, TYPE_UNIT | TYPE_GAMEOBJECT | TYPE_ITEM | TYPE_PLAYER);
 
     // no or incorrect quest giver
-    if (!object || object == _player || (object->GetTypeId() != ID_PLAYER && !object->hasQuest(questId)) ||
-            (object->GetTypeId() == ID_PLAYER && !object->ToPlayer()->CanShareQuest(questId)))
+    if (!object || object == _player || (object->GetObjectTypeID() != ID_PLAYER && !object->hasQuest(questId)) ||
+            (object->GetObjectTypeID() == ID_PLAYER && !object->ToPlayer()->CanShareQuest(questId)))
     {
         _player->PlayerTalkClass->SendCloseGossip();
         _player->SetDivider();
@@ -137,7 +137,7 @@ void WorldSession::HandleQuestgiverAcceptQuestOpcode(WorldPacket& recvData)
     if (Quest const* quest = sObjectMgr->GetQuestTemplate(questId))
     {
         // pussywizard: exploit fix, can't share quests that give items to be sold
-        if (object->GetTypeId() == ID_PLAYER)
+        if (object->GetObjectTypeID() == ID_PLAYER)
             if (uint32 itemId = quest->GetSrcItemId())
                 if (ItemTemplate const* srcItem = sObjectMgr->GetItemTemplate(itemId))
                     if (srcItem->SellPrice > 0)
@@ -219,7 +219,7 @@ void WorldSession::HandleQuestgiverQueryQuestOpcode(WorldPacket& recvData)
     if (Quest const* quest = sObjectMgr->GetQuestTemplate(questId))
     {
         // not sure here what should happen to quests with QUEST_FLAGS_AUTOCOMPLETE
-        // if this breaks them, add && object->GetTypeId() == ID_ITEM to this check
+        // if this breaks them, add && object->GetObjectTypeID() == ID_ITEM to this check
         // item-started quests never have that flag
         if (!_player->CanTakeQuest(quest, true))
             return;
@@ -289,7 +289,7 @@ void WorldSession::HandleQuestgiverChooseRewardOpcode(WorldPacket& recvData)
                 _player->PlayerTalkClass->SendQuestGiverStatus(uint8(_player->GetQuestDialogStatus(object)), guid);
             }
 
-            switch (object->GetTypeId())
+            switch (object->GetObjectTypeID())
             {
                 case ID_UNIT:
                     {

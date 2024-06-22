@@ -70,7 +70,7 @@ KillRewarder::KillRewarder(Player* killer, Unit* victim, bool isBattleGround) :
         _isFullXP(false), _maxLevel(0), _isBattleGround(isBattleGround), _isPvP(false)
 {
     // mark the credit as pvp if victim is player
-    if (victim->GetTypeId() == ID_PLAYER)
+    if (victim->GetObjectTypeID() == ID_PLAYER)
         _isPvP = true;
         // or if its owned by player and its not a vehicle
     else if (victim->GetCharmerOrOwnerGUID().IsPlayer())
@@ -130,7 +130,7 @@ void KillRewarder::_InitXP(Player* player)
         _xp = Acore::XP::Gain(player, _victim, _isBattleGround);
 
     if (_xp && !_isBattleGround && _victim) // pussywizard: npcs with relatively low hp give lower exp
-        if (_victim->GetTypeId() == ID_UNIT)
+        if (_victim->GetObjectTypeID() == ID_UNIT)
             if (const CreatureTemplate* ct = _victim->ToCreature()->GetCreatureTemplate())
                 if (ct->ModHealth <= 0.75f && ct->ModHealth >= 0.0f)
                     _xp = uint32(_xp * ct->ModHealth);
@@ -201,7 +201,7 @@ void KillRewarder::_RewardPlayer(Player* player, bool isDungeon)
         // 4.1. Give honor (player must be alive and not on BG).
         _RewardHonor(player);
         // 4.1.1 Send player killcredit for quests with PlayerSlain
-        if (_victim->GetTypeId() == ID_PLAYER)
+        if (_victim->GetObjectTypeID() == ID_PLAYER)
             player->KilledPlayerCredit();
     }
     // Give XP only in PvE or in battlegrounds.
@@ -255,7 +255,7 @@ void KillRewarder::_RewardGroup()
                     {
                         _RewardPlayer(member, isDungeon);
                         // Xinef: only count players
-                        //if (_victim->GetTypeId() == ID_PLAYER)
+                        //if (_victim->GetObjectTypeID() == ID_PLAYER)
                         //    member->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_SPECIAL_PVP_KILL, 1, 0, _victim);
                     }
                 }

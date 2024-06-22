@@ -118,7 +118,7 @@ struct npc_pilgrims_bounty_chair : public VehicleAI
 
     void PassengerBoarded(Unit* who, int8  /*seatId*/, bool apply) override
     {
-        if (apply && who->GetTypeId() == ID_PLAYER)
+        if (apply && who->GetObjectTypeID() == ID_PLAYER)
             who->ToPlayer()->SetClientControl(me, 0, true);
     }
 
@@ -563,7 +563,7 @@ class spell_pilgrims_bounty_serve_generic : public AuraScript
     void OnAuraRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
     {
         Unit* target = GetTarget();
-        if (target->GetTypeId() == ID_UNIT)
+        if (target->GetObjectTypeID() == ID_UNIT)
             target->ToCreature()->AI()->DoAction(GetSpellInfo()->Id);
     }
 

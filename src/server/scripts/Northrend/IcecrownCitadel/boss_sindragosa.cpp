@@ -252,7 +252,7 @@ public:
         if (target->GetExactDist(_source) > 80.0f)
             return false;
 
-        if (target->GetTypeId() != ID_PLAYER)
+        if (target->GetObjectTypeID() != ID_PLAYER)
             return false;
 
         if (target->HasAura(SPELL_FROST_IMBUED_BLADE))
@@ -361,7 +361,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->GetTypeId() == ID_PLAYER)
+            if (victim->GetObjectTypeID() == ID_PLAYER)
                 Talk(SAY_KILL);
         }
 
@@ -488,7 +488,7 @@ public:
 
         void SpellHitTarget(Unit* target, SpellInfo const* spell) override
         {
-            if (target->GetTypeId() == ID_PLAYER)
+            if (target->GetObjectTypeID() == ID_PLAYER)
                 if (uint32 spellId = sSpellMgr->GetSpellIdForDifficulty(70127, me))
                     if (spellId == spell->Id)
                         if (Aura const* mysticBuffet = target->GetAura(spell->Id))
@@ -810,7 +810,7 @@ public:
         {
             PreventHitDefaultEffect(effIndex);
 
-            if (!GetHitUnit()->IsAlive() || (GetHitUnit()->GetTypeId() == ID_PLAYER && GetHitUnit()->ToPlayer()->IsGameMaster()) || !_targetCount)
+            if (!GetHitUnit()->IsAlive() || (GetHitUnit()->GetObjectTypeID() == ID_PLAYER && GetHitUnit()->ToPlayer()->IsGameMaster()) || !_targetCount)
                 return;
 
             float resistance = float(GetHitUnit()->GetResistance(SpellSchoolMask(GetSpellInfo()->SchoolMask)));
@@ -1307,7 +1307,7 @@ public:
                 {
                     s->CastSpell(s, 72466, true);
                     s->RemoveAurasDueToSpell(72424);
-                    if (s->GetTypeId() == ID_UNIT) s->ToCreature()->SetLootMode(3);
+                    if (s->GetObjectTypeID() == ID_UNIT) s->ToCreature()->SetLootMode(3);
                     SetDuration(1);
                 }
         }

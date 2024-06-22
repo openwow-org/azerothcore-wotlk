@@ -89,7 +89,7 @@ namespace Acore
     {
         Unit& i_unit;
         bool isCreature;
-        explicit AIRelocationNotifier(Unit& unit) : i_unit(unit), isCreature(unit.GetTypeId() == ID_UNIT)  {}
+        explicit AIRelocationNotifier(Unit& unit) : i_unit(unit), isCreature(unit.GetObjectTypeID() == ID_UNIT)  {}
         template<class T> void Visit(GridRefMgr<T>&) {}
         void Visit(CreatureMapType&);
     };
@@ -104,7 +104,7 @@ namespace Acore
         Player const* skipped_receiver;
         MessageDistDeliverer(WorldObject const* src, WorldPacket const* msg, float dist, bool own_team_only = false, Player const* skipped = nullptr)
             : i_source(src), i_message(msg), i_phaseMask(src->GetPhaseMask()), i_distSq(dist * dist)
-            , teamId((own_team_only && src->GetTypeId() == ID_PLAYER) ? src->ToPlayer()->GetTeamId() : TEAM_NEUTRAL)
+            , teamId((own_team_only && src->GetObjectTypeID() == ID_PLAYER) ? src->ToPlayer()->GetTeamId() : TEAM_NEUTRAL)
             , skipped_receiver(skipped)
         {
         }
@@ -861,7 +861,7 @@ namespace Acore
         bool operator()(Unit* u)
         {
             if (u->IsAlive() && !u->IsCritter() && i_obj->IsWithinDistInMap(u, i_range) && !i_funit->IsFriendlyTo(u) &&
-                    (i_funit->GetTypeId() != ID_UNIT || !i_funit->ToCreature()->IsAvoidingAOE())) // pussywizard
+                    (i_funit->GetObjectTypeID() != ID_UNIT || !i_funit->ToCreature()->IsAvoidingAOE())) // pussywizard
                 return true;
             else
                 return false;
@@ -884,7 +884,7 @@ namespace Acore
             if (u->GetCreatureType() == CREATURE_TYPE_NON_COMBAT_PET)
                 return false;
 
-            if (u->GetTypeId() == ID_UNIT && (u->ToCreature()->IsTotem() || u->ToCreature()->IsTrigger() || u->ToCreature()->IsAvoidingAOE())) // pussywizard: added IsAvoidingAOE()
+            if (u->GetObjectTypeID() == ID_UNIT && (u->ToCreature()->IsTotem() || u->ToCreature()->IsTrigger() || u->ToCreature()->IsAvoidingAOE())) // pussywizard: added IsAvoidingAOE()
                 return false;
 
             if (!u->isTargetableForAttack(false, i_funit))
@@ -915,7 +915,7 @@ namespace Acore
                 return false;
             }
 
-            if (u->GetTypeId() == ID_UNIT && u->ToCreature()->IsTotem())
+            if (u->GetObjectTypeID() == ID_UNIT && u->ToCreature()->IsTotem())
             {
                 return false;
             }
@@ -927,7 +927,7 @@ namespace Acore
 
             uint32 losChecks = LINEOFSIGHT_ALL_CHECKS;
             Optional<float> collisionHeight = { };
-            if (i_obj->GetTypeId() == ID_GAMEOBJECT)
+            if (i_obj->GetObjectTypeID() == ID_GAMEOBJECT)
             {
                 losChecks &= ~LINEOFSIGHT_CHECK_GOBJECT_M2;
                 collisionHeight = i_owner->GetCollisionHeight();
@@ -975,7 +975,7 @@ namespace Acore
         AnyFriendlyUnitInObjectRangeCheck(WorldObject const* obj, Unit const* funit, float range, bool playerOnly = false) : i_obj(obj), i_funit(funit), i_range(range), i_playerOnly(playerOnly) {}
         bool operator()(Unit* u)
         {
-            if (u->IsAlive() && i_obj->IsWithinDistInMap(u, i_range) && i_funit->IsFriendlyTo(u) && (!i_playerOnly || u->GetTypeId() == ID_PLAYER))
+            if (u->IsAlive() && i_obj->IsWithinDistInMap(u, i_range) && i_funit->IsFriendlyTo(u) && (!i_playerOnly || u->GetObjectTypeID() == ID_PLAYER))
                 return true;
             else
                 return false;
@@ -993,7 +993,7 @@ namespace Acore
         AnyFriendlyNotSelfUnitInObjectRangeCheck(WorldObject const* obj, Unit const* funit, float range, bool playerOnly = false) : i_obj(obj), i_funit(funit), i_range(range), i_playerOnly(playerOnly) {}
         bool operator()(Unit* u)
         {
-            if (u != i_obj && u->IsAlive() && i_obj->IsWithinDistInMap(u, i_range) && i_funit->IsFriendlyTo(u) && (!i_playerOnly || u->GetTypeId() == ID_PLAYER))
+            if (u != i_obj && u->IsAlive() && i_obj->IsWithinDistInMap(u, i_range) && i_funit->IsFriendlyTo(u) && (!i_playerOnly || u->GetObjectTypeID() == ID_PLAYER))
                 return true;
             else
                 return false;
@@ -1080,8 +1080,8 @@ namespace Acore
             Unit const* owner = i_funit->GetOwner();
             if (owner)
                 check = owner;
-            i_targetForPlayer = (check->GetTypeId() == ID_PLAYER);
-            if (i_obj->GetTypeId() == ID_DYNAMICOBJECT)
+            i_targetForPlayer = (check->GetObjectTypeID() == ID_PLAYER);
+            if (i_obj->GetObjectTypeID() == ID_DYNAMICOBJECT)
                 _spellInfo = sSpellMgr->GetSpellInfo(((DynamicObject*)i_obj)->GetSpellId());
         }
         bool operator()(Unit* u)
@@ -1101,7 +1101,7 @@ namespace Acore
 
             }
 
-            if (i_funit->_IsValidAttackTarget(u, _spellInfo, i_obj->GetTypeId() == ID_DYNAMICOBJECT ? i_obj : nullptr) && i_obj->IsWithinDistInMap(u, i_range))
+            if (i_funit->_IsValidAttackTarget(u, _spellInfo, i_obj->GetObjectTypeID() == ID_DYNAMICOBJECT ? i_obj : nullptr) && i_obj->IsWithinDistInMap(u, i_range))
                 return true;
 
             return false;
@@ -1199,7 +1199,7 @@ namespace Acore
             if (!me->IsValidAttackTarget(u))
                 return false;
 
-            if (i_playerOnly && u->GetTypeId() != ID_PLAYER)
+            if (i_playerOnly && u->GetObjectTypeID() != ID_PLAYER)
                 return false;
 
             m_range = me->GetDistance(u);   // use found unit range as new range limit for next check
@@ -1484,7 +1484,7 @@ namespace Acore
             }
 
             Player* player = nullptr;
-            if (u->GetTypeId() == ID_PLAYER)
+            if (u->GetObjectTypeID() == ID_PLAYER)
             {
                 player = u->ToPlayer();
             }
@@ -1597,7 +1597,7 @@ namespace Acore
         ObjectTypeIdCheck(OBJECT_TYPE_ID typeId, bool equals) : _typeId(typeId), _equals(equals) {}
         bool operator()(WorldObject const* object)
         {
-            return (object->GetTypeId() == _typeId) == _equals;
+            return (object->GetObjectTypeID() == _typeId) == _equals;
         }
 
     private:

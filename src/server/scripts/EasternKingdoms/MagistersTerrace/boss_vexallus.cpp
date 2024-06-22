@@ -82,7 +82,7 @@ struct boss_vexallus : public BossAI
 
     void KilledUnit(Unit* victim) override
     {
-        if (victim->GetTypeId() == ID_PLAYER)
+        if (victim->GetObjectTypeID() == ID_PLAYER)
             Talk(SAY_KILL);
     }
 

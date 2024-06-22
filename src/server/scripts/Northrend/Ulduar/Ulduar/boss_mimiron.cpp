@@ -1165,7 +1165,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->GetTypeId() == ID_PLAYER)
+            if (who->GetObjectTypeID() == ID_PLAYER)
                 if (Creature* c = GetMimiron())
                 {
                     if (Phase == 1)
@@ -1321,7 +1321,7 @@ public:
                 if( Vehicle* vk = me->GetVehicleKit() )
                     for (uint8 i = 0; i < 2; ++i)
                         if (Unit* r = vk->GetPassenger(5 + i))
-                            if (r->GetTypeId() == ID_UNIT)
+                            if (r->GetObjectTypeID() == ID_UNIT)
                                 r->ToCreature()->DespawnOrUnsummon(1);
         }
 
@@ -1417,7 +1417,7 @@ public:
                                     exitPos.m_positionZ += 2.0f * Phase;
                                     r->_ExitVehicle(&exitPos);
                                     me->RemoveAurasByType(SPELL_AURA_CONTROL_VEHICLE, r->GetGUID());
-                                    if (r->GetTypeId() == ID_UNIT)
+                                    if (r->GetObjectTypeID() == ID_UNIT)
                                         r->ToCreature()->AI()->SetData(0, 0);
                                 }
                         }
@@ -1501,7 +1501,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->GetTypeId() == ID_PLAYER)
+            if (who->GetObjectTypeID() == ID_PLAYER)
                 if (Creature* c = GetMimiron())
                 {
                     if (Phase == 2)
@@ -1806,7 +1806,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->GetTypeId() == ID_PLAYER)
+            if (who->GetObjectTypeID() == ID_PLAYER)
                 if (Creature* c = GetMimiron())
                 {
                     if (Phase == 3)
@@ -1888,7 +1888,7 @@ public:
 
         void SpellHitTarget(Unit* target, SpellInfo const* spell) override
         {
-            if (target && spell && target->GetTypeId() == ID_PLAYER && spell->Id == SPELL_MINE_EXPLOSION)
+            if (target && spell && target->GetObjectTypeID() == ID_PLAYER && spell->Id == SPELL_MINE_EXPLOSION)
                 if (InstanceScript* pInstance = me->GetInstanceScript())
                     if (Creature* c = GetMimiron())
                         c->AI()->SetData(0, 11);
@@ -2136,7 +2136,7 @@ public:
         {
             if (Unit* c = GetCaster())
             {
-                if (c->GetTypeId() != ID_UNIT)
+                if (c->GetObjectTypeID() != ID_UNIT)
                     return;
                 uint32 diff = getMSTimeDiff(lastMSTime, GameTime::GetGameTimeMS().count());
                 if (lastOrientation == -1.0f)
@@ -2433,7 +2433,7 @@ public:
             {
                 if (target->GetEntry() == NPC_ASSAULT_BOT)
                     me->CastSpell(me, 65040, true); // achievement Not-So-Friendly Fire
-                else if (target->GetTypeId() == ID_PLAYER)
+                else if (target->GetObjectTypeID() == ID_PLAYER)
                     if (InstanceScript* pInstance = me->GetInstanceScript())
                         if (Creature* c = GetMimiron())
                             c->AI()->SetData(0, 13);
@@ -2449,7 +2449,7 @@ public:
 
     bool OnCheck(Player*  /*player*/, Unit* target, uint32 /*criteria_id*/) override
     {
-        return target && target->GetEntry() == NPC_MIMIRON && target->GetTypeId() == ID_UNIT && target->ToCreature()->AI()->GetData(1);
+        return target && target->GetEntry() == NPC_MIMIRON && target->GetObjectTypeID() == ID_UNIT && target->ToCreature()->AI()->GetData(1);
     }
 };
 
@@ -2460,7 +2460,7 @@ public:
 
     bool OnCheck(Player*  /*player*/, Unit* target, uint32 /*criteria_id*/) override
     {
-        return target && target->GetEntry() == NPC_MIMIRON && target->GetTypeId() == ID_UNIT && !target->ToCreature()->AI()->GetData(11);
+        return target && target->GetEntry() == NPC_MIMIRON && target->GetObjectTypeID() == ID_UNIT && !target->ToCreature()->AI()->GetData(11);
     }
 };
 
@@ -2471,7 +2471,7 @@ public:
 
     bool OnCheck(Player*  /*player*/, Unit* target, uint32 /*criteria_id*/) override
     {
-        return target && target->GetEntry() == NPC_MIMIRON && target->GetTypeId() == ID_UNIT && !target->ToCreature()->AI()->GetData(12);
+        return target && target->GetEntry() == NPC_MIMIRON && target->GetObjectTypeID() == ID_UNIT && !target->ToCreature()->AI()->GetData(12);
     }
 };
 
@@ -2482,7 +2482,7 @@ public:
 
     bool OnCheck(Player*  /*player*/, Unit* target, uint32 /*criteria_id*/) override
     {
-        return target && target->GetEntry() == NPC_MIMIRON && target->GetTypeId() == ID_UNIT && !target->ToCreature()->AI()->GetData(13);
+        return target && target->GetEntry() == NPC_MIMIRON && target->GetObjectTypeID() == ID_UNIT && !target->ToCreature()->AI()->GetData(13);
     }
 };
 

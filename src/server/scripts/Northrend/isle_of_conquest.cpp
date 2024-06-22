@@ -388,7 +388,7 @@ public:
 
         bool Load() override
         {
-            return GetCaster()->GetTypeId() == ID_PLAYER;
+            return GetCaster()->GetObjectTypeID() == ID_PLAYER;
         }
 
         void HandleScript(SpellEffIndex effIndex)

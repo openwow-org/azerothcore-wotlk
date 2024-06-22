@@ -601,7 +601,7 @@ public:
                 Transport::PassengerSet const& passengers = t->GetStaticPassengers();
                 for (Transport::PassengerSet::const_iterator itr = passengers.begin(); itr != passengers.end(); ++itr)
                 {
-                    if ((*itr)->GetTypeId() != ID_UNIT || (*itr)->GetEntry() != NPC_GUNSHIP_HULL)
+                    if ((*itr)->GetObjectTypeID() != ID_UNIT || (*itr)->GetEntry() != NPC_GUNSHIP_HULL)
                         continue;
                     (*itr)->ToCreature()->CastSpell((*itr)->ToCreature(), explosionSpell, true);
                 }
@@ -614,7 +614,7 @@ public:
                     Transport::PassengerSet const& passengers = t->GetStaticPassengers();
                     for (Transport::PassengerSet::const_iterator itr = passengers.begin(); itr != passengers.end(); ++itr)
                     {
-                        if ((*itr)->GetTypeId() != ID_UNIT || (*itr)->GetEntry() != cannonEntry)
+                        if ((*itr)->GetObjectTypeID() != ID_UNIT || (*itr)->GetEntry() != cannonEntry)
                             continue;
                         Creature* cannon = (*itr)->ToCreature();
                         cannon->CastSpell(cannon, SPELL_EJECT_ALL_PASSENGERS, true);
@@ -660,7 +660,7 @@ public:
                             Transport::PassengerSet const& passengers = t->GetPassengers();
                             for (Transport::PassengerSet::const_iterator itr = passengers.begin(); itr != passengers.end(); ++itr)
                             {
-                                if ((*itr)->GetTypeId() != ID_UNIT)
+                                if ((*itr)->GetObjectTypeID() != ID_UNIT)
                                     continue;
                                 Creature* c = (*itr)->ToCreature();
                                 if (c->GetEntry() == NPC_SKYBREAKER_MARINE || c->GetEntry() == NPC_SKYBREAKER_SERGEANT || c->GetEntry() == NPC_KOR_KRON_REAVER || c->GetEntry() == NPC_KOR_KRON_SERGEANT)
@@ -2009,7 +2009,7 @@ public:
 
         bool CheckAreaTarget(Unit* target)
         {
-            return target->GetTypeId() == ID_PLAYER && GetOwner()->GetInstanceScript()->GetBossState(DATA_ICECROWN_GUNSHIP_BATTLE) != DONE;
+            return target->GetObjectTypeID() == ID_PLAYER && GetOwner()->GetInstanceScript()->GetBossState(DATA_ICECROWN_GUNSHIP_BATTLE) != DONE;
         }
 
         void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
@@ -2088,7 +2088,7 @@ public:
         bool Load() override
         {
             _playerCount = 0;
-            return GetCaster()->GetTypeId() == ID_UNIT;
+            return GetCaster()->GetObjectTypeID() == ID_UNIT;
         }
 
         void CountTargets(std::list<WorldObject*>& targets)
@@ -2380,7 +2380,7 @@ public:
 
         bool Load() override
         {
-            return GetCaster()->GetTypeId() == ID_UNIT;
+            return GetCaster()->GetObjectTypeID() == ID_UNIT;
         }
 
         void CheckEnergy()
@@ -2553,7 +2553,7 @@ public:
 
     bool operator()(WorldObject* unit)
     {
-        return unit->GetTypeId() != ID_PLAYER || unit->GetPositionZ() > 478.0f || !unit->GetTransport() || unit->GetTransport()->GetEntry() != _entry
+        return unit->GetObjectTypeID() != ID_PLAYER || unit->GetPositionZ() > 478.0f || !unit->GetTransport() || unit->GetTransport()->GetEntry() != _entry
         || unit->GetMapHeight(unit->GetPhaseMask(), unit->GetPositionX(), unit->GetPositionY(), unit->GetPositionZ()) < 465.0f;
     }
 
@@ -2685,7 +2685,7 @@ public:
 
         bool CheckAreaTarget(Unit* unit)
         {
-            return unit->GetTypeId() == ID_PLAYER;
+            return unit->GetObjectTypeID() == ID_PLAYER;
         }
 
         void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)

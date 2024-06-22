@@ -1461,7 +1461,7 @@ public:
                 return true;
             }
 
-            if (owner->GetTypeId() != ID_PLAYER || !player->IsInSameRaidWith(owner->ToPlayer()))
+            if (owner->GetObjectTypeID() != ID_PLAYER || !player->IsInSameRaidWith(owner->ToPlayer()))
             {
                 if (SpellInfo const* spell = sSpellMgr->GetSpellInfo(stoneSpell))
                 {

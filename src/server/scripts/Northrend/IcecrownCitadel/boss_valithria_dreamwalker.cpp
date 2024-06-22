@@ -551,7 +551,7 @@ public:
 
         void AttackStart(Unit* target) override
         {
-            if (target->GetTypeId() == ID_PLAYER)
+            if (target->GetObjectTypeID() == ID_PLAYER)
                 BossAI::AttackStart(target);
         }
 
@@ -559,7 +559,7 @@ public:
 
         bool CanAIAttack(Unit const* target) const override
         {
-            return target->GetTypeId() == ID_PLAYER;
+            return target->GetObjectTypeID() == ID_PLAYER;
         }
 
         void JustReachedHome() override
@@ -594,7 +594,7 @@ public:
                 if (!threatList.empty())
                     for (ThreatContainer::StorageType::const_iterator itr = threatList.begin(); itr != threatList.end(); ++itr)
                         if (Unit* target = (*itr)->getTarget())
-                            if (target->IsAlive() && target->GetTypeId() == ID_PLAYER && me->GetExactDist(target) < 200.0f && !target->IsImmunedToDamageOrSchool(SPELL_SCHOOL_MASK_ALL))
+                            if (target->IsAlive() && target->GetObjectTypeID() == ID_PLAYER && me->GetExactDist(target) < 200.0f && !target->IsImmunedToDamageOrSchool(SPELL_SCHOOL_MASK_ALL))
                                 return;
                 EnterEvadeMode();
             }

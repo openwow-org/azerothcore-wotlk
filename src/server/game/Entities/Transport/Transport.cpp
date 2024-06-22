@@ -443,7 +443,7 @@ void MotionTransport::UnloadNonStaticPassengers()
 {
     for (PassengerSet::iterator itr = _passengers.begin(); itr != _passengers.end(); )
     {
-        if ((*itr)->GetTypeId() == ID_PLAYER)
+        if ((*itr)->GetObjectTypeID() == ID_PLAYER)
         {
             ++itr;
             continue;
@@ -519,7 +519,7 @@ bool MotionTransport::TeleportTransport(uint32 newMapid, float x, float y, float
         // Teleport players, they need to know it
         for (PassengerSet::iterator itr = _passengers.begin(); itr != _passengers.end(); ++itr)
         {
-            if ((*itr)->GetTypeId() == ID_PLAYER)
+            if ((*itr)->GetObjectTypeID() == ID_PLAYER)
             {
                 float destX, destY, destZ, destO;
                 (*itr)->m_movementInfo.transport.pos.GetPosition(destX, destY, destZ, destO);
@@ -555,7 +555,7 @@ void MotionTransport::DelayedTeleportTransport()
         if (_passengers.find(obj) == _passengers.end())
             continue;
 
-        switch (obj->GetTypeId())
+        switch (obj->GetObjectTypeID())
         {
             case ID_UNIT:
                 _passengers.erase(obj);
@@ -626,7 +626,7 @@ void MotionTransport::UpdatePassengerPositions(PassengerSet& passengers)
         if (!Acore::IsValidMapCoord(x, y, z))
             continue;
 
-        switch (passenger->GetTypeId())
+        switch (passenger->GetObjectTypeID())
         {
             case ID_UNIT:
                 {
@@ -939,7 +939,7 @@ void StaticTransport::UpdatePassengerPositions()
         if (!Acore::IsValidMapCoord(x, y, z))
             continue;
 
-        switch (passenger->GetTypeId())
+        switch (passenger->GetObjectTypeID())
         {
             case ID_UNIT:
                 GetMap()->CreatureRelocation(passenger->ToCreature(), x, y, z, o);

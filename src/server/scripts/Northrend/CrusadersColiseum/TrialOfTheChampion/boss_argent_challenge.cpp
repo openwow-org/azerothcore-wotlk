@@ -116,7 +116,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if( who->GetTypeId() == ID_PLAYER )
+            if( who->GetObjectTypeID() == ID_PLAYER )
             {
                 Talk(SAY_EADRIC_KILL_PLAYER);
             }
@@ -243,7 +243,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if( who->GetTypeId() == ID_PLAYER )
+            if( who->GetObjectTypeID() == ID_PLAYER )
             {
                 Talk(SAY_PALETRESS_KILL_PLAYER);
             }
@@ -781,7 +781,7 @@ public:
         {
             for( std::list<WorldObject*>::iterator itr = targets.begin(); itr != targets.end(); )
             {
-                if ((*itr)->GetTypeId() == ID_UNIT)
+                if ((*itr)->GetObjectTypeID() == ID_UNIT)
                     if ((*itr)->ToCreature()->GetEntry() == NPC_FOUNTAIN_OF_LIGHT)
                     {
                         targets.erase(itr);

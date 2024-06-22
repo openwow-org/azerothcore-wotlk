@@ -341,7 +341,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->GetTypeId() == ID_PLAYER)
+            if (victim->GetObjectTypeID() == ID_PLAYER)
                 Talk(SAY_KILL);
         }
 
@@ -1315,7 +1315,7 @@ public:
 
         bool Load() override
         {
-            return GetCaster()->GetTypeId() == ID_UNIT;
+            return GetCaster()->GetObjectTypeID() == ID_UNIT;
         }
 
         void FilterTargets(std::list<WorldObject*>& targets)

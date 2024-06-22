@@ -46,7 +46,7 @@ public:
 
         bool Load() override
         {
-            return GetOwner()->GetTypeId() == ID_UNIT;
+            return GetOwner()->GetObjectTypeID() == ID_UNIT;
         }
 
         void HandleEffectRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
@@ -224,14 +224,14 @@ public:
         {
             ScriptedAI::MoveInLineOfSight(who);
 
-            if (who->GetTypeId() != ID_UNIT)
+            if (who->GetObjectTypeID() != ID_UNIT)
                 return;
 
             if (who->GetEntry() == NPC_ORPHANED_MAMMOTH_CALF && me->IsWithinDistInMap(who, 10.0f))
             {
                 if (Unit* owner = who->GetOwner())
                 {
-                    if (owner->GetTypeId() == ID_PLAYER)
+                    if (owner->GetObjectTypeID() == ID_PLAYER)
                     {
                         owner->CastSpell(owner, SPELL_MAMMOTH_CALF_ESCORT_CREDIT, true);
                         who->ToCreature()->DespawnOrUnsummon();
@@ -321,7 +321,7 @@ public:
 
         void JustDied(Unit* killer) override
         {
-            if (!killer || killer->GetTypeId() != ID_PLAYER)
+            if (!killer || killer->GetObjectTypeID() != ID_PLAYER)
             {
                 return;
             }
@@ -759,7 +759,7 @@ public:
 
         void SpellHit(Unit* unit, SpellInfo const* spell) override
         {
-            if (spell->Id == SPELL_NEURAL_NEEDLE && unit->GetTypeId() == ID_PLAYER)
+            if (spell->Id == SPELL_NEURAL_NEEDLE && unit->GetObjectTypeID() == ID_PLAYER)
             {
                 if (Player* player = unit->ToPlayer())
                 {

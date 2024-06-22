@@ -133,7 +133,7 @@ public:
 
         void MoveInLineOfSight(Unit* who) override
         {
-            if (!sayGreet && who->GetTypeId() == ID_PLAYER)
+            if (!sayGreet && who->GetObjectTypeID() == ID_PLAYER)
             {
                 Talk(SAY_GREET);
                 sayGreet = true;
@@ -143,7 +143,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->GetTypeId() != ID_PLAYER)
+            if (who->GetObjectTypeID() != ID_PLAYER)
                 return;
 
             if (!urand(0, 3))

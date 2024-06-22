@@ -209,7 +209,7 @@ public:
 
     bool operator()(Unit const* target) const
     {
-        if (!me || !target || target->GetTypeId() != ID_PLAYER)
+        if (!me || !target || target->GetObjectTypeID() != ID_PLAYER)
             return false;
 
         if (me->IsWithinCombatRange(target, 7.0f))
@@ -333,7 +333,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->GetTypeId() == ID_PLAYER)
+            if (victim->GetObjectTypeID() == ID_PLAYER)
                 Talk(SAY_KILL);
         }
 
@@ -985,7 +985,7 @@ public:
         void HandleScript(SpellEffIndex effIndex)
         {
             PreventHitDefaultEffect(effIndex);
-            if (GetCaster()->GetTypeId() != ID_UNIT)
+            if (GetCaster()->GetObjectTypeID() != ID_UNIT)
                 return;
 
             Creature* creature = GetCaster()->ToCreature();
@@ -1105,7 +1105,7 @@ public:
         bool Load() override
         {
             _target = nullptr;
-            return GetCaster()->GetTypeId() == ID_UNIT;
+            return GetCaster()->GetObjectTypeID() == ID_UNIT;
         }
 
         void SelectTarget(std::list<WorldObject*>& targets)
@@ -1450,7 +1450,7 @@ public:
             if (!GetExplTargetUnit())
                 return SPELL_FAILED_BAD_TARGETS;
 
-            if (GetExplTargetUnit()->GetTypeId() != ID_PLAYER)
+            if (GetExplTargetUnit()->GetObjectTypeID() != ID_PLAYER)
                 return SPELL_FAILED_TARGET_NOT_PLAYER;
 
             SpellCustomErrors extension = SPELL_CUSTOM_ERROR_NONE;

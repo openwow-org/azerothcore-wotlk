@@ -641,7 +641,7 @@ public:
 
         void JustEngagedWith(Unit* who) override
         {
-            if (who->GetTypeId() == ID_PLAYER)
+            if (who->GetObjectTypeID() == ID_PLAYER)
                 PlayerGUID = who->GetGUID();
         }
 

@@ -1365,7 +1365,7 @@ public:
 
         void PassengerBoarded(Unit* passenger, int8 /*seatId*/, bool apply) override
         {
-            if (apply && passenger->GetTypeId() == ID_PLAYER)
+            if (apply && passenger->GetObjectTypeID() == ID_PLAYER)
             {
                 Movement::PointsArray pathPoints;
                 pathPoints.push_back(G3D::Vector3(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ()));
@@ -1424,7 +1424,7 @@ public:
             if (spell->Id == SPELL_LAND)
             {
                 Unit* passenger = me->GetVehicleKit()->GetPassenger(1); // player should be on seat 1
-                if (passenger && passenger->GetTypeId() == ID_PLAYER)
+                if (passenger && passenger->GetObjectTypeID() == ID_PLAYER)
                     passenger->CastSpell(passenger, SPELL_CREDIT, true);
 
                 me->DespawnOrUnsummon();

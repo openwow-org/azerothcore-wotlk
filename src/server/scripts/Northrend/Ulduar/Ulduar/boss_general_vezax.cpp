@@ -203,7 +203,7 @@ public:
 
         void SpellHitTarget(Unit* target, SpellInfo const* spell) override
         {
-            if (target && spell && target->GetTypeId() == ID_PLAYER && spell->Id == SPELL_VEZAX_SHADOW_CRASH_DMG)
+            if (target && spell && target->GetObjectTypeID() == ID_PLAYER && spell->Id == SPELL_VEZAX_SHADOW_CRASH_DMG)
                 bAchievShadowdodger = false;
         }
 
@@ -367,7 +367,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if( who->GetTypeId() == ID_PLAYER )
+            if( who->GetObjectTypeID() == ID_PLAYER )
                 Talk(SAY_SLAY);
         }
 
@@ -486,7 +486,7 @@ public:
             if (Unit* caster = GetCaster())
                 if (Unit* target = GetTarget())
                 {
-                    if (target->GetTypeId() != ID_PLAYER)
+                    if (target->GetObjectTypeID() != ID_PLAYER)
                         return;
 
                     target->CastSpell(target, SPELL_AURA_OF_DESPAIR_2, true);
@@ -649,7 +649,7 @@ public:
 
     bool OnCheck(Player*  /*player*/, Unit* target, uint32 /*criteria_id*/) override
     {
-        return target && target->GetEntry() == NPC_VEZAX && target->GetTypeId() == ID_UNIT && target->ToCreature()->AI()->GetData(1);
+        return target && target->GetEntry() == NPC_VEZAX && target->GetObjectTypeID() == ID_UNIT && target->ToCreature()->AI()->GetData(1);
     }
 };
 
@@ -660,7 +660,7 @@ public:
 
     bool OnCheck(Player*  /*player*/, Unit* target, uint32 /*criteria_id*/) override
     {
-        return target && target->GetEntry() == NPC_VEZAX && target->GetTypeId() == ID_UNIT && target->ToCreature()->AI()->GetData(2);
+        return target && target->GetEntry() == NPC_VEZAX && target->GetObjectTypeID() == ID_UNIT && target->ToCreature()->AI()->GetData(2);
     }
 };
 

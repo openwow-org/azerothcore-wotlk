@@ -43,7 +43,7 @@ GameObject::GameObject() : WorldObject(false), MovableMapObject(),
     m_model(nullptr), m_goValue(), m_AI(nullptr)
 {
     m_objectType |= TYPE_GAMEOBJECT;
-    m_objectTypeId = ID_GAMEOBJECT;
+    m_typeId = ID_GAMEOBJECT;
 
     m_updateFlag = (UPDATEFLAG_LOWGUID | UPDATEFLAG_STATIONARY_POSITION | UPDATEFLAG_POSITION | UPDATEFLAG_ROTATION);
 
@@ -503,7 +503,7 @@ void GameObject::Update(uint32 diff)
                             {
                                 // splash bobber (bobber ready now)
                                 Unit* caster = GetOwner();
-                                if (caster && caster->GetTypeId() == ID_PLAYER)
+                                if (caster && caster->GetObjectTypeID() == ID_PLAYER)
                                 {
                                     SetGoState(GO_STATE_ACTIVE);
                                     ReplaceAllGameObjectFlags(GO_FLAG_NODESPAWN);
@@ -631,7 +631,7 @@ void GameObject::Update(uint32 diff)
                             case GAMEOBJECT_TYPE_FISHINGNODE:   //  can't fish now
                                 {
                                     Unit* caster = GetOwner();
-                                    if (caster && caster->GetTypeId() == ID_PLAYER)
+                                    if (caster && caster->GetObjectTypeID() == ID_PLAYER)
                                     {
                                         caster->ToPlayer()->RemoveGameObject(this, false);
 
@@ -1519,7 +1519,7 @@ void GameObject::Use(Unit* user)
             return;
         case GAMEOBJECT_TYPE_QUESTGIVER:                    //2
             {
-                if (user->GetTypeId() != ID_PLAYER)
+                if (user->GetObjectTypeID() != ID_PLAYER)
                     return;
 
                 Player* player = user->ToPlayer();
@@ -1548,7 +1548,7 @@ void GameObject::Use(Unit* user)
                 if (!info)
                     return;
 
-                if (user->GetTypeId() != ID_PLAYER)
+                if (user->GetObjectTypeID() != ID_PLAYER)
                     return;
 
                 if (ChairListSlots.empty())        // this is called once at first chair use to make list of available slots
@@ -1633,7 +1633,7 @@ void GameObject::Use(Unit* user)
                 if (HasGameObjectFlag(GO_FLAG_IN_USE))
                     return;
 
-                if (user->GetTypeId() == ID_PLAYER)
+                if (user->GetObjectTypeID() == ID_PLAYER)
                 {
                     Player* player = user->ToPlayer();
 
@@ -1715,7 +1715,7 @@ void GameObject::Use(Unit* user)
                 if (!info)
                     return;
 
-                if (user->GetTypeId() != ID_PLAYER)
+                if (user->GetObjectTypeID() != ID_PLAYER)
                     return;
 
                 Player* player = user->ToPlayer();
@@ -1816,7 +1816,7 @@ void GameObject::Use(Unit* user)
 
         case GAMEOBJECT_TYPE_SUMMONING_RITUAL:              //18
             {
-                if (user->GetTypeId() != ID_PLAYER)
+                if (user->GetObjectTypeID() != ID_PLAYER)
                     return;
 
                 Player* player = user->ToPlayer();
@@ -1829,7 +1829,7 @@ void GameObject::Use(Unit* user)
 
                 if (owner)
                 {
-                    if (owner->GetTypeId() != ID_PLAYER)
+                    if (owner->GetObjectTypeID() != ID_PLAYER)
                         return;
 
                     // accept only use by player from same group as owner, excluding owner itself (unique use already added in spell effect)
@@ -1885,7 +1885,7 @@ void GameObject::Use(Unit* user)
                 if (info->spellcaster.partyOnly)
                 {
                     Player const* caster = ObjectAccessor::FindConnectedPlayer(GetOwnerGUID());
-                    if (!caster || user->GetTypeId() != ID_PLAYER || !user->ToPlayer()->IsInSameRaidWith(caster))
+                    if (!caster || user->GetObjectTypeID() != ID_PLAYER || !user->ToPlayer()->IsInSameRaidWith(caster))
                         return;
                 }
 
@@ -1899,7 +1899,7 @@ void GameObject::Use(Unit* user)
             {
                 GameObjectTemplate const* info = GetGOInfo();
 
-                if (user->GetTypeId() != ID_PLAYER)
+                if (user->GetObjectTypeID() != ID_PLAYER)
                     return;
 
                 Player* player = user->ToPlayer();
@@ -1928,7 +1928,7 @@ void GameObject::Use(Unit* user)
 
         case GAMEOBJECT_TYPE_FLAGSTAND:                     // 24
             {
-                if (user->GetTypeId() != ID_PLAYER)
+                if (user->GetObjectTypeID() != ID_PLAYER)
                     return;
 
                 Player* player = user->ToPlayer();
@@ -1960,7 +1960,7 @@ void GameObject::Use(Unit* user)
 
         case GAMEOBJECT_TYPE_FISHINGHOLE:                   // 25
             {
-                if (user->GetTypeId() != ID_PLAYER)
+                if (user->GetObjectTypeID() != ID_PLAYER)
                     return;
 
                 Player* player = user->ToPlayer();
@@ -1972,7 +1972,7 @@ void GameObject::Use(Unit* user)
 
         case GAMEOBJECT_TYPE_FLAGDROP:                      // 26
             {
-                if (user->GetTypeId() != ID_PLAYER)
+                if (user->GetObjectTypeID() != ID_PLAYER)
                     return;
 
                 Player* player = user->ToPlayer();
@@ -2030,7 +2030,7 @@ void GameObject::Use(Unit* user)
                 if (!info)
                     return;
 
-                if (user->GetTypeId() != ID_PLAYER)
+                if (user->GetObjectTypeID() != ID_PLAYER)
                     return;
 
                 Player* player = user->ToPlayer();
@@ -2057,7 +2057,7 @@ void GameObject::Use(Unit* user)
     SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(spellId);
     if (!spellInfo)
     {
-        if (user->GetTypeId() != ID_PLAYER || !sOutdoorPvPMgr->HandleCustomSpell(user->ToPlayer(), spellId, this))
+        if (user->GetObjectTypeID() != ID_PLAYER || !sOutdoorPvPMgr->HandleCustomSpell(user->ToPlayer(), spellId, this))
             LOG_ERROR("entities.gameobject", "WORLD: unknown spell id {} at use action for gameobject (Entry: {} GoType: {})", spellId, GetEntry(), GetGoType());
         else
             LOG_DEBUG("outdoorpvp", "WORLD: {} non-dbc spell was handled by OutdoorPvP", spellId);

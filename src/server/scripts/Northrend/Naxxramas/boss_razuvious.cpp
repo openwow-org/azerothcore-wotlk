@@ -102,7 +102,7 @@ public:
             {
                 Talk(SAY_SLAY);
             }
-            if (who->GetTypeId() == ID_PLAYER && pInstance)
+            if (who->GetObjectTypeID() == ID_PLAYER && pInstance)
             {
                 pInstance->SetData(DATA_IMMORTAL_FAIL, 0);
             }
@@ -111,7 +111,7 @@ public:
         void DamageTaken(Unit* who, uint32& damage, DamageEffectType, SpellSchoolMask) override
         {
             // Damage done by the controlled Death Knight understudies should also count toward damage done by players
-            if(who && who->GetTypeId() == ID_UNIT && who->GetEntry() == NPC_DEATH_KNIGHT_UNDERSTUDY)
+            if(who && who->GetObjectTypeID() == ID_UNIT && who->GetEntry() == NPC_DEATH_KNIGHT_UNDERSTUDY)
             {
                 me->LowerPlayerDamageReq(damage);
             }
@@ -197,7 +197,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->GetTypeId() == ID_PLAYER && me->GetInstanceScript())
+            if (who->GetObjectTypeID() == ID_PLAYER && me->GetInstanceScript())
             {
                 me->GetInstanceScript()->SetData(DATA_IMMORTAL_FAIL, 0);
             }
