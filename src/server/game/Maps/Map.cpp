@@ -70,7 +70,7 @@ Map::~Map()
         WorldObject* obj = *i_worldObjects.begin();
         ASSERT(obj->IsWorldObject());
         LOG_DEBUG("maps", "Map::~Map: WorldObject TypeId is not a corpse! ({})", static_cast<uint8>(obj->GetTypeId()));
-        //ASSERT(obj->GetTypeId() == TYPEID_CORPSE);
+        //ASSERT(obj->GetTypeId() == ID_CORPSE);
         obj->RemoveFromWorld();
         obj->ResetMap();
     }
@@ -587,7 +587,7 @@ bool Map::AddToMap(T* obj, bool checkTransport)
     obj->AddToWorld();
 
     if (checkTransport)
-        if (!(obj->GetTypeId() == TYPEID_GAMEOBJECT && obj->ToGameObject()->IsTransport())) // dont add transport to transport ;d
+        if (!(obj->GetTypeId() == ID_GAMEOBJECT && obj->ToGameObject()->IsTransport())) // dont add transport to transport ;d
             if (Transport* transport = GetTransportForPos(obj->GetPhaseMask(), obj->GetPositionX(), obj->GetPositionY(), obj->GetPositionZ(), obj))
                 transport->AddPassenger(obj, true);
 
@@ -602,7 +602,7 @@ bool Map::AddToMap(T* obj, bool checkTransport)
 
     // Xinef: little hack for vehicles, accessories have to be added after visibility update so they wont fall off the vehicle, moved from Creature::AIM_Initialize
     // Initialize vehicle, this is done only for summoned npcs, DB creatures are handled by grid loaders
-    if (obj->GetTypeId() == TYPEID_UNIT)
+    if (obj->GetTypeId() == ID_UNIT)
         if (Vehicle* vehicle = obj->ToCreature()->GetVehicleKit())
             vehicle->Reset();
     return true;
@@ -941,7 +941,7 @@ void Map::AfterPlayerUnlinkFromMap()
 template<class T>
 void Map::RemoveFromMap(T* obj, bool remove)
 {
-    bool inWorld = obj->IsInWorld() && obj->GetTypeId() >= TYPEID_UNIT && obj->GetTypeId() <= TYPEID_GAMEOBJECT;
+    bool inWorld = obj->IsInWorld() && obj->GetTypeId() >= ID_UNIT && obj->GetTypeId() <= ID_GAMEOBJECT;
     obj->RemoveFromWorld();
 
     if (obj->isActiveObject())
@@ -2657,8 +2657,8 @@ void Map::AddObjectToSwitchList(WorldObject* obj, bool on)
 {
     ASSERT(obj->GetMapId() == GetId() && obj->GetInstanceId() == GetInstanceId());
     // i_objectsToSwitch is iterated only in Map::RemoveAllObjectsInRemoveList() and it uses
-    // the contained objects only if GetTypeId() == TYPEID_UNIT , so we can return in all other cases
-    if (obj->GetTypeId() != TYPEID_UNIT && obj->GetTypeId() != TYPEID_GAMEOBJECT)
+    // the contained objects only if GetTypeId() == ID_UNIT , so we can return in all other cases
+    if (obj->GetTypeId() != ID_UNIT && obj->GetTypeId() != ID_GAMEOBJECT)
         return;
 
     std::map<WorldObject*, bool>::iterator itr = i_objectsToSwitch.find(obj);
@@ -2683,10 +2683,10 @@ void Map::RemoveAllObjectsInRemoveList()
         {
             switch (obj->GetTypeId())
             {
-                case TYPEID_UNIT:
+                case ID_UNIT:
                     SwitchGridContainers<Creature>(obj->ToCreature(), on);
                     break;
-                case TYPEID_GAMEOBJECT:
+                case ID_GAMEOBJECT:
                     SwitchGridContainers<GameObject>(obj->ToGameObject(), on);
                     break;
                 default:
@@ -2704,7 +2704,7 @@ void Map::RemoveAllObjectsInRemoveList()
 
         switch (obj->GetTypeId())
         {
-            case TYPEID_CORPSE:
+            case ID_CORPSE:
                 {
                     Corpse* corpse = ObjectAccessor::GetCorpse(*obj, obj->GetGUID());
                     if (!corpse)
@@ -2713,16 +2713,16 @@ void Map::RemoveAllObjectsInRemoveList()
                         RemoveFromMap(corpse, true);
                     break;
                 }
-            case TYPEID_DYNAMICOBJECT:
+            case ID_DYNAMICOBJECT:
                 RemoveFromMap((DynamicObject*)obj, true);
                 break;
-            case TYPEID_GAMEOBJECT:
+            case ID_GAMEOBJECT:
                 if (MotionTransport* transport = obj->ToGameObject()->ToMotionTransport())
                     RemoveFromMap(transport, true);
                 else
                     RemoveFromMap(obj->ToGameObject(), true);
                 break;
-            case TYPEID_UNIT:
+            case ID_UNIT:
                 // in case triggered sequence some spell can continue casting after prev CleanupsBeforeDelete call
                 // make sure that like sources auras/etc removed before destructor start
                 obj->ToCreature()->CleanupsBeforeDelete();

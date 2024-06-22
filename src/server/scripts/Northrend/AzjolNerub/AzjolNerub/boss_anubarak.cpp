@@ -92,7 +92,7 @@ class boss_anub_arak : public CreatureScript
 
             void MoveInLineOfSight(Unit* who) override
             {
-                if (!intro && who->GetTypeId() == TYPEID_PLAYER)
+                if (!intro && who->GetTypeId() == ID_PLAYER)
                 {
                     intro = true;
                     Talk(SAY_INTRO);

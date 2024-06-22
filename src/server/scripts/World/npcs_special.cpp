@@ -2534,7 +2534,7 @@ public:
 
         void IsSummonedBy(WorldObject* summoner) override
         {
-            if (summoner->GetTypeId() != TYPEID_PLAYER)
+            if (summoner->GetTypeId() != ID_PLAYER)
             {
                 return;
             }
@@ -2610,7 +2610,7 @@ public:
 
     void IsSummonedBy(WorldObject* summoner) override
     {
-        if (summoner->GetTypeId() != TYPEID_UNIT)
+        if (summoner->GetTypeId() != ID_UNIT)
         {
             return;
         }

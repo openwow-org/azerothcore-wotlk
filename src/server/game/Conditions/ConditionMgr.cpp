@@ -320,10 +320,10 @@ bool Condition::Meets(ConditionSourceInfo& sourceInfo)
             {
                 switch (object->GetTypeId())
                 {
-                    case TYPEID_UNIT:
+                    case ID_UNIT:
                         condMeets &= object->ToCreature()->GetSpawnId() == ConditionValue3;
                         break;
-                    case TYPEID_GAMEOBJECT:
+                    case ID_GAMEOBJECT:
                         condMeets &= object->ToGameObject()->GetSpawnId() == ConditionValue3;
                         break;
                     default:
@@ -672,16 +672,16 @@ uint32 Condition::GetSearcherTypeMaskForCondition()
     case CONDITION_OBJECT_ENTRY_GUID:
         switch (ConditionValue1)
         {
-        case TYPEID_UNIT:
+        case ID_UNIT:
             mask |= GRID_MAP_TYPE_MASK_CREATURE;
             break;
-        case TYPEID_PLAYER:
+        case ID_PLAYER:
             mask |= GRID_MAP_TYPE_MASK_PLAYER;
             break;
-        case TYPEID_GAMEOBJECT:
+        case ID_GAMEOBJECT:
             mask |= GRID_MAP_TYPE_MASK_GAMEOBJECT;
             break;
-        case TYPEID_CORPSE:
+        case ID_CORPSE:
             mask |= GRID_MAP_TYPE_MASK_CORPSE;
             break;
         default:
@@ -2146,7 +2146,7 @@ bool ConditionMgr::isConditionTypeValid(Condition* cond)
     {
         switch (cond->ConditionValue1)
         {
-        case TYPEID_UNIT:
+        case ID_UNIT:
             if (cond->ConditionValue2 && !sObjectMgr->GetCreatureTemplate(cond->ConditionValue2))
             {
                 LOG_ERROR("sql.sql", "ObjectEntryGuid condition has non existing creature template entry ({}), skipped", cond->ConditionValue2);
@@ -2169,7 +2169,7 @@ bool ConditionMgr::isConditionTypeValid(Condition* cond)
                 }
             }
             break;
-        case TYPEID_GAMEOBJECT:
+        case ID_GAMEOBJECT:
             if (cond->ConditionValue2 && !sObjectMgr->GetGameObjectTemplate(cond->ConditionValue2))
             {
                 LOG_ERROR("sql.sql", "ObjectEntryGuid condition has non existing gameobject template entry ({}), skipped", cond->ConditionValue2);
@@ -2192,8 +2192,8 @@ bool ConditionMgr::isConditionTypeValid(Condition* cond)
                 }
             }
             break;
-        case TYPEID_PLAYER:
-        case TYPEID_CORPSE:
+        case ID_PLAYER:
+        case ID_CORPSE:
             if (cond->ConditionValue2)
                 LOG_ERROR("sql.sql", "ObjectEntryGuid condition has useless data in value2 ({})!", cond->ConditionValue2);
             if (cond->ConditionValue3)

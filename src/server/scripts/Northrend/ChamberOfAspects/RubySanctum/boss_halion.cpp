@@ -308,7 +308,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->GetTypeId() == TYPEID_PLAYER && events.GetNextEventTime(EVENT_KILL_TALK) == 0)
+            if (victim->GetTypeId() == ID_PLAYER && events.GetNextEventTime(EVENT_KILL_TALK) == 0)
             {
                 Talk(SAY_KILL);
                 events.ScheduleEvent(EVENT_KILL_TALK, 6s);
@@ -475,7 +475,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->GetTypeId() == TYPEID_PLAYER && _events.GetNextEventTime(EVENT_KILL_TALK) == 0)
+            if (victim->GetTypeId() == ID_PLAYER && _events.GetNextEventTime(EVENT_KILL_TALK) == 0)
             {
                 Talk(SAY_KILL);
                 _events.ScheduleEvent(EVENT_KILL_TALK, 6s);
@@ -1124,7 +1124,7 @@ public:
 
         bool Load() override
         {
-            return GetCaster()->GetTypeId() == TYPEID_UNIT;
+            return GetCaster()->GetTypeId() == ID_UNIT;
         }
 
         void Phase()
@@ -1198,7 +1198,7 @@ public:
                 return;
 
             target->RemoveAurasDueToSpell(SPELL_FIERY_COMBUSTION, ObjectGuid::Empty, 0, AURA_REMOVE_BY_ENEMY_SPELL);
-            if (GetTarget()->GetTypeId() != TYPEID_PLAYER)
+            if (GetTarget()->GetTypeId() != ID_PLAYER)
                 return;
             GetTarget()->m_Events.AddEvent(new SendEncounterUnit(GetTarget()->ToPlayer()), GetTarget()->m_Events.CalculateTime(500));
         }
@@ -1237,7 +1237,7 @@ public:
         {
             GetTarget()->RemoveAurasDueToSpell(SPELL_TWILIGHT_REALM);
 
-            if (GetTarget()->GetTypeId() != TYPEID_PLAYER)
+            if (GetTarget()->GetTypeId() != ID_PLAYER)
                 return;
             GetTarget()->m_Events.AddEvent(new SendEncounterUnit(GetTarget()->ToPlayer()), GetTarget()->m_Events.CalculateTime(500));
         }

@@ -1207,7 +1207,7 @@ public:
 
         bool Load() override
         {
-            return GetUnitOwner()->GetTypeId() == TYPEID_UNIT;
+            return GetUnitOwner()->GetTypeId() == ID_UNIT;
         }
 
         void OnPeriodic(AuraEffect const*  /*aurEff*/)
@@ -1241,7 +1241,7 @@ public:
 
         bool Load() override
         {
-            return GetUnitOwner()->GetTypeId() == TYPEID_UNIT;
+            return GetUnitOwner()->GetTypeId() == ID_UNIT;
         }
 
         void OnPeriodic(AuraEffect const* aurEff)
@@ -1350,7 +1350,7 @@ public:
 
         bool Load() override
         {
-            return GetCaster()->GetTypeId() == TYPEID_UNIT;
+            return GetCaster()->GetTypeId() == ID_UNIT;
         }
 
         void HandleScriptEffect(SpellEffIndex effIndex)

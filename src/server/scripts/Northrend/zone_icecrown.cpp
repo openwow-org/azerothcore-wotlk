@@ -51,7 +51,7 @@ public:
 
         void MoveInLineOfSight(Unit* who) override
         {
-            if (who->GetTypeId() != TYPEID_PLAYER || me->GetDistance(who) > 8.0f || who->ToPlayer()->GetQuestStatus(QUEST_BLACK_KNIGHT_CURSE) != QUEST_STATUS_INCOMPLETE)
+            if (who->GetTypeId() != ID_PLAYER || me->GetDistance(who) > 8.0f || who->ToPlayer()->GetQuestStatus(QUEST_BLACK_KNIGHT_CURSE) != QUEST_STATUS_INCOMPLETE)
                 return;
 
             if (me->FindNearestCreature(NPC_CULT_ASSASSIN, 30.0f))
@@ -1287,7 +1287,7 @@ public:
             if (!summoner)
                 return;
 
-            if (summoner->GetTypeId() != TYPEID_UNIT)
+            if (summoner->GetTypeId() != ID_UNIT)
             {
                 return;
             }
@@ -1541,7 +1541,7 @@ public:
             if (me->GetAreaId() != AREA_SUNREAVER_PAVILION && me->GetAreaId() != AREA_SILVER_COVENANT_PAVILION)
                 return;
 
-            if (!who || who->GetTypeId() != TYPEID_PLAYER || !me->IsHostileTo(who) || !me->isInBackInMap(who, 5.0f))
+            if (!who || who->GetTypeId() != ID_PLAYER || !me->IsHostileTo(who) || !me->isInBackInMap(who, 5.0f))
                 return;
 
             if (who->HasAura(SPELL_TRESPASSER_H) || who->HasAura(SPELL_TRESPASSER_A))

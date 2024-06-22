@@ -159,7 +159,7 @@ struct boss_lady_vashj : public BossAI
 
     void MoveInLineOfSight(Unit* who) override
     {
-        if (!_intro && who->GetTypeId() == TYPEID_PLAYER)
+        if (!_intro && who->GetTypeId() == ID_PLAYER)
         {
             _intro = true;
             Talk(SAY_INTRO);

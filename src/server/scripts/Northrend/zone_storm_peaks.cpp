@@ -50,7 +50,7 @@ public:
 
         void PassengerBoarded(Unit* who, int8 /*seatId*/, bool apply) override
         {
-            if (who->GetTypeId() == TYPEID_PLAYER)
+            if (who->GetTypeId() == ID_PLAYER)
             {
                 if (apply)
                 {
@@ -887,13 +887,13 @@ public:
                 case EVENT_REACHED_HOME:
                     if (Vehicle* vehicle = me->GetVehicleKit())
                         if (Unit* player = vehicle->GetPassenger(0))
-                            if (player->GetTypeId() == TYPEID_PLAYER)
+                            if (player->GetTypeId() == ID_PLAYER)
                             {
                                 // for each prisoner on drake, give credit
                                 for (uint8 i = 1; i < 4; ++i)
                                     if (Unit* prisoner = me->GetVehicleKit()->GetPassenger(i))
                                     {
-                                        if (prisoner->GetTypeId() != TYPEID_UNIT)
+                                        if (prisoner->GetTypeId() != ID_UNIT)
                                             return;
                                         prisoner->CastSpell(player, SPELL_KILL_CREDIT_PRISONER, true);
                                         prisoner->CastSpell(prisoner, SPELL_SUMMON_LIBERATED, true);
@@ -928,7 +928,7 @@ public:
 
         void PassengerBoarded(Unit* who, int8 /*seatId*/, bool apply) override
         {
-            if (who->GetTypeId() == TYPEID_PLAYER)
+            if (who->GetTypeId() == ID_PLAYER)
             {
                 if (apply)
                     Start(false, true, who->GetGUID());
@@ -1145,7 +1145,7 @@ public:
                         {
                             if (Unit* player = vehicle->GetPassenger(0))
                             {
-                                if (player->GetTypeId() == TYPEID_PLAYER)
+                                if (player->GetTypeId() == ID_PLAYER)
                                 {
                                     player->m_Events.AddEventAtOffset([player]()
                                     {
@@ -1165,7 +1165,7 @@ public:
                         {
                             if (Unit* player = vehicle->GetPassenger(0))
                             {
-                                if (player->GetTypeId() == TYPEID_PLAYER)
+                                if (player->GetTypeId() == ID_PLAYER)
                                 {
                                     player->m_Events.AddEventAtOffset([player]()
                                     {

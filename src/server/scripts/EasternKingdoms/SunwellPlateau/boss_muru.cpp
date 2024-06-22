@@ -403,7 +403,7 @@ public:
 
         bool Load() override
         {
-            return GetCaster()->GetTypeId() == TYPEID_UNIT;
+            return GetCaster()->GetTypeId() == ID_UNIT;
         }
 
         void FilterTargets(std::list<WorldObject*>& targets)

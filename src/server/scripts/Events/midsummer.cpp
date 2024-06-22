@@ -98,7 +98,7 @@ struct npc_midsummer_torch_target : public ScriptedAI
         if (posVec.empty())
             return;
         // Triggered spell from torch
-        if (spellInfo->Id == SPELL_TORCH_TOSS_LAND && caster->GetTypeId() == TYPEID_PLAYER)
+        if (spellInfo->Id == SPELL_TORCH_TOSS_LAND && caster->GetTypeId() == ID_PLAYER)
         {
             me->CastSpell(me, SPELL_BRAZIERS_HIT_VISUAL, true); // hit visual anim
             if (++counter >= maxCount)
@@ -523,12 +523,12 @@ class spell_midsummer_ribbon_pole : public AuraScript
                 target->CastSpell(target, SPELL_RIBBON_POLE_XP, true);
 
                 // Achievement
-                if ((GameTime::GetGameTime().count() - GetApplyTime()) > 60 && target->GetTypeId() == TYPEID_PLAYER)
+                if ((GameTime::GetGameTime().count() - GetApplyTime()) > 60 && target->GetTypeId() == ID_PLAYER)
                     target->ToPlayer()->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_BE_SPELL_TARGET, 58934, 0, target);
             }
 
             // Achievement
-            if ((time(nullptr) - GetApplyTime()) > 60 && target->GetTypeId() == TYPEID_PLAYER)
+            if ((time(nullptr) - GetApplyTime()) > 60 && target->GetTypeId() == ID_PLAYER)
                 target->ToPlayer()->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_BE_SPELL_TARGET, 58934, 0, target);
         }
     }
@@ -808,7 +808,7 @@ class spell_midsummer_juggling_torch : public SpellScript
     void HandleFinish()
     {
         Unit* caster = GetCaster();
-        if (!caster || caster->GetTypeId() != TYPEID_PLAYER)
+        if (!caster || caster->GetTypeId() != ID_PLAYER)
             return;
 
         if (const WorldLocation* loc = GetExplTargetDest())

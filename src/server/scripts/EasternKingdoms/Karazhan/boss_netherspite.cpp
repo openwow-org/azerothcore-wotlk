@@ -151,7 +151,7 @@ struct boss_netherspite : public BossAI
                     }
                 }
                 // buff the target
-                if (target->GetTypeId() == TYPEID_PLAYER)
+                if (target->GetTypeId() == ID_PLAYER)
                 {
                     target->AddAura(PlayerBuff[j], target);
                 }
@@ -179,7 +179,7 @@ struct boss_netherspite : public BossAI
                     }
                 }
                 // aggro target if Red Beam
-                if (j == RED_PORTAL && me->GetVictim() != target && target->GetTypeId() == TYPEID_PLAYER)
+                if (j == RED_PORTAL && me->GetVictim() != target && target->GetTypeId() == ID_PLAYER)
                 {
                     me->GetThreatMgr().AddThreat(target, 100000.0f + DoGetThreat(me->GetVictim()));
                 }

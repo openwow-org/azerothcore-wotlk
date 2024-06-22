@@ -25,7 +25,7 @@
 Bag::Bag(): Item()
 {
     m_objectType |= TYPE_CONTAINER;
-    m_objectTypeId = TYPEID_CONTAINER;
+    m_objectTypeId = ID_CONTAINER;
 
     m_valuesCount = CONTAINER_END;
 

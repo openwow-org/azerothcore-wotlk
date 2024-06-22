@@ -180,7 +180,7 @@ class PlayerOrPetCheck
 public:
     bool operator() (WorldObject* unit) const
     {
-        if (unit->GetTypeId() != TYPEID_PLAYER)
+        if (unit->GetTypeId() != ID_PLAYER)
             if (!unit->ToUnit()->GetOwnerGUID().IsPlayer())
                 return true;
 

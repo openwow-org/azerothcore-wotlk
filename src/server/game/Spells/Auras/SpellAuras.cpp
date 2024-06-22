@@ -302,15 +302,15 @@ uint8 Aura::BuildEffectMaskForOwner(SpellInfo const* spellProto, uint8 avalibleE
     uint8 effMask = 0;
     switch (owner->GetTypeId())
     {
-        case TYPEID_UNIT:
-        case TYPEID_PLAYER:
+        case ID_UNIT:
+        case ID_PLAYER:
             for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
             {
                 if (spellProto->Effects[i].IsUnitOwnedAuraEffect())
                     effMask |= 1 << i;
             }
             break;
-        case TYPEID_DYNAMICOBJECT:
+        case ID_DYNAMICOBJECT:
             for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
             {
                 if (spellProto->Effects[i].Effect == SPELL_EFFECT_PERSISTENT_AREA_AURA)
@@ -389,11 +389,11 @@ Aura* Aura::Create(SpellInfo const* spellproto, uint8 effMask, WorldObject* owne
     Aura* aura = nullptr;
     switch (owner->GetTypeId())
     {
-        case TYPEID_UNIT:
-        case TYPEID_PLAYER:
+        case ID_UNIT:
+        case ID_PLAYER:
             aura = new UnitAura(spellproto, effMask, owner, caster, baseAmount, castItem, casterGUID, itemGUID);
             break;
-        case TYPEID_DYNAMICOBJECT:
+        case ID_DYNAMICOBJECT:
             aura = new DynObjAura(spellproto, effMask, owner, caster, baseAmount, castItem, casterGUID, itemGUID);
             break;
         default:
@@ -486,7 +486,7 @@ AuraObjectType Aura::GetType() const
         return UNIT_AURA_TYPE;
     }
 
-    return (m_owner->GetTypeId() == TYPEID_DYNAMICOBJECT) ? DYNOBJ_AURA_TYPE : UNIT_AURA_TYPE;
+    return (m_owner->GetTypeId() == ID_DYNAMICOBJECT) ? DYNOBJ_AURA_TYPE : UNIT_AURA_TYPE;
 }
 
 void Aura::_ApplyForTarget(Unit* target, Unit* caster, AuraApplication* auraApp)
@@ -559,7 +559,7 @@ void Aura::_UnapplyForTarget(Unit* target, Unit* caster, AuraApplication* auraAp
         }
     }
 
-    if (caster && caster->GetTypeId() == TYPEID_PLAYER)
+    if (caster && caster->GetTypeId() == ID_PLAYER)
     {
         if (GetSpellInfo()->IsCooldownStartedOnEvent() && !m_castItemGuid)
         {
@@ -1364,7 +1364,7 @@ void Aura::HandleAuraSpecificMods(AuraApplication const* aurApp, Unit* caster, b
                 switch (GetId())
                 {
                     case 32474: // Buffeting Winds of Susurrus
-                        if (target->GetTypeId() == TYPEID_PLAYER)
+                        if (target->GetTypeId() == ID_PLAYER)
                             target->ToPlayer()->ActivateTaxiPathTo(506, GetId());
                         break;
                     case 33572: // Gronn Lord's Grasp, becomes stoned
@@ -1376,7 +1376,7 @@ void Aura::HandleAuraSpecificMods(AuraApplication const* aurApp, Unit* caster, b
                             target->CastSpell(target, 50812, true);
                         break;
                     case 60970: // Heroic Fury (remove Intercept cooldown)
-                        if (target->GetTypeId() == TYPEID_PLAYER)
+                        if (target->GetTypeId() == ID_PLAYER)
                             target->ToPlayer()->RemoveSpellCooldown(20252, true);
                         break;
                 }
@@ -1601,7 +1601,7 @@ void Aura::HandleAuraSpecificMods(AuraApplication const* aurApp, Unit* caster, b
                 break;
             case SPELLFAMILY_POTION:
                 // Alchemy: Mixology
-                if (caster && caster->HasAura(53042) && caster->GetTypeId() == TYPEID_PLAYER && !caster->ToPlayer()->GetSession()->PlayerLoading())
+                if (caster && caster->HasAura(53042) && caster->GetTypeId() == ID_PLAYER && !caster->ToPlayer()->GetSession()->PlayerLoading())
                 {
                     if (sSpellMgr->GetSpellGroup(GetId()) == 1) /*Elixirs*/
                     {
@@ -1740,7 +1740,7 @@ void Aura::HandleAuraSpecificMods(AuraApplication const* aurApp, Unit* caster, b
                     if (Aura const* aura = caster->GetAuraOfRankedSpell(47535))
                     {
                         // check cooldown
-                        if (caster->GetTypeId() == TYPEID_PLAYER)
+                        if (caster->GetTypeId() == ID_PLAYER)
                         {
                             if (caster->ToPlayer()->HasSpellCooldown(aura->GetId()))
                             {
@@ -1803,7 +1803,7 @@ void Aura::HandleAuraSpecificMods(AuraApplication const* aurApp, Unit* caster, b
                     {
                         if (removeMode != AURA_REMOVE_BY_EXPIRE)
                             break;
-                        if (caster->GetTypeId() != TYPEID_PLAYER)
+                        if (caster->GetTypeId() != ID_PLAYER)
                             break;
 
                         Player* player = caster->ToPlayer();
@@ -1874,7 +1874,7 @@ void Aura::HandleAuraSpecificMods(AuraApplication const* aurApp, Unit* caster, b
                 {
                     if (!GetEffect(0) || GetEffect(0)->GetAuraType() != SPELL_AURA_PERIODIC_DUMMY)
                         break;
-                    if (target->GetTypeId() != TYPEID_PLAYER)
+                    if (target->GetTypeId() != ID_PLAYER)
                         break;
                     if (target->ToPlayer()->getClass() != CLASS_DEATH_KNIGHT)
                         break;
@@ -2280,7 +2280,7 @@ bool Aura::IsProcTriggeredOnEvent(AuraApplication* aurApp, ProcEventInfo& eventI
     // do that only for passive spells
     /// @todo: this needs to be unified for all kinds of auras
     Unit* target = aurApp->GetTarget();
-    if (IsPassive() && target->GetTypeId() == TYPEID_PLAYER && GetSpellInfo()->EquippedItemClass != -1)
+    if (IsPassive() && target->GetTypeId() == ID_PLAYER && GetSpellInfo()->EquippedItemClass != -1)
     {
         if (!GetSpellInfo()->HasAttribute(SPELL_ATTR3_NO_PROC_EQUIP_REQUIREMENT))
         {

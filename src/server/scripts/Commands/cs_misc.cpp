@@ -1080,7 +1080,7 @@ public:
             return false;
         }
 
-        if (target->GetTypeId() == TYPEID_PLAYER)
+        if (target->GetTypeId() == ID_PLAYER)
         {
             if (handler->HasLowerSecurity(target->ToPlayer()))
             {
@@ -1092,7 +1092,7 @@ public:
         {
             if (sWorld->getBoolConfig(CONFIG_DIE_COMMAND_MODE))
             {
-                if (target->GetTypeId() == TYPEID_UNIT && handler->GetSession()->GetSecurity() == SEC_CONSOLE) // pussywizard
+                if (target->GetTypeId() == ID_UNIT && handler->GetSession()->GetSecurity() == SEC_CONSOLE) // pussywizard
                 {
                     target->ToCreature()->LowerPlayerDamageReq(target->GetMaxHealth());
                 }
@@ -2324,7 +2324,7 @@ public:
         Unit* target = handler->getSelectedUnit();
         if (player->GetTarget() && target)
         {
-            if (target->GetTypeId() != TYPEID_UNIT || target->IsPet())
+            if (target->GetTypeId() != ID_UNIT || target->IsPet())
             {
                 handler->SendErrorMessage(LANG_SELECT_CREATURE);
                 return false;
@@ -2590,7 +2590,7 @@ public:
             return false;
         }
 
-        handler->PSendSysMessage(LANG_MOVEGENS_LIST, (unit->GetTypeId() == TYPEID_PLAYER ? "Player" : "Creature"), unit->GetGUID().GetCounter());
+        handler->PSendSysMessage(LANG_MOVEGENS_LIST, (unit->GetTypeId() == ID_PLAYER ? "Player" : "Creature"), unit->GetGUID().GetCounter());
 
         MotionMaster* motionMaster = unit->GetMotionMaster();
         float x, y, z;
@@ -2625,7 +2625,7 @@ public:
                 case CHASE_MOTION_TYPE:
                 {
                     Unit* target = nullptr;
-                    if (unit->GetTypeId() == TYPEID_PLAYER)
+                    if (unit->GetTypeId() == ID_PLAYER)
                     {
                         target = static_cast<ChaseMovementGenerator<Player> const*>(movementGenerator)->GetTarget();
                     }
@@ -2638,7 +2638,7 @@ public:
                     {
                         handler->SendSysMessage(LANG_MOVEGENS_CHASE_NULL);
                     }
-                    else if (target->GetTypeId() == TYPEID_PLAYER)
+                    else if (target->GetTypeId() == ID_PLAYER)
                     {
                         handler->PSendSysMessage(LANG_MOVEGENS_CHASE_PLAYER, target->GetName().c_str(), target->GetGUID().GetCounter());
                     }
@@ -2651,7 +2651,7 @@ public:
                 case FOLLOW_MOTION_TYPE:
                 {
                     Unit* target = nullptr;
-                    if (unit->GetTypeId() == TYPEID_PLAYER)
+                    if (unit->GetTypeId() == ID_PLAYER)
                     {
                         target = static_cast<FollowMovementGenerator<Player> const*>(movementGenerator)->GetTarget();
                     }
@@ -2664,7 +2664,7 @@ public:
                     {
                         handler->SendSysMessage(LANG_MOVEGENS_FOLLOW_NULL);
                     }
-                    else if (target->GetTypeId() == TYPEID_PLAYER)
+                    else if (target->GetTypeId() == ID_PLAYER)
                     {
                         handler->PSendSysMessage(LANG_MOVEGENS_FOLLOW_PLAYER, target->GetName().c_str(), target->GetGUID().GetCounter());
                     }
@@ -2676,7 +2676,7 @@ public:
                 }
                 case HOME_MOTION_TYPE:
                 {
-                    if (unit->GetTypeId() == TYPEID_UNIT)
+                    if (unit->GetTypeId() == ID_UNIT)
                     {
                         handler->PSendSysMessage(LANG_MOVEGENS_HOME_CREATURE, x, y, z);
                     }
@@ -2740,7 +2740,7 @@ public:
             return false;
         }
 
-        if (target->GetTypeId() == TYPEID_PLAYER)
+        if (target->GetTypeId() == ID_PLAYER)
         {
             if (handler->HasLowerSecurity(target->ToPlayer()))
             {
@@ -2758,7 +2758,7 @@ public:
             return true;
         }
 
-        if (target->GetTypeId() == TYPEID_UNIT && handler->GetSession()->GetSecurity() == SEC_CONSOLE) // pussywizard
+        if (target->GetTypeId() == ID_UNIT && handler->GetSession()->GetSecurity() == SEC_CONSOLE) // pussywizard
         {
             target->ToCreature()->LowerPlayerDamageReq(target->GetMaxHealth());
         }

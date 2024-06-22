@@ -254,7 +254,7 @@ public:
 
         void MoveInLineOfSight(Unit* who) override
         {
-            if (phase == PHASE_NONE && who->GetTypeId() == TYPEID_PLAYER && me->IsValidAttackTarget(who))
+            if (phase == PHASE_NONE && who->GetTypeId() == ID_PLAYER && me->IsValidAttackTarget(who))
             {
                 phase = PHASE_SINGLE_ADVISOR;
                 me->SetInCombatWithZone();
@@ -271,7 +271,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->GetTypeId() == TYPEID_PLAYER)
+            if (victim->GetTypeId() == ID_PLAYER)
                 Talk(SAY_SLAY);
         }
 
@@ -732,7 +732,7 @@ public:
 
         bool Load() override
         {
-            if (GetCaster()->GetTypeId() == TYPEID_UNIT)
+            if (GetCaster()->GetTypeId() == ID_UNIT)
                 if (InstanceScript* instance = GetCaster()->GetInstanceScript())
                     if (Creature* kael = ObjectAccessor::GetCreature(*GetCaster(), instance->GetGuidData(NPC_KAELTHAS)))
                         kael->AI()->SummonedCreatureDies(GetCaster()->ToCreature(), nullptr);
@@ -896,7 +896,7 @@ public:
 
         bool Load() override
         {
-            return GetUnitOwner()->GetTypeId() == TYPEID_UNIT;
+            return GetUnitOwner()->GetTypeId() == ID_UNIT;
         }
 
         void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
@@ -1000,7 +1000,7 @@ public:
             for (ThreatContainer::StorageType::const_iterator itr = ThreatList.begin(); itr != ThreatList.end(); ++itr)
             {
                 Unit* target = ObjectAccessor::GetUnit(*GetCaster(), (*itr)->getUnitGuid());
-                if (target && target->GetTypeId() == TYPEID_PLAYER)
+                if (target && target->GetTypeId() == ID_PLAYER)
                     targetList.push_back(target);
             }
 

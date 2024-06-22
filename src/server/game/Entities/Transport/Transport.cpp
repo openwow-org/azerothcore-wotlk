@@ -443,7 +443,7 @@ void MotionTransport::UnloadNonStaticPassengers()
 {
     for (PassengerSet::iterator itr = _passengers.begin(); itr != _passengers.end(); )
     {
-        if ((*itr)->GetTypeId() == TYPEID_PLAYER)
+        if ((*itr)->GetTypeId() == ID_PLAYER)
         {
             ++itr;
             continue;
@@ -519,7 +519,7 @@ bool MotionTransport::TeleportTransport(uint32 newMapid, float x, float y, float
         // Teleport players, they need to know it
         for (PassengerSet::iterator itr = _passengers.begin(); itr != _passengers.end(); ++itr)
         {
-            if ((*itr)->GetTypeId() == TYPEID_PLAYER)
+            if ((*itr)->GetTypeId() == ID_PLAYER)
             {
                 float destX, destY, destZ, destO;
                 (*itr)->m_movementInfo.transport.pos.GetPosition(destX, destY, destZ, destO);
@@ -557,16 +557,16 @@ void MotionTransport::DelayedTeleportTransport()
 
         switch (obj->GetTypeId())
         {
-            case TYPEID_UNIT:
+            case ID_UNIT:
                 _passengers.erase(obj);
                 if (!obj->ToCreature()->IsPet())
                     obj->ToCreature()->DespawnOrUnsummon();
                 break;
-            case TYPEID_GAMEOBJECT:
+            case ID_GAMEOBJECT:
                 _passengers.erase(obj);
                 obj->ToGameObject()->Delete();
                 break;
-            case TYPEID_DYNAMICOBJECT:
+            case ID_DYNAMICOBJECT:
                 _passengers.erase(obj);
                 if (Unit* caster = obj->ToDynObject()->GetCaster())
                     if (Spell* s = caster->GetCurrentSpell(CURRENT_CHANNELED_SPELL))
@@ -578,7 +578,7 @@ void MotionTransport::DelayedTeleportTransport()
                         }
                 obj->AddObjectToRemoveList();
                 break;
-            case TYPEID_PLAYER:
+            case ID_PLAYER:
                 {
                     float destX, destY, destZ, destO;
                     obj->m_movementInfo.transport.pos.GetPosition(destX, destY, destZ, destO);
@@ -628,7 +628,7 @@ void MotionTransport::UpdatePassengerPositions(PassengerSet& passengers)
 
         switch (passenger->GetTypeId())
         {
-            case TYPEID_UNIT:
+            case ID_UNIT:
                 {
                     Creature* creature = passenger->ToCreature();
                     GetMap()->CreatureRelocation(creature, x, y, z, o);
@@ -638,14 +638,14 @@ void MotionTransport::UpdatePassengerPositions(PassengerSet& passengers)
                     creature->SetHomePosition(x, y, z, o);
                 }
                 break;
-            case TYPEID_PLAYER:
+            case ID_PLAYER:
                 if (passenger->IsInWorld())
                     GetMap()->PlayerRelocation(passenger->ToPlayer(), x, y, z, o);
                 break;
-            case TYPEID_GAMEOBJECT:
+            case ID_GAMEOBJECT:
                 GetMap()->GameObjectRelocation(passenger->ToGameObject(), x, y, z, o);
                 break;
-            case TYPEID_DYNAMICOBJECT:
+            case ID_DYNAMICOBJECT:
                 GetMap()->DynamicObjectRelocation(passenger->ToDynObject(), x, y, z, o);
                 break;
             default:
@@ -941,20 +941,20 @@ void StaticTransport::UpdatePassengerPositions()
 
         switch (passenger->GetTypeId())
         {
-            case TYPEID_UNIT:
+            case ID_UNIT:
                 GetMap()->CreatureRelocation(passenger->ToCreature(), x, y, z, o);
                 break;
-            case TYPEID_PLAYER:
+            case ID_PLAYER:
                 if (passenger->IsInWorld())
                 {
                     GetMap()->PlayerRelocation(passenger->ToPlayer(), x, y, z, o);
                     passenger->ToPlayer()->SetFallInformation(GameTime::GetGameTime().count(), z);
                 }
                 break;
-            case TYPEID_GAMEOBJECT:
+            case ID_GAMEOBJECT:
                 GetMap()->GameObjectRelocation(passenger->ToGameObject(), x, y, z, o);
                 break;
-            case TYPEID_DYNAMICOBJECT:
+            case ID_DYNAMICOBJECT:
                 GetMap()->DynamicObjectRelocation(passenger->ToDynObject(), x, y, z, o);
                 break;
             default:

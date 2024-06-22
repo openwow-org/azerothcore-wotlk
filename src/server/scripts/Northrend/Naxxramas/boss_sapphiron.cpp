@@ -221,7 +221,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->GetTypeId() == TYPEID_PLAYER && pInstance)
+            if (who->GetTypeId() == ID_PLAYER && pInstance)
             {
                 pInstance->SetData(DATA_IMMORTAL_FAIL, 0);
             }
@@ -325,7 +325,7 @@ public:
                         auto i = me->GetThreatMgr().GetThreatList().begin();
                         for (; i != me->GetThreatMgr().GetThreatList().end(); ++i)
                         {
-                            if ((*i)->getTarget()->GetTypeId() == TYPEID_PLAYER)
+                            if ((*i)->getTarget()->GetTypeId() == ID_PLAYER)
                             {
                                 bool inList = false;
                                 if (!blockList.empty())

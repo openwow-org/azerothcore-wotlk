@@ -881,7 +881,7 @@ public:
 
         void SpellHitTarget(Unit* target, SpellInfo const* spell) override
         {
-            if (target && spell && target->GetTypeId() == TYPEID_PLAYER && spell->Id == 70827 && pInstance)
+            if (target && spell && target->GetTypeId() == ID_PLAYER && spell->Id == 70827 && pInstance)
                 pInstance->SetData(DATA_ACHIEV_DONT_LOOK_UP, 0);
         }
 
@@ -1185,7 +1185,7 @@ public:
 
         void SpellHitTarget(Unit* target, SpellInfo const* spell) override
         {
-            if ((spell->Id == SPELL_TELEPORT_JAINA || spell->Id == SPELL_TELEPORT_SYLVANAS) && target && target->GetTypeId() == TYPEID_PLAYER)
+            if ((spell->Id == SPELL_TELEPORT_JAINA || spell->Id == SPELL_TELEPORT_SYLVANAS) && target && target->GetTypeId() == ID_PLAYER)
             {
                 float angle = rand_norm() * 2 * M_PI;
                 float dist = urand(1, 4);
@@ -1422,7 +1422,7 @@ public:
                 if (Unit* caster = GetCaster())
                 {
                     Unit::Kill(caster, target);
-                    if (target->GetTypeId() == TYPEID_UNIT)
+                    if (target->GetTypeId() == ID_UNIT)
                         target->ToCreature()->DespawnOrUnsummon(30000);
                 }
         }

@@ -305,7 +305,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if( victim->GetTypeId() == TYPEID_PLAYER )
+            if( victim->GetTypeId() == ID_PLAYER )
             {
                 Talk(SAY_BK_KILL_PLAYER);
             }
@@ -434,7 +434,7 @@ public:
                     }
                     break;
                 case SPELL_EXPLODE_H:
-                    if (target && target->GetTypeId() == TYPEID_PLAYER)
+                    if (target && target->GetTypeId() == ID_PLAYER)
                         if (pInstance)
                             pInstance->SetData(DATA_ACHIEV_IVE_HAD_WORSE, 0);
                     break;

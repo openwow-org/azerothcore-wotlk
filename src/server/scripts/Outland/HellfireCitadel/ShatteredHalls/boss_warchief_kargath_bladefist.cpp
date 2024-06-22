@@ -157,7 +157,7 @@ struct boss_warchief_kargath_bladefist : public BossAI
 
     void KilledUnit(Unit* victim) override
     {
-        if (victim && victim->GetTypeId() == TYPEID_PLAYER)
+        if (victim && victim->GetTypeId() == ID_PLAYER)
             Talk(SAY_SLAY);
     }
 

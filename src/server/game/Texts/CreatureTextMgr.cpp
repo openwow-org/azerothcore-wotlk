@@ -345,7 +345,7 @@ void CreatureTextMgr::SendNonChatPacket(WorldObject* source, WorldPacket const* 
             {
                 if (range == TEXT_RANGE_NORMAL)//ignores team and gmOnly
                 {
-                    if (!target || target->GetTypeId() != TYPEID_PLAYER)
+                    if (!target || target->GetTypeId() != ID_PLAYER)
                         return;
 
                     target->ToPlayer()->GetSession()->SendPacket(data);

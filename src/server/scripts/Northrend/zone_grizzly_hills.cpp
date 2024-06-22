@@ -797,7 +797,7 @@ public:
 
         void SpellHit(Unit* caster, SpellInfo const* spell) override
         {
-            if (spell->Id == SPELL_SMOKE_BOMB && caster->GetTypeId() == TYPEID_PLAYER)
+            if (spell->Id == SPELL_SMOKE_BOMB && caster->GetTypeId() == ID_PLAYER)
             {
                 me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                 me->SetImmuneToPC(true);
@@ -972,7 +972,7 @@ public:
 
         bool Load() override
         {
-            return GetCaster()->GetTypeId() == TYPEID_UNIT;
+            return GetCaster()->GetTypeId() == ID_UNIT;
         }
 
         void HandleScript(SpellEffIndex /*effIndex*/)
@@ -1011,7 +1011,7 @@ public:
         void HandleAfterEffectApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
         {
             Unit* target = GetTarget();
-            if (target->GetTypeId() == TYPEID_PLAYER)
+            if (target->GetTypeId() == ID_PLAYER)
                 if (GetStackAmount() == GetSpellInfo()->StackAmount)
                 {
                     SetDuration(0);

@@ -282,7 +282,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->GetTypeId() == TYPEID_PLAYER)
+            if (who->GetTypeId() == ID_PLAYER)
                 Talk(SAY_SLAY);
         }
 
@@ -340,7 +340,7 @@ public:
                             if (valid)
                             {
                                 if (Aura* aur = target->ToUnit()->GetAura(70336))
-                                    if (aur->GetStackAmount() >= 10 && caster->GetTypeId() == TYPEID_UNIT)
+                                    if (aur->GetStackAmount() >= 10 && caster->GetTypeId() == ID_UNIT)
                                         caster->ToCreature()->AI()->SetData(1, aur->GetStackAmount());
                                 targetList.push_back(*itrU);
                             }

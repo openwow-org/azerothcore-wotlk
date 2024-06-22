@@ -488,7 +488,7 @@ public:
         void FilterTargets(std::list<WorldObject*>& targets)
         {
             // get a list of players with mana
-            targets.remove_if(Acore::ObjectTypeIdCheck(TYPEID_PLAYER, false));
+            targets.remove_if(Acore::ObjectTypeIdCheck(ID_PLAYER, false));
             targets.remove_if(Acore::PowerCheck(POWER_MANA, false));
             if (targets.empty())
                 return;

@@ -1268,14 +1268,14 @@ public:
         if (itr == _pointOfInterestLocaleStore.end()) return nullptr;
         return &itr->second;
     }
-    [[nodiscard]] QuestGreetingLocale const* GetQuestGreetingLocale(TypeID type, uint32 id) const
+    [[nodiscard]] QuestGreetingLocale const* GetQuestGreetingLocale(OBJECT_TYPE_ID type, uint32 id) const
     {
         uint32 typeIndex;
-        if (type == TYPEID_UNIT)
+        if (type == ID_UNIT)
         {
             typeIndex = 0;
         }
-        else if (type == TYPEID_GAMEOBJECT)
+        else if (type == ID_GAMEOBJECT)
         {
             typeIndex = 1;
         }
@@ -1306,7 +1306,7 @@ public:
         if (itr == _npcTextLocaleStore.end()) return nullptr;
         return &itr->second;
     }
-    QuestGreeting const* GetQuestGreeting(TypeID type, uint32 id) const;
+    QuestGreeting const* GetQuestGreeting(OBJECT_TYPE_ID type, uint32 id) const;
 
     GameObjectData& NewGOData(ObjectGuid::LowType guid) { return _gameObjectDataStore[guid]; }
     void DeleteGOData(ObjectGuid::LowType guid);

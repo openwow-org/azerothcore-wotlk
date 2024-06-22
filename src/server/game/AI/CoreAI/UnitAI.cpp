@@ -140,7 +140,7 @@ SpellCastResult UnitAI::DoAddAuraToAllHostilePlayers(uint32 spellid)
         {
             if (Unit* unit = ObjectAccessor::GetUnit(*me, (*itr)->getUnitGuid()))
             {
-                if (unit->GetTypeId() == TYPEID_PLAYER)
+                if (unit->GetTypeId() == ID_PLAYER)
                 {
                     me->AddAura(spellid, unit);
                     return SPELL_CAST_OK;
@@ -163,7 +163,7 @@ SpellCastResult UnitAI::DoCastToAllHostilePlayers(uint32 spellid, bool triggered
         {
             if (Unit* unit = ObjectAccessor::GetUnit(*me, (*itr)->getUnitGuid()))
             {
-                if (unit->GetTypeId() == TYPEID_PLAYER)
+                if (unit->GetTypeId() == ID_PLAYER)
                     return me->CastSpell(unit, spellid, triggered);
             }
             else
@@ -424,7 +424,7 @@ bool NonTankTargetSelector::operator()(Unit const* target) const
     if (!target)
         return false;
 
-    if (_playerOnly && target->GetTypeId() != TYPEID_PLAYER)
+    if (_playerOnly && target->GetTypeId() != ID_PLAYER)
         return false;
 
     if (Unit* currentVictim = _source->GetThreatMgr().GetCurrentVictim())

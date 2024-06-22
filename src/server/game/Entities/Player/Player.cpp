@@ -150,7 +150,7 @@ Player::Player(WorldSession* session): Unit(true), m_mover(this)
 #endif
 
     m_objectType |= TYPE_PLAYER;
-    m_objectTypeId = TYPEID_PLAYER;
+    m_objectTypeId = ID_PLAYER;
 
     m_valuesCount = PLAYER_END;
 
@@ -2040,13 +2040,13 @@ bool Player::CanInteractWithQuestGiver(Object* questGiver)
 {
     switch (questGiver->GetTypeId())
     {
-        case TYPEID_UNIT:
+        case ID_UNIT:
             return GetNPCIfCanInteractWith(questGiver->GetGUID(), UNIT_NPC_FLAG_QUESTGIVER) != nullptr;
-        case TYPEID_GAMEOBJECT:
+        case ID_GAMEOBJECT:
             return GetGameObjectIfCanInteractWith(questGiver->GetGUID(), GAMEOBJECT_TYPE_QUESTGIVER) != nullptr;
-        case TYPEID_PLAYER:
+        case ID_PLAYER:
             return IsAlive() && questGiver->ToPlayer()->IsAlive();
-        case TYPEID_ITEM:
+        case ID_ITEM:
             return IsAlive();
         default:
             break;
@@ -2364,7 +2364,7 @@ void Player::GiveXP(uint32 xp, Unit* victim, float group_rate, bool isLFGReward)
         return;
     }
 
-    if (victim && victim->GetTypeId() == TYPEID_UNIT && !victim->ToCreature()->hasLootRecipient())
+    if (victim && victim->GetTypeId() == ID_UNIT && !victim->ToCreature()->hasLootRecipient())
     {
         return;
     }
@@ -5858,7 +5858,7 @@ float Player::CalculateReputationGain(ReputationSource source, uint32 creatureOr
 // Calculates how many reputation points player gains in victim's enemy factions
 void Player::RewardReputation(Unit* victim)
 {
-    if (!victim || victim->GetTypeId() == TYPEID_PLAYER)
+    if (!victim || victim->GetTypeId() == ID_PLAYER)
         return;
 
     if (victim->ToCreature()->IsReputationGainDisabled())
@@ -5976,7 +5976,7 @@ bool Player::RewardHonor(Unit* uVictim, uint32 groupsize, int32 honor, bool awar
     // do not reward honor in arenas, but enable onkill spellproc
     if (InArena())
     {
-        if (!uVictim || uVictim == this || uVictim->GetTypeId() != TYPEID_PLAYER)
+        if (!uVictim || uVictim == this || uVictim->GetTypeId() != ID_PLAYER)
             return false;
 
         if (GetBgTeamId() == uVictim->ToPlayer()->GetBgTeamId())
@@ -5990,7 +5990,7 @@ bool Player::RewardHonor(Unit* uVictim, uint32 groupsize, int32 honor, bool awar
         return false;
 
     /* check if player has same IP
-    if (uVictim && uVictim->GetTypeId() == TYPEID_PLAYER)
+    if (uVictim && uVictim->GetTypeId() == ID_PLAYER)
     {
         if (GetSession()->GetRemoteAddress() == uVictim->ToPlayer()->GetSession()->GetRemoteAddress())
             return false;
@@ -6017,7 +6017,7 @@ bool Player::RewardHonor(Unit* uVictim, uint32 groupsize, int32 honor, bool awar
 
         victim_guid = uVictim->GetGUID();
 
-        if (uVictim->GetTypeId() == TYPEID_PLAYER)
+        if (uVictim->GetTypeId() == ID_PLAYER)
         {
             Player* victim = uVictim->ToPlayer();
 
@@ -6128,7 +6128,7 @@ bool Player::RewardHonor(Unit* uVictim, uint32 groupsize, int32 honor, bool awar
         if (!uVictim || uVictim == this || uVictim->HasAuraType(SPELL_AURA_NO_PVP_CREDIT))
             return true;
 
-        if (uVictim->GetTypeId() == TYPEID_PLAYER)
+        if (uVictim->GetTypeId() == ID_PLAYER)
         {
             // Check if allowed to receive it in current map
             uint8 MapType = sWorld->getIntConfig(CONFIG_PVP_TOKEN_MAP_TYPE);
@@ -9113,7 +9113,7 @@ Pet* Player::CreatePet(Creature* creatureTarget, uint32 spellID /*= 0*/)
         return nullptr;
     }
 
-    if (!creatureTarget || creatureTarget->IsPet() || creatureTarget->GetTypeId() == TYPEID_PLAYER)
+    if (!creatureTarget || creatureTarget->IsPet() || creatureTarget->GetTypeId() == ID_PLAYER)
     {
         return nullptr;
     }
@@ -9207,7 +9207,7 @@ void Player::StopCastingCharm(Aura* except /*= nullptr*/)
         return;
     }
 
-    if (charm->GetTypeId() == TYPEID_UNIT)
+    if (charm->GetTypeId() == ID_UNIT)
     {
         if (charm->ToCreature()->HasUnitTypeMask(UNIT_MASK_PUPPET))
         {
@@ -9568,7 +9568,7 @@ void Player::CharmSpellInitialize()
     }
 
     uint8 addlist = 0;
-    if (charm->GetTypeId() != TYPEID_PLAYER)
+    if (charm->GetTypeId() != ID_PLAYER)
     {
         //CreatureInfo const* cinfo = charm->ToCreature()->GetCreatureTemplate();
         //if (cinfo && cinfo->type == CREATURE_TYPE_DEMON && getClass() == CLASS_WARLOCK)
@@ -9584,7 +9584,7 @@ void Player::CharmSpellInitialize()
     data << uint16(0);
     data << uint32(0);
 
-    if (charm->GetTypeId() != TYPEID_PLAYER)
+    if (charm->GetTypeId() != ID_PLAYER)
         data << uint8(charm->ToCreature()->GetReactState()) << uint8(charmInfo->GetCommandState()) << uint16(0);
     else
         data << uint32(0);
@@ -12585,7 +12585,7 @@ bool Player::isHonorOrXPTarget(Unit* victim) const
         return false;
     }
 
-    if (victim->GetTypeId() == TYPEID_UNIT)
+    if (victim->GetTypeId() == ID_UNIT)
     {
         if (victim->IsTotem() || victim->IsCritter() || victim->IsPet() || (victim->ToCreature()->GetCreatureTemplate()->flags_extra & CREATURE_FLAG_EXTRA_NO_XP))
         {
@@ -12647,7 +12647,7 @@ void Player::RewardPlayerAndGroupAtEvent(uint32 creature_id, WorldObject* pRewar
     if (!pRewardSource)
         return;
 
-    ObjectGuid creature_guid = (pRewardSource->GetTypeId() == TYPEID_UNIT) ? pRewardSource->GetGUID() : ObjectGuid::Empty;
+    ObjectGuid creature_guid = (pRewardSource->GetTypeId() == ID_UNIT) ? pRewardSource->GetGUID() : ObjectGuid::Empty;
 
     // prepare data for near group iteration
     if (Group* group = GetGroup())
@@ -12781,7 +12781,7 @@ void Player::SetClientControl(Unit* target, bool allowMove, bool packetOnly /*= 
         SetMover(target);
 
     // Xinef: disable moving if target has disable move flag
-    if (target->GetTypeId() != TYPEID_UNIT)
+    if (target->GetTypeId() != ID_UNIT)
         return;
 
     if (allowMove && target->HasUnitFlag(UNIT_FLAG_DISABLE_MOVE))
@@ -12818,12 +12818,12 @@ void Player::SetMover(Unit* target)
         LOG_INFO("misc", "Player::SetMover (B2) - {}, {}, {}, {}, {}, {}, {}, {}", target->GetGUID().ToString(), target->GetMapId(), target->GetInstanceId(), target->FindMap()->GetId(), target->IsInWorld() ? 1 : 0, target->IsDuringRemoveFromWorld() ? 1 : 0, (target->ToPlayer() && target->ToPlayer()->IsBeingTeleported() ? 1 : 0), target->isBeingLoaded() ? 1 : 0);
     }
     m_mover->m_movedByPlayer = nullptr;
-    if (m_mover->GetTypeId() == TYPEID_UNIT)
+    if (m_mover->GetTypeId() == ID_UNIT)
         m_mover->GetMotionMaster()->Initialize();
 
     m_mover = target;
     m_mover->m_movedByPlayer = this;
-    if (m_mover->GetTypeId() == TYPEID_UNIT)
+    if (m_mover->GetTypeId() == ID_UNIT)
         m_mover->GetMotionMaster()->Initialize();
 }
 

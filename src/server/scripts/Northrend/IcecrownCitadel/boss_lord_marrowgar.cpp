@@ -84,7 +84,7 @@ public:
         if (target->GetExactDist(_source) > 175.0f)
             return false;
 
-        if (target->GetTypeId() != TYPEID_PLAYER)
+        if (target->GetTypeId() != ID_PLAYER)
             return false;
 
         if (target->GetPositionX() > -337.0f)
@@ -285,13 +285,13 @@ public:
 
     void KilledUnit(Unit* victim) override
     {
-        if (victim->GetTypeId() == TYPEID_PLAYER)
+        if (victim->GetTypeId() == ID_PLAYER)
             Talk(SAY_KILL);
     }
 
     void MoveInLineOfSight(Unit* who) override
     {
-        if (!_introDone && me->IsAlive() && who->GetTypeId() == TYPEID_PLAYER && me->GetExactDist2dSq(who) <= 10000.0f) // 100*100, moveinlineofsight limited to 60yd anyway
+        if (!_introDone && me->IsAlive() && who->GetTypeId() == ID_PLAYER && me->GetExactDist2dSq(who) <= 10000.0f) // 100*100, moveinlineofsight limited to 60yd anyway
         {
             Talk(SAY_ENTER_ZONE);
             _introDone = true;
@@ -415,7 +415,7 @@ public:
                 {
                     if (Unit* u = v->GetBase())
                     {
-                        if (u->GetEntry() == NPC_BONE_SPIKE && u->GetTypeId() == TYPEID_UNIT)
+                        if (u->GetEntry() == NPC_BONE_SPIKE && u->GetTypeId() == ID_UNIT)
                         {
                             u->ToCreature()->AI()->DoAction(-1337);
                         }

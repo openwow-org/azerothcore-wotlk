@@ -29,20 +29,6 @@
 #include <unordered_set>
 #include <vector>
 
-enum TypeID
-{
-    TYPEID_OBJECT        = 0,
-    TYPEID_ITEM          = 1,
-    TYPEID_CONTAINER     = 2,
-    TYPEID_UNIT          = 3,
-    TYPEID_PLAYER        = 4,
-    TYPEID_GAMEOBJECT    = 5,
-    TYPEID_DYNAMICOBJECT = 6,
-    TYPEID_CORPSE        = 7
-};
-
-#define NUM_CLIENT_OBJECT_TYPES             8
-
 enum OBJECT_TYPE {
   TYPE_OBJECT             = 0x1,
   HIER_TYPE_OBJECT        = 0x1,
@@ -64,6 +50,21 @@ enum OBJECT_TYPE {
   HIER_TYPE_AI_GROUP      = 0x101,
   TYPE_AREATRIGGER        = 0x200,
   HIER_TYPE_AREATRIGGER   = 0x201
+};
+
+enum OBJECT_TYPE_ID {
+  ID_OBJECT               = 0x0,
+  ID_ITEM                 = 0x1,
+  ID_CONTAINER            = 0x2,
+  ID_UNIT                 = 0x3,
+  ID_PLAYER               = 0x4,
+  ID_GAMEOBJECT           = 0x5,
+  ID_DYNAMICOBJECT        = 0x6,
+  ID_CORPSE               = 0x7,
+  NUM_CLIENT_OBJECT_TYPES = 0x8,
+  ID_AIGROUP              = 0x8,
+  ID_AREATRIGGER          = 0x9,
+  NUM_OBJECT_TYPES        = 0xA
 };
 
 enum class HighGuid
@@ -189,28 +190,28 @@ class ObjectGuid
         [[nodiscard]] bool IsInstance()          const { return GetHigh() == HighGuid::Instance; }
         [[nodiscard]] bool IsGroup()             const { return GetHigh() == HighGuid::Group; }
 
-        static TypeID GetTypeId(HighGuid high)
+        static OBJECT_TYPE_ID GetTypeId(HighGuid high)
         {
             switch (high)
             {
-                case HighGuid::Item:         return TYPEID_ITEM;
-                //case HighGuid::Container:    return TYPEID_CONTAINER; HighGuid::Container == HighGuid::Item currently
-                case HighGuid::Unit:         return TYPEID_UNIT;
-                case HighGuid::Pet:          return TYPEID_UNIT;
-                case HighGuid::Player:       return TYPEID_PLAYER;
-                case HighGuid::GameObject:   return TYPEID_GAMEOBJECT;
-                case HighGuid::DynamicObject: return TYPEID_DYNAMICOBJECT;
-                case HighGuid::Corpse:       return TYPEID_CORPSE;
-                case HighGuid::Mo_Transport: return TYPEID_GAMEOBJECT;
-                case HighGuid::Vehicle:      return TYPEID_UNIT;
+                case HighGuid::Item:         return ID_ITEM;
+                //case HighGuid::Container:    return ID_CONTAINER; HighGuid::Container == HighGuid::Item currently
+                case HighGuid::Unit:         return ID_UNIT;
+                case HighGuid::Pet:          return ID_UNIT;
+                case HighGuid::Player:       return ID_PLAYER;
+                case HighGuid::GameObject:   return ID_GAMEOBJECT;
+                case HighGuid::DynamicObject: return ID_DYNAMICOBJECT;
+                case HighGuid::Corpse:       return ID_CORPSE;
+                case HighGuid::Mo_Transport: return ID_GAMEOBJECT;
+                case HighGuid::Vehicle:      return ID_UNIT;
                 // unknown
                 case HighGuid::Instance:
                 case HighGuid::Group:
-                default:                    return TYPEID_OBJECT;
+                default:                    return ID_OBJECT;
             }
         }
 
-        [[nodiscard]] TypeID GetTypeId() const { return GetTypeId(GetHigh()); }
+        [[nodiscard]] OBJECT_TYPE_ID GetTypeId() const { return GetTypeId(GetHigh()); }
 
         operator bool() const { return !IsEmpty(); }
         bool operator!() const { return !(bool(*this)); }

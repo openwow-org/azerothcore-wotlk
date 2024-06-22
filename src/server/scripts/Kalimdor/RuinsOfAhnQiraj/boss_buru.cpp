@@ -107,7 +107,7 @@ struct boss_buru : public BossAI
 
     void KilledUnit(Unit* victim) override
     {
-        if (victim->GetTypeId() == TYPEID_PLAYER)
+        if (victim->GetTypeId() == ID_PLAYER)
             ChaseNewVictim();
     }
 

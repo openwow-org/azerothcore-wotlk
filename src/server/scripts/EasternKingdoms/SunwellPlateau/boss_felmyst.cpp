@@ -171,7 +171,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->GetTypeId() == TYPEID_PLAYER && roll_chance_i(50))
+            if (victim->GetTypeId() == ID_PLAYER && roll_chance_i(50))
                 Talk(YELL_KILL);
         }
 
@@ -543,7 +543,7 @@ class DoorsGuidCheck
 public:
     bool operator()(WorldObject* object) const
     {
-        if (object->GetTypeId() != TYPEID_UNIT)
+        if (object->GetTypeId() != ID_UNIT)
             return true;
 
         Creature* cr = object->ToCreature();

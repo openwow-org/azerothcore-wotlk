@@ -226,7 +226,7 @@ struct boss_warbringer_omrogg : public BossAI
 
     void KilledUnit(Unit* victim) override
     {
-        if (victim && victim->GetTypeId() == TYPEID_PLAYER)
+        if (victim && victim->GetTypeId() == ID_PLAYER)
             HandleHeadTalk(SAY_ON_KILL);
     }
 

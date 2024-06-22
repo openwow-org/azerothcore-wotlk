@@ -70,7 +70,7 @@ constexpr float VisibilityDistances[AsUnderlyingType(VisibilityDistanceType::Max
 
 Object::Object() : m_PackGUID(sizeof(uint64) + 1)
 {
-    m_objectTypeId      = TYPEID_OBJECT;
+    m_objectTypeId      = ID_OBJECT;
     m_objectType        = TYPE_OBJECT;
 
     m_uint32Values      = nullptr;
@@ -90,7 +90,7 @@ WorldObject::~WorldObject()
     // this may happen because there are many !create/delete
     if (IsWorldObject() && m_currMap)
     {
-        if (GetTypeId() == TYPEID_CORPSE)
+        if (GetTypeId() == ID_CORPSE)
         {
             LOG_FATAL("entities.object", "Object::~Object Corpse {}, type={} deleted but still in map!!", GetGUID().ToString(), ((Corpse*)this)->GetType());
             ABORT();
@@ -403,7 +403,7 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
 
             *data << object->GetOrientation();
 
-            if (GetTypeId() == TYPEID_CORPSE)
+            if (GetTypeId() == ID_CORPSE)
                 *data << float(object->GetOrientation());
             else
                 *data << float(0);
@@ -432,20 +432,20 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
     {
         switch (GetTypeId())
         {
-            case TYPEID_OBJECT:
-            case TYPEID_ITEM:
-            case TYPEID_CONTAINER:
-            case TYPEID_GAMEOBJECT:
-            case TYPEID_DYNAMICOBJECT:
-            case TYPEID_CORPSE:
+            case ID_OBJECT:
+            case ID_ITEM:
+            case ID_CONTAINER:
+            case ID_GAMEOBJECT:
+            case ID_DYNAMICOBJECT:
+            case ID_CORPSE:
                 *data << uint32(GetGUID().GetCounter());
                 break;
             //! Unit, Player and default here are sending wrong values.
             /// @todo Research the proper formula
-            case TYPEID_UNIT:
+            case ID_UNIT:
                 *data << uint32(0x0000000B);                // unk
                 break;
-            case TYPEID_PLAYER:
+            case ID_PLAYER:
                 if (flags & UPDATEFLAG_SELF)
                     *data << uint32(0x0000002F);            // unk
                 else
@@ -565,14 +565,14 @@ uint32 Object::GetUpdateFieldData(Player const* target, uint32*& flags) const
 
     switch (GetTypeId())
     {
-        case TYPEID_ITEM:
-        case TYPEID_CONTAINER:
+        case ID_ITEM:
+        case ID_CONTAINER:
             flags = ItemUpdateFieldFlags;
             if (((Item*)this)->GetOwnerGUID() == target->GetGUID())
                 visibleFlag |= UF_FLAG_OWNER | UF_FLAG_ITEM_OWNER;
             break;
-        case TYPEID_UNIT:
-        case TYPEID_PLAYER:
+        case ID_UNIT:
+        case ID_PLAYER:
             {
                 Player* plr = ToUnit()->GetCharmerOrOwnerPlayerOrPlayerItself();
                 flags = UnitUpdateFieldFlags;
@@ -587,22 +587,22 @@ uint32 Object::GetUpdateFieldData(Player const* target, uint32*& flags) const
                     visibleFlag |= UF_FLAG_PARTY_MEMBER;
                 break;
             }
-        case TYPEID_GAMEOBJECT:
+        case ID_GAMEOBJECT:
             flags = GameObjectUpdateFieldFlags;
             if (ToGameObject()->GetOwnerGUID() == target->GetGUID())
                 visibleFlag |= UF_FLAG_OWNER;
             break;
-        case TYPEID_DYNAMICOBJECT:
+        case ID_DYNAMICOBJECT:
             flags = DynamicObjectUpdateFieldFlags;
             if (((DynamicObject*)this)->GetCasterGUID() == target->GetGUID())
                 visibleFlag |= UF_FLAG_OWNER;
             break;
-        case TYPEID_CORPSE:
+        case ID_CORPSE:
             flags = CorpseUpdateFieldFlags;
             if (ToCorpse()->GetOwnerGUID() == target->GetGUID())
                 visibleFlag |= UF_FLAG_OWNER;
             break;
-        case TYPEID_OBJECT:
+        case ID_OBJECT:
             break;
     }
 
@@ -1087,7 +1087,7 @@ void WorldObject::setActive(bool on)
     if (m_isActive == on)
         return;
 
-    if (GetTypeId() == TYPEID_PLAYER)
+    if (GetTypeId() == ID_PLAYER)
         return;
 
     m_isActive = on;
@@ -1101,20 +1101,20 @@ void WorldObject::setActive(bool on)
 
     if (on)
     {
-        if (GetTypeId() == TYPEID_UNIT)
+        if (GetTypeId() == ID_UNIT)
             map->AddToActive(this->ToCreature());
-        else if (GetTypeId() == TYPEID_DYNAMICOBJECT)
+        else if (GetTypeId() == ID_DYNAMICOBJECT)
             map->AddToActive((DynamicObject*)this);
-        else if (GetTypeId() == TYPEID_GAMEOBJECT)
+        else if (GetTypeId() == ID_GAMEOBJECT)
             map->AddToActive((GameObject*)this);
     }
     else
     {
-        if (GetTypeId() == TYPEID_UNIT)
+        if (GetTypeId() == ID_UNIT)
             map->RemoveFromActive(this->ToCreature());
-        else if (GetTypeId() == TYPEID_DYNAMICOBJECT)
+        else if (GetTypeId() == ID_DYNAMICOBJECT)
             map->RemoveFromActive((DynamicObject*)this);
-        else if (GetTypeId() == TYPEID_GAMEOBJECT)
+        else if (GetTypeId() == ID_GAMEOBJECT)
             map->RemoveFromActive((GameObject*)this);
     }
 }
@@ -1122,7 +1122,7 @@ void WorldObject::setActive(bool on)
 void WorldObject::SetVisibilityDistanceOverride(VisibilityDistanceType type)
 {
     ASSERT(type < VisibilityDistanceType::Max);
-    if (GetTypeId() == TYPEID_PLAYER)
+    if (GetTypeId() == ID_PLAYER)
     {
         return;
     }
@@ -1147,7 +1147,7 @@ void WorldObject::SetPositionDataUpdate()
     _updatePositionData = true;
 
     // Calls immediately for charmed units
-    if (GetTypeId() == TYPEID_UNIT && ToUnit()->IsCharmedOwnedByPlayerOrPlayer())
+    if (GetTypeId() == ID_UNIT && ToUnit()->IsCharmedOwnedByPlayerOrPlayer())
         UpdatePositionData();
 }
 
@@ -1329,7 +1329,7 @@ bool WorldObject::IsWithinLOS(float ox, float oy, float oz, VMAP::ModelIgnoreFla
     {
         oz += GetCollisionHeight();
         float x, y, z;
-        if (GetTypeId() == TYPEID_PLAYER)
+        if (GetTypeId() == ID_PLAYER)
         {
             GetPosition(x, y, z);
             z += GetCollisionHeight();
@@ -1350,7 +1350,7 @@ bool WorldObject::IsWithinLOSInMap(WorldObject const* obj, VMAP::ModelIgnoreFlag
         return false;
 
     float ox, oy, oz;
-    if (obj->GetTypeId() == TYPEID_PLAYER)
+    if (obj->GetTypeId() == ID_PLAYER)
     {
         obj->GetPosition(ox, oy, oz);
         oz += obj->GetCollisionHeight();
@@ -1359,7 +1359,7 @@ bool WorldObject::IsWithinLOSInMap(WorldObject const* obj, VMAP::ModelIgnoreFlag
         obj->GetHitSpherePointFor({ GetPositionX(), GetPositionY(), GetPositionZ() + (collisionHeight ? *collisionHeight : GetCollisionHeight()) }, ox, oy, oz);
 
     float x, y, z;
-    if (GetTypeId() == TYPEID_PLAYER)
+    if (GetTypeId() == ID_PLAYER)
     {
         GetPosition(x, y, z);
         z += GetCollisionHeight();
@@ -1634,7 +1634,7 @@ float WorldObject::GetGridActivationRange() const
     {
         return ToCreature()->m_SightDistance;
     }
-    else if (((GetTypeId() == TYPEID_GAMEOBJECT && ToGameObject()->IsTransport()) || GetTypeId() == TYPEID_DYNAMICOBJECT) && isActiveObject())
+    else if (((GetTypeId() == ID_GAMEOBJECT && ToGameObject()->IsTransport()) || GetTypeId() == ID_DYNAMICOBJECT) && isActiveObject())
     {
         return GetMap()->GetVisibilityRange();
     }
@@ -1644,11 +1644,11 @@ float WorldObject::GetGridActivationRange() const
 
 float WorldObject::GetVisibilityRange() const
 {
-    if (IsVisibilityOverridden() && GetTypeId() == TYPEID_UNIT)
+    if (IsVisibilityOverridden() && GetTypeId() == ID_UNIT)
     {
         return *m_visibilityDistanceOverride;
     }
-    else if (GetTypeId() == TYPEID_GAMEOBJECT)
+    else if (GetTypeId() == ID_GAMEOBJECT)
     {
         {
             if (IsInWintergrasp())
@@ -1677,11 +1677,11 @@ float WorldObject::GetSightRange(WorldObject const* target) const
         {
             if (target)
             {
-                if (target->IsVisibilityOverridden() && target->GetTypeId() == TYPEID_UNIT)
+                if (target->IsVisibilityOverridden() && target->GetTypeId() == ID_UNIT)
                 {
                     return *target->m_visibilityDistanceOverride;
                 }
-                else if (target->GetTypeId() == TYPEID_GAMEOBJECT)
+                else if (target->GetTypeId() == ID_GAMEOBJECT)
                 {
                     if (IsInWintergrasp() && target->IsInWintergrasp())
                     {
@@ -1762,7 +1762,7 @@ bool WorldObject::CanSeeOrDetect(WorldObject const* obj, bool ignoreStealth, boo
     }
 
     // pussywizard: arena spectator
-    if (obj->GetTypeId() == TYPEID_PLAYER)
+    if (obj->GetTypeId() == ID_PLAYER)
         if (((Player const*)obj)->IsSpectator() && ((Player const*)obj)->FindMap()->IsBattleArena())
             return false;
 
@@ -1858,7 +1858,7 @@ bool WorldObject::CanSeeOrDetect(WorldObject const* obj, bool ignoreStealth, boo
         return false;
 
     // pussywizard: arena spectator
-    if (this->GetTypeId() == TYPEID_PLAYER)
+    if (this->GetTypeId() == ID_PLAYER)
         if (((Player const*)this)->IsSpectator() && ((Player const*)this)->FindMap()->IsBattleArena() && (obj->m_invisibility.GetFlags() || obj->m_stealth.GetFlags()))
             return false;
 
@@ -1872,7 +1872,7 @@ bool WorldObject::CanSeeOrDetect(WorldObject const* obj, bool ignoreStealth, boo
 
 bool WorldObject::CanNeverSee(WorldObject const* obj) const
 {
-    if (GetTypeId() == TYPEID_UNIT && obj->GetTypeId() == TYPEID_UNIT)
+    if (GetTypeId() == ID_UNIT && obj->GetTypeId() == ID_UNIT)
         return GetMap() != obj->GetMap() || (!InSamePhase(obj) && ToUnit()->GetVehicleBase() != obj && this != obj->ToUnit()->GetVehicleBase());
     return GetMap() != obj->GetMap() || !InSamePhase(obj);
 }
@@ -1901,7 +1901,7 @@ bool WorldObject::CanDetect(WorldObject const* obj, bool ignoreStealth, bool che
             // xinef: ignore units players have at client, this cant be cheated!
             if (checkClient)
             {
-                if (GetTypeId() != TYPEID_PLAYER || !ToPlayer()->HaveAtClient(obj))
+                if (GetTypeId() != ID_PLAYER || !ToPlayer()->HaveAtClient(obj))
                     return false;
             }
             else
@@ -2035,7 +2035,7 @@ bool WorldObject::CanDetectStealthOf(WorldObject const* obj, bool checkAlert) co
         Unit const* unit = ToUnit();
 
         // If this unit is an NPC then player detect range doesn't apply
-        if (unit && unit->GetTypeId() == TYPEID_PLAYER && visibilityRange > MAX_PLAYER_STEALTH_DETECT_RANGE)
+        if (unit && unit->GetTypeId() == ID_PLAYER && visibilityRange > MAX_PLAYER_STEALTH_DETECT_RANGE)
             visibilityRange = MAX_PLAYER_STEALTH_DETECT_RANGE;
 
         if (checkAlert)
@@ -2058,7 +2058,7 @@ void WorldObject::SendPlayMusic(uint32 Music, bool OnlySelf)
 {
     WorldPacket data(SMSG_PLAY_MUSIC, 4);
     data << Music;
-    if (OnlySelf && GetTypeId() == TYPEID_PLAYER)
+    if (OnlySelf && GetTypeId() == ID_PLAYER)
         this->ToPlayer()->GetSession()->SendPacket(&data);
     else
         SendMessageToSet(&data, true); // ToSelf ignored in this case
@@ -2380,7 +2380,7 @@ GameObject* WorldObject::SummonGameObject(uint32 entry, float x, float y, float 
     if (respawnTime)
         go->SetSpellId(1);
 
-    if (GetTypeId() == TYPEID_PLAYER || (GetTypeId() == TYPEID_UNIT && summonType == GO_SUMMON_TIMED_OR_CORPSE_DESPAWN)) //not sure how to handle this
+    if (GetTypeId() == ID_PLAYER || (GetTypeId() == ID_UNIT && summonType == GO_SUMMON_TIMED_OR_CORPSE_DESPAWN)) //not sure how to handle this
         ToUnit()->AddGameObject(go);
     else
         go->SetSpawnedByDefault(false);
@@ -2397,7 +2397,7 @@ Creature* WorldObject::SummonTrigger(float x, float y, float z, float ang, uint3
         return nullptr;
 
     //summon->SetName(GetName());
-    if (setLevel && (GetTypeId() == TYPEID_PLAYER || GetTypeId() == TYPEID_UNIT))
+    if (setLevel && (GetTypeId() == ID_PLAYER || GetTypeId() == ID_UNIT))
     {
         summon->SetFaction(((Unit*)this)->GetFaction());
         summon->SetLevel(((Unit*)this)->GetLevel());
@@ -2419,9 +2419,9 @@ Creature* WorldObject::SummonTrigger(float x, float y, float z, float ang, uint3
 */
 void WorldObject::SummonCreatureGroup(uint8 group, std::list<TempSummon*>* list /*= nullptr*/)
 {
-    ASSERT((GetTypeId() == TYPEID_GAMEOBJECT || GetTypeId() == TYPEID_UNIT) && "Only GOs and creatures can summon npc groups!");
+    ASSERT((GetTypeId() == ID_GAMEOBJECT || GetTypeId() == ID_UNIT) && "Only GOs and creatures can summon npc groups!");
 
-    std::vector<TempSummonData> const* data = sObjectMgr->GetSummonGroup(GetEntry(), GetTypeId() == TYPEID_GAMEOBJECT ? SUMMONER_TYPE_GAMEOBJECT : SUMMONER_TYPE_CREATURE, group);
+    std::vector<TempSummonData> const* data = sObjectMgr->GetSummonGroup(GetEntry(), GetTypeId() == ID_GAMEOBJECT ? SUMMONER_TYPE_GAMEOBJECT : SUMMONER_TYPE_CREATURE, group);
     if (!data)
         return;
 
@@ -2733,7 +2733,7 @@ void WorldObject::GetContactPoint(WorldObject const* obj, float& x, float& y, fl
     GetNearPoint(obj, x, y, z, obj->GetObjectSize(), distance2d, GetAngle(obj));
 
     // Exclude gameobjects from LoS calculations
-    if (std::fabs(this->GetPositionZ() - z) > 3.0f || (GetTypeId() != TYPEID_GAMEOBJECT && !IsWithinLOS(x, y, z)))
+    if (std::fabs(this->GetPositionZ() - z) > 3.0f || (GetTypeId() != ID_GAMEOBJECT && !IsWithinLOS(x, y, z)))
     {
         x = this->GetPositionX();
         y = this->GetPositionY();

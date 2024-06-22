@@ -86,7 +86,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->GetTypeId() == TYPEID_PLAYER)
+            if (who->GetTypeId() == ID_PLAYER)
                 Talk(SAY_ONSLAY);
         }
 

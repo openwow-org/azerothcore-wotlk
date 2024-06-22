@@ -441,7 +441,7 @@ public:
                 case EVENT_REINSTALL:
                     for (uint8 i = RAID_MODE(0, 2); i < 4; ++i)
                         if (Unit* seat = vehicle->GetPassenger(i))
-                            if (seat->GetTypeId() == TYPEID_UNIT)
+                            if (seat->GetTypeId() == ID_UNIT)
                                 seat->ToCreature()->AI()->EnterEvadeMode();
                     Talk(FLAME_LEVIATHAN_EMOTE_REACTIVATE);
                     return;
@@ -651,7 +651,7 @@ void boss_flame_leviathan::boss_flame_leviathanAI::KilledUnit(Unit* who)
     if (who == me->GetVictim())
         events.RescheduleEvent(EVENT_PURSUE, 0ms);
 
-    if (who->GetTypeId() == TYPEID_PLAYER)
+    if (who->GetTypeId() == ID_PLAYER)
         Talk(FLAME_LEVIATHAN_SAY_SLAY);
 }
 
@@ -752,7 +752,7 @@ public:
 
         void PassengerBoarded(Unit* who, int8 seatId, bool apply) override
         {
-            if (who->GetTypeId() != TYPEID_PLAYER || !me->GetVehicle())
+            if (who->GetTypeId() != ID_PLAYER || !me->GetVehicle())
                 return;
 
             who->ApplySpellImmune(63847, IMMUNITY_ID, 63847, apply); // SPELL_FLAME_VENTS_TRIGGER
@@ -774,7 +774,7 @@ public:
                     {
                         turret->ReplaceAllUnitFlags(UNIT_FLAG_NOT_SELECTABLE);
                         turret->SetImmuneToAll(true);
-                        if (turret->GetTypeId() == TYPEID_UNIT)
+                        if (turret->GetTypeId() == ID_UNIT)
                             turret->ToCreature()->AI()->EnterEvadeMode();
                     }
                 }
@@ -823,7 +823,7 @@ public:
 
         bool CanAIAttack(Unit const* who) const override
         {
-            if (!who || who->GetTypeId() != TYPEID_PLAYER || !who->GetVehicle() || who->GetVehicleBase()->GetEntry() != NPC_SEAT)
+            if (!who || who->GetTypeId() != ID_PLAYER || !who->GetVehicle() || who->GetVehicleBase()->GetEntry() != NPC_SEAT)
                 return false;
             return true;
         }
@@ -1225,7 +1225,7 @@ public:
         {
             if (!_lock)
             {
-                if (who->GetTypeId() != TYPEID_PLAYER && !who->IsVehicle())
+                if (who->GetTypeId() != ID_PLAYER && !who->IsVehicle())
                     return;
 
                 // MIMIRON
@@ -1791,7 +1791,7 @@ public:
                         GetCaster()->CastSpell(parent, 62496 /*SPELL_ADD_PYRITE*/, true);
                         target->CastSpell(seat, GetEffectValue());
 
-                        if (target->GetTypeId() == TYPEID_UNIT)
+                        if (target->GetTypeId() == ID_UNIT)
                             target->ToCreature()->DespawnOrUnsummon(1300);
                     }
                 }
@@ -2020,7 +2020,7 @@ public:
 
         SpellCastResult CheckCast()
         {
-            if (GetCaster()->GetTypeId() != TYPEID_PLAYER)
+            if (GetCaster()->GetTypeId() != ID_PLAYER)
                 return SPELL_CAST_OK;
 
             Unit* target = this->GetExplTargetUnit();

@@ -335,7 +335,7 @@ public:
             if (bCanEat || bIsEating)
                 return;
 
-            if (pCaster->GetTypeId() == TYPEID_PLAYER && spell->Id == SPELL_PLACE_CARCASS && !me->HasAura(SPELL_JUST_EATEN))
+            if (pCaster->GetTypeId() == ID_PLAYER && spell->Id == SPELL_PLACE_CARCASS && !me->HasAura(SPELL_JUST_EATEN))
             {
                 uiPlayerGUID = pCaster->GetGUID();
                 bCanEat = true;
@@ -613,7 +613,7 @@ public:
 
             PlayerGUID = caster->GetGUID();
 
-            if (caster->GetTypeId() == TYPEID_PLAYER && spell->Id == SPELL_POISON && !Tapped)
+            if (caster->GetTypeId() == ID_PLAYER && spell->Id == SPELL_POISON && !Tapped)
             {
                 Tapped = true;
                 caster->GetClosePoint(x, y, z, me->GetObjectSize());
@@ -1049,12 +1049,12 @@ public:
         {
             switch (killer->GetTypeId())
             {
-                case TYPEID_UNIT:
+                case ID_UNIT:
                     if (Unit* owner = killer->GetOwner())
                         if (Player* player = owner->ToPlayer())
                             player->GroupEventHappens(QUEST_BATTLE_OF_THE_CRIMSON_WATCH, me);
                     break;
-                case TYPEID_PLAYER:
+                case ID_PLAYER:
                     if (Player* player = killer->ToPlayer())
                         player->GroupEventHappens(QUEST_BATTLE_OF_THE_CRIMSON_WATCH, me);
                     break;
@@ -1292,7 +1292,7 @@ public:
                 {
                     if (Unit* target = SelectTarget(SelectTargetMethod::Random, 0))
                     {
-                        if (target->GetTypeId() == TYPEID_PLAYER)
+                        if (target->GetTypeId() == ID_PLAYER)
                         {
                             DoCast(target, SpawnCast[1].SpellId); //Focused Bursts
                             SpellTimer1 = SpawnCast[1].Timer2 + (rand() % 5 * 1000);

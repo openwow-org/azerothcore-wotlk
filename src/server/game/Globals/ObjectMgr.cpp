@@ -6260,12 +6260,12 @@ void ObjectMgr::LoadQuestAreaTriggers()
     LOG_INFO("server.loading", " ");
 }
 
-QuestGreeting const* ObjectMgr::GetQuestGreeting(TypeID type, uint32 id) const
+QuestGreeting const* ObjectMgr::GetQuestGreeting(OBJECT_TYPE_ID type, uint32 id) const
 {
     uint32 typeIndex;
-    if (type == TYPEID_UNIT)
+    if (type == ID_UNIT)
         typeIndex = 0;
-    else if (type == TYPEID_GAMEOBJECT)
+    else if (type == ID_GAMEOBJECT)
         typeIndex = 1;
     else
         return nullptr;

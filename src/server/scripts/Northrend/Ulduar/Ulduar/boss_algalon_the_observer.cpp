@@ -402,7 +402,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->GetTypeId() != TYPEID_PLAYER || urand(0, 2))
+            if (victim->GetTypeId() != ID_PLAYER || urand(0, 2))
                 return;
 
             Talk(SAY_ALGALON_KILL);
@@ -1019,7 +1019,7 @@ public:
 
         void SpellHit(Unit* caster, SpellInfo const* spell) override
         {
-            if (spell->Id != SPELL_CONSTELLATION_PHASE_EFFECT || caster->GetTypeId() != TYPEID_UNIT)
+            if (spell->Id != SPELL_CONSTELLATION_PHASE_EFFECT || caster->GetTypeId() != ID_UNIT)
                 return;
 
             if (InstanceScript* instance = me->GetInstanceScript())

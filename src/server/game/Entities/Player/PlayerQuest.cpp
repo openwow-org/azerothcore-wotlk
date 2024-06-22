@@ -429,12 +429,12 @@ void Player::AddQuestAndCheckCompletion(Quest const* quest, Object* questGiver)
 
     switch (questGiver->GetTypeId())
     {
-        case TYPEID_UNIT:
+        case ID_UNIT:
             sScriptMgr->OnQuestAccept(this, questGiver->ToCreature(), quest);
             questGiver->ToCreature()->AI()->sQuestAccept(this, quest);
             break;
-        case TYPEID_ITEM:
-        case TYPEID_CONTAINER:
+        case ID_ITEM:
+        case ID_CONTAINER:
         {
             Item* item = (Item*)questGiver;
             sScriptMgr->OnQuestAccept(this, item, quest);
@@ -455,7 +455,7 @@ void Player::AddQuestAndCheckCompletion(Quest const* quest, Object* questGiver)
 
             break;
         }
-        case TYPEID_GAMEOBJECT:
+        case ID_GAMEOBJECT:
             sScriptMgr->OnQuestAccept(this, questGiver->ToGameObject(), quest);
             questGiver->ToGameObject()->AI()->QuestAccept(this, quest);
             break;
@@ -551,7 +551,7 @@ void Player::AddQuest(Quest const* quest, Object* questGiver)
         uint32 timeAllowed = quest->GetTimeAllowed();
 
         // shared timed quest
-        if (questGiver && questGiver->GetTypeId() == TYPEID_PLAYER)
+        if (questGiver && questGiver->GetTypeId() == ID_PLAYER)
             timeAllowed = questGiver->ToPlayer()->getQuestStatusMap()[quest_id].Timer / IN_MILLISECONDS;
 
         AddTimedQuest(quest_id);
@@ -1587,7 +1587,7 @@ QuestGiverStatus Player::GetQuestDialogStatus(Object* questgiver)
 
     switch (questgiver->GetTypeId())
     {
-        case TYPEID_GAMEOBJECT:
+        case ID_GAMEOBJECT:
         {
             QuestGiverStatus questStatus = QuestGiverStatus(sScriptMgr->GetDialogStatus(this, questgiver->ToGameObject()));
             if (questStatus != DIALOG_STATUS_SCRIPTED_NO_STATUS)
@@ -1596,7 +1596,7 @@ QuestGiverStatus Player::GetQuestDialogStatus(Object* questgiver)
             qir = sObjectMgr->GetGOQuestInvolvedRelationBounds(questgiver->GetEntry());
             break;
         }
-        case TYPEID_UNIT:
+        case ID_UNIT:
         {
             QuestGiverStatus questStatus = QuestGiverStatus(sScriptMgr->GetDialogStatus(this, questgiver->ToCreature()));
             if (questStatus != DIALOG_STATUS_SCRIPTED_NO_STATUS)

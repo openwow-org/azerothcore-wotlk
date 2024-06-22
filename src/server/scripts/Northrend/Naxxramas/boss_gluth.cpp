@@ -140,7 +140,7 @@ public:
             {
                 me->ModifyHealth(int32(me->GetMaxHealth() * 0.05f));
             }
-            if (who->GetTypeId() == TYPEID_PLAYER && pInstance)
+            if (who->GetTypeId() == ID_PLAYER && pInstance)
             {
                 pInstance->SetData(DATA_IMMORTAL_FAIL, 0);
             }

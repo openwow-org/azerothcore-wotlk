@@ -267,7 +267,7 @@ class spell_mage_pet_scaling : public AuraScript
             amount = CalculatePct(std::max<int32>(0, frost), 33);
 
             // xinef: Update appropriate player field
-            if (owner->GetTypeId() == TYPEID_PLAYER)
+            if (owner->GetTypeId() == ID_PLAYER)
                 owner->SetUInt32Value(PLAYER_PET_SPELL_POWER, (uint32)amount);
         }
     }
@@ -459,7 +459,7 @@ class spell_mage_cold_snap : public SpellScript
 
     bool Load() override
     {
-        return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        return GetCaster()->GetTypeId() == ID_PLAYER;
     }
 
     void HandleDummy(SpellEffIndex /*effIndex*/)
@@ -884,7 +884,7 @@ class spell_mage_polymorph_cast_visual : public SpellScript
     void HandleDummy(SpellEffIndex /*effIndex*/)
     {
         if (Unit* target = GetCaster()->FindNearestCreature(NPC_AUROSALIA, 30.0f))
-            if (target->GetTypeId() == TYPEID_UNIT)
+            if (target->GetTypeId() == ID_UNIT)
                 target->CastSpell(target, PolymorhForms[urand(0, 5)], true);
     }
 

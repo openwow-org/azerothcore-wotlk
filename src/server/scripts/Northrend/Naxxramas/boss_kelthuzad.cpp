@@ -263,7 +263,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->GetTypeId() != TYPEID_PLAYER)
+            if (who->GetTypeId() != ID_PLAYER)
                 return;
 
             Talk(SAY_SLAY);
@@ -293,7 +293,7 @@ public:
 
         void MoveInLineOfSight(Unit* who) override
         {
-            if (!me->IsInCombat() && who->GetTypeId() == TYPEID_PLAYER && who->IsAlive() && me->GetDistance(who) <= 50.0f)
+            if (!me->IsInCombat() && who->GetTypeId() == ID_PLAYER && who->IsAlive() && me->GetDistance(who) <= 50.0f)
                 AttackStart(who);
         }
 
@@ -442,7 +442,7 @@ public:
                         ThreatContainer::StorageType const& threatList = me->GetThreatMgr().GetThreatList();
                         for (auto itr : threatList)
                         {
-                            if (itr->getTarget()->GetTypeId() == TYPEID_PLAYER
+                            if (itr->getTarget()->GetTypeId() == ID_PLAYER
                                     && itr->getTarget()->getPowerType() == POWER_MANA
                                     && itr->getTarget()->GetPower(POWER_MANA))
                                     {
@@ -565,7 +565,7 @@ public:
 
         void MoveInLineOfSight(Unit* who) override
         {
-            if (who->GetTypeId() != TYPEID_PLAYER && !who->IsPet())
+            if (who->GetTypeId() != ID_PLAYER && !who->IsPet())
                 return;
 
             ScriptedAI::MoveInLineOfSight(who);
@@ -618,7 +618,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->GetTypeId() == TYPEID_PLAYER && me->GetInstanceScript())
+            if (who->GetTypeId() == ID_PLAYER && me->GetInstanceScript())
             {
                 me->GetInstanceScript()->SetData(DATA_IMMORTAL_FAIL, 0);
             }

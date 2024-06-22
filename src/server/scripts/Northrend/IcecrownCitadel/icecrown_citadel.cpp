@@ -968,7 +968,7 @@ public:
         bool CanAIAttack(Unit const* target) const override
         {
             // do not see targets inside Frostwing Halls when we are not there
-            return target->GetTypeId() != TYPEID_PLAYER && (me->GetPositionY() > 2660.0f) == (target->GetPositionY() > 2660.0f) && target->GetEntry() != NPC_SINDRAGOSA;
+            return target->GetTypeId() != ID_PLAYER && (me->GetPositionY() > 2660.0f) == (target->GetPositionY() > 2660.0f) && target->GetEntry() != NPC_SINDRAGOSA;
         }
 
     private:
@@ -1049,10 +1049,10 @@ public:
         {
             switch (victim->GetTypeId())
             {
-                case TYPEID_PLAYER:
+                case ID_PLAYER:
                     Talk(SAY_SVALNA_KILL);
                     break;
-                /*case TYPEID_UNIT: // captains also say something on death and this causes spam
+                /*case ID_UNIT: // captains also say something on death and this causes spam
                     switch (victim->GetEntry())
                     {
                         case NPC_CAPTAIN_ARNATH:
@@ -1212,7 +1212,7 @@ public:
 
     void KilledUnit(Unit* victim) override
     {
-        if (victim->GetTypeId() == TYPEID_PLAYER)
+        if (victim->GetTypeId() == ID_PLAYER)
             Talk(SAY_CAPTAIN_KILL);
     }
 
@@ -1238,7 +1238,7 @@ public:
     bool CanAIAttack(Unit const* target) const override
     {
         // do not see targets inside Frostwing Halls when we are not there
-        return (me->GetPositionY() > 2660.0f) == (target->GetPositionY() > 2660.0f) && (target->GetTypeId() == TYPEID_PLAYER || target->IsInCombat());
+        return (me->GetPositionY() > 2660.0f) == (target->GetPositionY() > 2660.0f) && (target->GetTypeId() == ID_PLAYER || target->IsInCombat());
     }
 
     void EnterEvadeMode(EvadeReason why) override
@@ -1758,7 +1758,7 @@ public:
 
         void SpellHitTarget(Unit* c, SpellInfo const* spell) override
         {
-            if (spell->Id == 71306 && c->GetTypeId() == TYPEID_UNIT) // Twisted Winds
+            if (spell->Id == 71306 && c->GetTypeId() == ID_UNIT) // Twisted Winds
             {
                 Position myPos = me->GetPosition();
                 me->NearTeleportTo(c->GetPositionX(), c->GetPositionY(), c->GetPositionZ(), c->GetOrientation());
@@ -2069,7 +2069,7 @@ public:
         // First effect
         void CountTargets(std::list<WorldObject*>& targets)
         {
-            targets.remove_if(Acore::ObjectTypeIdCheck(TYPEID_PLAYER, false));
+            targets.remove_if(Acore::ObjectTypeIdCheck(ID_PLAYER, false));
             targets.remove_if(Acore::ObjectGUIDCheck(GetCaster()->GetGUID(), true));
 
             bool kill = true;
@@ -2834,7 +2834,7 @@ public:
 
         void MoveInLineOfSight(Unit* who) override
         {
-            if (me->IsAlive() && !me->IsInCombat() && who->GetTypeId() == TYPEID_PLAYER && who->GetExactDist2d(me) < 35.0f)
+            if (me->IsAlive() && !me->IsInCombat() && who->GetTypeId() == ID_PLAYER && who->GetExactDist2d(me) < 35.0f)
                 AttackStart(who);
         }
 
@@ -3207,7 +3207,7 @@ public:
                 ScriptedAI::MoveInLineOfSight(who);
             else
             {
-                if (!me->IsInCombat() && who->GetTypeId() == TYPEID_PLAYER && me->GetExactDist2dSq(who) < 25.0f * 25.0f && me->CanSeeOrDetect(who) && me->IsValidAttackTarget(who))
+                if (!me->IsInCombat() && who->GetTypeId() == ID_PLAYER && me->GetExactDist2dSq(who) < 25.0f * 25.0f && me->CanSeeOrDetect(who) && me->IsValidAttackTarget(who))
                     AttackStart(who);
             }
         }
@@ -3352,7 +3352,7 @@ public:
 
         void MoveInLineOfSight(Unit* who) override
         {
-            if (!_didWebBeam && who->GetTypeId() == TYPEID_PLAYER && me->GetExactDist2d(who) < 70.0f)
+            if (!_didWebBeam && who->GetTypeId() == ID_PLAYER && me->GetExactDist2d(who) < 70.0f)
             {
                 _didWebBeam = true;
                 float nx = me->GetPositionX();

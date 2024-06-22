@@ -206,7 +206,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->GetTypeId() != TYPEID_PLAYER)
+            if (who->GetTypeId() != ID_PLAYER)
                 return;
 
             Talk(SAY_SLAY);

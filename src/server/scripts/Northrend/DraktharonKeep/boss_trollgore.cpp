@@ -84,7 +84,7 @@ public:
 
             me->setActive(true);
             instance->SetBossState(DATA_TROLLGORE, IN_PROGRESS);
-            if (who->GetTypeId() == TYPEID_PLAYER)
+            if (who->GetTypeId() == ID_PLAYER)
             {
                 Talk(SAY_AGGRO);
                 me->SetInCombatWithZone();

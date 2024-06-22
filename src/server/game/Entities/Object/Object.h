@@ -118,7 +118,7 @@ public:
     virtual void RemoveDynamicFlag(uint32 flag) { ReplaceAllDynamicFlags(GetDynamicFlags() & ~flag); }
     virtual void ReplaceAllDynamicFlags([[maybe_unused]] uint32 flag) { }
 
-    [[nodiscard]] TypeID GetTypeId() const { return m_objectTypeId; }
+    [[nodiscard]] OBJECT_TYPE_ID GetTypeId() const { return m_objectTypeId; }
     [[nodiscard]] bool isType(uint16 mask) const { return (mask & m_objectType); }
 
     virtual void BuildCreateUpdateBlockForPlayer(UpdateData* data, Player* target) const;
@@ -191,22 +191,22 @@ public:
     // FG: some hacky helpers
     void ForceValuesUpdateAtIndex(uint32);
 
-    [[nodiscard]] inline bool IsPlayer() const { return GetTypeId() == TYPEID_PLAYER; }
-    Player* ToPlayer() { if (GetTypeId() == TYPEID_PLAYER) return reinterpret_cast<Player*>(this); else return nullptr; }
-    [[nodiscard]] Player const* ToPlayer() const { if (GetTypeId() == TYPEID_PLAYER) return (Player const*)((Player*)this); else return nullptr; }
-    Creature* ToCreature() { if (GetTypeId() == TYPEID_UNIT) return reinterpret_cast<Creature*>(this); else return nullptr; }
-    [[nodiscard]] Creature const* ToCreature() const { if (GetTypeId() == TYPEID_UNIT) return (Creature const*)((Creature*)this); else return nullptr; }
+    [[nodiscard]] inline bool IsPlayer() const { return GetTypeId() == ID_PLAYER; }
+    Player* ToPlayer() { if (GetTypeId() == ID_PLAYER) return reinterpret_cast<Player*>(this); else return nullptr; }
+    [[nodiscard]] Player const* ToPlayer() const { if (GetTypeId() == ID_PLAYER) return (Player const*)((Player*)this); else return nullptr; }
+    Creature* ToCreature() { if (GetTypeId() == ID_UNIT) return reinterpret_cast<Creature*>(this); else return nullptr; }
+    [[nodiscard]] Creature const* ToCreature() const { if (GetTypeId() == ID_UNIT) return (Creature const*)((Creature*)this); else return nullptr; }
 
-    Unit* ToUnit() { if (GetTypeId() == TYPEID_UNIT || GetTypeId() == TYPEID_PLAYER) return reinterpret_cast<Unit*>(this); else return nullptr; }
-    [[nodiscard]] Unit const* ToUnit() const { if (GetTypeId() == TYPEID_UNIT || GetTypeId() == TYPEID_PLAYER) return (Unit const*)((Unit*)this); else return nullptr; }
-    GameObject* ToGameObject() { if (GetTypeId() == TYPEID_GAMEOBJECT) return reinterpret_cast<GameObject*>(this); else return nullptr; }
-    [[nodiscard]] GameObject const* ToGameObject() const { if (GetTypeId() == TYPEID_GAMEOBJECT) return (GameObject const*)((GameObject*)this); else return nullptr; }
+    Unit* ToUnit() { if (GetTypeId() == ID_UNIT || GetTypeId() == ID_PLAYER) return reinterpret_cast<Unit*>(this); else return nullptr; }
+    [[nodiscard]] Unit const* ToUnit() const { if (GetTypeId() == ID_UNIT || GetTypeId() == ID_PLAYER) return (Unit const*)((Unit*)this); else return nullptr; }
+    GameObject* ToGameObject() { if (GetTypeId() == ID_GAMEOBJECT) return reinterpret_cast<GameObject*>(this); else return nullptr; }
+    [[nodiscard]] GameObject const* ToGameObject() const { if (GetTypeId() == ID_GAMEOBJECT) return (GameObject const*)((GameObject*)this); else return nullptr; }
 
-    Corpse* ToCorpse() { if (GetTypeId() == TYPEID_CORPSE) return reinterpret_cast<Corpse*>(this); else return nullptr; }
-    [[nodiscard]] Corpse const* ToCorpse() const { if (GetTypeId() == TYPEID_CORPSE) return (const Corpse*)((Corpse*)this); else return nullptr; }
+    Corpse* ToCorpse() { if (GetTypeId() == ID_CORPSE) return reinterpret_cast<Corpse*>(this); else return nullptr; }
+    [[nodiscard]] Corpse const* ToCorpse() const { if (GetTypeId() == ID_CORPSE) return (const Corpse*)((Corpse*)this); else return nullptr; }
 
-    DynamicObject* ToDynObject() { if (GetTypeId() == TYPEID_DYNAMICOBJECT) return reinterpret_cast<DynamicObject*>(this); else return nullptr; }
-    [[nodiscard]] DynamicObject const* ToDynObject() const { if (GetTypeId() == TYPEID_DYNAMICOBJECT) return reinterpret_cast<DynamicObject const*>(this); else return nullptr; }
+    DynamicObject* ToDynObject() { if (GetTypeId() == ID_DYNAMICOBJECT) return reinterpret_cast<DynamicObject*>(this); else return nullptr; }
+    [[nodiscard]] DynamicObject const* ToDynObject() const { if (GetTypeId() == ID_DYNAMICOBJECT) return reinterpret_cast<DynamicObject const*>(this); else return nullptr; }
 
     virtual std::string GetDebugInfo() const;
 
@@ -227,7 +227,7 @@ protected:
 
     uint16 m_objectType;
 
-    TypeID m_objectTypeId;
+    OBJECT_TYPE_ID m_objectTypeId;
     uint16 m_updateFlag;
 
     union

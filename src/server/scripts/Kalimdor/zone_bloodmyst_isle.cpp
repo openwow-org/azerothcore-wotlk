@@ -70,7 +70,7 @@ public:
                     {
                         if (Unit* owner = killer->GetOwner())
                         {
-                            if (owner->GetTypeId() == TYPEID_PLAYER)
+                            if (owner->GetTypeId() == ID_PLAYER)
                             {
                                 owner->ToPlayer()->KilledMonsterCredit(NPC_EXPEDITION_RESEARCHER);
                             }

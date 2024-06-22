@@ -647,7 +647,7 @@ protected:
 private:
     // Battleground
     BattlegroundTypeId m_RealTypeID;
-    BattlegroundTypeId m_RandomTypeID;                  // TypeID created from Random Battleground list
+    BattlegroundTypeId m_RandomTypeID;                  // OBJECT_TYPE_ID created from Random Battleground list
     uint32 m_InstanceID;                                // Battleground Instance's GUID!
     BattlegroundStatus m_Status;
     uint32 m_ClientInstanceID;                          // the instance-id which is sent to the client and without any other internal use

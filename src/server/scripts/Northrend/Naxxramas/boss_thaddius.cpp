@@ -210,7 +210,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->GetTypeId() != TYPEID_PLAYER)
+            if (who->GetTypeId() != ID_PLAYER)
                 return;
 
             Talk(SAY_SLAY);
@@ -490,7 +490,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->GetTypeId() != TYPEID_PLAYER)
+            if (who->GetTypeId() != ID_PLAYER)
                 return;
 
             if (pInstance)
@@ -648,7 +648,7 @@ public:
             if (!target)
                 return;
 
-            if (target->HasAura(GetTriggeringSpell()->Id) || target->GetTypeId() != TYPEID_PLAYER)
+            if (target->HasAura(GetTriggeringSpell()->Id) || target->GetTypeId() != ID_PLAYER)
             {
                 SetHitDamage(0);
             }

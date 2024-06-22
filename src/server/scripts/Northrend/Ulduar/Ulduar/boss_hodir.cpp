@@ -447,7 +447,7 @@ public:
                         Map::PlayerList const& pl = me->GetMap()->GetPlayers();
                         for (Map::PlayerList::const_iterator itr = pl.begin(); itr != pl.end(); ++itr)
                             targets.push_back(itr->GetSource());
-                        targets.remove_if(Acore::ObjectTypeIdCheck(TYPEID_PLAYER, false));
+                        targets.remove_if(Acore::ObjectTypeIdCheck(ID_PLAYER, false));
                         targets.remove_if(Acore::UnitAuraCheck(true, SPELL_FLASH_FREEZE_TRAPPED_PLAYER));
                         Acore::Containers::RandomResize(targets, (RAID_MODE(2,3)));
                         for (std::list<Unit*>::const_iterator itr = targets.begin(); itr != targets.end(); ++itr)
@@ -547,7 +547,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if (who->GetTypeId() == TYPEID_PLAYER)
+            if (who->GetTypeId() == ID_PLAYER)
                 Talk(TEXT_SLAY);
         }
 
@@ -563,9 +563,9 @@ public:
 
         bool CanAIAttack(Unit const* t) const override
         {
-            if (t->GetTypeId() == TYPEID_PLAYER)
+            if (t->GetTypeId() == ID_PLAYER)
                 return !t->HasAura(SPELL_FLASH_FREEZE_TRAPPED_PLAYER);
-            else if (t->GetTypeId() == TYPEID_UNIT)
+            else if (t->GetTypeId() == ID_UNIT)
                 return !t->HasAura(SPELL_FLASH_FREEZE_TRAPPED_NPC);
 
             return true;
@@ -689,9 +689,9 @@ public:
                 {
                     if (Unit* s = me->ToTempSummon()->GetSummonerUnit())
                     {
-                        if ((s->GetTypeId() == TYPEID_PLAYER && !s->HasAura(SPELL_FLASH_FREEZE_TRAPPED_PLAYER)) || (s->GetTypeId() == TYPEID_UNIT && !s->HasAura(SPELL_FLASH_FREEZE_TRAPPED_NPC)))
+                        if ((s->GetTypeId() == ID_PLAYER && !s->HasAura(SPELL_FLASH_FREEZE_TRAPPED_PLAYER)) || (s->GetTypeId() == ID_UNIT && !s->HasAura(SPELL_FLASH_FREEZE_TRAPPED_NPC)))
                             me->DespawnOrUnsummon(2000);
-                        else if (s->GetTypeId() == TYPEID_PLAYER)
+                        else if (s->GetTypeId() == ID_PLAYER)
                             if (InstanceScript* instanceScript = me->GetInstanceScript())
                                 if (instanceScript->GetData(TYPE_HODIR) == NOT_STARTED)
                                 {
@@ -1209,7 +1209,7 @@ public:
         {
             if ((aurEff->GetTickNumber() % 4) == 0)
                 if (Unit* target = GetTarget())
-                    if (target->GetTypeId() == TYPEID_PLAYER
+                    if (target->GetTypeId() == ID_PLAYER
                         && !target->isMoving()
                         && !target->HasAura(SPELL_BITING_COLD_PLAYER_AURA)
                         && !target->HasAura(SPELL_MAGE_TOASTY_FIRE_AURA))
@@ -1306,7 +1306,7 @@ public:
 
         void FilterTargets(std::list<WorldObject*>& targets)
         {
-            targets.remove_if(Acore::ObjectTypeIdCheck(TYPEID_PLAYER, false));
+            targets.remove_if(Acore::ObjectTypeIdCheck(ID_PLAYER, false));
             targets.remove_if(Acore::UnitAuraCheck(true, SPELL_FLASH_FREEZE_TRAPPED_PLAYER));
             Acore::Containers::RandomResize(targets, 1);
         }
@@ -1367,14 +1367,14 @@ public:
             {
                 Unit* target = GetTarget();
                 Unit* caster = GetCaster();
-                if (!target || !caster || caster->GetTypeId() != TYPEID_UNIT)
+                if (!target || !caster || caster->GetTypeId() != ID_UNIT)
                     return;
 
-                if (Aura* aur = target->GetAura(target->GetTypeId() == TYPEID_PLAYER ? SPELL_FLASH_FREEZE_TRAPPED_PLAYER : SPELL_FLASH_FREEZE_TRAPPED_NPC))
+                if (Aura* aur = target->GetAura(target->GetTypeId() == ID_PLAYER ? SPELL_FLASH_FREEZE_TRAPPED_PLAYER : SPELL_FLASH_FREEZE_TRAPPED_NPC))
                 {
                     if (Unit* caster2 = aur->GetCaster())
                     {
-                        if (caster2->GetTypeId() == TYPEID_UNIT)
+                        if (caster2->GetTypeId() == ID_UNIT)
                         {
                             caster2->ToCreature()->DespawnOrUnsummon();
                         }
@@ -1382,7 +1382,7 @@ public:
                     target->CastSpell(target, SPELL_FLASH_FREEZE_INSTAKILL, true);
                     return;
                 }
-                if (target->GetTypeId() == TYPEID_PLAYER)
+                if (target->GetTypeId() == ID_PLAYER)
                 {
                     caster->ToCreature()->AI()->SetData(1, 1);
                     if( Creature* c = target->SummonCreature(NPC_FLASH_FREEZE_PLR, target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 5 * 60 * 1000) )
@@ -1391,7 +1391,7 @@ public:
                         caster->ToCreature()->AI()->JustSummoned(c);
                     }
                 }
-                else if (target->GetTypeId() == TYPEID_UNIT)
+                else if (target->GetTypeId() == ID_UNIT)
                 {
                     if( Creature* c = target->SummonCreature(NPC_FLASH_FREEZE_NPC, target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), 0.0f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 2000) )
                     {
@@ -1438,7 +1438,7 @@ public:
         void HandleAfterEffectApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
         {
             if (Unit* target = GetTarget())
-                if (target->GetTypeId() == TYPEID_PLAYER)
+                if (target->GetTypeId() == ID_PLAYER)
                     target->ToPlayer()->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_BE_SPELL_TARGET2, GetId(), 0, GetCaster());
         }
 
@@ -1490,7 +1490,7 @@ public:
 
     bool OnCheck(Player*  /*player*/, Unit* target, uint32 /*criteria_id*/) override
     {
-        return target && target->GetEntry() == NPC_HODIR && target->GetTypeId() == TYPEID_UNIT && target->ToCreature()->AI()->GetData(1);
+        return target && target->GetEntry() == NPC_HODIR && target->GetTypeId() == ID_UNIT && target->ToCreature()->AI()->GetData(1);
     }
 };
 
@@ -1501,7 +1501,7 @@ public:
 
     bool OnCheck(Player*  /*player*/, Unit* target, uint32 /*criteria_id*/) override
     {
-        return target && target->GetEntry() == NPC_HODIR && target->GetTypeId() == TYPEID_UNIT && target->ToCreature()->AI()->GetData(2);
+        return target && target->GetEntry() == NPC_HODIR && target->GetTypeId() == ID_UNIT && target->ToCreature()->AI()->GetData(2);
     }
 };
 
@@ -1512,7 +1512,7 @@ public:
 
     bool OnCheck(Player*  /*player*/, Unit* target, uint32 /*criteria_id*/) override
     {
-        return target && target->GetEntry() == NPC_HODIR && target->GetTypeId() == TYPEID_UNIT && target->ToCreature()->AI()->GetData(3);
+        return target && target->GetEntry() == NPC_HODIR && target->GetTypeId() == ID_UNIT && target->ToCreature()->AI()->GetData(3);
     }
 };
 
@@ -1523,7 +1523,7 @@ public:
 
     bool OnCheck(Player*  /*player*/, Unit* target, uint32 /*criteria_id*/) override
     {
-        return target && target->GetEntry() == NPC_HODIR && target->GetTypeId() == TYPEID_UNIT && target->ToCreature()->AI()->GetData(4);
+        return target && target->GetEntry() == NPC_HODIR && target->GetTypeId() == ID_UNIT && target->ToCreature()->AI()->GetData(4);
     }
 };
 
@@ -1561,7 +1561,7 @@ public:
         void HandleAfterEffectApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
         {
             if (Unit* target = GetTarget())
-                if (target->GetTypeId() == TYPEID_PLAYER)
+                if (target->GetTypeId() == ID_PLAYER)
                     target->ToPlayer()->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_BE_SPELL_TARGET2, SPELL_MAGE_TOASTY_FIRE_AURA, 0, GetCaster());
         }
 
@@ -1589,7 +1589,7 @@ public:
         void HandleAfterEffectApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
         {
             if (Unit* target = GetTarget())
-                if (target->GetTypeId() == TYPEID_PLAYER)
+                if (target->GetTypeId() == ID_PLAYER)
                     target->ToPlayer()->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_BE_SPELL_TARGET2, SPELL_DRUID_STARLIGHT_AREA_AURA, 0, GetCaster());
         }
 

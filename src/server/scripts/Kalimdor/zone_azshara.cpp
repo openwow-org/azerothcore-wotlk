@@ -340,7 +340,7 @@ public:
             if (!who)
                 return;
 
-            if (who->GetTypeId() == TYPEID_PLAYER && me->IsWithinDistInMap(who, 5))
+            if (who->GetTypeId() == ID_PLAYER && me->IsWithinDistInMap(who, 5))
             {
                 DoCast(who, SPELL_DEPTH_CHARGE_TRAP);
                 WeMustDie = true;

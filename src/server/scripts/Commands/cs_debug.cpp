@@ -265,7 +265,7 @@ public:
         Unit* unit = handler->getSelectedUnit();
         Player* player = nullptr;
 
-        if (!unit || (unit->GetTypeId() != TYPEID_PLAYER))
+        if (!unit || (unit->GetTypeId() != ID_PLAYER))
         {
             player = handler->GetSession()->GetPlayer();
         }
@@ -1136,7 +1136,7 @@ public:
             return true;
 
         // check index
-        if (unit->GetTypeId() == TYPEID_PLAYER)
+        if (unit->GetTypeId() == ID_PLAYER)
         {
             if (index >= PLAYER_END)
                 return true;

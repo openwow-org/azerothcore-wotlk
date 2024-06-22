@@ -186,7 +186,7 @@ struct boss_grandmaster_vorpil : public BossAI
     void MoveInLineOfSight(Unit* who) override
     {
         ScriptedAI::MoveInLineOfSight(who);
-        if (!sayIntro && who->GetTypeId() == TYPEID_PLAYER)
+        if (!sayIntro && who->GetTypeId() == ID_PLAYER)
         {
             Talk(SAY_INTRO);
             sayIntro = true;

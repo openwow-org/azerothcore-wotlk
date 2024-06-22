@@ -383,7 +383,7 @@ public:
 
         void KilledUnit(Unit* who) override
         {
-            if( who->GetTypeId() == TYPEID_PLAYER )
+            if( who->GetTypeId() == ID_PLAYER )
                 Talk(SAY_KILL_PLAYER);
         }
 
@@ -398,7 +398,7 @@ public:
 
         void MoveInLineOfSight(Unit* who) override
         {
-            if (who->GetTypeId() != TYPEID_PLAYER || me->GetExactDistSq(who) > 6400.0f) // 80yd*80yd
+            if (who->GetTypeId() != ID_PLAYER || me->GetExactDistSq(who) > 6400.0f) // 80yd*80yd
                 return;
 
             if (me->getStandState() != UNIT_STAND_STATE_STAND)
@@ -844,7 +844,7 @@ public:
                 {
                     target->UpdatePosition(*c, false);
                     target->CastCustomSpell(SPELL_SPIKE_FAIL, SPELLVALUE_MAX_TARGETS, 1);
-                    if( target->GetTypeId() == TYPEID_UNIT )
+                    if( target->GetTypeId() == ID_UNIT )
                         target->ToCreature()->AI()->DoAction(-1);
                     Remove();
                     return;

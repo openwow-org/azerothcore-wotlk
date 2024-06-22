@@ -258,7 +258,7 @@ public:
 
         void KilledUnit(Unit* victim) override
         {
-            if (victim->GetTypeId() != TYPEID_PLAYER)
+            if (victim->GetTypeId() != ID_PLAYER)
                 return;
 
             int32 textId = 0;
@@ -347,7 +347,7 @@ public:
                 {
                     t->SetControlled(false, UNIT_STATE_ROOT);
                     t->DisableRotate(false);
-                    if (t->GetTypeId() == TYPEID_UNIT)
+                    if (t->GetTypeId() == ID_UNIT)
                         t->ToCreature()->SetReactState(REACT_AGGRESSIVE);
                     if (t->GetVictim())
                     {

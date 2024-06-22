@@ -55,14 +55,14 @@ void VisibleNotifier::SendToSelf()
 
                 switch ((*itr)->GetTypeId())
                 {
-                    case TYPEID_GAMEOBJECT:
+                    case ID_GAMEOBJECT:
                         i_player.UpdateVisibilityOf((*itr)->ToGameObject(), i_data, i_visibleNow);
                         break;
-                    case TYPEID_PLAYER:
+                    case ID_PLAYER:
                         i_player.UpdateVisibilityOf((*itr)->ToPlayer(), i_data, i_visibleNow);
                         (*itr)->ToPlayer()->UpdateVisibilityOf(&i_player);
                         break;
-                    case TYPEID_UNIT:
+                    case ID_UNIT:
                         i_player.UpdateVisibilityOf((*itr)->ToCreature(), i_data, i_visibleNow);
                         break;
                     default:
@@ -160,7 +160,7 @@ inline void CreatureUnitRelocationWorker(Creature* c, Unit* u)
         {
             c->AI()->MoveInLineOfSight_Safe(u);
         }
-        else if (u->GetTypeId() == TYPEID_PLAYER && u->HasStealthAura() && c->IsAIEnabled && c->CanSeeOrDetect(u, false, true, true))
+        else if (u->GetTypeId() == ID_PLAYER && u->HasStealthAura() && c->IsAIEnabled && c->CanSeeOrDetect(u, false, true, true))
         {
             c->AI()->TriggerAlert(u);
         }

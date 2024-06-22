@@ -231,7 +231,7 @@ class spell_hun_generic_scaling : public AuraScript
             amount = CalculatePct(std::max<int32>(0, owner->GetTotalAttackPowerValue(RANGED_ATTACK)), modifier);
 
             // xinef: Update appropriate player field
-            if (owner->GetTypeId() == TYPEID_PLAYER)
+            if (owner->GetTypeId() == ID_PLAYER)
                 owner->SetUInt32Value(PLAYER_PET_SPELL_POWER, (uint32)amount);
         }
     }
@@ -322,7 +322,7 @@ class spell_hun_aspect_of_the_beast : public AuraScript
 
     bool Load() override
     {
-        return GetCaster() && GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        return GetCaster() && GetCaster()->GetTypeId() == ID_PLAYER;
     }
 
     bool Validate(SpellInfo const* /*spellInfo*/) override
@@ -655,7 +655,7 @@ class spell_hun_readiness : public SpellScript
 
     bool Load() override
     {
-        return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        return GetCaster()->GetTypeId() == ID_PLAYER;
     }
 
     void HandleDummy(SpellEffIndex /*effIndex*/)
@@ -708,7 +708,7 @@ class spell_hun_scatter_shot : public SpellScript
 
     bool Load() override
     {
-        return GetCaster()->GetTypeId() == TYPEID_PLAYER;
+        return GetCaster()->GetTypeId() == ID_PLAYER;
     }
 
     void HandleDummy(SpellEffIndex /*effIndex*/)
@@ -930,7 +930,7 @@ class spell_hun_disengage : public SpellScript
     SpellCastResult CheckCast()
     {
         Unit* caster = GetCaster();
-        if (caster->GetTypeId() == TYPEID_PLAYER && !caster->IsInCombat())
+        if (caster->GetTypeId() == ID_PLAYER && !caster->IsInCombat())
             return SPELL_FAILED_CANT_DO_THAT_RIGHT_NOW;
 
         return SPELL_CAST_OK;
@@ -950,7 +950,7 @@ class spell_hun_tame_beast : public SpellScript
     SpellCastResult CheckCast()
     {
         Unit* caster = GetCaster();
-        if (caster->GetTypeId() != TYPEID_PLAYER)
+        if (caster->GetTypeId() != ID_PLAYER)
             return SPELL_FAILED_DONT_REPORT;
 
         Player* player = GetCaster()->ToPlayer();
@@ -1136,7 +1136,7 @@ class spell_hun_volley_trigger : public SpellScript
         {
             if (Unit* pet = *itr)
             {
-                if (pet->IsAlive() && pet->GetTypeId() == TYPEID_UNIT)
+                if (pet->IsAlive() && pet->GetTypeId() == ID_UNIT)
                 {
                     pet->ToCreature()->AI()->OwnerAttacked(_target->ToUnit());
                 }
@@ -1295,7 +1295,7 @@ class spell_hun_bestial_wrath : public SpellScript
     SpellCastResult CheckCast()
     {
         Unit* caster = GetCaster();
-        if (!caster || caster->GetTypeId() != TYPEID_PLAYER)
+        if (!caster || caster->GetTypeId() != ID_PLAYER)
         {
             return SPELL_FAILED_NO_VALID_TARGETS;
         }
