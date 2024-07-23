@@ -909,7 +909,7 @@ public:
 
     private:
         EventMap _events;
-        ObjectGuid _playerGUID;
+        WOWGUID _playerGUID;
     };
 
     GameObjectAI* GetAI(GameObject* go) const override

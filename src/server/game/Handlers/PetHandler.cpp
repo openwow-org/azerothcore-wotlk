@@ -56,9 +56,9 @@ void User::HandleDismissCritter(WorldPackets::Pet::DismissCritter& packet)
 
 void User::HandlePetAction(WorldPacket& recvData)
 {
-    ObjectGuid guid1;
+    WOWGUID guid1;
     uint32 data;
-    ObjectGuid guid2;
+    WOWGUID guid2;
     recvData >> guid1;                                     //pet guid
     recvData >> data;
     recvData >> guid2;                                     //tag guid
@@ -147,7 +147,7 @@ void User::HandlePetStopAttack(WorldPackets::Pet::PetStopAttack& packet)
     pet->ClearInPetCombat();
 }
 
-void User::HandlePetActionHelper(Unit* pet, ObjectGuid guid1, uint32 spellId, uint16 flag, ObjectGuid guid2)
+void User::HandlePetActionHelper(Unit* pet, WOWGUID guid1, uint32 spellId, uint16 flag, WOWGUID guid2)
 {
     CharmInfo* charmInfo = pet->GetCharmInfo();
     if (!charmInfo)
@@ -527,7 +527,7 @@ void User::HandlePetActionHelper(Unit* pet, ObjectGuid guid1, uint32 spellId, ui
                                 pet->SendPetAIReaction(guid1);
                             }
 
-                            pet->ToPet()->CastWhenWillAvailable(spellId, unit_target, ObjectGuid::Empty, tempspellIsPositive);
+                            pet->ToPet()->CastWhenWillAvailable(spellId, unit_target, WOWGUID::Empty, tempspellIsPositive);
                         }
                     }
                     else if (haspositiveeffect)
@@ -563,7 +563,7 @@ void User::HandlePetActionHelper(Unit* pet, ObjectGuid guid1, uint32 spellId, ui
                                 pet->SendPetAIReaction(guid1);
                             }
 
-                            ObjectGuid oldTarget = ObjectGuid::Empty;
+                            WOWGUID oldTarget = WOWGUID::Empty;
                             if (victim)
                                 oldTarget = victim->GetGUID();
 
@@ -603,7 +603,7 @@ void User::HandlePetNameQuery(WorldPacket& recvData)
     LOG_DEBUG("network.opcode", "HandlePetNameQuery. CMSG_PET_NAME_QUERY");
 
     uint32 petnumber;
-    ObjectGuid petguid;
+    WOWGUID petguid;
 
     recvData >> petnumber;
     recvData >> petguid;
@@ -611,7 +611,7 @@ void User::HandlePetNameQuery(WorldPacket& recvData)
     SendPetNameQuery(petguid, petnumber);
 }
 
-void User::SendPetNameQuery(ObjectGuid petguid, uint32 petnumber)
+void User::SendPetNameQuery(WOWGUID petguid, uint32 petnumber)
 {
     Creature* pet = ObjectAccessor::GetCreatureOrPetOrVehicle(*m_player, petguid);
     if (!pet)
@@ -655,7 +655,7 @@ void User::SendPetNameQuery(ObjectGuid petguid, uint32 petnumber)
     Send(&data);
 }
 
-bool User::CheckStableMaster(ObjectGuid guid)
+bool User::CheckStableMaster(WOWGUID guid)
 {
     // spell case or GM
     if (guid == GetPlayer()->GetGUID())
@@ -682,7 +682,7 @@ void User::HandlePetSetAction(WorldPacket& recvData)
 {
     LOG_DEBUG("network.opcode", "HandlePetSetAction. CMSG_PET_SET_ACTION");
 
-    ObjectGuid petguid;
+    WOWGUID petguid;
     uint8  count;
 
     recvData >> petguid;
@@ -826,7 +826,7 @@ void User::HandlePetRename(WorldPacket& recvData)
 {
     LOG_DEBUG("network.opcode", "HandlePetRename. CMSG_PET_RENAME");
 
-    ObjectGuid petguid;
+    WOWGUID petguid;
     uint8 isdeclined;
 
     std::string name;
@@ -997,7 +997,7 @@ void User::HandlePetCastSpellOpcode(WorldPacket& recvPacket)
 {
     LOG_DEBUG("network", "WORLD: CMSG_PET_CAST_SPELL");
 
-    ObjectGuid guid;
+    WOWGUID guid;
     uint8  castCount;
     uint32 spellId;
     uint8  castFlags;
@@ -1114,7 +1114,7 @@ void User::HandlePetLearnTalent(WorldPacket& recvData)
 {
     LOG_DEBUG("network", "WORLD: CMSG_PET_LEARN_TALENT");
 
-    ObjectGuid guid;
+    WOWGUID guid;
     uint32 talent_id, requested_rank;
     recvData >> guid >> talent_id >> requested_rank;
 
@@ -1126,7 +1126,7 @@ void User::HandleLearnPreviewTalentsPet(WorldPacket& recvData)
 {
     LOG_DEBUG("network", "CMSG_LEARN_PREVIEW_TALENTS_PET");
 
-    ObjectGuid guid;
+    WOWGUID guid;
     recvData >> guid;
 
     uint32 talentsCount;

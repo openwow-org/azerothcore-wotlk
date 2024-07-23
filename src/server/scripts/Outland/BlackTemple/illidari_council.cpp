@@ -120,7 +120,7 @@ private:
 class VerasEnvenom : public BasicEvent
 {
 public:
-    VerasEnvenom(Unit& owner, ObjectGuid targetGUID) : _owner(owner), _targetGUID(targetGUID) { }
+    VerasEnvenom(Unit& owner, WOWGUID targetGUID) : _owner(owner), _targetGUID(targetGUID) { }
 
     bool Execute(uint64 /*eventTime*/, uint32 /*updateTime*/) override
     {
@@ -136,7 +136,7 @@ public:
 
 private:
     Unit& _owner;
-    ObjectGuid _targetGUID;
+    WOWGUID _targetGUID;
 };
 
 class boss_illidari_council : public CreatureScript
@@ -236,7 +236,7 @@ struct boss_illidari_council_memberAI : public ScriptedAI
 
     void EnterEvadeMode(EvadeReason why) override
     {
-        me->SetOwnerGUID(ObjectGuid::Empty);
+        me->SetOwnerGUID(WOWGUID::Empty);
         ScriptedAI::EnterEvadeMode(why);
     }
 
