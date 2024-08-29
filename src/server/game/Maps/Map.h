@@ -61,8 +61,15 @@ class Transport;
 class StaticTransport;
 class MotionTransport;
 class PathGenerator;
+class Creature;
 
 enum WeatherState : uint32;
+
+enum PhaseMasks
+{
+  PHASEMASK_NORMAL   = 0x00000001,
+  PHASEMASK_ANYWHERE = 0xFFFFFFFF
+};
 
 namespace VMAP
 {
@@ -330,6 +337,11 @@ public:
         m_unloadTimer -= diff;
         return false;
     }
+
+  Creature* AddCreature (float x, float y, float z, float facing,
+                         uint type,
+                         Transport* transport,
+                         uint32 phase = PHASEMASK_NORMAL);
 
     virtual bool AddPlayerToMap(Player*);
     virtual void RemovePlayerFromMap(Player*, bool);

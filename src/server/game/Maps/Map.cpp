@@ -82,6 +82,60 @@ Map::~Map()
     MMAP::MMapFactory::createOrGetMMapMgr()->unloadMapInstance(GetId(), i_InstanceId);
 }
 
+//===========================================================================
+Creature* Map::AddCreature (float x, float y, float z, float facing,
+                            uint type,
+                            Transport* transport,
+                            uint32 phase /*= PHASEMASK_NORMAL*/) {
+
+  if (!sObjectMgr->GetCreatureTemplate(type))
+    return nullptr;
+
+  if (transport) {
+    if (MotionTransport* trans = transport->ToMotionTransport()) {
+      WOWGUID::LowType guid = sObjectMgr->GenerateCreatureSpawnId();
+      CreatureData& data = sObjectMgr->NewOrExistCreatureData(guid);
+      data.id1 = type;
+      data.phaseMask = phase;
+      data.posX = x;
+      data.posY = y;
+      data.posZ = z;
+      data.orientation = facing;
+
+      Creature* creature = trans->CreateNPCPassenger(guid, &data);
+      creature->SaveToDB(trans->GetGOInfo()->moTransport.mapID, 1 << this->GetSpawnMode(), phase);
+
+      sObjectMgr->AddCreatureToGrid(guid, &data);
+
+      return creature;
+    }
+  }
+
+  Creature* creature = new Creature();
+  if (!creature->Create(this->GenerateLowGuid<HighGuid::Unit>(), this, phase, type, 0, x, y, z, facing)) {
+      delete creature;
+      return nullptr;
+  }
+
+  creature->SaveToDB(this->GetId(), (1 << this->GetSpawnMode()), phase);
+
+  WOWGUID::LowType spawnId = creature->GetSpawnId();
+
+  // To call _LoadGoods(); _LoadQuests(); CreateTrainerSpells()
+  // current "creature" variable is deleted and created fresh new, otherwise old values might trigger asserts or cause undefined behavior
+  creature->CleanupsBeforeDelete();
+  delete creature;
+  creature = new Creature();
+  if (!creature->LoadCreatureFromDB(spawnId, this, true, true))
+  {
+      delete creature;
+      return nullptr;
+  }
+
+  sObjectMgr->AddCreatureToGrid(spawnId, sObjectMgr->GetCreatureData(spawnId));
+  return creature;
+}
+
 bool Map::ExistMap(uint32 mapid, int gx, int gy)
 {
     int len = sWorld->GetDataPath().length() + strlen("maps/%03u%02u%02u.map") + 1;

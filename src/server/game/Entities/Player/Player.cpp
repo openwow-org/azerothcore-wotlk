@@ -84,6 +84,10 @@ static BOOL PlayerCreateItemCheatHandler (User*       user,
                                           NETMESSAGE  msgId,
                                           uint32_t    eventTime,
                                           WDataStore* msg);
+static BOOL PlayerCreateMonsterHandler (User*       user,
+                                        NETMESSAGE  msgId,
+                                        uint        eventTime,
+                                        WDataStore* msg);
 static BOOL OnGodMode (User*        user,
                        NETMESSAGE   msgId,
                        uint         eventTime,
@@ -124,6 +128,7 @@ static BOOL PlayerDechargeCheat (User*        user,
 void PlayerInitialize () {
   // REGISTER MESSAGE HANDLERS
   WowConnection::SetMessageHandler(CMSG_RECHARGE, PlayerRechargeCheat);
+  WowConnection::SetMessageHandler(CMSG_CREATEMONSTER, PlayerCreateMonsterHandler);
   WowConnection::SetMessageHandler(CMSG_CREATEITEM, PlayerCreateItemCheatHandler);
   WowConnection::SetMessageHandler(CMSG_GODMODE, OnGodMode);
   WowConnection::SetMessageHandler(CMSG_LEARN_SPELL, PlayerLearnSpellCheatHandler);
@@ -137,6 +142,7 @@ void PlayerInitialize () {
 void PlayerDestroy () {
   // UNREGISTER MESSAGE HANDLERS
   WowConnection::ClearMessageHandler(CMSG_RECHARGE);
+  WowConnection::ClearMessageHandler(CMSG_CREATEMONSTER);
   WowConnection::ClearMessageHandler(CMSG_CREATEITEM);
   WowConnection::ClearMessageHandler(CMSG_GODMODE);
   WowConnection::ClearMessageHandler(CMSG_LEARN_SPELL);
@@ -16379,6 +16385,41 @@ static BOOL PlayerCreateItemCheatHandler (User*       user,
   }
 
   return FALSE;
+}
+
+//===========================================================================
+static BOOL PlayerCreateMonsterHandler (User*       user,
+                                        NETMESSAGE  msgId,
+                                        uint        eventTime,
+                                        WDataStore* msg) {
+
+  // VALIDATE USER PERMISSIONS
+  if (!user->IsGMAccount()) {
+    user->SendNotification(LANG_PERMISSION_DENIED);
+    return FALSE;
+  }
+
+  if (Player* plyr = user->ActivePlayer()) {
+    // READ THE MESSAGE DATA
+    auto type = msg->read<int32>();
+
+    // IF THE TYPE VALUE IS NEGATIVE
+    // CREATE THE MONSTER AS A PET OF THE ACTIVE PLAYER
+    if (type < 0) plyr->CreatePet(type * -1);
+
+    else {
+      float x = plyr->GetPosition().m_positionX;
+      float y = plyr->GetPosition().m_positionY;
+      float z = plyr->GetPosition().m_positionZ;
+      float facing = plyr->GetPosition().m_orientation;
+      uint32 phase = plyr->GetPhaseMaskForSpawn();
+      Transport* transport = plyr->GetTransport();
+
+      plyr->GetMap()->AddCreature(x, y, z, facing, type, transport, phase);
+    }
+  }
+
+  return TRUE;
 }
 
 //===========================================================================

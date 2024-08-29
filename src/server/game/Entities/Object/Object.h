@@ -54,12 +54,6 @@ enum TempSummonType
     TEMPSUMMON_TIMED_DESPAWN_OOC_ALIVE     = 10,            // despawns after a specified time after the creature is out of combat and alive
 };
 
-enum PhaseMasks
-{
-    PHASEMASK_NORMAL   = 0x00000001,
-    PHASEMASK_ANYWHERE = 0xFFFFFFFF
-};
-
 enum NotifyFlags
 {
     NOTIFY_NONE                     = 0x00,
