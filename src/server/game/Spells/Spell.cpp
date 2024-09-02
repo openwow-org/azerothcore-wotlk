@@ -2489,7 +2489,7 @@ void Spell::AddUnitTarget(Unit* target, uint32 effectMask, bool checkIfValid /*=
         /// @todo: seduction should be casted only on humanoids (not demons)
         if (m_caster->IsPet())
         {
-            CreatureRec const* ci = sObjectMgr->GetCreatureTemplate(m_caster->GetEntry());
+            CreatureRec const* ci = sObjectMgr->GetCreatureRecord(m_caster->GetEntry());
             switch (ci->family)
             {
                 case CREATURE_FAMILY_SUCCUBUS:
@@ -6443,7 +6443,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                                     return SPELL_FAILED_DONT_REPORT;
                                 }
 
-                                CreatureRec const* creatureInfo = sObjectMgr->GetCreatureTemplate(info.first->CreatureId);
+                                CreatureRec const* creatureInfo = sObjectMgr->GetCreatureRecord(info.first->CreatureId);
                                 if (!creatureInfo || !creatureInfo->IsTameable(playerCaster->CanTameExoticPets()))
                                 {
                                     // if problem in exotic pet

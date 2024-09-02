@@ -88,7 +88,7 @@ Creature* Map::AddCreature (float x, float y, float z, float facing,
                             Transport* transport,
                             uint32 phase /*= PHASEMASK_NORMAL*/) {
 
-  if (!sObjectMgr->GetCreatureTemplate(type))
+  if (!sObjectMgr->GetCreatureRecord(type))
     return nullptr;
 
   if (transport) {

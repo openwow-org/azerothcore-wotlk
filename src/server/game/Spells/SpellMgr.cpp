@@ -2447,7 +2447,7 @@ void SpellMgr::LoadPetDefaultSpells()
             if (spellInfo->Effects[k].Effect == SPELL_EFFECT_SUMMON || spellInfo->Effects[k].Effect == SPELL_EFFECT_SUMMON_PET)
             {
                 uint32 creature_id = spellInfo->Effects[k].MiscValue;
-                CreatureRec const* cInfo = sObjectMgr->GetCreatureTemplate(creature_id);
+                CreatureRec const* cInfo = sObjectMgr->GetCreatureRecord(creature_id);
                 if (!cInfo)
                     continue;
 

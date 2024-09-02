@@ -17575,7 +17575,7 @@ Pet* Unit::CreatePet(uint32 creatureEntry, uint32 spell_id)
     if (GetTypeId() != TYPEID_PLAYER)
         return nullptr;
 
-    CreatureRec const* creatureInfo = sObjectMgr->GetCreatureTemplate(creatureEntry);
+    CreatureRec const* creatureInfo = sObjectMgr->GetCreatureRecord(creatureEntry);
     if (!creatureInfo)
         return nullptr;
 
@@ -21160,7 +21160,7 @@ void Unit::PatchValuesUpdate(ByteBuffer& valuesUpdateBuf, BuildValuesCachePosPoi
             if (SpellInfo const* transform = sSpellMgr->GetSpellInfo(getTransForm()))
                 for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
                     if (transform->Effects[i].IsAura(SPELL_AURA_TRANSFORM))
-                        if (CreatureRec const* transformInfo = sObjectMgr->GetCreatureTemplate(transform->Effects[i].MiscValue))
+                        if (CreatureRec const* transformInfo = sObjectMgr->GetCreatureRecord(transform->Effects[i].MiscValue))
                         {
                             cinfo = transformInfo;
                             break;

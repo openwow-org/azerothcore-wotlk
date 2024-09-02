@@ -473,7 +473,7 @@ protected:
 
     bool DisableReputationGain;
 
-    CreatureRec const* m_creatureInfo;                 // in difficulty mode > 0 can different from sObjectMgr->GetCreatureTemplate(GetEntry())
+    CreatureRec const* m_creatureInfo;                 // in difficulty mode > 0 can different from sObjectMgr->GetCreatureRecord(GetEntry())
     CreatureData const* m_creatureData;
 
     float m_detectionDistance;

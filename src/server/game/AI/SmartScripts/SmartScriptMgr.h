@@ -2102,7 +2102,7 @@ private:
 
     bool IsCreatureValid(SmartScriptHolder const& e, uint32 entry)
     {
-        if (!sObjectMgr->GetCreatureTemplate(entry))
+        if (!sObjectMgr->GetCreatureRecord(entry))
         {
             LOG_ERROR("sql.sql", "SmartAIMgr: Entry {} SourceType {} Event {} Action {} uses non-existent Creature entry {}, skipped.", e.entryOrGuid, e.GetScriptType(), e.event_id, e.GetActionType(), entry);
             return false;

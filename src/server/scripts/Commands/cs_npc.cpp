@@ -203,7 +203,7 @@ public:
     //add spawn of creature
     static bool HandleNpcAddCommand(ChatHandler* handler, CreatureEntry id)
     {
-        if (!sObjectMgr->GetCreatureTemplate(id))
+        if (!sObjectMgr->GetCreatureRecord(id))
             return false;
 
         Player* chr = handler->GetSession()->GetPlayer();
@@ -692,7 +692,7 @@ public:
                 float z = fields[6].Get<float>();
                 uint16 mapId = fields[7].Get<uint16>();
 
-                CreatureRec const* creatureTemplate = sObjectMgr->GetCreatureTemplate(entry);
+                CreatureRec const* creatureTemplate = sObjectMgr->GetCreatureRecord(entry);
                 if (!creatureTemplate)
                     continue;
 

@@ -909,7 +909,7 @@ public:
         if (!id)
             return handler->GetPlayer()->SummonCreature(entry, x, y, z, o) != nullptr;
 
-        CreatureRec const* ci = sObjectMgr->GetCreatureTemplate(entry);
+        CreatureRec const* ci = sObjectMgr->GetCreatureRecord(entry);
 
         if (!ci)
             return false;

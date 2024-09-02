@@ -226,7 +226,7 @@ void CreatureAI::EnterEvadeMode(EvadeReason why)
     sScriptMgr->OnUnitEnterEvadeMode(me, why);
 
     // despawn bosses at reset - only verified tbc/woltk bosses with this reset type
-    CreatureRec const* cInfo = sObjectMgr->GetCreatureTemplate(me->GetEntry());
+    CreatureRec const* cInfo = sObjectMgr->GetCreatureRecord(me->GetEntry());
     if (cInfo && cInfo->HasFlagsExtra(CREATURE_FLAG_EXTRA_HARD_RESET))
     {
         me->DespawnOnEvade();

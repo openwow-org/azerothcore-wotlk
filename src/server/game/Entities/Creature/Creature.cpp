@@ -436,7 +436,7 @@ void Creature::RemoveCorpse(bool setSpawnTime, bool skipVisibility)
  */
 bool Creature::InitEntry(uint32 Entry, const CreatureData* data)
 {
-    CreatureRec const* normalInfo = sObjectMgr->GetCreatureTemplate(Entry);
+    CreatureRec const* normalInfo = sObjectMgr->GetCreatureRecord(Entry);
     if (!normalInfo)
     {
         LOG_ERROR("sql.sql", "Creature::InitEntry creature entry {} does not exist.", Entry);
@@ -451,7 +451,7 @@ bool Creature::InitEntry(uint32 Entry, const CreatureData* data)
         // we already have valid Map pointer for current creature!
         if (normalInfo->DifficultyEntry[diff - 1])
         {
-            cinfo = sObjectMgr->GetCreatureTemplate(normalInfo->DifficultyEntry[diff - 1]);
+            cinfo = sObjectMgr->GetCreatureRecord(normalInfo->DifficultyEntry[diff - 1]);
             if (cinfo)
                 break;                                      // template found
 
@@ -1123,7 +1123,7 @@ bool Creature::Create(WOWGUID::LowType guidlow, Map* map, uint32 phaseMask, uint
     SetMap(map);
     SetPhaseMask(phaseMask, false);
 
-    CreatureRec const* cinfo = sObjectMgr->GetCreatureTemplate(Entry);
+    CreatureRec const* cinfo = sObjectMgr->GetCreatureRecord(Entry);
     if (!cinfo)
     {
         LOG_ERROR("sql.sql", "Creature::Create(): creature template (guidlow: {}, entry: {}) does not exist.", guidlow, Entry);
@@ -1629,7 +1629,7 @@ bool Creature::CreateFromProto(WOWGUID::LowType guidlow, uint32 Entry, uint32 ve
             return false;
     }
 
-    CreatureRec const* normalInfo = sObjectMgr->GetCreatureTemplate(Entry);
+    CreatureRec const* normalInfo = sObjectMgr->GetCreatureRecord(Entry);
     if (!normalInfo)
     {
         LOG_ERROR("sql.sql", "Creature::CreateFromProto(): creature template (guidlow: {}, entry: {}) does not exist.", guidlow, Entry);
@@ -1649,7 +1649,7 @@ bool Creature::CreateFromProto(WOWGUID::LowType guidlow, uint32 Entry, uint32 ve
             // we already have valid Map pointer for current creature!
             if (cinfo->DifficultyEntry[diff - 1])
             {
-                cinfo = sObjectMgr->GetCreatureTemplate(normalInfo->DifficultyEntry[diff - 1]);
+                cinfo = sObjectMgr->GetCreatureRecord(normalInfo->DifficultyEntry[diff - 1]);
                 if (cinfo && cinfo->VehicleId)
                     break;                                      // template found
 
@@ -2045,7 +2045,7 @@ void Creature::Respawn(bool force)
     WOWGUID dbtableHighGuid = WOWGUID::Create<HighGuid::Unit>(m_creatureData ? m_creatureData->id1 : GetEntry(), m_spawnId);
     time_t linkedRespawntime = GetMap()->GetLinkedRespawnTime(dbtableHighGuid);
 
-    CreatureRec const* cInfo = sObjectMgr->GetCreatureTemplate(GetEntry());
+    CreatureRec const* cInfo = sObjectMgr->GetCreatureRecord(GetEntry());
 
     if (!linkedRespawntime || (cInfo && cInfo->HasFlagsExtra(CREATURE_FLAG_EXTRA_HARD_RESET)) || force)          // Should respawn
     {
@@ -2247,8 +2247,8 @@ bool Creature::IsImmunedToSpell(SpellInfo const* spellInfo, Spell const* spell)
     if (spellInfo->Mechanic > MECHANIC_NONE && HasMechanicTemplateImmunity(1 << (spellInfo->Mechanic - 1)))
         return true;
 
-    // This check must be done instead of 'if (GetCreatureTemplate()->MechanicImmuneMask & (1 << (spellInfo->Mechanic - 1)))' for not break
-    // the check of mechanic immunity on DB (tested) because GetCreatureTemplate()->MechanicImmuneMask and m_spellImmune[IMMUNITY_MECHANIC] don't have same data.
+    // This check must be done instead of 'if (GetCreatureRecord()->MechanicImmuneMask & (1 << (spellInfo->Mechanic - 1)))' for not break
+    // the check of mechanic immunity on DB (tested) because GetCreatureRecord()->MechanicImmuneMask and m_spellImmune[IMMUNITY_MECHANIC] don't have same data.
     bool immunedToAllEffects = true;
     for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
         if (spellInfo->Effects[i].IsEffect() && !IsImmunedToSpellEffect(spellInfo, i))
@@ -3003,7 +3003,7 @@ uint8 Creature::getLevelForTarget(WorldObject const* target) const
 
 std::string const& Creature::GetAIName() const
 {
-    return sObjectMgr->GetCreatureTemplate(GetEntry())->AIName;
+    return sObjectMgr->GetCreatureRecord(GetEntry())->AIName;
 }
 
 std::string Creature::GetScriptName() const
@@ -3017,7 +3017,7 @@ uint32 Creature::GetScriptId() const
         if (uint32 scriptId = creatureData->ScriptId)
             return scriptId;
 
-    return sObjectMgr->GetCreatureTemplate(GetEntry())->ScriptID;
+    return sObjectMgr->GetCreatureRecord(GetEntry())->ScriptID;
 }
 
 VendorItemData const* Creature::GetVendorItems() const
@@ -3132,7 +3132,7 @@ bool Creature::IsDungeonBoss() const
     if (GetOwnerGUID().IsPlayer())
         return false;
 
-    CreatureRec const* cinfo = sObjectMgr->GetCreatureTemplate(GetEntry());
+    CreatureRec const* cinfo = sObjectMgr->GetCreatureRecord(GetEntry());
     return cinfo && (cinfo->flags_extra & CREATURE_FLAG_EXTRA_DUNGEON_BOSS);
 }
 
@@ -3141,7 +3141,7 @@ bool Creature::IsImmuneToKnockback() const
     if (GetOwnerGUID().IsPlayer())
         return false;
 
-    CreatureRec const* cinfo = sObjectMgr->GetCreatureTemplate(GetEntry());
+    CreatureRec const* cinfo = sObjectMgr->GetCreatureRecord(GetEntry());
     return cinfo && (cinfo->flags_extra & CREATURE_FLAG_EXTRA_IMMUNITY_KNOCKBACK);
 }
 

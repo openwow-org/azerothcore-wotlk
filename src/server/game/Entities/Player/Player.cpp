@@ -1217,7 +1217,7 @@ bool Player::BuildEnumData(PreparedQueryResult result, WDataStore* data)
     if (result && !(playerFlags & PLAYER_FLAGS_GHOST) && (plrClass == CLASS_WARLOCK || plrClass == CLASS_HUNTER || (plrClass == CLASS_DEATH_KNIGHT && (fields[21].Get<uint32>()&PLAYER_EXTRA_SHOW_DK_PET))))
     {
         uint32 entry = fields[19].Get<uint32>();
-        CreatureRec const* creatureInfo = sObjectMgr->GetCreatureTemplate(entry);
+        CreatureRec const* creatureInfo = sObjectMgr->GetCreatureRecord(entry);
         if (creatureInfo)
         {
             petDisplayId = fields[20].Get<uint32>();
@@ -9213,7 +9213,7 @@ Pet* Player::CreatePet(Creature* creatureTarget, uint32 spellID /*= 0*/)
         return nullptr;
     }
 
-    CreatureRec const* creatrueTemplate = sObjectMgr->GetCreatureTemplate(creatureTarget->GetEntry());
+    CreatureRec const* creatrueTemplate = sObjectMgr->GetCreatureRecord(creatureTarget->GetEntry());
     if (!creatrueTemplate->family)
     {
         // Creatures with family 0 crashes the server
@@ -9260,7 +9260,7 @@ Pet* Player::CreatePet(uint32 creatureEntry, uint32 spellID /*= 0*/)
         return nullptr;
     }
 
-    CreatureRec const* creatrueTemplate = sObjectMgr->GetCreatureTemplate(creatureEntry);
+    CreatureRec const* creatrueTemplate = sObjectMgr->GetCreatureRecord(creatureEntry);
     if (!creatrueTemplate->family)
     {
         // Creatures with family 0 crashes the server
@@ -9659,7 +9659,7 @@ void Player::CharmSpellInitialize()
     uint8 addlist = 0;
     if (charm->GetTypeId() != TYPEID_PLAYER)
     {
-        //CreatureInfo const* cinfo = charm->ToCreature()->GetCreatureTemplate();
+        //CreatureInfo const* cinfo = charm->ToCreature()->GetCreatureRecord();
         //if (cinfo && cinfo->type == CREATURE_TYPE_DEMON && getClass() == CLASS_WARLOCK)
         {
             for (uint32 i = 0; i < MAX_SPELL_CHARM; ++i)

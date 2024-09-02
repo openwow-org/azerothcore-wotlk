@@ -167,7 +167,7 @@ void SmartAIMgr::LoadSmartAIFromDB()
             {
                 case SMART_SCRIPT_TYPE_CREATURE:
                     {
-                        if (!sObjectMgr->GetCreatureTemplate((uint32)temp.entryOrGuid))
+                        if (!sObjectMgr->GetCreatureRecord((uint32)temp.entryOrGuid))
                         {
                             LOG_ERROR("sql.sql", "SmartAIMgr::LoadSmartAIFromDB: Creature entry ({}) does not exist, skipped loading.", uint32(temp.entryOrGuid));
                             continue;
@@ -362,7 +362,7 @@ bool SmartAIMgr::IsTargetValid(SmartScriptHolder const& e)
         case SMART_TARGET_CREATURE_DISTANCE:
         case SMART_TARGET_CREATURE_RANGE:
             {
-                if (e.target.unitDistance.creature && !sObjectMgr->GetCreatureTemplate(e.target.unitDistance.creature))
+                if (e.target.unitDistance.creature && !sObjectMgr->GetCreatureRecord(e.target.unitDistance.creature))
                 {
                     LOG_ERROR("sql.sql", "SmartAIMgr: Entry {} SourceType {} Event {} Action {} uses non-existent Creature entry {} as target_param1, skipped.", e.entryOrGuid, e.GetScriptType(), e.event_id, e.GetActionType(), e.target.unitDistance.creature);
                     return false;
@@ -1239,7 +1239,7 @@ bool SmartAIMgr::IsEventValid(SmartScriptHolder& e)
                     return false;
                 }
 
-                if (e.event.distance.entry != 0 && !sObjectMgr->GetCreatureTemplate(e.event.distance.entry))
+                if (e.event.distance.entry != 0 && !sObjectMgr->GetCreatureRecord(e.event.distance.entry))
                 {
                     LOG_ERROR("sql.sql", "SmartAIMgr: Event SMART_EVENT_DISTANCE_CREATURE using invalid creature entry {}, skipped.", e.event.distance.entry);
                     return false;
@@ -1356,7 +1356,7 @@ bool SmartAIMgr::IsEventValid(SmartScriptHolder& e)
         case SMART_ACTION_MOUNT_TO_ENTRY_OR_MODEL:
             if (e.action.morphOrMount.creature || e.action.morphOrMount.model)
             {
-                if (e.action.morphOrMount.creature > 0 && !sObjectMgr->GetCreatureTemplate(e.action.morphOrMount.creature))
+                if (e.action.morphOrMount.creature > 0 && !sObjectMgr->GetCreatureRecord(e.action.morphOrMount.creature))
                 {
                     LOG_ERROR("sql.sql", "SmartAIMgr: Entry {} SourceType {} Event {} Action {} uses non-existent Creature entry {}, skipped.", e.entryOrGuid, e.GetScriptType(), e.event_id, e.GetActionType(), e.action.morphOrMount.creature);
                     return false;

@@ -1561,7 +1561,7 @@ Creature* Battleground::AddCreature(uint32 entry, uint32 type, float x, float y,
 
     creature->SetHomePosition(x, y, z, o);
 
-    CreatureRec const* cinfo = sObjectMgr->GetCreatureTemplate(entry);
+    CreatureRec const* cinfo = sObjectMgr->GetCreatureRecord(entry);
     if (!cinfo)
     {
         LOG_ERROR("bg.battleground", "Battleground::AddCreature: creature template (entry: {}) does not exist for BG (map: {}, instance id: {})!",

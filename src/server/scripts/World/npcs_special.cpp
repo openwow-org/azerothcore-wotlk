@@ -525,7 +525,7 @@ public:
                 LOG_ERROR("sql.sql", "TCSR: Creature template entry {} has ScriptName npc_air_force_bots, but it's not handled by that script", creature->GetEntry());
             else
             {
-                CreatureRec const* spawnedTemplate = sObjectMgr->GetCreatureTemplate(SpawnAssoc->spawnedCreatureEntry);
+                CreatureRec const* spawnedTemplate = sObjectMgr->GetCreatureRecord(SpawnAssoc->spawnedCreatureEntry);
 
                 if (!spawnedTemplate)
                 {

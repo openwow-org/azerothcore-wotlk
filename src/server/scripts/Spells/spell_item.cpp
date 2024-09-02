@@ -3114,7 +3114,7 @@ class spell_item_impale_leviroth : public SpellScript
 
     bool Validate(SpellInfo const* /*spell*/) override
     {
-        if (!sObjectMgr->GetCreatureTemplate(NPC_LEVIROTH))
+        if (!sObjectMgr->GetCreatureRecord(NPC_LEVIROTH))
             return false;
         return true;
     }

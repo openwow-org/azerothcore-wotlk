@@ -651,7 +651,7 @@ void User::HandleUnstablePet(WDataStore& recvData)
         return;
     }
 
-    CreatureRec const* creatureInfo = sObjectMgr->GetCreatureTemplate((*stabledPet)->CreatureId);
+    CreatureRec const* creatureInfo = sObjectMgr->GetCreatureRecord((*stabledPet)->CreatureId);
     if (!creatureInfo || !creatureInfo->IsTameable(m_player->CanTameExoticPets()))
     {
         // if problem in exotic pet
@@ -805,7 +805,7 @@ void User::HandleStableSwapPet(WDataStore& recvData)
         return;
     }
 
-    CreatureRec const* creatureInfo = sObjectMgr->GetCreatureTemplate((*stabledPet)->CreatureId);
+    CreatureRec const* creatureInfo = sObjectMgr->GetCreatureRecord((*stabledPet)->CreatureId);
     if (!creatureInfo || !creatureInfo->IsTameable(m_player->CanTameExoticPets()))
     {
         // if problem in exotic pet

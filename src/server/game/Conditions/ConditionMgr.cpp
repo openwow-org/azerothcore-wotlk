@@ -1740,7 +1740,7 @@ bool ConditionMgr::isSourceTypeValid(Condition* cond)
     }
     case CONDITION_SOURCE_TYPE_CREATURE_TEMPLATE_VEHICLE:
     {
-        if (!sObjectMgr->GetCreatureTemplate(cond->SourceEntry))
+        if (!sObjectMgr->GetCreatureRecord(cond->SourceEntry))
         {
             LOG_ERROR("sql.sql", "SourceEntry {} in `condition` table, does not exist in `creature_template`, ignoring.", cond->SourceEntry);
             return false;
@@ -1770,7 +1770,7 @@ bool ConditionMgr::isSourceTypeValid(Condition* cond)
         break;
     case CONDITION_SOURCE_TYPE_VEHICLE_SPELL:
     case CONDITION_SOURCE_TYPE_SPELL_CLICK_EVENT:
-        if (!sObjectMgr->GetCreatureTemplate(cond->SourceGroup))
+        if (!sObjectMgr->GetCreatureRecord(cond->SourceGroup))
         {
             LOG_ERROR("sql.sql", "SourceEntry {} in `condition` table, does not exist in `creature_template`, ignoring.", cond->SourceGroup);
             return false;
@@ -1784,7 +1784,7 @@ bool ConditionMgr::isSourceTypeValid(Condition* cond)
         break;
     case CONDITION_SOURCE_TYPE_NPC_VENDOR:
     {
-        if (!sObjectMgr->GetCreatureTemplate(cond->SourceGroup))
+        if (!sObjectMgr->GetCreatureRecord(cond->SourceGroup))
         {
             LOG_ERROR("condition", "SourceEntry {} in `condition` table, does not exist in `creature_template`, ignoring.", cond->SourceGroup);
             return false;
@@ -2124,7 +2124,7 @@ bool ConditionMgr::isConditionTypeValid(Condition* cond)
     }
     case CONDITION_NEAR_CREATURE:
     {
-        if (!sObjectMgr->GetCreatureTemplate(cond->ConditionValue1))
+        if (!sObjectMgr->GetCreatureRecord(cond->ConditionValue1))
         {
             LOG_ERROR("sql.sql", "NearCreature condition has non existing creature template entry ({}), skipped", cond->ConditionValue1);
             return false;
@@ -2147,7 +2147,7 @@ bool ConditionMgr::isConditionTypeValid(Condition* cond)
         switch (cond->ConditionValue1)
         {
         case TYPEID_UNIT:
-            if (cond->ConditionValue2 && !sObjectMgr->GetCreatureTemplate(cond->ConditionValue2))
+            if (cond->ConditionValue2 && !sObjectMgr->GetCreatureRecord(cond->ConditionValue2))
             {
                 LOG_ERROR("sql.sql", "ObjectEntryGuid condition has non existing creature template entry ({}), skipped", cond->ConditionValue2);
                 return false;

@@ -1115,7 +1115,7 @@ public:
 
         bool Validate(SpellInfo const* /*spell*/) override
         {
-            if (!sObjectMgr->GetCreatureTemplate(NPC_ICE_TOMB))
+            if (!sObjectMgr->GetCreatureRecord(NPC_ICE_TOMB))
                 return false;
             if (!sObjectMgr->GetGameObjectTemplate(GO_ICE_BLOCK))
                 return false;

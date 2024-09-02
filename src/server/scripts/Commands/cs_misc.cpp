@@ -56,7 +56,7 @@ constexpr auto SPELL_FREEZE = 9454;
 
 std::string const GetLocalizeCreatureName(Creature* creature, LocaleConstant locale)
 {
-    auto creatureTemplate = sObjectMgr->GetCreatureTemplate(creature->GetEntry());
+    auto creatureTemplate = sObjectMgr->GetCreatureRecord(creature->GetEntry());
     auto cretureLocale = sObjectMgr->GetCreatureLocale(creature->GetEntry());
     std::string name;
 

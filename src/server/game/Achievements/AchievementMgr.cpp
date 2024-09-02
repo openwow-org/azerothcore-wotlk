@@ -100,7 +100,7 @@ bool AchievementCriteriaData::IsValid(AchievementCriteriaEntry const* criteria)
         case ACHIEVEMENT_CRITERIA_DATA_TYPE_NTH_BIRTHDAY:
             return true;
         case ACHIEVEMENT_CRITERIA_DATA_TYPE_T_CREATURE:
-            if (!creature.id || !sObjectMgr->GetCreatureTemplate(creature.id))
+            if (!creature.id || !sObjectMgr->GetCreatureRecord(creature.id))
             {
                 LOG_ERROR("sql.sql", "Table `achievement_criteria_data` (Entry: {} Type: {}) for data type ACHIEVEMENT_CRITERIA_DATA_TYPE_CREATURE ({}) has non-existing creature id in value1 ({}), ignored.",
                                  criteria->ID, criteria->requiredType, dataType, creature.id);
@@ -2960,7 +2960,7 @@ void AchievementGlobalMgr::LoadRewards()
         // Check mail data before item for report including wrong item case
         if (reward.sender)
         {
-            if (!sObjectMgr->GetCreatureTemplate(reward.sender))
+            if (!sObjectMgr->GetCreatureRecord(reward.sender))
             {
                 LOG_ERROR("sql.sql", "Table `achievement_reward` (Entry: {}) has invalid creature_template entry {} as Sender. Will not send the mail reward.", entry, reward.sender);
                 reward.sender = 0;

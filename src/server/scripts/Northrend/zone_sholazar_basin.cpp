@@ -51,7 +51,7 @@ class spell_q12726_song_of_wind_and_water : public SpellScript
             if (Player* player = cr->GetCharmerOrOwnerPlayerOrPlayerItself())
             {
                 player->KilledMonsterCredit(cr->GetDisplayId() == NPC_SOWAW_WATER_MODEL ? 29008 : 29009);
-                CreatureRec const* ct = sObjectMgr->GetCreatureTemplate(cr->GetDisplayId() == NPC_SOWAW_WIND_MODEL ? NPC_SOWAW_WIND_ELEMENTAL : NPC_SOWAW_WATER_ELEMENTAL);
+                CreatureRec const* ct = sObjectMgr->GetCreatureRecord(cr->GetDisplayId() == NPC_SOWAW_WIND_MODEL ? NPC_SOWAW_WIND_ELEMENTAL : NPC_SOWAW_WATER_ELEMENTAL);
                 for (uint8 i = 0; i < MAX_CREATURE_SPELLS; ++i)
                     cr->m_spells[i] = ct->spells[i];
 

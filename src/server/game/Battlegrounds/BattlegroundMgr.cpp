@@ -811,7 +811,7 @@ void BattlegroundMgr::LoadBattleMastersEntry()
         Field* fields = result->Fetch();
 
         uint32 entry = fields[0].Get<uint32>();
-        if (CreatureRec const* cInfo = sObjectMgr->GetCreatureTemplate(entry))
+        if (CreatureRec const* cInfo = sObjectMgr->GetCreatureRecord(entry))
         {
             if ((cInfo->npcflag & UNIT_NPC_FLAG_BATTLEMASTER) == 0)
                 LOG_ERROR("sql.sql", "Creature (Entry: {}) listed in `battlemaster_entry` is not a battlemaster.", entry);

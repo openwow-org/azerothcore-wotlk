@@ -767,7 +767,8 @@ public:
     void LoadGameObjectTemplateAddons();
     void AddGameobjectInfo(GameObjectTemplate* goinfo);
 
-    CreatureRec const* GetCreatureTemplate(uint32 entry);
+    CreatureRec const* GetCreatureRecord(uint32 id);
+
     [[nodiscard]] CreatureTemplateContainer const* GetCreatureTemplates() const { return &_creatureTemplateStore; }
     CreatureModelInfo const* GetCreatureModelInfo(uint32 modelId) const;
     CreatureModelInfo const* GetCreatureModelRandomGender(CreatureModel* model, CreatureRec const* creatureTemplate) const;
