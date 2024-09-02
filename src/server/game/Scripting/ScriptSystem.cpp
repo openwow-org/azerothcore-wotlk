@@ -68,7 +68,7 @@ void SystemMgr::LoadScriptWaypoints()
         temp.fZ                = pFields[4].Get<float>();
         temp.uiWaitTime        = pFields[5].Get<uint32>();
 
-        CreatureTemplate const* pCInfo = sObjectMgr->GetCreatureTemplate(temp.uiCreatureEntry);
+        CreatureRec const* pCInfo = sObjectMgr->GetCreatureTemplate(temp.uiCreatureEntry);
 
         if (!pCInfo)
         {

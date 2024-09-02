@@ -50,7 +50,7 @@ public:
      *
      * @param creatureTemplates Pointer to a modifiable vector of creature templates. Indexed by Entry ID.
      */
-    virtual void OnAfterDatabaseLoadCreatureTemplates(std::vector<CreatureTemplate*> /*creatureTemplates*/) { }
+    virtual void OnAfterDatabaseLoadCreatureTemplates(std::vector<CreatureRec*> /*creatureTemplates*/) { }
 
 };
 

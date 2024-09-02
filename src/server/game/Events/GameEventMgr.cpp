@@ -1285,7 +1285,7 @@ void GameEventMgr::UpdateEventNPCFlags(uint16 event_id)
                 {
                     Creature* creature = itr->second;
                     uint32 npcflag = GetNPCFlag(creature);
-                    if (CreatureTemplate const* creatureTemplate = creature->GetCreatureTemplate())
+                    if (CreatureRec const* creatureTemplate = creature->GetCreatureTemplate())
                         npcflag |= creatureTemplate->npcflag;
 
                     creature->ReplaceAllNpcFlags(NPCFlags(npcflag));

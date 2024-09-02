@@ -1906,7 +1906,7 @@ void Player::ItemRemovedQuestCheck(uint32 entry, uint32 count)
     UpdateForQuestWorldObjects();
 }
 
-void Player::KilledMonster(CreatureTemplate const* cInfo, WOWGUID guid)
+void Player::KilledMonster(CreatureRec const* cInfo, WOWGUID guid)
 {
     ASSERT(cInfo);
 

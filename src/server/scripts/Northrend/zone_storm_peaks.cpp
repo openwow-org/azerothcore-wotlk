@@ -662,7 +662,7 @@ class spell_q13007_iron_colossus : public SpellScript
             caster->SetUnitFlag(UNIT_FLAG_DISABLE_MOVE);
             caster->SetControlled(true, UNIT_STATE_ROOT);
 
-            if (CreatureTemplate const* ct = sObjectMgr->GetCreatureTemplate(caster->GetEntry()))
+            if (CreatureRec const* ct = sObjectMgr->GetCreatureTemplate(caster->GetEntry()))
                 for (uint8 i = 0; i < MAX_CREATURE_SPELLS; ++i)
                     caster->m_spells[i] = ct->spells[i];
         }

@@ -442,8 +442,8 @@ public:
         // Faction is set in creature_template - not inside creature
 
         // Update in memory..
-        if (CreatureTemplate const* cinfo = creature->GetCreatureTemplate())
-            const_cast<CreatureTemplate*>(cinfo)->faction = factionId;
+        if (CreatureRec const* cinfo = creature->GetCreatureTemplate())
+            const_cast<CreatureRec*>(cinfo)->faction = factionId;
 
         // ..and DB
         WorldDatabasePreparedStatement* stmt = WorldDatabase.GetPreparedStatement(WORLD_UPD_CREATURE_FACTION);
@@ -564,7 +564,7 @@ public:
             return false;
         }
 
-        CreatureTemplate const* cInfo = target->GetCreatureTemplate();
+        CreatureRec const* cInfo = target->GetCreatureTemplate();
         uint32 faction = target->GetFaction();
         uint32 npcflags = target->GetNpcFlags();
         uint32 mechanicImmuneMask = cInfo->MechanicImmuneMask;
@@ -692,7 +692,7 @@ public:
                 float z = fields[6].Get<float>();
                 uint16 mapId = fields[7].Get<uint16>();
 
-                CreatureTemplate const* creatureTemplate = sObjectMgr->GetCreatureTemplate(entry);
+                CreatureRec const* creatureTemplate = sObjectMgr->GetCreatureTemplate(entry);
                 if (!creatureTemplate)
                     continue;
 
@@ -1179,7 +1179,7 @@ public:
             return false;
         }
 
-        CreatureTemplate const* cInfo = creatureTarget->GetCreatureTemplate();
+        CreatureRec const* cInfo = creatureTarget->GetCreatureTemplate();
 
         if (!cInfo->IsTameable(player->CanTameExoticPets()))
         {

@@ -30,10 +30,10 @@ public:
     virtual void OnAllCreatureUpdate(Creature* /*creature*/, uint32 /*diff*/) { }
 
     // Called just before the level of the creature is set.
-    virtual void OnBeforeCreatureSelectLevel(const CreatureTemplate* /*cinfo*/, Creature* /*creature*/, uint8& /*level*/) { }
+    virtual void OnBeforeCreatureSelectLevel(const CreatureRec* /*cinfo*/, Creature* /*creature*/, uint8& /*level*/) { }
 
     // Called from End of Creature SelectLevel.
-    virtual void Creature_SelectLevel(const CreatureTemplate* /*cinfo*/, Creature* /*creature*/) { }
+    virtual void Creature_SelectLevel(const CreatureRec* /*cinfo*/, Creature* /*creature*/) { }
 
     /**
      * @brief This hook runs after add creature in world

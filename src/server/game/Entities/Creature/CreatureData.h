@@ -185,7 +185,7 @@ struct CreatureModel
 };
 
 // from `creature_template` table
-struct CreatureTemplate
+struct CreatureRec
 {
     uint32  Entry;
     uint32  DifficultyEntry[MAX_DIFFICULTY - 1];
@@ -292,7 +292,7 @@ typedef std::vector<uint32> CreatureQuestItemList;
 typedef std::unordered_map<uint32, CreatureQuestItemList> CreatureQuestItemMap;
 
 // Benchmarked: Faster than std::map (insert/find)
-typedef std::unordered_map<uint32, CreatureTemplate> CreatureTemplateContainer;
+typedef std::unordered_map<uint32, CreatureRec> CreatureTemplateContainer;
 
 // GCC have alternative #pragma pack(N) syntax and old gcc version not support pack(push, N), also any gcc version not support it at some platform
 #if defined(__GNUC__)
@@ -313,12 +313,12 @@ struct CreatureBaseStats
 
     // Helpers
 
-    uint32 GenerateHealth(CreatureTemplate const* info) const
+    uint32 GenerateHealth(CreatureRec const* info) const
     {
         return uint32(std::ceil(BaseHealth[info->expansion] * info->ModHealth));
     }
 
-    uint32 GenerateMana(CreatureTemplate const* info) const
+    uint32 GenerateMana(CreatureRec const* info) const
     {
         // Mana can be 0.
         if (!BaseMana)
@@ -327,12 +327,12 @@ struct CreatureBaseStats
         return uint32(std::ceil(BaseMana * info->ModMana));
     }
 
-    float GenerateArmor(CreatureTemplate const* info) const
+    float GenerateArmor(CreatureRec const* info) const
     {
         return std::ceil(BaseArmor * info->ModArmor);
     }
 
-    float GenerateBaseDamage(CreatureTemplate const* info) const
+    float GenerateBaseDamage(CreatureRec const* info) const
     {
         return BaseDamage[info->expansion];
     }

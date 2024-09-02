@@ -100,7 +100,7 @@ struct AreaTrigger;
 struct CompletedAchievementData;
 struct Condition;
 struct ConditionSourceInfo;
-struct CreatureTemplate;
+struct CreatureRec;
 struct CriteriaProgress;
 struct DungeonEncounter;
 struct DungeonProgressionRequirements;

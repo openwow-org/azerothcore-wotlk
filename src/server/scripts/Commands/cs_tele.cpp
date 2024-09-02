@@ -333,7 +333,7 @@ public:
             return false;
         }
 
-        CreatureTemplate const* creatureTemplate = ASSERT_NOTNULL(sObjectMgr->GetCreatureTemplate(*creatureId));
+        CreatureRec const* creatureTemplate = ASSERT_NOTNULL(sObjectMgr->GetCreatureTemplate(*creatureId));
 
         return DoNameTeleport(handler, player, spawnpoint->mapid, { spawnpoint->posX, spawnpoint->posY, spawnpoint->posZ }, creatureTemplate->Name);
     }
@@ -347,7 +347,7 @@ public:
             return false;
         }
 
-        CreatureTemplate const* creatureTemplate = ASSERT_NOTNULL(sObjectMgr->GetCreatureTemplate(spawnpoint->id1));
+        CreatureRec const* creatureTemplate = ASSERT_NOTNULL(sObjectMgr->GetCreatureTemplate(spawnpoint->id1));
 
         return DoNameTeleport(handler, player, spawnpoint->mapid, { spawnpoint->posX, spawnpoint->posY, spawnpoint->posZ }, creatureTemplate->Name);
     }

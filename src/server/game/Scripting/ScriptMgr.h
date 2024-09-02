@@ -386,7 +386,7 @@ public: /* PlayerScript */
     bool CanJoinInBattlegroundQueue(Player* player, WOWGUID BattlemasterGuid, BattlegroundTypeId BGTypeID, uint8 joinAsGroup, GroupJoinBattlegroundResult& err);
     bool ShouldBeRewardedWithMoneyInsteadOfExp(Player* player);
     void OnBeforeTempSummonInitStats(Player* player, TempSummon* tempSummon, uint32& duration);
-    void OnBeforeGuardianInitStatsForLevel(Player* player, Guardian* guardian, CreatureTemplate const* cinfo, PetType& petType);
+    void OnBeforeGuardianInitStatsForLevel(Player* player, Guardian* guardian, CreatureRec const* cinfo, PetType& petType);
     void OnAfterGuardianInitStatsForLevel(Player* player, Guardian* guardian);
     void OnBeforeLoadPetFromDB(Player* player, uint32& petentry, uint32& petnumber, bool& current, bool& forceLoadFromDB);
     bool CanJoinInArenaQueue(Player* player, WOWGUID BattlemasterGuid, uint8 arenaslot, BattlegroundTypeId BGTypeID, uint8 joinAsGroup, uint8 IsRated, GroupJoinBattlegroundResult& err);
@@ -564,8 +564,8 @@ public: /* MovementHandlerScript */
 public: /* AllCreatureScript */
     //listener function (OnAllCreatureUpdate) is called by OnCreatureUpdate
     //void OnAllCreatureUpdate(Creature* creature, uint32 diff);
-    void OnBeforeCreatureSelectLevel(const CreatureTemplate* cinfo, Creature* creature, uint8& level);
-    void Creature_SelectLevel(const CreatureTemplate* cinfo, Creature* creature);
+    void OnBeforeCreatureSelectLevel(const CreatureRec* cinfo, Creature* creature, uint8& level);
+    void Creature_SelectLevel(const CreatureRec* cinfo, Creature* creature);
     void OnCreatureSaveToDB(Creature* creature);
 
 public: /* AllGameobjectScript */
@@ -675,7 +675,7 @@ public: /* CommandSC */
 public: /* DatabaseScript */
 
     void OnAfterDatabasesLoaded(uint32 updateFlags);
-    void OnAfterDatabaseLoadCreatureTemplates(std::vector<CreatureTemplate*> creatureTemplateStore);
+    void OnAfterDatabaseLoadCreatureTemplates(std::vector<CreatureRec*> creatureTemplateStore);
 
 public: /* WorldObjectScript */
 

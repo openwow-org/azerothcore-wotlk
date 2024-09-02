@@ -67,7 +67,7 @@ public:
 
     static bool HandleListCreatureCommand(ChatHandler* handler, Variant<Hyperlink<creature_entry>, uint32> creatureId, Optional<uint32> countArg)
     {
-        CreatureTemplate const* cInfo = sObjectMgr->GetCreatureTemplate(creatureId);
+        CreatureRec const* cInfo = sObjectMgr->GetCreatureTemplate(creatureId);
         if (!cInfo)
         {
             handler->SendErrorMessage(LANG_COMMAND_INVALIDCREATUREID, uint32(creatureId));

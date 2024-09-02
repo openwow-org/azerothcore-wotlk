@@ -1217,7 +1217,7 @@ bool Player::BuildEnumData(PreparedQueryResult result, WDataStore* data)
     if (result && !(playerFlags & PLAYER_FLAGS_GHOST) && (plrClass == CLASS_WARLOCK || plrClass == CLASS_HUNTER || (plrClass == CLASS_DEATH_KNIGHT && (fields[21].Get<uint32>()&PLAYER_EXTRA_SHOW_DK_PET))))
     {
         uint32 entry = fields[19].Get<uint32>();
-        CreatureTemplate const* creatureInfo = sObjectMgr->GetCreatureTemplate(entry);
+        CreatureRec const* creatureInfo = sObjectMgr->GetCreatureTemplate(entry);
         if (creatureInfo)
         {
             petDisplayId = fields[20].Get<uint32>();
@@ -9213,7 +9213,7 @@ Pet* Player::CreatePet(Creature* creatureTarget, uint32 spellID /*= 0*/)
         return nullptr;
     }
 
-    CreatureTemplate const* creatrueTemplate = sObjectMgr->GetCreatureTemplate(creatureTarget->GetEntry());
+    CreatureRec const* creatrueTemplate = sObjectMgr->GetCreatureTemplate(creatureTarget->GetEntry());
     if (!creatrueTemplate->family)
     {
         // Creatures with family 0 crashes the server
@@ -9260,7 +9260,7 @@ Pet* Player::CreatePet(uint32 creatureEntry, uint32 spellID /*= 0*/)
         return nullptr;
     }
 
-    CreatureTemplate const* creatrueTemplate = sObjectMgr->GetCreatureTemplate(creatureEntry);
+    CreatureRec const* creatrueTemplate = sObjectMgr->GetCreatureTemplate(creatureEntry);
     if (!creatrueTemplate->family)
     {
         // Creatures with family 0 crashes the server
@@ -14111,7 +14111,7 @@ void Player::LearnPetTalent(WOWGUID petGuid, uint32 talentId, uint32 talentRank)
     if (!talentTabInfo)
         return;
 
-    CreatureTemplate const* ci = pet->GetCreatureTemplate();
+    CreatureRec const* ci = pet->GetCreatureTemplate();
 
     if (!ci)
         return;
@@ -14374,7 +14374,7 @@ void Player::BuildPetTalentsInfoData(WDataStore* data)
 
     data->put<uint32>(pointsPos, unspentTalentPoints);      // put real points
 
-    CreatureTemplate const* ci = pet->GetCreatureTemplate();
+    CreatureRec const* ci = pet->GetCreatureTemplate();
     if (!ci)
         return;
 

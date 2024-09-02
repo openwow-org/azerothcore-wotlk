@@ -98,7 +98,7 @@ void User::HandleCreatureQueryOpcode(WDataStore& recvData)
     WOWGUID guid;
     recvData >> guid;
 
-    CreatureTemplate const* ci = sObjectMgr->GetCreatureTemplate(entry);
+    CreatureRec const* ci = sObjectMgr->GetCreatureTemplate(entry);
     if (ci)
     {
         std::string Name, Title;

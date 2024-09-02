@@ -2349,7 +2349,7 @@ void SpellMgr::LoadPetLevelupSpellMap()
     LOG_INFO("server.loading", " ");
 }
 
-bool LoadPetDefaultSpells_helper(CreatureTemplate const* cInfo, PetDefaultSpellsEntry& petDefSpells)
+bool LoadPetDefaultSpells_helper(CreatureRec const* cInfo, PetDefaultSpellsEntry& petDefSpells)
 {
     // skip empty list;
     bool have_spell = false;
@@ -2447,7 +2447,7 @@ void SpellMgr::LoadPetDefaultSpells()
             if (spellInfo->Effects[k].Effect == SPELL_EFFECT_SUMMON || spellInfo->Effects[k].Effect == SPELL_EFFECT_SUMMON_PET)
             {
                 uint32 creature_id = spellInfo->Effects[k].MiscValue;
-                CreatureTemplate const* cInfo = sObjectMgr->GetCreatureTemplate(creature_id);
+                CreatureRec const* cInfo = sObjectMgr->GetCreatureTemplate(creature_id);
                 if (!cInfo)
                     continue;
 

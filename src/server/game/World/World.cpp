@@ -1941,10 +1941,10 @@ void World::SetInitialWorldSettings()
     sObjectMgr->LoadGossipMenuItems();
 
     LOG_INFO("server.loading", "Loading Vendors...");
-    sObjectMgr->LoadVendors();                                   // must be after load CreatureTemplate and ItemTemplate
+    sObjectMgr->LoadVendors();                                   // must be after load CreatureRec and ItemTemplate
 
     LOG_INFO("server.loading", "Loading Trainers...");
-    sObjectMgr->LoadTrainerSpell();                              // must be after load CreatureTemplate
+    sObjectMgr->LoadTrainerSpell();                              // must be after load CreatureRec
 
     LOG_INFO("server.loading", "Loading Waypoints...");
     sWaypointMgr->Load();

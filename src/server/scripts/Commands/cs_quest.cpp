@@ -274,7 +274,7 @@ public:
 
                 if (creature > 0)
                 {
-                    if (CreatureTemplate const* creatureInfo = sObjectMgr->GetCreatureTemplate(creature))
+                    if (CreatureRec const* creatureInfo = sObjectMgr->GetCreatureTemplate(creature))
                     {
                         for (uint16 z = 0; z < creatureCount; ++z)
                         {

@@ -249,7 +249,7 @@ bool Pet::LoadPetFromDB(Player* owner, uint32 petEntry, uint32 petnumber, bool c
 
     if (petInfo->Type == HUNTER_PET)
     {
-        CreatureTemplate const* creatureInfo = sObjectMgr->GetCreatureTemplate(petInfo->CreatureId);
+        CreatureRec const* creatureInfo = sObjectMgr->GetCreatureTemplate(petInfo->CreatureId);
         if (!creatureInfo || !creatureInfo->IsTameable(owner->CanTameExoticPets()))
             return false;
     }
@@ -956,7 +956,7 @@ bool Pet::CreateBaseAtCreature(Creature* creature)
         return false;
     }
 
-    CreatureTemplate const* cinfo = GetCreatureTemplate();
+    CreatureRec const* cinfo = GetCreatureTemplate();
     if (!cinfo)
     {
         LOG_ERROR("entities.pet", "CreateBaseAtCreature() failed, creatureInfo is missing!");
@@ -975,7 +975,7 @@ bool Pet::CreateBaseAtCreature(Creature* creature)
     return true;
 }
 
-bool Pet::CreateBaseAtCreatureInfo(CreatureTemplate const* cinfo, Unit* owner)
+bool Pet::CreateBaseAtCreatureInfo(CreatureRec const* cinfo, Unit* owner)
 {
     if (!CreateBaseAtTamed(cinfo, owner->GetMap(), owner->GetPhaseMask()))
         return false;
@@ -990,7 +990,7 @@ bool Pet::CreateBaseAtCreatureInfo(CreatureTemplate const* cinfo, Unit* owner)
     return true;
 }
 
-bool Pet::CreateBaseAtTamed(CreatureTemplate const* cinfo, Map* map, uint32 phaseMask)
+bool Pet::CreateBaseAtTamed(CreatureRec const* cinfo, Map* map, uint32 phaseMask)
 {
     LOG_DEBUG("entities.pet", "Pet::CreateBaseForTamed");
     WOWGUID::LowType guid = map->GenerateLowGuid<HighGuid::Pet>();
@@ -1019,7 +1019,7 @@ bool Pet::CreateBaseAtTamed(CreatureTemplate const* cinfo, Map* map, uint32 phas
 /// @todo: Move stat mods code to pet passive auras
 bool Guardian::InitStatsForLevel(uint8 petlevel)
 {
-    CreatureTemplate const* cinfo = GetCreatureTemplate();
+    CreatureRec const* cinfo = GetCreatureTemplate();
     ASSERT(cinfo);
 
     SetLevel(petlevel);
@@ -1440,7 +1440,7 @@ bool Pet::HaveInDiet(ItemTemplate const* item) const
     if (!item->FoodType)
         return false;
 
-    CreatureTemplate const* cInfo = GetCreatureTemplate();
+    CreatureRec const* cInfo = GetCreatureTemplate();
     if (!cInfo)
         return false;
 
@@ -2069,7 +2069,7 @@ bool Pet::resetTalents()
     if (owner->ToPlayer()->HasAtLoginFlag(AT_LOGIN_RESET_PET_TALENTS))
         owner->ToPlayer()->RemoveAtLoginFlag(AT_LOGIN_RESET_PET_TALENTS, true);
 
-    CreatureTemplate const* ci = GetCreatureTemplate();
+    CreatureRec const* ci = GetCreatureTemplate();
     if (!ci)
         return false;
     // Check pet talent type
@@ -2345,7 +2345,7 @@ bool Pet::HasSpell(uint32 spell) const
 // Get all passive spells in our skill line
 void Pet::LearnPetPassives()
 {
-    CreatureTemplate const* cInfo = GetCreatureTemplate();
+    CreatureRec const* cInfo = GetCreatureTemplate();
     if (!cInfo)
         return;
 

@@ -196,7 +196,7 @@ public:
 
     [[nodiscard]] TrainerSpellData const* GetTrainerSpells() const;
 
-    [[nodiscard]] CreatureTemplate const* GetCreatureTemplate() const { return m_creatureInfo; }
+    [[nodiscard]] CreatureRec const* GetCreatureTemplate() const { return m_creatureInfo; }
     [[nodiscard]] CreatureData const* GetCreatureData() const { return m_creatureData; }
     void SetDetectionDistance(float dist){ m_detectionDistance = dist; }
     [[nodiscard]] CreatureAddon const* GetCreatureAddon() const;
@@ -473,7 +473,7 @@ protected:
 
     bool DisableReputationGain;
 
-    CreatureTemplate const* m_creatureInfo;                 // in difficulty mode > 0 can different from sObjectMgr->GetCreatureTemplate(GetEntry())
+    CreatureRec const* m_creatureInfo;                 // in difficulty mode > 0 can different from sObjectMgr->GetCreatureTemplate(GetEntry())
     CreatureData const* m_creatureData;
 
     float m_detectionDistance;

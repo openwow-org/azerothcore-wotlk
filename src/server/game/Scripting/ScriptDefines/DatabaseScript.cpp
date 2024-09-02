@@ -24,7 +24,7 @@ void ScriptMgr::OnAfterDatabasesLoaded(uint32 updateFlags)
     CALL_ENABLED_HOOKS(DatabaseScript, DATABASEHOOK_ON_AFTER_DATABASES_LOADED, script->OnAfterDatabasesLoaded(updateFlags));
 }
 
-void ScriptMgr::OnAfterDatabaseLoadCreatureTemplates(std::vector<CreatureTemplate*> creatureTemplates)
+void ScriptMgr::OnAfterDatabaseLoadCreatureTemplates(std::vector<CreatureRec*> creatureTemplates)
 {
     CALL_ENABLED_HOOKS(DatabaseScript, DATABASEHOOK_ON_AFTER_DATABASE_LOAD_CREATURETEMPLATES, script->OnAfterDatabaseLoadCreatureTemplates(creatureTemplates));
 }

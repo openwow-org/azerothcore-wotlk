@@ -435,7 +435,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                     }
                     else
                     {
-                        if (CreatureTemplate const* ci = sObjectMgr->GetCreatureTemplate(target->ToCreature()->GetEntry()))
+                        if (CreatureRec const* ci = sObjectMgr->GetCreatureTemplate(target->ToCreature()->GetEntry()))
                         {
                             if (target->ToCreature()->GetFaction() != ci->faction)
                             {
@@ -461,7 +461,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                     //set model based on entry from creature_template
                     if (e.action.morphOrMount.creature)
                     {
-                        if (CreatureTemplate const* ci = sObjectMgr->GetCreatureTemplate(e.action.morphOrMount.creature))
+                        if (CreatureRec const* ci = sObjectMgr->GetCreatureTemplate(e.action.morphOrMount.creature))
                         {
                             CreatureModel const* model = ObjectMgr::ChooseDisplayId(ci);
                             target->ToCreature()->SetDisplayId(model->CreatureDisplayID, model->DisplayScale);
@@ -1361,7 +1361,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                 {
                     if (e.action.morphOrMount.creature > 0)
                     {
-                        if (CreatureTemplate const* cInfo = sObjectMgr->GetCreatureTemplate(e.action.morphOrMount.creature))
+                        if (CreatureRec const* cInfo = sObjectMgr->GetCreatureTemplate(e.action.morphOrMount.creature))
                             target->ToUnit()->Mount(ObjectMgr::ChooseDisplayId(cInfo)->CreatureDisplayID);
                     }
                     else
@@ -4965,7 +4965,7 @@ void SmartScript::GetScript()
 
         FillScript(e, me, nullptr);
 
-        if (CreatureTemplate const* cInfo = me->GetCreatureTemplate())
+        if (CreatureRec const* cInfo = me->GetCreatureTemplate())
         {
             if (cInfo->HasFlagsExtra(CREATURE_FLAG_DONT_OVERRIDE_ENTRY_SAI))
             {

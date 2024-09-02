@@ -434,7 +434,7 @@ void ScriptMgr::OnBeforeTempSummonInitStats(Player* player, TempSummon* tempSumm
     CALL_ENABLED_HOOKS(PlayerScript, PLAYERHOOK_ON_BEFORE_TEMP_SUMMON_INIT_STATS, script->OnBeforeTempSummonInitStats(player, tempSummon, duration));
 }
 
-void ScriptMgr::OnBeforeGuardianInitStatsForLevel(Player* player, Guardian* guardian, CreatureTemplate const* cinfo, PetType& petType)
+void ScriptMgr::OnBeforeGuardianInitStatsForLevel(Player* player, Guardian* guardian, CreatureRec const* cinfo, PetType& petType)
 {
     CALL_ENABLED_HOOKS(PlayerScript, PLAYERHOOK_ON_BEFORE_GUARDIAN_INIT_STATS_FOR_LEVEL, script->OnBeforeGuardianInitStatsForLevel(player, guardian, cinfo, petType));
 }

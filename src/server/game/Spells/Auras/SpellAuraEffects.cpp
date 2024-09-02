@@ -2695,7 +2695,7 @@ void AuraEffect::HandleAuraTransform(AuraApplication const* aurApp, uint8 mode, 
             }
             else
             {
-                CreatureTemplate const* ci = sObjectMgr->GetCreatureTemplate(GetMiscValue());
+                CreatureRec const* ci = sObjectMgr->GetCreatureTemplate(GetMiscValue());
                 if (!ci)
                 {
                     target->SetDisplayId(16358);              // pig pink ^_^
@@ -2755,7 +2755,7 @@ void AuraEffect::HandleAuraTransform(AuraApplication const* aurApp, uint8 mode, 
             if (!target->GetAuraEffectsByType(SPELL_AURA_MOUNTED).empty())
             {
                 uint32 cr_id = target->GetAuraEffectsByType(SPELL_AURA_MOUNTED).front()->GetMiscValue();
-                if (CreatureTemplate const* ci = sObjectMgr->GetCreatureTemplate(cr_id))
+                if (CreatureRec const* ci = sObjectMgr->GetCreatureTemplate(cr_id))
                 {
                     CreatureModel model = *ObjectMgr::ChooseDisplayId(ci);
                     sObjectMgr->GetCreatureModelRandomGender(&model, ci);
@@ -3270,7 +3270,7 @@ void AuraEffect::HandleAuraMounted(AuraApplication const* aurApp, uint8 mode, bo
             }
         }
 
-        if (CreatureTemplate const* creatureInfo = sObjectMgr->GetCreatureTemplate(creatureEntry))
+        if (CreatureRec const* creatureInfo = sObjectMgr->GetCreatureTemplate(creatureEntry))
         {
             CreatureModel model = *ObjectMgr::ChooseDisplayId(creatureInfo);
             sObjectMgr->GetCreatureModelRandomGender(&model, creatureInfo);
@@ -5779,7 +5779,7 @@ void AuraEffect::HandleAuraDummy(AuraApplication const* aurApp, uint8 mode, bool
                             else
                                 creatureEntry = target->GetAuraEffectsByType(SPELL_AURA_MOUNTED).front()->GetMiscValue();
 
-                            if (CreatureTemplate const* creatureInfo = sObjectMgr->GetCreatureTemplate(creatureEntry))
+                            if (CreatureRec const* creatureInfo = sObjectMgr->GetCreatureTemplate(creatureEntry))
                             {
                                 CreatureModel model = *ObjectMgr::ChooseDisplayId(creatureInfo);
                                 sObjectMgr->GetCreatureModelRandomGender(&model, creatureInfo);
@@ -5809,7 +5809,7 @@ void AuraEffect::HandleAuraDummy(AuraApplication const* aurApp, uint8 mode, bool
                                 creatureEntry = target->GetAuraEffectsByType(SPELL_AURA_MOUNTED).front()->GetMiscValue();
                             }
 
-                            if (CreatureTemplate const* creatureInfo = sObjectMgr->GetCreatureTemplate(creatureEntry))
+                            if (CreatureRec const* creatureInfo = sObjectMgr->GetCreatureTemplate(creatureEntry))
                             {
                                 CreatureModel model = *ObjectMgr::ChooseDisplayId(creatureInfo);
                                 sObjectMgr->GetCreatureModelRandomGender(&model, creatureInfo);

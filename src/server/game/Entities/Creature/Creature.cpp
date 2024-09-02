@@ -119,12 +119,12 @@ VendorItem const* VendorItemData::FindItemCostPair(uint32 item_id, uint32 extend
 CreatureModel const CreatureModel::DefaultInvisibleModel(11686, 1.0f, 1.0f);
 CreatureModel const CreatureModel::DefaultVisibleModel(17519, 1.0f, 1.0f);
 
-CreatureModel const* CreatureTemplate::GetModelByIdx(uint32 idx) const
+CreatureModel const* CreatureRec::GetModelByIdx(uint32 idx) const
 {
     return idx < Models.size() ? &Models[idx] : nullptr;
 }
 
-CreatureModel const* CreatureTemplate::GetRandomValidModel() const
+CreatureModel const* CreatureRec::GetRandomValidModel() const
 {
     if (!Models.size())
         return nullptr;
@@ -141,7 +141,7 @@ CreatureModel const* CreatureTemplate::GetRandomValidModel() const
     return &(*selectedItr);
 }
 
-CreatureModel const* CreatureTemplate::GetFirstValidModel() const
+CreatureModel const* CreatureRec::GetFirstValidModel() const
 {
     for (CreatureModel const& model : Models)
         if (model.CreatureDisplayID)
@@ -150,7 +150,7 @@ CreatureModel const* CreatureTemplate::GetFirstValidModel() const
     return nullptr;
 }
 
-CreatureModel const* CreatureTemplate::GetModelWithDisplayId(uint32 displayId) const
+CreatureModel const* CreatureRec::GetModelWithDisplayId(uint32 displayId) const
 {
     for (CreatureModel const& model : Models)
         if (displayId == model.CreatureDisplayID)
@@ -159,7 +159,7 @@ CreatureModel const* CreatureTemplate::GetModelWithDisplayId(uint32 displayId) c
     return nullptr;
 }
 
-CreatureModel const* CreatureTemplate::GetFirstInvisibleModel() const
+CreatureModel const* CreatureRec::GetFirstInvisibleModel() const
 {
     for (CreatureModel const& model : Models)
         if (CreatureModelInfo const* modelInfo = sObjectMgr->GetCreatureModelInfo(model.CreatureDisplayID))
@@ -169,7 +169,7 @@ CreatureModel const* CreatureTemplate::GetFirstInvisibleModel() const
     return &CreatureModel::DefaultInvisibleModel;
 }
 
-CreatureModel const* CreatureTemplate::GetFirstVisibleModel() const
+CreatureModel const* CreatureRec::GetFirstVisibleModel() const
 {
     for (CreatureModel const& model : Models)
         if (CreatureModelInfo const* modelInfo = sObjectMgr->GetCreatureModelInfo(model.CreatureDisplayID))
@@ -179,7 +179,7 @@ CreatureModel const* CreatureTemplate::GetFirstVisibleModel() const
     return &CreatureModel::DefaultVisibleModel;
 }
 
-void CreatureTemplate::InitializeQueryData()
+void CreatureRec::InitializeQueryData()
 {
     queryData.Initialize(SMSG_CREATURE_QUERY_RESPONSE, 1);
 
@@ -436,7 +436,7 @@ void Creature::RemoveCorpse(bool setSpawnTime, bool skipVisibility)
  */
 bool Creature::InitEntry(uint32 Entry, const CreatureData* data)
 {
-    CreatureTemplate const* normalInfo = sObjectMgr->GetCreatureTemplate(Entry);
+    CreatureRec const* normalInfo = sObjectMgr->GetCreatureTemplate(Entry);
     if (!normalInfo)
     {
         LOG_ERROR("sql.sql", "Creature::InitEntry creature entry {} does not exist.", Entry);
@@ -445,7 +445,7 @@ bool Creature::InitEntry(uint32 Entry, const CreatureData* data)
 
     // get difficulty 1 mode entry
     // Xinef: Skip for pets!
-    CreatureTemplate const* cinfo = normalInfo;
+    CreatureRec const* cinfo = normalInfo;
     for (uint8 diff = uint8(GetMap()->GetSpawnMode()); diff > 0 && !IsPet();)
     {
         // we already have valid Map pointer for current creature!
@@ -538,7 +538,7 @@ bool Creature::UpdateEntry(uint32 Entry, const CreatureData* data, bool changele
     if (!InitEntry(Entry, data))
         return false;
 
-    CreatureTemplate const* cInfo = GetCreatureTemplate();
+    CreatureRec const* cInfo = GetCreatureTemplate();
 
     m_regenHealth = cInfo->RegenHealth;
 
@@ -1123,7 +1123,7 @@ bool Creature::Create(WOWGUID::LowType guidlow, Map* map, uint32 phaseMask, uint
     SetMap(map);
     SetPhaseMask(phaseMask, false);
 
-    CreatureTemplate const* cinfo = sObjectMgr->GetCreatureTemplate(Entry);
+    CreatureRec const* cinfo = sObjectMgr->GetCreatureTemplate(Entry);
     if (!cinfo)
     {
         LOG_ERROR("sql.sql", "Creature::Create(): creature template (guidlow: {}, entry: {}) does not exist.", guidlow, Entry);
@@ -1411,7 +1411,7 @@ void Creature::SaveToDB(uint32 mapid, uint8 spawnMask, uint32 phaseMask)
     uint32 dynamicflags = GetDynamicFlags();
 
     // check if it's a custom model and if not, use 0 for displayId
-    CreatureTemplate const* cinfo = GetCreatureTemplate();
+    CreatureRec const* cinfo = GetCreatureTemplate();
     if (cinfo)
     {
         for (CreatureModel model : cinfo->Models)
@@ -1501,7 +1501,7 @@ void Creature::SaveToDB(uint32 mapid, uint8 spawnMask, uint32 phaseMask)
 
 void Creature::SelectLevel(bool changelevel)
 {
-    CreatureTemplate const* cInfo = GetCreatureTemplate();
+    CreatureRec const* cInfo = GetCreatureTemplate();
 
     uint32 rank = IsPet() ? 0 : cInfo->rank;
 
@@ -1629,7 +1629,7 @@ bool Creature::CreateFromProto(WOWGUID::LowType guidlow, uint32 Entry, uint32 ve
             return false;
     }
 
-    CreatureTemplate const* normalInfo = sObjectMgr->GetCreatureTemplate(Entry);
+    CreatureRec const* normalInfo = sObjectMgr->GetCreatureTemplate(Entry);
     if (!normalInfo)
     {
         LOG_ERROR("sql.sql", "Creature::CreateFromProto(): creature template (guidlow: {}, entry: {}) does not exist.", guidlow, Entry);
@@ -1643,7 +1643,7 @@ bool Creature::CreateFromProto(WOWGUID::LowType guidlow, uint32 Entry, uint32 ve
     // Xinef: select proper vehicle id
     if (!vehId)
     {
-        CreatureTemplate const* cinfo = normalInfo;
+        CreatureRec const* cinfo = normalInfo;
         for (uint8 diff = uint8(GetMap()->GetSpawnMode()); diff > 0 && !IsPet();)
         {
             // we already have valid Map pointer for current creature!
@@ -1992,7 +1992,7 @@ void Creature::setDeathState(DeathState s, bool despawn)
         SetLootRecipient(nullptr);
         ResetPlayerDamageReq();
         SetCannotReachTarget();
-        CreatureTemplate const* cinfo = GetCreatureTemplate();
+        CreatureRec const* cinfo = GetCreatureTemplate();
         // Xinef: npc run by default
         //SetWalk(true);
 
@@ -2045,7 +2045,7 @@ void Creature::Respawn(bool force)
     WOWGUID dbtableHighGuid = WOWGUID::Create<HighGuid::Unit>(m_creatureData ? m_creatureData->id1 : GetEntry(), m_spawnId);
     time_t linkedRespawntime = GetMap()->GetLinkedRespawnTime(dbtableHighGuid);
 
-    CreatureTemplate const* cInfo = sObjectMgr->GetCreatureTemplate(GetEntry());
+    CreatureRec const* cInfo = sObjectMgr->GetCreatureTemplate(GetEntry());
 
     if (!linkedRespawntime || (cInfo && cInfo->HasFlagsExtra(CREATURE_FLAG_EXTRA_HARD_RESET)) || force)          // Should respawn
     {
@@ -3132,7 +3132,7 @@ bool Creature::IsDungeonBoss() const
     if (GetOwnerGUID().IsPlayer())
         return false;
 
-    CreatureTemplate const* cinfo = sObjectMgr->GetCreatureTemplate(GetEntry());
+    CreatureRec const* cinfo = sObjectMgr->GetCreatureTemplate(GetEntry());
     return cinfo && (cinfo->flags_extra & CREATURE_FLAG_EXTRA_DUNGEON_BOSS);
 }
 
@@ -3141,7 +3141,7 @@ bool Creature::IsImmuneToKnockback() const
     if (GetOwnerGUID().IsPlayer())
         return false;
 
-    CreatureTemplate const* cinfo = sObjectMgr->GetCreatureTemplate(GetEntry());
+    CreatureRec const* cinfo = sObjectMgr->GetCreatureTemplate(GetEntry());
     return cinfo && (cinfo->flags_extra & CREATURE_FLAG_EXTRA_IMMUNITY_KNOCKBACK);
 }
 
@@ -3393,7 +3393,7 @@ void Creature::UpdateMovementFlags()
     if (m_movedByPlayer)
         return;
 
-    CreatureTemplate const* info = GetCreatureTemplate();
+    CreatureRec const* info = GetCreatureTemplate();
     if (!info)
         return;
 

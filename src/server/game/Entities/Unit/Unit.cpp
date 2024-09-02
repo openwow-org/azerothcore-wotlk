@@ -10114,7 +10114,7 @@ ReputationRank Unit::GetReactionTo(Unit const* target, bool checkOriginalFaction
             {
                 factionTemplateEntry = sFactionTemplateStore.LookupEntry(owner->GetFaction());
             }
-            else if (CreatureTemplate const* cinfo = ToCreature()->GetCreatureTemplate())
+            else if (CreatureRec const* cinfo = ToCreature()->GetCreatureTemplate())
             {
                 factionTemplateEntry = sFactionTemplateStore.LookupEntry(cinfo->faction);
             }
@@ -17575,7 +17575,7 @@ Pet* Unit::CreatePet(uint32 creatureEntry, uint32 spell_id)
     if (GetTypeId() != TYPEID_PLAYER)
         return nullptr;
 
-    CreatureTemplate const* creatureInfo = sObjectMgr->GetCreatureTemplate(creatureEntry);
+    CreatureRec const* creatureInfo = sObjectMgr->GetCreatureTemplate(creatureEntry);
     if (!creatureInfo)
         return nullptr;
 
@@ -18711,7 +18711,7 @@ bool Unit::SetCharmedBy(Unit* charmer, CharmType type, AuraApplication const* au
             case CHARM_TYPE_CHARM:
                 if (GetTypeId() == TYPEID_UNIT && charmer->IsClass(CLASS_WARLOCK, CLASS_CONTEXT_PET_CHARM))
                 {
-                    CreatureTemplate const* cinfo = ToCreature()->GetCreatureTemplate();
+                    CreatureRec const* cinfo = ToCreature()->GetCreatureTemplate();
                     if (cinfo && cinfo->type == CREATURE_TYPE_DEMON)
                     {
                         // to prevent client crash
@@ -18833,7 +18833,7 @@ void Unit::RemoveCharmedBy(Unit* charmer)
             case CHARM_TYPE_CHARM:
                 if (GetTypeId() == TYPEID_UNIT && charmer->IsClass(CLASS_WARLOCK, CLASS_CONTEXT_PET_CHARM))
                 {
-                    CreatureTemplate const* cinfo = ToCreature()->GetCreatureTemplate();
+                    CreatureRec const* cinfo = ToCreature()->GetCreatureTemplate();
                     if (cinfo && cinfo->type == CREATURE_TYPE_DEMON)
                     {
                         SetByteValue(UNIT_FIELD_BYTES_0, 1, uint8(cinfo->unit_class));
@@ -18905,7 +18905,7 @@ void Unit::RestoreFaction()
             }
         }
 
-        if (CreatureTemplate const* cinfo = ToCreature()->GetCreatureTemplate())  // normal creature
+        if (CreatureRec const* cinfo = ToCreature()->GetCreatureTemplate())  // normal creature
             SetFaction(cinfo->faction);
     }
 }
@@ -21154,13 +21154,13 @@ void Unit::PatchValuesUpdate(ByteBuffer& valuesUpdateBuf, BuildValuesCachePosPoi
         uint32 displayId = m_uint32Values[UNIT_FIELD_DISPLAYID];
         if (creature)
         {
-            CreatureTemplate const* cinfo = creature->GetCreatureTemplate();
+            CreatureRec const* cinfo = creature->GetCreatureTemplate();
 
             // this also applies for transform auras
             if (SpellInfo const* transform = sSpellMgr->GetSpellInfo(getTransForm()))
                 for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
                     if (transform->Effects[i].IsAura(SPELL_AURA_TRANSFORM))
-                        if (CreatureTemplate const* transformInfo = sObjectMgr->GetCreatureTemplate(transform->Effects[i].MiscValue))
+                        if (CreatureRec const* transformInfo = sObjectMgr->GetCreatureTemplate(transform->Effects[i].MiscValue))
                         {
                             cinfo = transformInfo;
                             break;

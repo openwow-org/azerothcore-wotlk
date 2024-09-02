@@ -48,7 +48,7 @@
 extern void PlayerInitialize ();
 extern void PlayerDestroy ();
 
-struct CreatureTemplate;
+struct CreatureRec;
 struct Mail;
 struct TrainerSpell;
 struct VendorItem;
@@ -1521,7 +1521,7 @@ public:
     void GroupEventHappens(uint32 questId, WorldObject const* pEventObject);
     void ItemAddedQuestCheck(uint32 entry, uint32 count);
     void ItemRemovedQuestCheck(uint32 entry, uint32 count);
-    void KilledMonster(CreatureTemplate const* cInfo, WOWGUID guid);
+    void KilledMonster(CreatureRec const* cInfo, WOWGUID guid);
     void KilledMonsterCredit(uint32 entry, WOWGUID guid = WOWGUID::Empty);
     void KilledPlayerCredit(uint16 count = 1);
     void KilledPlayerCreditForQuest(uint16 count, Quest const* quest);

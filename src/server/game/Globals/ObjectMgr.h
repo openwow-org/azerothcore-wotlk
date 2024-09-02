@@ -767,12 +767,12 @@ public:
     void LoadGameObjectTemplateAddons();
     void AddGameobjectInfo(GameObjectTemplate* goinfo);
 
-    CreatureTemplate const* GetCreatureTemplate(uint32 entry);
+    CreatureRec const* GetCreatureTemplate(uint32 entry);
     [[nodiscard]] CreatureTemplateContainer const* GetCreatureTemplates() const { return &_creatureTemplateStore; }
     CreatureModelInfo const* GetCreatureModelInfo(uint32 modelId) const;
-    CreatureModelInfo const* GetCreatureModelRandomGender(CreatureModel* model, CreatureTemplate const* creatureTemplate) const;
-    static CreatureModel const* ChooseDisplayId(CreatureTemplate const* cinfo, CreatureData const* data = nullptr);
-    static void ChooseCreatureFlags(CreatureTemplate const* cinfo, uint32& npcflag, uint32& unit_flags, uint32& dynamicflags, CreatureData const* data = nullptr);
+    CreatureModelInfo const* GetCreatureModelRandomGender(CreatureModel* model, CreatureRec const* creatureTemplate) const;
+    static CreatureModel const* ChooseDisplayId(CreatureRec const* cinfo, CreatureData const* data = nullptr);
+    static void ChooseCreatureFlags(CreatureRec const* cinfo, uint32& npcflag, uint32& unit_flags, uint32& dynamicflags, CreatureData const* data = nullptr);
     EquipmentInfo const* GetEquipmentInfo(uint32 entry, int8& id);
     CreatureAddon const* GetCreatureAddon(WOWGUID::LowType lowguid);
     GameObjectAddon const* GetGameObjectAddon(WOWGUID::LowType lowguid);
@@ -1026,7 +1026,7 @@ public:
     void LoadCreatureTemplateResistances();
     void LoadCreatureTemplateSpells();
     void LoadCreatureCustomIDs();
-    void CheckCreatureTemplate(CreatureTemplate const* cInfo);
+    void CheckCreatureTemplate(CreatureRec const* cInfo);
     void CheckCreatureMovement(char const* table, uint64 id, CreatureMovementData& creatureMovement);
     void LoadGameObjectQuestItems();
     void LoadCreatureQuestItems();
@@ -1572,7 +1572,7 @@ private:
     CreatureDataContainer _creatureDataStore;
     CreatureTemplateContainer _creatureTemplateStore;
     CreatureCustomIDsContainer _creatureCustomIDsStore;
-    std::vector<CreatureTemplate*> _creatureTemplateStoreFast; // pussywizard
+    std::vector<CreatureRec*> _creatureTemplateStoreFast; // pussywizard
     CreatureModelContainer _creatureModelStore;
     CreatureAddonContainer _creatureAddonStore;
     CreatureAddonContainer _creatureTemplateAddonStore;

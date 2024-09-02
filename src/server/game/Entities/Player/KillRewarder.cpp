@@ -131,7 +131,7 @@ void KillRewarder::_InitXP(Player* player)
 
     if (_xp && !_isBattleGround && _victim) // pussywizard: npcs with relatively low hp give lower exp
         if (_victim->GetTypeId() == TYPEID_UNIT)
-            if (const CreatureTemplate* ct = _victim->ToCreature()->GetCreatureTemplate())
+            if (const CreatureRec* ct = _victim->ToCreature()->GetCreatureTemplate())
                 if (ct->ModHealth <= 0.75f && ct->ModHealth >= 0.0f)
                     _xp = uint32(_xp * ct->ModHealth);
 }

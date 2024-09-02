@@ -105,7 +105,7 @@ void User::SendTrainerList(WOWGUID guid, const std::string& strTitle)
     if (GetPlayer()->HasUnitState(UNIT_STATE_DIED))
         GetPlayer()->RemoveAurasByType(SPELL_AURA_FEIGN_DEATH);
 
-    CreatureTemplate const* ci = unit->GetCreatureTemplate();
+    CreatureRec const* ci = unit->GetCreatureTemplate();
 
     if (!ci)
     {
@@ -651,7 +651,7 @@ void User::HandleUnstablePet(WDataStore& recvData)
         return;
     }
 
-    CreatureTemplate const* creatureInfo = sObjectMgr->GetCreatureTemplate((*stabledPet)->CreatureId);
+    CreatureRec const* creatureInfo = sObjectMgr->GetCreatureTemplate((*stabledPet)->CreatureId);
     if (!creatureInfo || !creatureInfo->IsTameable(m_player->CanTameExoticPets()))
     {
         // if problem in exotic pet
@@ -805,7 +805,7 @@ void User::HandleStableSwapPet(WDataStore& recvData)
         return;
     }
 
-    CreatureTemplate const* creatureInfo = sObjectMgr->GetCreatureTemplate((*stabledPet)->CreatureId);
+    CreatureRec const* creatureInfo = sObjectMgr->GetCreatureTemplate((*stabledPet)->CreatureId);
     if (!creatureInfo || !creatureInfo->IsTameable(m_player->CanTameExoticPets()))
     {
         // if problem in exotic pet

@@ -597,7 +597,7 @@ void ObjectMgr::LoadCreatureTemplate(Field* fields, bool triggerHook)
 {
     uint32 entry = fields[0].Get<uint32>();
 
-    CreatureTemplate& creatureTemplate = _creatureTemplateStore[entry];
+    CreatureRec& creatureTemplate = _creatureTemplateStore[entry];
 
     // enlarge the fast cache as necessary
     if (_creatureTemplateStoreFast.size() < entry + 1)
@@ -742,7 +742,7 @@ void ObjectMgr::LoadCreatureTemplateModels()
         float displayScale = fields[2].Get<float>();
         float probability = fields[3].Get<float>();
 
-        CreatureTemplate const* cInfo = GetCreatureTemplate(creatureId);
+        CreatureRec const* cInfo = GetCreatureTemplate(creatureId);
         if (!cInfo)
         {
             LOG_ERROR("sql.sql", "Creature template (Entry: {}) does not exist but has a record in `creature_template_model`", creatureId);
@@ -763,7 +763,7 @@ void ObjectMgr::LoadCreatureTemplateModels()
         if (displayScale <= 0.0f)
             displayScale = 1.0f;
 
-        const_cast<CreatureTemplate*>(cInfo)->Models.emplace_back(creatureDisplayId, displayScale, probability);
+        const_cast<CreatureRec*>(cInfo)->Models.emplace_back(creatureDisplayId, displayScale, probability);
 
         ++count;
     } while (result->NextRow());
@@ -807,7 +807,7 @@ void ObjectMgr::LoadCreatureTemplateResistances()
             continue;
         }
 
-        CreatureTemplate& creatureTemplate = itr->second;
+        CreatureRec& creatureTemplate = itr->second;
         creatureTemplate.resistance[school] = fields[2].Get<int16>();
 
         ++count;
@@ -853,7 +853,7 @@ void ObjectMgr::LoadCreatureTemplateSpells()
             continue;
         }
 
-        CreatureTemplate& creatureTemplate = itr->second;
+        CreatureRec& creatureTemplate = itr->second;
         creatureTemplate.spells[index] = fields[2].Get<uint32>();
 
         ++count;
@@ -971,7 +971,7 @@ void ObjectMgr::LoadCreatureCustomIDs()
     }
 }
 
-void ObjectMgr::CheckCreatureTemplate(CreatureTemplate const* cInfo)
+void ObjectMgr::CheckCreatureTemplate(CreatureRec const* cInfo)
 {
     if (!cInfo)
         return;
@@ -983,7 +983,7 @@ void ObjectMgr::CheckCreatureTemplate(CreatureTemplate const* cInfo)
             continue;
         ok = false;                                     // will be set to true at the end of this loop again
 
-        CreatureTemplate const* difficultyInfo = GetCreatureTemplate(cInfo->DifficultyEntry[diff]);
+        CreatureRec const* difficultyInfo = GetCreatureTemplate(cInfo->DifficultyEntry[diff]);
         if (!difficultyInfo)
         {
             LOG_ERROR("sql.sql", "Creature (Entry: {}) has `difficulty_entry_{}`={} but creature entry {} does not exist.",
@@ -1114,7 +1114,7 @@ void ObjectMgr::CheckCreatureTemplate(CreatureTemplate const* cInfo)
     if (!cInfo->AIName.empty() && !sCreatureAIRegistry->HasItem(cInfo->AIName))
     {
         LOG_ERROR("sql.sql", "Creature (Entry: {}) has non-registered `AIName` '{}' set, removing", cInfo->Entry, cInfo->AIName);
-        const_cast<CreatureTemplate*>(cInfo)->AIName.clear();
+        const_cast<CreatureRec*>(cInfo)->AIName.clear();
     }
 
     FactionTemplateEntry const* factionTemplate = sFactionTemplateStore.LookupEntry(cInfo->faction);
@@ -1128,7 +1128,7 @@ void ObjectMgr::CheckCreatureTemplate(CreatureTemplate const* cInfo)
             if (!GetCreatureTemplate(cInfo->KillCredit[k]))
             {
                 LOG_ERROR("sql.sql", "Creature (Entry: {}) lists non-existing creature entry {} in `KillCredit{}`.", cInfo->Entry, cInfo->KillCredit[k], k + 1);
-                const_cast<CreatureTemplate*>(cInfo)->KillCredit[k] = 0;
+                const_cast<CreatureRec*>(cInfo)->KillCredit[k] = 0;
             }
         }
     }
@@ -1141,20 +1141,20 @@ void ObjectMgr::CheckCreatureTemplate(CreatureTemplate const* cInfo)
     if (!cInfo->unit_class || ((1 << (cInfo->unit_class - 1)) & CLASSMASK_ALL_CREATURES) == 0)
     {
         LOG_ERROR("sql.sql", "Creature (Entry: {}) has invalid unit_class ({}) in creature_template. Set to 1 (UNIT_CLASS_WARRIOR).", cInfo->Entry, cInfo->unit_class);
-        const_cast<CreatureTemplate*>(cInfo)->unit_class = UNIT_CLASS_WARRIOR;
+        const_cast<CreatureRec*>(cInfo)->unit_class = UNIT_CLASS_WARRIOR;
     }
 
     if (cInfo->dmgschool >= MAX_SPELL_SCHOOL)
     {
         LOG_ERROR("sql.sql", "Creature (Entry: {}) has invalid spell school value ({}) in `dmgschool`.", cInfo->Entry, cInfo->dmgschool);
-        const_cast<CreatureTemplate*>(cInfo)->dmgschool = SPELL_SCHOOL_NORMAL;
+        const_cast<CreatureRec*>(cInfo)->dmgschool = SPELL_SCHOOL_NORMAL;
     }
 
     if (cInfo->BaseAttackTime == 0)
-        const_cast<CreatureTemplate*>(cInfo)->BaseAttackTime  = BASE_ATTACK_TIME;
+        const_cast<CreatureRec*>(cInfo)->BaseAttackTime  = BASE_ATTACK_TIME;
 
     if (cInfo->RangeAttackTime == 0)
-        const_cast<CreatureTemplate*>(cInfo)->RangeAttackTime = BASE_ATTACK_TIME;
+        const_cast<CreatureRec*>(cInfo)->RangeAttackTime = BASE_ATTACK_TIME;
 
     if ((cInfo->npcflag & UNIT_NPC_FLAG_TRAINER) && cInfo->trainer_type >= MAX_TRAINER_TYPE)
         LOG_ERROR("sql.sql", "Creature (Entry: {}) has wrong trainer type {}.", cInfo->Entry, cInfo->trainer_type);
@@ -1162,34 +1162,34 @@ void ObjectMgr::CheckCreatureTemplate(CreatureTemplate const* cInfo)
     if (cInfo->speed_walk == 0.0f)
     {
         LOG_ERROR("sql.sql", "Creature (Entry: {}) has wrong value ({}) in speed_walk, set to 1.", cInfo->Entry, cInfo->speed_walk);
-        const_cast<CreatureTemplate*>(cInfo)->speed_walk = 1.0f;
+        const_cast<CreatureRec*>(cInfo)->speed_walk = 1.0f;
     }
 
     if (cInfo->speed_run == 0.0f)
     {
         LOG_ERROR("sql.sql", "Creature (Entry: {}) has wrong value ({}) in speed_run, set to 1.14286.", cInfo->Entry, cInfo->speed_run);
-        const_cast<CreatureTemplate*>(cInfo)->speed_run = 1.14286f;
+        const_cast<CreatureRec*>(cInfo)->speed_run = 1.14286f;
     }
 
     if (cInfo->type && !sCreatureTypeStore.LookupEntry(cInfo->type))
     {
         LOG_ERROR("sql.sql", "Creature (Entry: {}) has invalid creature type ({}) in `type`.", cInfo->Entry, cInfo->type);
-        const_cast<CreatureTemplate*>(cInfo)->type = CREATURE_TYPE_HUMANOID;
+        const_cast<CreatureRec*>(cInfo)->type = CREATURE_TYPE_HUMANOID;
     }
 
     // must exist or used hidden but used in data horse case
     if (cInfo->family && !sCreatureFamilyStore.LookupEntry(cInfo->family) && cInfo->family != CREATURE_FAMILY_HORSE_CUSTOM)
     {
         LOG_ERROR("sql.sql", "Creature (Entry: {}) has invalid creature family ({}) in `family`.", cInfo->Entry, cInfo->family);
-        const_cast<CreatureTemplate*>(cInfo)->family = 0;
+        const_cast<CreatureRec*>(cInfo)->family = 0;
     }
 
-    CheckCreatureMovement("creature_template_movement", cInfo->Entry, const_cast<CreatureTemplate*>(cInfo)->Movement);
+    CheckCreatureMovement("creature_template_movement", cInfo->Entry, const_cast<CreatureRec*>(cInfo)->Movement);
 
     if (cInfo->HoverHeight < 0.0f)
     {
         LOG_ERROR("sql.sql", "Creature (Entry: {}) has wrong value ({}) in `HoverHeight`", cInfo->Entry, cInfo->HoverHeight);
-        const_cast<CreatureTemplate*>(cInfo)->HoverHeight = 1.0f;
+        const_cast<CreatureRec*>(cInfo)->HoverHeight = 1.0f;
     }
 
     if (cInfo->VehicleId)
@@ -1198,7 +1198,7 @@ void ObjectMgr::CheckCreatureTemplate(CreatureTemplate const* cInfo)
         if (!vehId)
         {
             LOG_ERROR("sql.sql", "Creature (Entry: {}) has a non-existing VehicleId ({}). This *WILL* cause the client to freeze!", cInfo->Entry, cInfo->VehicleId);
-            const_cast<CreatureTemplate*>(cInfo)->VehicleId = 0;
+            const_cast<CreatureRec*>(cInfo)->VehicleId = 0;
         }
     }
 
@@ -1214,29 +1214,29 @@ void ObjectMgr::CheckCreatureTemplate(CreatureTemplate const* cInfo)
         if (cInfo->spells[j] && !sSpellMgr->GetSpellInfo(cInfo->spells[j]))
         {
             LOG_ERROR("sql.sql", "Creature (Entry: {}) has non-existing Spell{} ({}), set to 0.", cInfo->Entry, j + 1, cInfo->spells[j]);
-            const_cast<CreatureTemplate*>(cInfo)->spells[j] = 0;
+            const_cast<CreatureRec*>(cInfo)->spells[j] = 0;
         }
     }
 
     if (cInfo->MovementType >= MAX_DB_MOTION_TYPE)
     {
         LOG_ERROR("sql.sql", "Creature (Entry: {}) has wrong movement generator type ({}), ignored and set to IDLE.", cInfo->Entry, cInfo->MovementType);
-        const_cast<CreatureTemplate*>(cInfo)->MovementType = IDLE_MOTION_TYPE;
+        const_cast<CreatureRec*>(cInfo)->MovementType = IDLE_MOTION_TYPE;
     }
 
     if (cInfo->expansion > (MAX_EXPANSIONS - 1))
     {
         LOG_ERROR("sql.sql", "Table `creature_template` lists creature (Entry: {}) with expansion {}. Ignored and set to 0.", cInfo->Entry, cInfo->expansion);
-        const_cast<CreatureTemplate*>(cInfo)->expansion = 0;
+        const_cast<CreatureRec*>(cInfo)->expansion = 0;
     }
 
     if (uint32 badFlags = (cInfo->flags_extra & ~CREATURE_FLAG_EXTRA_DB_ALLOWED))
     {
         LOG_ERROR("sql.sql", "Table `creature_template` lists creature (Entry: {}) with disallowed `flags_extra` {}, removing incorrect flag.", cInfo->Entry, badFlags);
-        const_cast<CreatureTemplate*>(cInfo)->flags_extra &= CREATURE_FLAG_EXTRA_DB_ALLOWED;
+        const_cast<CreatureRec*>(cInfo)->flags_extra &= CREATURE_FLAG_EXTRA_DB_ALLOWED;
     }
 
-    const_cast<CreatureTemplate*>(cInfo)->DamageModifier *= Creature::_GetDamageMod(cInfo->rank);
+    const_cast<CreatureRec*>(cInfo)->DamageModifier *= Creature::_GetDamageMod(cInfo->rank);
 
     // Hack for modules
     for (auto& itr : _creatureCustomIDsStore)
@@ -1657,7 +1657,7 @@ CreatureModelInfo const* ObjectMgr::GetCreatureModelInfo(uint32 modelId) const
     return nullptr;
 }
 
-CreatureModel const* ObjectMgr::ChooseDisplayId(CreatureTemplate const* cinfo, CreatureData const* data /*= nullptr*/)
+CreatureModel const* ObjectMgr::ChooseDisplayId(CreatureRec const* cinfo, CreatureData const* data /*= nullptr*/)
 {
     // Load creature model (display id)
     if (data && data->displayid)
@@ -1672,7 +1672,7 @@ CreatureModel const* ObjectMgr::ChooseDisplayId(CreatureTemplate const* cinfo, C
     return cinfo->GetFirstInvisibleModel();
 }
 
-void ObjectMgr::ChooseCreatureFlags(const CreatureTemplate* cinfo, uint32& npcflag, uint32& unit_flags, uint32& dynamicflags, const CreatureData* data /*= nullptr*/)
+void ObjectMgr::ChooseCreatureFlags(const CreatureRec* cinfo, uint32& npcflag, uint32& unit_flags, uint32& dynamicflags, const CreatureData* data /*= nullptr*/)
 {
     npcflag = cinfo->npcflag;
     unit_flags = cinfo->unit_flags;
@@ -1691,7 +1691,7 @@ void ObjectMgr::ChooseCreatureFlags(const CreatureTemplate* cinfo, uint32& npcfl
     }
 }
 
-CreatureModelInfo const* ObjectMgr::GetCreatureModelRandomGender(CreatureModel* model, CreatureTemplate const* creatureTemplate) const
+CreatureModelInfo const* ObjectMgr::GetCreatureModelRandomGender(CreatureModel* model, CreatureRec const* creatureTemplate) const
 {
     CreatureModelInfo const* modelInfo = GetCreatureModelInfo(model->CreatureDisplayID);
     if (!modelInfo)
@@ -2156,19 +2156,19 @@ void ObjectMgr::LoadCreatures()
         uint32 id2                      = fields[2].Get<uint32>();
         uint32 id3                      = fields[3].Get<uint32>();
 
-        CreatureTemplate const* cInfo = GetCreatureTemplate(id1);
+        CreatureRec const* cInfo = GetCreatureTemplate(id1);
         if (!cInfo)
         {
             LOG_ERROR("sql.sql", "Table `creature` has creature (SpawnId: {}) with non existing creature entry {} in id1 field, skipped.", spawnId, id1);
             continue;
         }
-        CreatureTemplate const* cInfo2 = GetCreatureTemplate(id2);
+        CreatureRec const* cInfo2 = GetCreatureTemplate(id2);
         if (!cInfo2 && id2)
         {
             LOG_ERROR("sql.sql", "Table `creature` has creature (SpawnId: {}) with non existing creature entry {} in id2 field, skipped.", spawnId, id2);
             continue;
         }
-        CreatureTemplate const* cInfo3 = GetCreatureTemplate(id3);
+        CreatureRec const* cInfo3 = GetCreatureTemplate(id3);
         if (!cInfo3 && id3)
         {
             LOG_ERROR("sql.sql", "Table `creature` has creature (SpawnId: {}) with non existing creature entry {} in id3 field, skipped.", spawnId, id3);
@@ -2392,7 +2392,7 @@ uint32 ObjectMgr::AddGOData(uint32 entry, uint32 mapId, float x, float y, float 
 
 uint32 ObjectMgr::AddCreData(uint32 entry, uint32 mapId, float x, float y, float z, float o, uint32 spawntimedelay)
 {
-    CreatureTemplate const* cInfo = GetCreatureTemplate(entry);
+    CreatureRec const* cInfo = GetCreatureTemplate(entry);
     if (!cInfo)
         return 0;
 
@@ -5891,13 +5891,13 @@ void ObjectMgr::LoadInstanceEncounters()
         {
             case ENCOUNTER_CREDIT_KILL_CREATURE:
                 {
-                    CreatureTemplate const* creatureInfo = GetCreatureTemplate(creditEntry);
+                    CreatureRec const* creatureInfo = GetCreatureTemplate(creditEntry);
                     if (!creatureInfo)
                     {
                         LOG_ERROR("sql.sql", "Table `instance_encounters` has an invalid creature (entry {}) linked to the encounter {} ({}), skipped!", creditEntry, entry, dungeonEncounter->encounterName[0]);
                         continue;
                     }
-                    const_cast<CreatureTemplate*>(creatureInfo)->flags_extra |= CREATURE_FLAG_EXTRA_DUNGEON_BOSS;
+                    const_cast<CreatureRec*>(creatureInfo)->flags_extra |= CREATURE_FLAG_EXTRA_DUNGEON_BOSS;
                     break;
                 }
             case ENCOUNTER_CREDIT_CAST_SPELL:
@@ -6555,7 +6555,7 @@ void ObjectMgr::GetTaxiPath(uint32 source, uint32 destination, uint32& path, uin
 uint32 ObjectMgr::GetTaxiMountDisplayId(uint32 id, TeamId teamId, bool allowed_alt_team /* = false */)
 {
     CreatureModel mountModel;
-    CreatureTemplate const* mount_info = nullptr;
+    CreatureRec const* mount_info = nullptr;
 
     // select mount creature id
     TaxiNodesEntry const* node = sTaxiNodesStore.LookupEntry(id);
@@ -7484,7 +7484,7 @@ std::string ObjectMgr::GeneratePetName(uint32 entry)
 
     if (list0.empty() || list1.empty())
     {
-        CreatureTemplate const* cinfo = GetCreatureTemplate(entry);
+        CreatureRec const* cinfo = GetCreatureTemplate(entry);
         char const* petname = GetPetName(cinfo->family, sWorld->GetDefaultDbcLocale());
         if (!petname)
             return cinfo->Name;
@@ -7933,7 +7933,7 @@ void ObjectMgr::LoadNPCSpellClickSpells()
         Field* fields = result->Fetch();
 
         uint32 npc_entry = fields[0].Get<uint32>();
-        CreatureTemplate const* cInfo = GetCreatureTemplate(npc_entry);
+        CreatureRec const* cInfo = GetCreatureTemplate(npc_entry);
         if (!cInfo)
         {
             LOG_ERROR("sql.sql", "Table npc_spellclick_spells references unknown creature_template {}. Skipping entry.", npc_entry);
@@ -7970,7 +7970,7 @@ void ObjectMgr::LoadNPCSpellClickSpells()
         if ((itr->second.npcflag & UNIT_NPC_FLAG_SPELLCLICK) && _spellClickInfoStore.find(itr->second.Entry) == _spellClickInfoStore.end())
         {
             LOG_ERROR("sql.sql", "npc_spellclick_spells: Creature template {} has UNIT_NPC_FLAG_SPELLCLICK but no data in spellclick table! Removing flag", itr->second.Entry);
-            const_cast<CreatureTemplate*>(&itr->second)->npcflag &= ~UNIT_NPC_FLAG_SPELLCLICK;
+            const_cast<CreatureRec*>(&itr->second)->npcflag &= ~UNIT_NPC_FLAG_SPELLCLICK;
         }
     }
 
@@ -8077,7 +8077,7 @@ void ObjectMgr::LoadCreatureQuestStarters()
 
     for (QuestRelations::iterator itr = _creatureQuestRelations.begin(); itr != _creatureQuestRelations.end(); ++itr)
     {
-        CreatureTemplate const* cInfo = GetCreatureTemplate(itr->first);
+        CreatureRec const* cInfo = GetCreatureTemplate(itr->first);
         if (!cInfo)
             LOG_ERROR("sql.sql", "Table `creature_queststarter` have data for not existed creature entry ({}) and existed quest {}", itr->first, itr->second);
         else if (!(cInfo->npcflag & UNIT_NPC_FLAG_QUESTGIVER))
@@ -8091,7 +8091,7 @@ void ObjectMgr::LoadCreatureQuestEnders()
 
     for (QuestRelations::iterator itr = _creatureQuestInvolvedRelations.begin(); itr != _creatureQuestInvolvedRelations.end(); ++itr)
     {
-        CreatureTemplate const* cInfo = GetCreatureTemplate(itr->first);
+        CreatureRec const* cInfo = GetCreatureTemplate(itr->first);
         if (!cInfo)
             LOG_ERROR("sql.sql", "Table `creature_questender` have data for not existed creature entry ({}) and existed quest {}", itr->first, itr->second);
         else if (!(cInfo->npcflag & UNIT_NPC_FLAG_QUESTGIVER))
@@ -8951,7 +8951,7 @@ void ObjectMgr::AddSpellToTrainer(uint32 entry, uint32 spell, uint32 spellCost, 
     if (entry >= ACORE_TRAINER_START_REF)
         return;
 
-    CreatureTemplate const* cInfo = GetCreatureTemplate(entry);
+    CreatureRec const* cInfo = GetCreatureTemplate(entry);
     if (!cInfo)
     {
         LOG_ERROR("sql.sql", "Table `npc_trainer` contains an entry for a non-existing creature template (Entry: {}), ignoring", entry);
@@ -9315,7 +9315,7 @@ bool ObjectMgr::RemoveVendorItem(uint32 entry, uint32 item, bool persist /*= tru
 bool ObjectMgr::IsVendorItemValid(uint32 vendor_entry, uint32 item_id, int32 maxcount, uint32 incrtime, uint32 ExtendedCost, Player* player, std::set<uint32>* /*skip_vendors*/, uint32 /*ORnpcflag*/) const
 {
     /*
-    CreatureTemplate const* cInfo = sObjectMgr->GetCreatureTemplate(vendor_entry);
+    CreatureRec const* cInfo = sObjectMgr->GetCreatureTemplate(vendor_entry);
     if (!cInfo)
     {
         if (player)
@@ -9942,7 +9942,7 @@ GameObjectTemplateAddon const* ObjectMgr::GetGameObjectTemplateAddon(uint32 entr
     return nullptr;
 }
 
-CreatureTemplate const* ObjectMgr::GetCreatureTemplate(uint32 entry)
+CreatureRec const* ObjectMgr::GetCreatureTemplate(uint32 entry)
 {
     return entry < _creatureTemplateStoreFast.size() ? _creatureTemplateStoreFast[entry] : nullptr;
 }
@@ -10043,7 +10043,7 @@ void ObjectMgr::LoadCreatureQuestItems()
         uint32 item = fields[1].Get<uint32>();
         uint32 idx = fields[2].Get<uint32>();
 
-        CreatureTemplate const* creatureInfo = GetCreatureTemplate(entry);
+        CreatureRec const* creatureInfo = GetCreatureTemplate(entry);
         if (!creatureInfo)
         {
             LOG_ERROR("sql.sql", "Table `creature_questitem` has data for nonexistent creature (entry: {}, idx: {}), skipped", entry, idx);

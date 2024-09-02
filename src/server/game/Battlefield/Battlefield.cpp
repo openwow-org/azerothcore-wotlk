@@ -791,7 +791,7 @@ Creature* Battlefield::SpawnCreature(uint32 entry, float x, float y, float z, fl
         return nullptr;
     }
 
-    CreatureTemplate const* cinfo = sObjectMgr->GetCreatureTemplate(entry);
+    CreatureRec const* cinfo = sObjectMgr->GetCreatureTemplate(entry);
     if (!cinfo)
     {
         LOG_ERROR("sql.sql", "Battlefield::SpawnCreature: entry {} does not exist.", entry);

@@ -215,7 +215,7 @@ public:
             return false;
         }
 
-        CreatureTemplate const* creatureInfo = pet->GetCreatureTemplate();
+        CreatureRec const* creatureInfo = pet->GetCreatureTemplate();
         if (!creatureInfo)
         {
             handler->SendErrorMessage(LANG_WRONG_PET_TYPE);

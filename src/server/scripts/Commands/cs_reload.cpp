@@ -465,7 +465,7 @@ public:
                 continue;
             }
 
-            CreatureTemplate* cInfo = const_cast<CreatureTemplate*>(sObjectMgr->GetCreatureTemplate(entry));
+            CreatureRec* cInfo = const_cast<CreatureRec*>(sObjectMgr->GetCreatureTemplate(entry));
             if (!cInfo)
             {
                 handler->PSendSysMessage(LANG_COMMAND_CREATURESTORAGE_NOTFOUND, entry);

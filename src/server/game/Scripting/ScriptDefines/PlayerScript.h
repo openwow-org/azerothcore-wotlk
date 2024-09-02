@@ -471,7 +471,7 @@ public:
     virtual void OnBeforeTempSummonInitStats(Player* /*player*/, TempSummon* /*tempSummon*/, uint32& /*duration*/) { }
 
     // Called before the player's guardian / pet has initialized it's stats for the player's level
-    virtual void OnBeforeGuardianInitStatsForLevel(Player* /*player*/, Guardian* /*guardian*/, CreatureTemplate const* /*cinfo*/, PetType& /*petType*/) { }
+    virtual void OnBeforeGuardianInitStatsForLevel(Player* /*player*/, Guardian* /*guardian*/, CreatureRec const* /*cinfo*/, PetType& /*petType*/) { }
 
     // Called after the player's guardian / pet has initialized it's stats for the player's level
     virtual void OnAfterGuardianInitStatsForLevel(Player* /*player*/, Guardian* /*guardian*/) { }
