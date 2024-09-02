@@ -135,7 +135,7 @@ bool GameObjectModel::initialize(std::unique_ptr<GameObjectModelOwnerBase> model
 
     name = it->second.name;
     iPos = modelOwner->GetPosition();
-    phasemask = modelOwner->GetPhaseMask();
+    phasemask = modelOwner->GetPhase();
     iScale = modelOwner->GetScale();
     iInvScale = 1.f / iScale;
 

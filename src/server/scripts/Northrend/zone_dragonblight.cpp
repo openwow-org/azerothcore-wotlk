@@ -1161,7 +1161,7 @@ public:
                     {
                         bool valid = false;
                         if (Player* p = ObjectAccessor::GetPlayer(*me, playerGUID))
-                            if (p->IsAlive() && p->GetPhaseMask() & 2 && p->GetExactDistSq(me) < 100.0f * 100.0f && !p->IsGameMaster())
+                            if (p->IsAlive() && p->GetPhase() & 2 && p->GetExactDistSq(me) < 100.0f * 100.0f && !p->IsGameMaster())
                                 valid = true;
                         if (!valid)
                         {
@@ -1341,7 +1341,7 @@ public:
 
     bool OnTrigger(Player* player, AreaTrigger const* /*areaTrigger*/) override
     {
-        if (player->GetPhaseMask() & 2)
+        if (player->GetPhase() & 2)
             if (Creature* c = player->FindNearestCreature(NPC_SAC_LICH_KING, 60.0f, true))
                 c->AI()->SetGUID(player->GetGUID());
 

@@ -263,7 +263,7 @@ public:
 
         void AttackStart(Unit* victim) override
         {
-            if (victim && me->Attack(victim, true) && !(events.GetPhaseMask() & PHASE_ONE_MASK))
+            if (victim && me->Attack(victim, true) && !(events.GetPhase() & PHASE_ONE_MASK))
                 me->GetMotionMaster()->MoveChase(victim);
         }
 
@@ -298,7 +298,7 @@ public:
 
         void DamageTaken(Unit*, uint32& damage, DamageEffectType, SpellSchoolMask) override
         {
-            if (events.GetPhaseMask() & PHASE_ONE_MASK && damage >= me->GetPower(POWER_TYPE_MANA))
+            if (events.GetPhase() & PHASE_ONE_MASK && damage >= me->GetPower(POWER_TYPE_MANA))
             {
                 // reset threat
                 ThreatContainer::StorageType const& threatlist = me->GetThreatMgr().GetThreatList();
@@ -332,12 +332,12 @@ public:
 
         void UpdateAI(uint32 diff) override
         {
-            if (!UpdateVictim() && !(events.GetPhaseMask() & PHASE_INTRO_MASK))
+            if (!UpdateVictim() && !(events.GetPhase() & PHASE_INTRO_MASK))
                 return;
 
             events.Update(diff);
 
-            if (me->HasUnitState(UNIT_STATE_CASTING) && !(events.GetPhaseMask() & PHASE_INTRO_MASK))
+            if (me->HasUnitState(UNIT_STATE_CASTING) && !(events.GetPhase() & PHASE_INTRO_MASK))
                 return;
 
             switch (events.ExecuteEvent())

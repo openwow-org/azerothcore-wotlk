@@ -287,7 +287,7 @@ struct boss_felblood_kaelthas : public ScriptedAI
             break;
         }
 
-        if (events.GetPhaseMask() == 0)
+        if (events.GetPhase() == 0)
             DoMeleeAttackIfReady();
     }
 };

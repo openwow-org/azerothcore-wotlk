@@ -42,7 +42,7 @@ public:
 
     [[nodiscard]] virtual bool IsSpawned() const = 0;
     [[nodiscard]] virtual uint32 GetDisplayId() const = 0;
-    [[nodiscard]] virtual uint32 GetPhaseMask() const = 0;
+    [[nodiscard]] virtual uint32 GetPhase() const = 0;
     [[nodiscard]] virtual G3D::Vector3 GetPosition() const = 0;
     [[nodiscard]] virtual float GetFacing() const = 0;
     [[nodiscard]] virtual float GetScale() const = 0;

@@ -87,7 +87,7 @@ struct boss_selin_fireheart : public ScriptedAI
     void SummonedCreatureDies(Creature* summon, Unit*) override
     {
         summons.Despawn(summon);
-        if (events.GetPhaseMask() & 0x01)
+        if (events.GetPhase() & 0x01)
             events.ScheduleEvent(EVENT_RESTORE_COMBAT, 0);
     }
 

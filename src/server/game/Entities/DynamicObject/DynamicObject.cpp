@@ -106,7 +106,7 @@ bool DynamicObject::CreateDynamicObject(WOWGUID::LowType guidlow, Unit* caster, 
         return false;
     }
 
-    WorldObject::_Create(guidlow, HighGuid::DynamicObject, caster->GetPhaseMask());
+    WorldObject::_Create(guidlow, HighGuid::DynamicObject, caster->GetPhase());
 
     UpdatePositionData();
 

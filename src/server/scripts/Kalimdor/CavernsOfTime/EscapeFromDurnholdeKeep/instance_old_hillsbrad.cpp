@@ -125,7 +125,7 @@ public:
                     break;
                 case GO_ROARING_FLAME:
                     // Xinef: hack in DB to distinguish final / initial flames
-                    if (gameobject->GetPhaseMask() & 0x2)
+                    if (gameobject->GetPhase() & 0x2)
                         _finalFlamesSet.insert(gameobject->GetGUID());
                     else
                         _initalFlamesSet.insert(gameobject->GetGUID());

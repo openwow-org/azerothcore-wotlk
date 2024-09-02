@@ -607,7 +607,7 @@ public:
                                  object->GetMapId(), (mapEntry ? mapEntry->name[handler->GetSessionDbcLocale()] : "<unknown>"),
                                  zoneId, (zoneEntry ? zoneEntry->area_name[handler->GetSessionDbcLocale()] : "<unknown>"),
                                  areaId, (areaEntry ? areaEntry->area_name[handler->GetSessionDbcLocale()] : "<unknown>"),
-                                 object->GetPhaseMask(),
+                                 object->GetPhase(),
                                  object->GetPositionX(), object->GetPositionY(), object->GetPositionZ(), object->GetFacing(),
                                  cell.GridX(), cell.GridY(), cell.CellX(), cell.CellY(), object->GetInstanceId(),
                                  zoneX, zoneY, groundZ, floorZ, haveMap, haveVMap, haveMMAP);
@@ -794,7 +794,7 @@ public:
 
             if (m_player->Teleport(targetPlayer->GetMapId(), targetPlayer->GetPositionX(), targetPlayer->GetPositionY(), targetPlayer->GetPositionZ() + 0.25f, m_player->GetFacing(), TELE_TO_GM_MODE, targetPlayer))
             {
-                m_player->SetPhaseMask(targetPlayer->GetPhaseMask() | 1, false);
+                m_player->SetPhaseMask(targetPlayer->GetPhase() | 1, false);
             }
         }
         else
@@ -1978,7 +1978,7 @@ public:
             areaId            = playerTarget->GetAreaId();
             alive             = playerTarget->IsAlive() ? handler->GetAcoreString(LANG_YES) : handler->GetAcoreString(LANG_NO);
             gender            = playerTarget->getGender();
-            phase             = playerTarget->GetPhaseMask();
+            phase             = playerTarget->GetPhase();
         }
         // get additional information from DB
         else

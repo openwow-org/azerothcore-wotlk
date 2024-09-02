@@ -106,7 +106,7 @@ namespace Acore
         Player const* skipped_receiver;
         bool required3dDist;
         MessageDistDeliverer(WorldObject const* src, WDataStore const* msg, float dist, bool own_team_only = false, Player const* skipped = nullptr, bool req3dDist = false)
-            : i_source(src), i_message(msg), i_phaseMask(src->GetPhaseMask()), i_distSq(dist * dist)
+            : i_source(src), i_message(msg), i_phaseMask(src->GetPhase()), i_distSq(dist * dist)
             , teamId((own_team_only && src->GetTypeId() == TYPEID_PLAYER) ? src->ToPlayer()->GetTeamId() : TEAM_NEUTRAL)
             , skipped_receiver(skipped), required3dDist(req3dDist)
         {
@@ -136,7 +136,7 @@ namespace Acore
         uint32 i_phaseMask;
         float i_distSq;
         MessageDistDelivererToHostile(Unit* src, WDataStore* msg, float dist)
-            : i_source(src), i_message(msg), i_phaseMask(src->GetPhaseMask()), i_distSq(dist * dist)
+            : i_source(src), i_message(msg), i_phaseMask(src->GetPhase()), i_distSq(dist * dist)
         {
         }
         void Visit(PlayerMapType& m);
@@ -203,7 +203,7 @@ namespace Acore
         Check& i_check;
 
         WorldObjectSearcher(WorldObject const* searcher, WorldObject*& result, Check& check, uint32 mapTypeMask = GRID_MAP_TYPE_MASK_ALL)
-            : i_mapTypeMask(mapTypeMask), i_phaseMask(searcher->GetPhaseMask()), i_object(result), i_check(check) {}
+            : i_mapTypeMask(mapTypeMask), i_phaseMask(searcher->GetPhase()), i_object(result), i_check(check) {}
 
         void Visit(GameObjectMapType& m);
         void Visit(PlayerMapType& m);
@@ -223,7 +223,7 @@ namespace Acore
         Check& i_check;
 
         WorldObjectLastSearcher(WorldObject const* searcher, WorldObject*& result, Check& check, uint32 mapTypeMask = GRID_MAP_TYPE_MASK_ALL)
-            :  i_mapTypeMask(mapTypeMask), i_phaseMask(searcher->GetPhaseMask()), i_object(result), i_check(check) {}
+            :  i_mapTypeMask(mapTypeMask), i_phaseMask(searcher->GetPhase()), i_object(result), i_check(check) {}
 
         void Visit(GameObjectMapType& m);
         void Visit(PlayerMapType& m);
@@ -244,7 +244,7 @@ namespace Acore
         template<typename Container>
         WorldObjectListSearcher(WorldObject const* searcher, Container& container, Check & check, uint32 mapTypeMask = GRID_MAP_TYPE_MASK_ALL)
                 : ContainerInserter<WorldObject*>(container),
-                  i_mapTypeMask(mapTypeMask), i_phaseMask(searcher->GetPhaseMask()), i_check(check) { }
+                  i_mapTypeMask(mapTypeMask), i_phaseMask(searcher->GetPhase()), i_check(check) { }
 
         void Visit(PlayerMapType& m);
         void Visit(CreatureMapType& m);
@@ -263,7 +263,7 @@ namespace Acore
         Do const& i_do;
 
         WorldObjectWorker(WorldObject const* searcher, Do const& _do, uint32 mapTypeMask = GRID_MAP_TYPE_MASK_ALL)
-            : i_mapTypeMask(mapTypeMask), i_phaseMask(searcher->GetPhaseMask()), i_do(_do) {}
+            : i_mapTypeMask(mapTypeMask), i_phaseMask(searcher->GetPhase()), i_do(_do) {}
 
         void Visit(GameObjectMapType& m)
         {
@@ -322,7 +322,7 @@ namespace Acore
         Check& i_check;
 
         GameObjectSearcher(WorldObject const* searcher, GameObject*& result, Check& check)
-            : i_phaseMask(searcher->GetPhaseMask()), i_object(result), i_check(check) {}
+            : i_phaseMask(searcher->GetPhase()), i_object(result), i_check(check) {}
 
         void Visit(GameObjectMapType& m);
 
@@ -338,7 +338,7 @@ namespace Acore
         Check& i_check;
 
         GameObjectLastSearcher(WorldObject const* searcher, GameObject*& result, Check& check)
-            : i_phaseMask(searcher->GetPhaseMask()), i_object(result), i_check(check) {}
+            : i_phaseMask(searcher->GetPhase()), i_object(result), i_check(check) {}
 
         void Visit(GameObjectMapType& m);
 
@@ -354,7 +354,7 @@ namespace Acore
         template<typename Container>
         GameObjectListSearcher(WorldObject const* searcher, Container& container, Check & check)
                 : ContainerInserter<GameObject*>(container),
-                  i_phaseMask(searcher->GetPhaseMask()), i_check(check) { }
+                  i_phaseMask(searcher->GetPhase()), i_check(check) { }
 
         void Visit(GameObjectMapType& m);
 
@@ -365,7 +365,7 @@ namespace Acore
     struct GameObjectWorker
     {
         GameObjectWorker(WorldObject const* searcher, Functor& func)
-            : _func(func), _phaseMask(searcher->GetPhaseMask()) {}
+            : _func(func), _phaseMask(searcher->GetPhase()) {}
 
         void Visit(GameObjectMapType& m)
         {
@@ -392,7 +392,7 @@ namespace Acore
         Check& i_check;
 
         UnitSearcher(WorldObject const* searcher, Unit*& result, Check& check)
-            : i_phaseMask(searcher->GetPhaseMask()), i_object(result), i_check(check) {}
+            : i_phaseMask(searcher->GetPhase()), i_object(result), i_check(check) {}
 
         void Visit(CreatureMapType& m);
         void Visit(PlayerMapType& m);
@@ -409,7 +409,7 @@ namespace Acore
         Check& i_check;
 
         UnitLastSearcher(WorldObject const* searcher, Unit*& result, Check& check)
-            : i_phaseMask(searcher->GetPhaseMask()), i_object(result), i_check(check) {}
+            : i_phaseMask(searcher->GetPhase()), i_object(result), i_check(check) {}
 
         void Visit(CreatureMapType& m);
         void Visit(PlayerMapType& m);
@@ -427,7 +427,7 @@ namespace Acore
         template<typename Container>
         UnitListSearcher(WorldObject const* searcher, Container& container, Check& check)
                 : ContainerInserter<Unit*>(container),
-                  i_phaseMask(searcher->GetPhaseMask()), i_check(check) { }
+                  i_phaseMask(searcher->GetPhase()), i_check(check) { }
 
         void Visit(PlayerMapType& m);
         void Visit(CreatureMapType& m);
@@ -445,7 +445,7 @@ namespace Acore
         Check& i_check;
 
         CreatureSearcher(WorldObject const* searcher, Creature*& result, Check& check)
-            : i_phaseMask(searcher->GetPhaseMask()), i_object(result), i_check(check) {}
+            : i_phaseMask(searcher->GetPhase()), i_object(result), i_check(check) {}
 
         void Visit(CreatureMapType& m);
 
@@ -461,7 +461,7 @@ namespace Acore
         Check& i_check;
 
         CreatureLastSearcher(WorldObject const* searcher, Creature*& result, Check& check)
-            : i_phaseMask(searcher->GetPhaseMask()), i_object(result), i_check(check) {}
+            : i_phaseMask(searcher->GetPhase()), i_object(result), i_check(check) {}
 
         void Visit(CreatureMapType& m);
 
@@ -477,7 +477,7 @@ namespace Acore
         template<typename Container>
         CreatureListSearcher(WorldObject const* searcher, Container& container, Check & check)
                 : ContainerInserter<Creature*>(container),
-                  i_phaseMask(searcher->GetPhaseMask()), i_check(check) { }
+                  i_phaseMask(searcher->GetPhase()), i_check(check) { }
 
         void Visit(CreatureMapType& m);
 
@@ -491,7 +491,7 @@ namespace Acore
         Do& i_do;
 
         CreatureWorker(WorldObject const* searcher, Do& _do)
-            : i_phaseMask(searcher->GetPhaseMask()), i_do(_do) {}
+            : i_phaseMask(searcher->GetPhase()), i_do(_do) {}
 
         void Visit(CreatureMapType& m)
         {
@@ -513,7 +513,7 @@ namespace Acore
         Check& i_check;
 
         PlayerSearcher(WorldObject const* searcher, Player*& result, Check& check)
-            : i_phaseMask(searcher->GetPhaseMask()), i_object(result), i_check(check) {}
+            : i_phaseMask(searcher->GetPhase()), i_object(result), i_check(check) {}
 
         void Visit(PlayerMapType& m);
 
@@ -529,7 +529,7 @@ namespace Acore
         template<typename Container>
         PlayerListSearcher(WorldObject const* searcher, Container& container, Check & check)
                 : ContainerInserter<Player*>(container),
-                  i_phaseMask(searcher->GetPhaseMask()), i_check(check) { }
+                  i_phaseMask(searcher->GetPhase()), i_check(check) { }
 
         void Visit(PlayerMapType& m);
 
@@ -544,7 +544,7 @@ namespace Acore
         Check& i_check;
 
         PlayerListSearcherWithSharedVision(WorldObject const* searcher, std::list<Player*>& objects, Check& check)
-            : i_phaseMask(searcher->GetPhaseMask()), i_objects(objects), i_check(check) {}
+            : i_phaseMask(searcher->GetPhase()), i_objects(objects), i_check(check) {}
 
         void Visit(PlayerMapType& m);
         void Visit(CreatureMapType& m);
@@ -559,7 +559,7 @@ namespace Acore
         Player*& i_object;
         Check& i_check;
 
-        PlayerLastSearcher(WorldObject const* searcher, Player*& result, Check& check) : i_phaseMask(searcher->GetPhaseMask()), i_object(result), i_check(check)
+        PlayerLastSearcher(WorldObject const* searcher, Player*& result, Check& check) : i_phaseMask(searcher->GetPhase()), i_object(result), i_check(check)
         {
         }
 
@@ -575,7 +575,7 @@ namespace Acore
         Do& i_do;
 
         PlayerWorker(WorldObject const* searcher, Do& _do)
-            : i_phaseMask(searcher->GetPhaseMask()), i_do(_do) {}
+            : i_phaseMask(searcher->GetPhase()), i_do(_do) {}
 
         void Visit(PlayerMapType& m)
         {

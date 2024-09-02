@@ -544,7 +544,7 @@ public:
                 case ACTION_START_EVENT:
                     {
                         // Prevent crashes
-                        if (_events.GetPhaseMask() & PHASE_INTRO_MASK)
+                        if (_events.GetPhase() & PHASE_INTRO_MASK)
                             return;
 
                         Creature* deathbringer = ObjectAccessor::GetCreature(*me, _instance->GetGuidData(DATA_DEATHBRINGER_SAURFANG));
@@ -805,7 +805,7 @@ public:
                 case ACTION_START_EVENT:
                     {
                         // Prevent crashes
-                        if (_events.GetPhaseMask() & PHASE_INTRO_MASK)
+                        if (_events.GetPhase() & PHASE_INTRO_MASK)
                             return;
 
                         Creature* deathbringer = ObjectAccessor::GetCreature(*me, _instance->GetGuidData(DATA_DEATHBRINGER_SAURFANG));

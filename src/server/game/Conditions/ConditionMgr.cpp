@@ -413,7 +413,7 @@ bool Condition::Meets(ConditionSourceInfo& sourceInfo)
     }
     case CONDITION_PHASEMASK:
     {
-        condMeets = object->GetPhaseMask() & ConditionValue1;
+        condMeets = object->GetPhase() & ConditionValue1;
         break;
     }
     case CONDITION_TITLE:

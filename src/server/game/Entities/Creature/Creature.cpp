@@ -908,7 +908,7 @@ void Creature::Update(uint32 diff)
             if (m_transportCheckTimer <= diff)
             {
                 m_transportCheckTimer = 1000;
-                Transport* newTransport = GetMap()->GetTransportForPos(GetPhaseMask(), GetPositionX(), GetPositionY(), GetPositionZ(), this);
+                Transport* newTransport = GetMap()->GetTransportForPos(GetPhase(), GetPositionX(), GetPositionY(), GetPositionZ(), this);
                 if (newTransport != GetTransport())
                 {
                     if (GetTransport())
@@ -1142,7 +1142,7 @@ bool Creature::Create(WOWGUID::LowType guidlow, Map* map, uint32 phaseMask, uint
 
     // area/zone id is needed immediately for ZoneScript::GetCreatureEntry hook before it is known which creature template to load (no model/scale available yet)
     PositionFullTerrainStatus terrainData;
-    GetMap()->GetFullTerrainStatusForPosition(GetPhaseMask(), GetPositionX(), GetPositionY(), GetPositionZ(), DEFAULT_COLLISION_HEIGHT, terrainData);
+    GetMap()->GetFullTerrainStatusForPosition(GetPhase(), GetPositionX(), GetPositionY(), GetPositionZ(), DEFAULT_COLLISION_HEIGHT, terrainData);
     ProcessPositionDataChanged(terrainData);
 
     //oX = x;     oY = y;    dX = x;    dY = y;    m_moveTime = 0;    m_startMove = 0;
@@ -1394,7 +1394,7 @@ void Creature::SaveToDB()
     }
 
     uint32 mapId = GetTransport() && GetTransport()->ToMotionTransport() ? GetTransport()->GetGOInfo()->moTransport.mapID : GetMapId();
-    SaveToDB(mapId, data->spawnMask, GetPhaseMask());
+    SaveToDB(mapId, data->spawnMask, GetPhase());
 }
 
 void Creature::SaveToDB(uint32 mapid, uint8 spawnMask, uint32 phaseMask)
@@ -1478,7 +1478,7 @@ void Creature::SaveToDB(uint32 mapid, uint8 spawnMask, uint32 phaseMask)
     stmt->SetData(index++, 0);
     stmt->SetData(index++, uint16(mapid));
     stmt->SetData(index++, spawnMask);
-    stmt->SetData(index++, GetPhaseMask());
+    stmt->SetData(index++, GetPhase());
     stmt->SetData(index++, int32(GetCurrentEquipmentId()));
     stmt->SetData(index++, GetPositionX());
     stmt->SetData(index++, GetPositionY());
@@ -1744,7 +1744,7 @@ bool Creature::LoadCreatureFromDB(WOWGUID::LowType spawnId, Map* map, bool addTo
         m_deathState = DeathState::Dead;
         if (CanFly())
         {
-            float tz = map->GetHeight(GetPhaseMask(), data->posX, data->posY, data->posZ, true, MAX_FALL_DISTANCE);
+            float tz = map->GetHeight(GetPhase(), data->posX, data->posY, data->posZ, true, MAX_FALL_DISTANCE);
             if (data->posZ - tz > 0.1f && Acore::IsValidMapCoord(tz))
             {
                 Relocate(data->posX, data->posY, tz);
@@ -2010,7 +2010,7 @@ void Creature::setDeathState(DeathState s, bool despawn)
 
         Motion_Initialize();
         LoadCreaturesAddon(true);
-        if (GetCreatureData() && GetPhaseMask() != GetCreatureData()->phaseMask)
+        if (GetCreatureData() && GetPhase() != GetCreatureData()->phaseMask)
             SetPhaseMask(GetCreatureData()->phaseMask, false);
     }
 }

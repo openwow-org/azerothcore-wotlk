@@ -642,7 +642,7 @@ bool Map::AddToMap(T* obj, bool checkTransport)
 
     if (checkTransport)
         if (!(obj->GetTypeId() == TYPEID_GAMEOBJECT && obj->ToGameObject()->IsTransport())) // dont add transport to transport ;d
-            if (Transport* transport = GetTransportForPos(obj->GetPhaseMask(), obj->GetPositionX(), obj->GetPositionY(), obj->GetPositionZ(), obj))
+            if (Transport* transport = GetTransportForPos(obj->GetPhase(), obj->GetPositionX(), obj->GetPositionY(), obj->GetPositionZ(), obj))
                 transport->AddPassenger(obj, true);
 
     InitializeObject(obj);
@@ -2565,7 +2565,7 @@ bool Map::IsUnderWater(uint32 phaseMask, float x, float y, float z, float collis
 
 bool Map::HasEnoughWater(WorldObject const* searcher, float x, float y, float z) const
 {
-    LiquidData const& liquidData = const_cast<Map*>(this)->GetLiquidData(searcher->GetPhaseMask(), x, y, z, searcher->GetCollisionHeight(), MAP_ALL_LIQUIDS);
+    LiquidData const& liquidData = const_cast<Map*>(this)->GetLiquidData(searcher->GetPhase(), x, y, z, searcher->GetCollisionHeight(), MAP_ALL_LIQUIDS);
     return (liquidData.Status & MAP_LIQUID_STATUS_SWIMMING) != 0 && HasEnoughWater(searcher, liquidData);
 }
 
@@ -3709,7 +3709,7 @@ Corpse* Map::ConvertCorpseToBones(WOWGUID const ownerGuid, bool insignia /*= fal
 
         bones->SetCellCoord(corpse->GetCellCoord());
         bones->Relocate(corpse->GetPositionX(), corpse->GetPositionY(), corpse->GetPositionZ(), corpse->GetFacing());
-        bones->SetPhaseMask(corpse->GetPhaseMask(), false);
+        bones->SetPhaseMask(corpse->GetPhase(), false);
 
         bones->SetUInt32Value(CORPSE_FIELD_FLAGS, CORPSE_FLAG_UNK2 | CORPSE_FLAG_BONES);
         bones->SetGuidValue(CORPSE_FIELD_OWNER, corpse->GetOwnerGUID());
@@ -3984,7 +3984,7 @@ bool Map::CheckCollisionAndGetValidCoords(WorldObject const* source, float start
         return false;
     }
 
-    bool isWaterNext = IsInWater(source->GetPhaseMask(), destX, destY, destZ, source->GetCollisionHeight());
+    bool isWaterNext = IsInWater(source->GetPhase(), destX, destY, destZ, source->GetCollisionHeight());
 
     PathGenerator path(source);
 
@@ -4031,7 +4031,7 @@ bool Map::CheckCollisionAndGetValidCoords(WorldObject const* source, float start
     }
 
     // check dynamic collision
-    bool col = source->GetMap()->GetObjectHitPos(source->GetPhaseMask(),
+    bool col = source->GetMap()->GetObjectHitPos(source->GetPhase(),
         startX, startY, startZ + halfHeight,
         destX, destY, destZ + halfHeight,
         destX, destY, destZ, -CONTACT_DISTANCE);

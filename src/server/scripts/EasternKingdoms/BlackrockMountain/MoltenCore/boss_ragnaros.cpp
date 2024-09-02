@@ -133,7 +133,7 @@ public:
             _Reset();
 
             // Never reset intro events!
-            if (_isIntroDone && !(extraEvents.GetPhaseMask() & (1 << (PHASE_INTRO - 1))))
+            if (_isIntroDone && !(extraEvents.GetPhase() & (1 << (PHASE_INTRO - 1))))
             {
                 extraEvents.Reset();
                 extraEvents.SetPhase(PHASE_EMERGED);

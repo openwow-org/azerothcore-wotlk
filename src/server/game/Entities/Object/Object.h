@@ -419,9 +419,9 @@ public:
     [[nodiscard]] uint32 GetInstanceId() const { return m_InstanceId; }
 
     virtual void SetPhaseMask(uint32 newPhaseMask, bool update);
-    [[nodiscard]] uint32 GetPhaseMask() const { return m_phaseMask; }
-    bool InSamePhase(WorldObject const* obj) const { return InSamePhase(obj->GetPhaseMask()); }
-    [[nodiscard]] bool InSamePhase(uint32 phasemask) const { return m_useCombinedPhases ? GetPhaseMask() & phasemask : GetPhaseMask() == phasemask; }
+    uint32 GetPhase() const { return m_phase; }
+    bool InSamePhase(WorldObject const* obj) const { return InSamePhase(obj->GetPhase()); }
+    [[nodiscard]] bool InSamePhase(uint32 phasemask) const { return m_useCombinedPhases ? GetPhase() & phasemask : GetPhase() == phasemask; }
 
     [[nodiscard]] uint32 GetZoneId() const;
     [[nodiscard]] uint32 GetAreaId() const;
@@ -645,7 +645,7 @@ private:
 
     //uint32 m_mapId;                                     // object at map with map_id
     uint32 m_InstanceId;                                // in map copy with instance id
-    uint32 m_phaseMask;                                 // in area phase state
+    uint32 m_phase;                                 // in area phase state
     bool m_useCombinedPhases;                           // true (default): use phaseMask as bit mask combining up to 32 phases
     // false: use phaseMask to represent single phases only (up to 4294967295 phases)
 

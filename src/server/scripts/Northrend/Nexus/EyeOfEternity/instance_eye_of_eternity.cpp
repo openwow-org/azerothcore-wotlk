@@ -75,7 +75,7 @@ public:
                 // destroy platform, hide iris (actually ensure, done at loading, but doesn't always work
                 ProcessEvent(nullptr, 20158);
                 if (GameObject* go = instance->GetGameObject(GO_IrisGUID))
-                    if (go->GetPhaseMask() != 2)
+                    if (go->GetPhase() != 2)
                         go->SetPhaseMask(2, true);
 
                 // no floor, so put players on drakes

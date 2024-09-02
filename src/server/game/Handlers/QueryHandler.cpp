@@ -260,7 +260,7 @@ void User::HandleCorpseQueryOpcode(WDataStore& /*recvData*/)
                     mapID = corpseMapEntry->entrance_map;
                     x = corpseMapEntry->entrance_x;
                     y = corpseMapEntry->entrance_y;
-                    z = entranceMap->GetHeight(GetPlayer()->GetPhaseMask(), x, y, MAX_HEIGHT);
+                    z = entranceMap->GetHeight(GetPlayer()->GetPhase(), x, y, MAX_HEIGHT);
                 }
             }
         }

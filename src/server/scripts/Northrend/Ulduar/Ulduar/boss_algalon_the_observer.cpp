@@ -362,7 +362,7 @@ public:
                 me->SetInCombatWithZone();
                 return;
             }
-            else if (events.GetPhaseMask() & PHASE_NORMAL)
+            else if (events.GetPhase() & PHASE_NORMAL)
             {
                 DoAction(ACTION_ASCEND);
                 return;
@@ -638,11 +638,11 @@ public:
 
         void UpdateAI(uint32 diff) override
         {
-            if (!(events.GetPhaseMask() & PHASE_MASK_NO_UPDATE) && (!UpdateVictim() || !IsInRoom()))
+            if (!(events.GetPhase() & PHASE_MASK_NO_UPDATE) && (!UpdateVictim() || !IsInRoom()))
                 return;
 
             events.Update(diff);
-            if (!(events.GetPhaseMask() & PHASE_MASK_NO_CAST_CHECK) && me->HasUnitState(UNIT_STATE_CASTING))
+            if (!(events.GetPhase() & PHASE_MASK_NO_CAST_CHECK) && me->HasUnitState(UNIT_STATE_CASTING))
                 return;
 
             switch (events.ExecuteEvent())
@@ -708,7 +708,7 @@ public:
                     break;
                 case EVENT_ACTIVATE_LIVING_CONSTELLATION:
                     {
-                        if (events.GetPhaseMask() & PHASE_MASK_NO_UPDATE)
+                        if (events.GetPhase() & PHASE_MASK_NO_UPDATE)
                         {
                             events.Repeat(4s);
                             break;
@@ -1033,7 +1033,7 @@ public:
 
         void UpdateAI(uint32 diff) override
         {
-            if (!(events.GetPhaseMask() & PHASE_MASK_NO_UPDATE) && !UpdateVictim())
+            if (!(events.GetPhase() & PHASE_MASK_NO_UPDATE) && !UpdateVictim())
                 return;
 
             events.Update(diff);

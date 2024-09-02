@@ -19246,7 +19246,7 @@ uint32 Unit::GetPhaseByAuras() const
 
 void Unit::SetPhaseMask(uint32 newPhaseMask, bool update)
 {
-    if (newPhaseMask == GetPhaseMask())
+    if (newPhaseMask == GetPhase())
         return;
 
     if (IsInWorld())

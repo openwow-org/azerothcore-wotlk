@@ -779,7 +779,7 @@ public:
                             wh->Delete();
                         }
                         if( GameObject* bh = me->FindNearestGameObject(GO_BROKEN_HARPOON, 5.0f) )
-                            if (bh->GetPhaseMask() != 1)
+                            if (bh->GetPhase() != 1)
                                 bh->SetPhaseMask(1, true);
                     }
                     Reset();

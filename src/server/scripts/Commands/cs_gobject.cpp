@@ -112,7 +112,7 @@ public:
         GameObject* object = sObjectMgr->IsGameObjectStaticTransport(objectInfo->entry) ? new StaticTransport() : new GameObject();
         WOWGUID::LowType guidLow = map->GenerateLowGuid<HighGuid::GameObject>();
 
-        if (!object->Create(guidLow, objectInfo->entry, map, player->GetPhaseMaskForSpawn(), x, y, z, o, G3D::Quat(), 0, GO_STATE_READY))
+        if (!object->Create(guidLow, objectInfo->entry, map, player->GetPhaseForSpawn(), x, y, z, o, G3D::Quat(), 0, GO_STATE_READY))
         {
             delete object;
             return false;
@@ -122,7 +122,7 @@ public:
             object->SetRespawnTime(*spawnTimeSecs);
 
         // fill the gameobject data and save to the db
-        object->SaveToDB(map->GetId(), (1 << map->GetSpawnMode()), player->GetPhaseMaskForSpawn());
+        object->SaveToDB(map->GetId(), (1 << map->GetSpawnMode()), player->GetPhaseForSpawn());
         guidLow = object->GetSpawnId();
 
         // delete the old object and do a clean load from DB with a fresh new GameObject instance.
@@ -447,7 +447,7 @@ public:
         stmt->SetData(5, player->GetPositionY());
         stmt->SetData(6, player->GetPositionZ());
         stmt->SetData(7, distance * distance);
-        stmt->SetData(8, player->GetPhaseMask());
+        stmt->SetData(8, player->GetPhase());
         PreparedQueryResult result = WorldDatabase.Query(stmt);
 
         if (result)
@@ -531,7 +531,7 @@ public:
             handler->PSendSysMessage("LootMode: %u", gameObject->GetLootMode());
             handler->PSendSysMessage("LootState: %u", gameObject->getLootState());
             handler->PSendSysMessage("GOState: %u", gameObject->GetGoState());
-            handler->PSendSysMessage("PhaseMask: %u", gameObject->GetPhaseMask());
+            handler->PSendSysMessage("PhaseMask: %u", gameObject->GetPhase());
             handler->PSendSysMessage("IsLootEmpty: %u", gameObject->loot.empty());
             handler->PSendSysMessage("IsLootLooted: %u", gameObject->loot.isLooted());
         }

@@ -8981,7 +8981,7 @@ Pet* Player::SummonPet(uint32 entry, float x, float y, float z, float ang, PetTy
 
     Map* map = GetMap();
     uint32 pet_number = sObjectMgr->GeneratePetNumber();
-    if (!pet->Create(map->GenerateLowGuid<HighGuid::Pet>(), map, GetPhaseMask(), entry, pet_number))
+    if (!pet->Create(map->GenerateLowGuid<HighGuid::Pet>(), map, GetPhase(), entry, pet_number))
     {
         LOG_ERROR("misc", "Player::SummonPet: No such creature entry {}", entry);
         delete pet;
@@ -13776,9 +13776,9 @@ void Player::_LoadSkills(PreparedQueryResult result)
     }
 }
 
-uint32 Player::GetPhaseMaskForSpawn() const
+uint32 Player::GetPhaseForSpawn() const
 {
-    uint32 phase = IsGameMaster() ? GetPhaseByAuras() : GetPhaseMask();
+    uint32 phase = IsGameMaster() ? GetPhaseByAuras() : GetPhase();
 
     if (!phase)
         phase = PHASEMASK_NORMAL;
@@ -16412,7 +16412,7 @@ static BOOL PlayerCreateMonsterHandler (User*       user,
       float y = plyr->GetPosition().m_positionY;
       float z = plyr->GetPosition().m_positionZ;
       float facing = plyr->GetFacing();
-      uint32 phase = plyr->GetPhaseMaskForSpawn();
+      uint32 phase = plyr->GetPhase();
       Transport* transport = plyr->GetTransport();
 
       plyr->GetMap()->AddCreature(x, y, z, facing, type, transport, phase);

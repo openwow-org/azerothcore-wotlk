@@ -61,7 +61,7 @@ void ConfusedMovementGenerator<T>::DoInitialize(T* unit)
         }
         else if (unit->IsWithinLOS(wanderX, wanderY, z))
         {
-            bool is_water = map->IsInWater(unit->GetPhaseMask(), wanderX, wanderY, z, unit->GetCollisionHeight());
+            bool is_water = map->IsInWater(unit->GetPhase(), wanderX, wanderY, z, unit->GetCollisionHeight());
 
             if ((is_water && !is_water_ok) || (!is_water && !is_land_ok))
             {

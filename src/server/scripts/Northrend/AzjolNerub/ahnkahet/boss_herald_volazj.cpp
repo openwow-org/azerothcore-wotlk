@@ -302,7 +302,7 @@ private:
         {
             if (Player* pPlayer = i.GetSource())
             {
-                if (uint32 const insanityAura = GetPlrInsanityAuraId(pPlayer->GetPhaseMask()))
+                if (uint32 const insanityAura = GetPlrInsanityAuraId(pPlayer->GetPhase()))
                 {
                     pPlayer->RemoveAurasDueToSpell(insanityAura);
                 }
@@ -324,7 +324,7 @@ private:
         {
             if (Creature* summon = ObjectAccessor::GetCreature(*me, summonGUID))
             {
-                phase |= summon->GetPhaseMask();
+                phase |= summon->GetPhase();
             }
         }
 
@@ -332,9 +332,9 @@ private:
         for (auto const& i : players)
         {
             Player* pPlayer = i.GetSource();
-            if (pPlayer && !(pPlayer->GetPhaseMask() & phase))
+            if (pPlayer && !(pPlayer->GetPhase() & phase))
             {
-                pPlayer->RemoveAurasDueToSpell(GetPlrInsanityAuraId(pPlayer->GetPhaseMask()));
+                pPlayer->RemoveAurasDueToSpell(GetPlrInsanityAuraId(pPlayer->GetPhase()));
             }
         }
 

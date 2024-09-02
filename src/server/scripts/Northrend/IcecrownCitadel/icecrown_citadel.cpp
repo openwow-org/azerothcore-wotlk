@@ -2172,7 +2172,7 @@ public:
                 return;
 
             Position pos = caster->GetNearPosition(5.0f, 0.0f);
-            pos.m_positionZ = caster->GetMap()->GetHeight(caster->GetPhaseMask(), pos.GetPositionX(), pos.GetPositionY(), caster->GetPositionZ(), true, 50.0f);
+            pos.m_positionZ = caster->GetMap()->GetHeight(caster->GetPhase(), pos.GetPositionX(), pos.GetPositionY(), caster->GetPositionZ(), true, 50.0f);
             pos.m_positionZ += 0.1f;
             caster->SendMeleeAttackStop(caster->GetVictim());
             caster->GetMotionMaster()->MoveLand(POINT_LAND, pos, 7.0f);
@@ -3549,12 +3549,12 @@ public:
             summons.Despawn(summon);
             if (summon->GetEntry() != NPC_NERUBAR_BROODLING && summons.GetEntryCount(NPC_NERUBAR_BROODLING) == summons.size())
             {
-                if (events.GetPhaseMask() == 0)
+                if (events.GetPhase() == 0)
                 {
                     events.SetPhase(1);
                     events.ScheduleEvent(EVENT_GAUNTLET_PHASE2, 0ms);
                 }
-                else if (events.GetPhaseMask() == 1)
+                else if (events.GetPhase() == 1)
                 {
                     events.SetPhase(2);
                     events.ScheduleEvent(EVENT_GAUNTLET_PHASE3, 0ms);

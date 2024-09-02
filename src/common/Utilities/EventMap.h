@@ -81,10 +81,10 @@ public:
     }
 
     /**
-    * @name GetPhaseMask
+    * @name GetPhase
     * @return Active phases as mask.
     */
-    [[nodiscard]] uint8 GetPhaseMask() const
+    [[nodiscard]] uint8 GetPhase() const
     {
         return _phase;
     }

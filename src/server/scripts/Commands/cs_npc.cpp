@@ -219,7 +219,7 @@ public:
                 WOWGUID::LowType guid = sObjectMgr->GenerateCreatureSpawnId();
                 CreatureData& data = sObjectMgr->NewOrExistCreatureData(guid);
                 data.id1 = id;
-                data.phaseMask = chr->GetPhaseMaskForSpawn();
+                data.phaseMask = chr->GetPhaseForSpawn();
                 data.posX = chr->GetTransOffsetX();
                 data.posY = chr->GetTransOffsetY();
                 data.posZ = chr->GetTransOffsetZ();
@@ -227,20 +227,20 @@ public:
 
                 Creature* creature = trans->CreateNPCPassenger(guid, &data);
 
-                creature->SaveToDB(trans->GetGOInfo()->moTransport.mapID, 1 << map->GetSpawnMode(), chr->GetPhaseMaskForSpawn());
+                creature->SaveToDB(trans->GetGOInfo()->moTransport.mapID, 1 << map->GetSpawnMode(), chr->GetPhaseForSpawn());
 
                 sObjectMgr->AddCreatureToGrid(guid, &data);
                 return true;
             }
 
         Creature* creature = new Creature();
-        if (!creature->Create(map->GenerateLowGuid<HighGuid::Unit>(), map, chr->GetPhaseMaskForSpawn(), id, 0, x, y, z, o))
+        if (!creature->Create(map->GenerateLowGuid<HighGuid::Unit>(), map, chr->GetPhaseForSpawn(), id, 0, x, y, z, o))
         {
             delete creature;
             return false;
         }
 
-        creature->SaveToDB(map->GetId(), (1 << map->GetSpawnMode()), chr->GetPhaseMaskForSpawn());
+        creature->SaveToDB(map->GetId(), (1 << map->GetSpawnMode()), chr->GetPhaseForSpawn());
 
         WOWGUID::LowType spawnId = creature->GetSpawnId();
 
@@ -596,7 +596,7 @@ public:
         handler->PSendSysMessage(LANG_COMMAND_RAWPAWNTIMES, defRespawnDelayStr.c_str(), curRespawnDelayStr.c_str());
         handler->PSendSysMessage(LANG_NPCINFO_LOOT,  cInfo->lootid, cInfo->pickpocketLootId, cInfo->SkinLootId);
         handler->PSendSysMessage(LANG_NPCINFO_DUNGEON_ID, target->GetInstanceId());
-        handler->PSendSysMessage(LANG_NPCINFO_PHASEMASK, target->GetPhaseMask());
+        handler->PSendSysMessage(LANG_NPCINFO_PHASEMASK, target->GetPhase());
         handler->PSendSysMessage(LANG_NPCINFO_ARMOR, target->GetArmor());
         handler->PSendSysMessage(LANG_NPCINFO_POSITION, float(target->GetPositionX()), float(target->GetPositionY()), float(target->GetPositionZ()));
         handler->PSendSysMessage(LANG_NPCINFO_AIINFO, target->GetAIName().c_str(), target->GetScriptName().c_str());
@@ -675,7 +675,7 @@ public:
         stmt->SetData(5, player->GetPositionY());
         stmt->SetData(6, player->GetPositionZ());
         stmt->SetData(7, distance * distance);
-        stmt->SetData(8, player->GetPhaseMask());
+        stmt->SetData(8, player->GetPhase());
         PreparedQueryResult result = WorldDatabase.Query(stmt);
 
         if (result)

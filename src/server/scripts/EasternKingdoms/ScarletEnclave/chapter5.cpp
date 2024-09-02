@@ -436,7 +436,7 @@ public:
             if (!players.IsEmpty())
                 for (Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
                     if (Player* player = itr->GetSource())
-                        if (player->GetPhaseMask() & 128) // Xinef: client skips players without chapter 5 aura anyway, speedup
+                        if (player->GetPhase() & 128) // Xinef: client skips players without chapter 5 aura anyway, speedup
                             player->SendUpdateWorldState(id, state);
         }
 

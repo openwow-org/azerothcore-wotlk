@@ -318,7 +318,7 @@ public:
         void UpdateAI(uint32 diff) override
         {
 
-            switch (events.GetPhaseMask())
+            switch (events.GetPhase())
             {
                 case  (1 << (PHASE_COMBAT - 1)):
                 {

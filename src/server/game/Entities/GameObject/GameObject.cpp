@@ -1094,7 +1094,7 @@ void GameObject::SaveToDB(uint32 mapid, uint8 spawnMask, uint32 phaseMask, bool 
     stmt->SetData(index++, GetEntry());
     stmt->SetData(index++, uint16(mapid));
     stmt->SetData(index++, spawnMask);
-    stmt->SetData(index++, GetPhaseMask());
+    stmt->SetData(index++, GetPhase());
     stmt->SetData(index++, GetPositionX());
     stmt->SetData(index++, GetPositionY());
     stmt->SetData(index++, GetPositionZ());
@@ -2602,7 +2602,7 @@ void GameObject::EnableCollision(bool enable)
 
     uint32 phaseMask = 0;
     if (enable && !DisableMgr::IsDisabledFor(DISABLE_TYPE_GO_LOS, GetEntry(), nullptr))
-        phaseMask = GetPhaseMask();
+        phaseMask = GetPhase();
 
     m_model->enable(phaseMask);
 }
@@ -2934,7 +2934,7 @@ public:
 
     bool IsSpawned() const override { return _owner->isSpawned(); }
     uint32 GetDisplayId() const override { return _owner->GetDisplayId(); }
-    uint32 GetPhaseMask() const override { return (_owner->GetGoState() == GO_STATE_READY || _owner->IsTransport()) ? _owner->GetPhaseMask() : 0; }
+    uint32 GetPhase() const override { return (_owner->GetGoState() == GO_STATE_READY || _owner->IsTransport()) ? _owner->GetPhase() : 0; }
     G3D::Vector3 GetPosition() const override { return G3D::Vector3(_owner->GetPositionX(), _owner->GetPositionY(), _owner->GetPositionZ()); }
     float GetFacing() const override { return _owner->GetFacing(); }
     float GetScale() const override { return _owner->GetObjectScale(); }

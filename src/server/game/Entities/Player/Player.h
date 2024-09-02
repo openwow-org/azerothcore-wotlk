@@ -1223,7 +1223,7 @@ public:
     Pet* CreatePet(Creature* creatureTarget, uint32 spellID = 0);
     Pet* CreatePet(uint32 creatureEntry, uint32 spellID = 0);
 
-    [[nodiscard]] uint32 GetPhaseMaskForSpawn() const;                // used for proper set phase for DB at GM-mode creature/GO spawn
+    [[nodiscard]] uint32 GetPhaseForSpawn() const;                // used for proper set phase for DB at GM-mode creature/GO spawn
 
     /// Handles said message in regular chat based on declared language and in config pre-defined Range.
     void Say(std::string_view text, Language language, WorldObject const* = nullptr) override;

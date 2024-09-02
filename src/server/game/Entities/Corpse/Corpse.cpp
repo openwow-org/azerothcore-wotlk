@@ -77,7 +77,7 @@ bool Corpse::Create(WOWGUID::LowType guidlow, Player* owner)
         return false;
     }
 
-    WorldObject::_Create(guidlow, HighGuid::Corpse, owner->GetPhaseMask());
+    WorldObject::_Create(guidlow, HighGuid::Corpse, owner->GetPhase());
 
     SetObjectScale(1);
     SetGuidValue(CORPSE_FIELD_OWNER, owner->GetGUID());
@@ -110,7 +110,7 @@ void Corpse::SaveToDB()
     stmt->SetData(13, uint32(m_time));                                        // time
     stmt->SetData (14, GetType());                                             // corpseType
     stmt->SetData(15, GetInstanceId());                                       // instanceId
-    stmt->SetData(16, GetPhaseMask());                                        // phaseMask
+    stmt->SetData(16, GetPhase());                                        // phaseMask
     trans->Append(stmt);
 
     CharacterDatabase.CommitTransaction(trans);
