@@ -1385,7 +1385,7 @@ public:
                     instance->SetData(DATA_CRATE_COUNT, 0);
                 if (GameObject* crate = me->FindNearestGameObject(GO_SUSPICIOUS_CRATE, 5.0f))
                 {
-                    crate->SummonGameObject(GO_PLAGUED_CRATE, crate->GetPositionX(), crate->GetPositionY(), crate->GetPositionZ(), crate->GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, DAY);
+                    crate->SummonGameObject(GO_PLAGUED_CRATE, crate->GetPositionX(), crate->GetPositionY(), crate->GetPositionZ(), crate->GetFacing(), 0.0f, 0.0f, 0.0f, 0.0f, DAY);
                     crate->Delete();
                 }
             }
@@ -1458,7 +1458,7 @@ public:
                         arthas->AI()->Reset();
                     }
                 }
-                player->NearTeleportTo(LeaderIntroPos2.GetPositionX(), LeaderIntroPos2.GetPositionY(), LeaderIntroPos2.GetPositionZ(), LeaderIntroPos2.GetOrientation());
+                player->NearTeleportTo(LeaderIntroPos2.GetPositionX(), LeaderIntroPos2.GetPositionY(), LeaderIntroPos2.GetPositionZ(), LeaderIntroPos2.GetFacing());
             }
         }
 

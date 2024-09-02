@@ -41,7 +41,7 @@ void BattlegroundNA::StartingEventOpenDoors()
 
 bool BattlegroundNA::HandlePlayerUnderMap(Player* player)
 {
-    player->NearTeleportTo(4055.504395f, 2919.660645f, 13.611241f, player->GetOrientation());
+    player->NearTeleportTo(4055.504395f, 2919.660645f, 13.611241f, player->GetFacing());
     return true;
 }
 
@@ -59,7 +59,7 @@ void BattlegroundNA::HandleAreaTrigger(Player* player, uint32 trigger)
         case 4917:
         case 5006:
         case 5008:
-            player->NearTeleportTo(4054.15f, 2923.7f, 13.4f, player->GetOrientation());
+            player->NearTeleportTo(4054.15f, 2923.7f, 13.4f, player->GetFacing());
             break;
     }
 }

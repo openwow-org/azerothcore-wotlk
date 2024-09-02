@@ -103,7 +103,7 @@ void Player::SavePositionInDB(WorldLocation const& loc, uint16 zoneId, WOWGUID g
     stmt->SetData(0, loc.GetPositionX());
     stmt->SetData(1, loc.GetPositionY());
     stmt->SetData(2, loc.GetPositionZ());
-    stmt->SetData(3, loc.GetOrientation());
+    stmt->SetData(3, loc.GetFacing());
     stmt->SetData(4, uint16(loc.GetMapId()));
     stmt->SetData(5, zoneId);
     stmt->SetData(6, guid.GetCounter());

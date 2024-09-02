@@ -180,7 +180,7 @@ public:
                 for (uint8 j = 0; j < 8; ++j)
                 {
                     float angle = M_PI * 2 / 8 * j;
-                    me->SummonCreature(NPC_SOLDIER_OF_THE_FROZEN_WASTES, SummonGroups[i].GetPositionX() + 6 * cos(angle), SummonGroups[i].GetPositionY() + 6 * std::sin(angle), SummonGroups[i].GetPositionZ(), SummonGroups[i].GetOrientation(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 20000);
+                    me->SummonCreature(NPC_SOLDIER_OF_THE_FROZEN_WASTES, SummonGroups[i].GetPositionX() + 6 * cos(angle), SummonGroups[i].GetPositionY() + 6 * std::sin(angle), SummonGroups[i].GetPositionZ(), SummonGroups[i].GetFacing(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 20000);
                 }
             }
             for (uint8 i = 6; i < 12; ++i)
@@ -188,16 +188,16 @@ public:
                 for (uint8 j = 1; j < 4; ++j)
                 {
                     float dist = j == 2 ? 0.0f : 8.0f; // second in middle
-                    float angle = SummonGroups[i].GetOrientation() + M_PI * 2 / 4 * j;
-                    me->SummonCreature(NPC_UNSTOPPABLE_ABOMINATION, SummonGroups[i].GetPositionX() + dist * cos(angle), SummonGroups[i].GetPositionY() + dist * std::sin(angle), SummonGroups[i].GetPositionZ(), SummonGroups[i].GetOrientation(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 20000);
+                    float angle = SummonGroups[i].GetFacing() + M_PI * 2 / 4 * j;
+                    me->SummonCreature(NPC_UNSTOPPABLE_ABOMINATION, SummonGroups[i].GetPositionX() + dist * cos(angle), SummonGroups[i].GetPositionY() + dist * std::sin(angle), SummonGroups[i].GetPositionZ(), SummonGroups[i].GetFacing(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 20000);
                 }
             }
             for (uint8 i = 6; i < 12; ++i)
             {
                 for (uint8 j = 0; j < 1; ++j)
                 {
-                    float angle = SummonGroups[i].GetOrientation() + M_PI;
-                    me->SummonCreature(NPC_SOUL_WEAVER, SummonGroups[i].GetPositionX() + 6 * cos(angle), SummonGroups[i].GetPositionY() + 6 * std::sin(angle), SummonGroups[i].GetPositionZ() + 0.5f, SummonGroups[i].GetOrientation(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 20000);
+                    float angle = SummonGroups[i].GetFacing() + M_PI;
+                    me->SummonCreature(NPC_SOUL_WEAVER, SummonGroups[i].GetPositionX() + 6 * cos(angle), SummonGroups[i].GetPositionY() + 6 * std::sin(angle), SummonGroups[i].GetPositionZ() + 0.5f, SummonGroups[i].GetFacing(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 20000);
                 }
             }
         }
@@ -335,7 +335,7 @@ public:
             }
             if (cr->GetEntry() == NPC_GUARDIAN_OF_ICECROWN)
             {
-                cr->SetHomePosition(cr->GetPositionX(), cr->GetPositionY(), cr->GetPositionZ(), cr->GetOrientation());
+                cr->SetHomePosition(cr->GetPositionX(), cr->GetPositionY(), cr->GetPositionZ(), cr->GetFacing());
             }
         }
 

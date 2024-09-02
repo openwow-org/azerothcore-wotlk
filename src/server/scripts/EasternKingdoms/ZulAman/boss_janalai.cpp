@@ -347,7 +347,7 @@ public:
 
                 me->AttackStop();
                 me->GetMotionMaster()->Clear();
-                me->NearTeleportTo(JanalainPos[0][0], JanalainPos[0][1], JanalainPos[0][2], me->GetOrientation());
+                me->NearTeleportTo(JanalainPos[0][0], JanalainPos[0][1], JanalainPos[0][2], me->GetFacing());
                 me->StopMovingOnCurrentPos();
                 DoCast(me, SPELL_FIRE_BOMB_CHANNEL, false);
                 //DoTeleportPlayer(me, JanalainPos[0][0], JanalainPos[0][1], JanalainPos[0][2], 0);
@@ -381,7 +381,7 @@ public:
 
                     me->AttackStop();
                     me->GetMotionMaster()->Clear();
-                    me->NearTeleportTo(JanalainPos[0][0], JanalainPos[0][1], JanalainPos[0][2], me->GetOrientation());
+                    me->NearTeleportTo(JanalainPos[0][0], JanalainPos[0][1], JanalainPos[0][2], me->GetFacing());
                     me->StopMovingOnCurrentPos();
                     DoCast(me, SPELL_HATCH_ALL, false);
                     HatchAllEggs(2);

@@ -1221,7 +1221,7 @@ public:
         {
             if (Creature* crok = ObjectAccessor::GetCreature(*me, instance->GetGuidData(DATA_CROK_SCOURGEBANE)))
             {
-                FollowAngle = me->GetAngle(crok) + me->GetOrientation();
+                FollowAngle = me->GetAngle(crok) + me->GetFacing();
                 FollowDist = me->GetDistance2d(crok);
                 me->GetMotionMaster()->MoveFollow(crok, FollowDist, FollowAngle, MOTION_SLOT_IDLE);
             }
@@ -1760,8 +1760,8 @@ public:
             if (spell->Id == 71306 && c->GetTypeId() == TYPEID_UNIT) // Twisted Winds
             {
                 Position myPos = me->GetPosition();
-                me->NearTeleportTo(c->GetPositionX(), c->GetPositionY(), c->GetPositionZ(), c->GetOrientation());
-                c->NearTeleportTo(myPos.GetPositionX(), myPos.GetPositionY(), myPos.GetPositionZ(), myPos.GetOrientation());
+                me->NearTeleportTo(c->GetPositionX(), c->GetPositionY(), c->GetPositionZ(), c->GetFacing());
+                c->NearTeleportTo(myPos.GetPositionX(), myPos.GetPositionY(), myPos.GetPositionZ(), myPos.GetFacing());
                 const ThreatContainer::StorageType me_tl = me->GetThreatMgr().GetThreatList();
                 const ThreatContainer::StorageType target_tl = c->GetThreatMgr().GetThreatList();
                 DoResetThreatList();
@@ -2270,7 +2270,7 @@ public:
             player->GetPosition(x, y, z, o);
 
             // move player to preload grid and be able to select nearby npcs
-            player->GetMap()->PlayerRelocation(player, destPos.GetPositionX(), destPos.GetPositionY(), destPos.GetPositionZ(), destPos.GetOrientation());
+            player->GetMap()->PlayerRelocation(player, destPos.GetPositionX(), destPos.GetPositionY(), destPos.GetPositionZ(), destPos.GetFacing());
 
             instance->SetData(DATA_COLDFLAME_JETS, IN_PROGRESS);
             std::list<Creature*> traps;
@@ -2287,7 +2287,7 @@ public:
             player->GetMap()->PlayerRelocation(player, x, y, z, o);
         }
 
-        player->Teleport(631, destPos.GetPositionX(), destPos.GetPositionY(), destPos.GetPositionZ(), destPos.GetOrientation());
+        player->Teleport(631, destPos.GetPositionX(), destPos.GetPositionY(), destPos.GetPositionZ(), destPos.GetFacing());
 
         return true;
     }
@@ -3250,7 +3250,7 @@ public:
                     else
                         --currPipeWP;
                 }
-                me->SetHomePosition(VengefulWP[currPipeWP].GetPositionX(), VengefulWP[currPipeWP].GetPositionY(), VengefulWP[currPipeWP].GetPositionZ(), me->GetOrientation());
+                me->SetHomePosition(VengefulWP[currPipeWP].GetPositionX(), VengefulWP[currPipeWP].GetPositionY(), VengefulWP[currPipeWP].GetPositionZ(), me->GetFacing());
                 if ((forward && currPipeWP == 3) || (!forward && currPipeWP == 2))
                     me->GetMotionMaster()->MoveJump(VengefulWP[currPipeWP].GetPositionX(), VengefulWP[currPipeWP].GetPositionY(), VengefulWP[currPipeWP].GetPositionZ(), 10.0f, 6.0f, 1);
                 else
@@ -3357,7 +3357,7 @@ public:
                 float ny = me->GetPositionY();
                 float nz = me->GetFloorZ();
                 DoCastSelf(SPELL_WEB_BEAM);
-                me->SetHomePosition(nx, ny, nz, me->GetOrientation());
+                me->SetHomePosition(nx, ny, nz, me->GetFacing());
                 me->GetMotionMaster()->MoveLand(POINT_LAND, nx, ny, nz, false);
                 me->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_ONESHOT_NONE);
                 return;

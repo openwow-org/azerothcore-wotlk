@@ -288,7 +288,7 @@ public:
                 case ENCOUNTER_PROGRESS_TARETHA_MEET:
                     thrall->UpdatePosition(thrallPositions[data - ENCOUNTER_PROGRESS_THRALL_ARMORED], true);
                     thrall->SetHomePosition(thrallPositions[data - ENCOUNTER_PROGRESS_THRALL_ARMORED]);
-                    thrall->SetFacingTo(thrallPositions[data - ENCOUNTER_PROGRESS_THRALL_ARMORED].GetOrientation());
+                    thrall->SetFacingTo(thrallPositions[data - ENCOUNTER_PROGRESS_THRALL_ARMORED].GetFacing());
                     break;
             }
         }

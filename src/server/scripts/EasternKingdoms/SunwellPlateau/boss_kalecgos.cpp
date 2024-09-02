@@ -194,7 +194,7 @@ public:
                     Sath->RemoveAllAuras();
                     Sath->GetMotionMaster()->MovementExpired();
                     Sath->SetReactState(REACT_PASSIVE);
-                    Sath->NearTeleportTo(1696.20f, 915.0f, DRAGON_REALM_Z, Sath->GetOrientation());
+                    Sath->NearTeleportTo(1696.20f, 915.0f, DRAGON_REALM_Z, Sath->GetFacing());
                 }
             }
         }

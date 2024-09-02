@@ -337,7 +337,7 @@ Creature* MotionTransport::CreateNPCPassenger(WOWGUID::LowType guid, CreatureDat
     creature->m_movement.transport.pos.Relocate(x, y, z, o);
     CalculatePassengerPosition(x, y, z, &o);
     creature->Relocate(x, y, z, o);
-    creature->SetHomePosition(creature->GetPositionX(), creature->GetPositionY(), creature->GetPositionZ(), creature->GetOrientation());
+    creature->SetHomePosition(creature->GetPositionX(), creature->GetPositionY(), creature->GetPositionZ(), creature->GetFacing());
     creature->SetTransportHomePosition(creature->m_movement.transport.pos);
 
     /// @HACK - transport models are not added to map's dynamic LoS calculations
@@ -719,7 +719,7 @@ bool StaticTransport::Create(WOWGUID::LowType guidlow, uint32 name_id, Map* map,
 
     // pussywizard: temporarily calculate WorldRotation from orientation, do so until values in db are correct
     //SetWorldRotation( /*for StaticTransport we need 2 rotation Quats in db for World- and Path- Rotation*/ );
-    SetLocalRotationAngles(NormalizeOrientation(GetOrientation()), 0.0f, 0.0f);
+    SetLocalRotationAngles(NormalizeOrientation(GetFacing()), 0.0f, 0.0f);
     // pussywizard: PathRotation for StaticTransport (only StaticTransports have PathRotation)
     SetTransportPathRotation(rotation.x, rotation.y, rotation.z, rotation.w);
 

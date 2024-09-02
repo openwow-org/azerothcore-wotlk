@@ -92,7 +92,7 @@ void HandleBothDead(Creature* creature, bool jarien, Unit* killer)
     }
 
     // chest spawn
-    if (GameObject* chest = killer->SummonGameObject(GO_JARIEN_AND_SOTHOS_HEIRLOOMS, heirloomsPosition.GetPositionX(), heirloomsPosition.GetPositionY(), heirloomsPosition.GetPositionZ(), heirloomsPosition.GetOrientation(), 0.f, 0.f, 0.f, 0.f, 0))
+    if (GameObject* chest = killer->SummonGameObject(GO_JARIEN_AND_SOTHOS_HEIRLOOMS, heirloomsPosition.GetPositionX(), heirloomsPosition.GetPositionY(), heirloomsPosition.GetPositionZ(), heirloomsPosition.GetFacing(), 0.f, 0.f, 0.f, 0.f, 0))
     {
         chest->setActive(true);
         chest->SetGoState(GO_STATE_READY);

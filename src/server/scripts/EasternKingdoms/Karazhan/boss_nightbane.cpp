@@ -237,7 +237,7 @@ struct boss_nightbane : public BossAI
             if (Unit* target = SelectTarget(SelectTargetMethod::Random, 0, 100.0f))
             {
                 _skeletonSpawnPos = target->GetPosition();
-                me->SetFacingTo(_skeletonSpawnPos.GetOrientation());
+                me->SetFacingTo(_skeletonSpawnPos.GetFacing());
                 me->CastSpell(_skeletonSpawnPos.GetPositionX(), _skeletonSpawnPos.GetPositionY(), _skeletonSpawnPos.GetPositionZ(), SPELL_RAIN_OF_BONES, true);
                 _skeletonscheduler.Schedule(50ms, [this](TaskContext context)
                 {

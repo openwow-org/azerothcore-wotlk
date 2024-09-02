@@ -716,7 +716,7 @@ public:
                     break;
                 case GO_GEIST_ALARM_1:
                 case GO_GEIST_ALARM_2:
-                    go->SetPosition(go->GetPositionX() + urand(0, 2) * 20.0f * (go->GetEntry() == GO_GEIST_ALARM_1 ? -1.0f : 1.0f), go->GetPositionY(), go->GetPositionZ(), go->GetOrientation());
+                    go->SetPosition(go->GetPositionX() + urand(0, 2) * 20.0f * (go->GetEntry() == GO_GEIST_ALARM_1 ? -1.0f : 1.0f), go->GetPositionY(), go->GetPositionZ(), go->GetFacing());
                     break;
                 case GO_DOODAD_ICECROWN_ICEWALL02:
                 case GO_ICEWALL:

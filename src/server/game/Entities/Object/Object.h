@@ -576,7 +576,7 @@ public:
     [[nodiscard]] float GetTransOffsetX() const { return m_movement.transport.pos.GetPositionX(); }
     [[nodiscard]] float GetTransOffsetY() const { return m_movement.transport.pos.GetPositionY(); }
     [[nodiscard]] float GetTransOffsetZ() const { return m_movement.transport.pos.GetPositionZ(); }
-    [[nodiscard]] float GetTransOffsetO() const { return m_movement.transport.pos.GetOrientation(); }
+    [[nodiscard]] float GetTransOffsetO() const { return m_movement.transport.pos.GetFacing(); }
     [[nodiscard]] uint32 GetTransTime()   const { return m_movement.transport.time; }
     [[nodiscard]] int8 GetTransSeat()     const { return m_movement.transport.seat; }
     [[nodiscard]] virtual WOWGUID GetTransGUID()   const;
@@ -587,7 +587,7 @@ public:
     [[nodiscard]] virtual float GetStationaryX() const { return GetPositionX(); }
     [[nodiscard]] virtual float GetStationaryY() const { return GetPositionY(); }
     [[nodiscard]] virtual float GetStationaryZ() const { return GetPositionZ(); }
-    [[nodiscard]] virtual float GetStationaryO() const { return GetOrientation(); }
+    [[nodiscard]] virtual float GetStationaryO() const { return GetFacing(); }
 
     [[nodiscard]] float GetMapWaterOrGroundLevel(float x, float y, float z, float* ground = nullptr) const;
     [[nodiscard]] float GetMapHeight(float x, float y, float z, bool vmap = true, float distanceToSearch = 50.0f) const; // DEFAULT_HEIGHT_SEARCH in map.h

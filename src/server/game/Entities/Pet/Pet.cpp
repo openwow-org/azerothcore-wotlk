@@ -275,7 +275,7 @@ bool Pet::LoadPetFromDB(Player* owner, uint32 petEntry, uint32 petnumber, bool c
     {
         float px, py, pz;
         owner->GetClosePoint(px, py, pz, GetCombatReach(), PET_FOLLOW_DIST, GetFollowAngle());
-        Relocate(px, py, pz, owner->GetOrientation());
+        Relocate(px, py, pz, owner->GetFacing());
 
         if (!IsPositionValid())
         {
@@ -341,7 +341,7 @@ bool Pet::LoadPetFromDB(Player* owner, uint32 petEntry, uint32 petnumber, bool c
     // Set pet's position after setting level, its size depends on it
     float px, py, pz;
     owner->GetClosePoint(px, py, pz, GetCombatReach(), PET_FOLLOW_DIST, GetFollowAngle());
-    Relocate(px, py, pz, owner->GetOrientation());
+    Relocate(px, py, pz, owner->GetFacing());
     if (!IsPositionValid())
     {
         LOG_ERROR("entities.pet", "Pet {} not loaded. Suggested coordinates isn't valid (X: {} Y: {})",
@@ -947,7 +947,7 @@ bool Pet::CreateBaseAtCreature(Creature* creature)
     if (!CreateBaseAtTamed(creature->GetCreatureTemplate(), creature->GetMap(), creature->GetPhaseMask()))
         return false;
 
-    Relocate(creature->GetPositionX(), creature->GetPositionY(), creature->GetPositionZ(), creature->GetOrientation());
+    Relocate(creature->GetPositionX(), creature->GetPositionY(), creature->GetPositionZ(), creature->GetFacing());
 
     if (!IsPositionValid())
     {
@@ -983,7 +983,7 @@ bool Pet::CreateBaseAtCreatureInfo(CreatureRec const* cinfo, Unit* owner)
     if (CreatureFamilyEntry const* cFamily = sCreatureFamilyStore.LookupEntry(cinfo->family))
         SetName(cFamily->Name[sWorld->GetDefaultDbcLocale()]);
 
-    Relocate(owner->GetPositionX(), owner->GetPositionY(), owner->GetPositionZ(), owner->GetOrientation());
+    Relocate(owner->GetPositionX(), owner->GetPositionY(), owner->GetPositionZ(), owner->GetFacing());
 
     UpdatePositionData();
 

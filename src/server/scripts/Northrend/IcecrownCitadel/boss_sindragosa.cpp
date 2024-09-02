@@ -225,7 +225,7 @@ public:
             {
                 summon->AI()->SetGUID(_owner->GetGUID(), DATA_TRAPPED_PLAYER);
                 _owner->CastSpell(_owner, SPELL_ICE_TOMB_UNTARGETABLE, true);
-                if (GameObject* go = summon->SummonGameObject(GO_ICE_BLOCK, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 0))
+                if (GameObject* go = summon->SummonGameObject(GO_ICE_BLOCK, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetFacing(), 0.0f, 0.0f, 0.0f, 0.0f, 0))
                 {
                     go->SetSpellId(SPELL_ICE_TOMB_DAMAGE);
                     summon->AddGameObject(go);
@@ -1365,7 +1365,7 @@ public:
             me->setActive(false);
             me->SetDisableGravity(false);
             me->SetHomePosition(SpinestalkerLandPos);
-            me->SetFacingTo(SpinestalkerLandPos.GetOrientation());
+            me->SetFacingTo(SpinestalkerLandPos.GetFacing());
             me->SetImmuneToPC(false);
         }
 
@@ -1498,7 +1498,7 @@ public:
                 me->setActive(false);
                 me->SetDisableGravity(false);
                 me->SetHomePosition(RimefangLandPos);
-                me->SetFacingTo(RimefangLandPos.GetOrientation());
+                me->SetFacingTo(RimefangLandPos.GetFacing());
                 me->SetImmuneToPC(false);
             }
             else if (point == POINT_LAND_GROUND)

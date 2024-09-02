@@ -339,13 +339,13 @@ public:
                         me->m_positionZ = 42.5f;
                         me->DisableSpline();
                         me->CastSpell(me, SPELL_COLDFLAME_SUMMON, true);
-                        float nx = me->GetPositionX() + 5.0f * cos(me->GetOrientation());
-                        float ny = me->GetPositionY() + 5.0f * std::sin(me->GetOrientation());
+                        float nx = me->GetPositionX() + 5.0f * cos(me->GetFacing());
+                        float ny = me->GetPositionY() + 5.0f * std::sin(me->GetFacing());
                         if (!me->IsWithinLOS(nx, ny, 42.5f))
                         {
                             break;
                         }
-                        me->NearTeleportTo(nx, ny, 42.5f, me->GetOrientation());
+                        me->NearTeleportTo(nx, ny, 42.5f, me->GetFacing());
                         events.Repeat(450ms);
                     }
                     break;
@@ -384,7 +384,7 @@ public:
             if (TempSummon* summ = me->ToTempSummon())
                 if (Unit* trapped = summ->GetSummonerUnit())
                 {
-                    Position exitPos = {me->GetPositionX(), me->GetPositionY(), 60.0f, me->GetOrientation()};
+                    Position exitPos = {me->GetPositionX(), me->GetPositionY(), 60.0f, me->GetFacing()};
                     trapped->UpdateAllowedPositionZ(exitPos.GetPositionX(), exitPos.GetPositionY(), exitPos.m_positionZ);
                     exitPos.m_positionZ += 1.0f;
                     if (Unit* vehBase = trapped->GetVehicleBase())
@@ -394,7 +394,7 @@ public:
                     trapped->GetMotionMaster()->Clear();
                     trapped->UpdatePosition(exitPos, true);
                     trapped->StopMovingOnCurrentPos();
-                    trapped->NearTeleportTo(exitPos.GetPositionX(), exitPos.GetPositionY(), exitPos.GetPositionZ(), exitPos.GetOrientation(), false);
+                    trapped->NearTeleportTo(exitPos.GetPositionX(), exitPos.GetPositionY(), exitPos.GetPositionZ(), exitPos.GetFacing(), false);
                 }
 
             me->DespawnOrUnsummon(1);

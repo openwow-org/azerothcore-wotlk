@@ -90,7 +90,7 @@ public:
 
     static bool IsValidMapCoord(uint32 mapid, Position const& pos)
     {
-        return IsValidMapCoord(mapid, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation());
+        return IsValidMapCoord(mapid, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetFacing());
     }
 
     static bool IsValidMapCoord(uint32 mapid, float x, float y)
@@ -110,7 +110,7 @@ public:
 
     static bool IsValidMapCoord(WorldLocation const& loc)
     {
-        return IsValidMapCoord(loc.GetMapId(), loc.GetPositionX(), loc.GetPositionY(), loc.GetPositionZ(), loc.GetOrientation());
+        return IsValidMapCoord(loc.GetMapId(), loc.GetPositionX(), loc.GetPositionY(), loc.GetPositionZ(), loc.GetFacing());
     }
 
     // modulos a radian orientation to the range of 0..2PI

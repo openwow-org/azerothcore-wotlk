@@ -643,7 +643,7 @@ void Unit::UpdateSplinePosition()
 
     // Xinef: if we had spline running update orientation along with position
     //if (HasUnitState(UNIT_STATE_CANNOT_TURN))
-    //    loc.orientation = GetOrientation();
+    //    loc.orientation = GetFacing();
 
     if (GetTypeId() == TYPEID_PLAYER)
         UpdatePosition(loc.x, loc.y, loc.z, loc.orientation);
@@ -1269,7 +1269,7 @@ SpellCastResult Unit::CastSpell(float x, float y, float z, uint32 spellId, bool 
     }
 
     SpellCastTargets targets;
-    targets.SetDst(x, y, z, GetOrientation());
+    targets.SetDst(x, y, z, GetFacing());
 
     return CastSpell(targets, spellInfo, nullptr, triggered ? TRIGGERED_FULL_MASK : TRIGGERED_NONE, castItem, triggeredByAura, originalCaster);
 }
@@ -13689,7 +13689,7 @@ void Unit::SetInCombatState(bool PvP, Unit* enemy, uint32 duration)
         if ((IsAIEnabled && creature->AI()->IsEscorted()) ||
                 GetMotionMaster()->GetCurrentMovementGeneratorType() == WAYPOINT_MOTION_TYPE ||
                 GetMotionMaster()->GetCurrentMovementGeneratorType() == ESCORT_MOTION_TYPE)
-            creature->SetHomePosition(GetPositionX(), GetPositionY(), GetPositionZ(), GetOrientation());
+            creature->SetHomePosition(GetPositionX(), GetPositionY(), GetPositionZ(), GetFacing());
 
         if (enemy)
         {
@@ -16906,7 +16906,7 @@ void Unit::StopMovingOnCurrentPos() // pussywizard
     DisableSpline(); // pussywizard: required so Launch() won't recalculate position from previous spline
     Movement::MoveSplineInit init(this);
     init.MoveTo(GetPositionX(), GetPositionY(), GetPositionZ());
-    init.SetFacing(GetOrientation());
+    init.SetFacing(GetFacing());
     init.Launch();
 }
 
@@ -19716,8 +19716,8 @@ void Unit::JumpTo(float speedXY, float speedZ, bool forward)
         GetMotionMaster()->MoveJumpTo(angle, speedXY, speedZ);
     else
     {
-        float vcos = cos(angle + GetOrientation());
-        float vsin = std::sin(angle + GetOrientation());
+        float vcos = cos(angle + GetFacing());
+        float vsin = std::sin(angle + GetFacing());
 
         WDataStore data(SMSG_MOVE_KNOCK_BACK, (8 + 4 + 4 + 4 + 4 + 4));
         data << GetPackGUID();
@@ -20001,8 +20001,8 @@ void Unit::_ExitVehicle(Position const* exitPosition)
         }
         else if (vehicleInfo->m_ID == 349) // AT Mounts, dismount to the right
         {
-            float x = pos.GetPositionX() + 2.0f * cos(pos.GetOrientation() - M_PI / 2.0f);
-            float y = pos.GetPositionY() + 2.0f * std::sin(pos.GetOrientation() - M_PI / 2.0f);
+            float x = pos.GetPositionX() + 2.0f * cos(pos.GetFacing() - M_PI / 2.0f);
+            float y = pos.GetPositionY() + 2.0f * std::sin(pos.GetFacing() - M_PI / 2.0f);
             float z = GetMapHeight(x, y, pos.GetPositionZ());
             if (z > INVALID_HEIGHT)
             {
@@ -20031,7 +20031,7 @@ void Unit::_ExitVehicle(Position const* exitPosition)
     {
         Movement::MoveSplineInit init(this);
         init.MoveTo(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ());
-        init.SetFacing(GetOrientation());
+        init.SetFacing(GetFacing());
         init.SetTransportExit();
         init.Launch();
     }
@@ -20040,7 +20040,7 @@ void Unit::_ExitVehicle(Position const* exitPosition)
         float o = pos.GetAngle(this);
         Movement::MoveSplineInit init(this);
         init.MoveTo(pos.GetPositionX() + 8 * cos(o), pos.GetPositionY() + 8 * std::sin(o), pos.GetPositionZ() + 16.0f);
-        init.SetFacing(GetOrientation());
+        init.SetFacing(GetFacing());
         init.SetTransportExit();
         init.Launch();
         DisableSpline();
@@ -20105,7 +20105,7 @@ void Unit::BuildMovementPacket(ByteBuffer* data) const
     *data << GetPositionX();
     *data << GetPositionY();
     *data << GetPositionZ();
-    *data << GetOrientation();
+    *data << GetFacing();
 
     // 0x00000200
     if (GetUnitMovementFlags() & MOVEFLAG_IMMOBILIZED)
@@ -20178,7 +20178,7 @@ bool Unit::CanSwim() const
 
 void Unit::NearTeleportTo(Position& pos, bool casting /*= false*/, bool vehicleTeleport /*= false*/, bool withPet /*= false*/, bool removeTransport /*= false*/)
 {
-    NearTeleportTo(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), casting, vehicleTeleport, withPet, removeTransport);
+    NearTeleportTo(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetFacing(), casting, vehicleTeleport, withPet, removeTransport);
 }
 
 void Unit::NearTeleportTo(float x, float y, float z, float orientation, bool casting /*= false*/, bool vehicleTeleport /*= false*/, bool withPet /*= false*/, bool removeTransport /*= false*/)
@@ -20205,7 +20205,7 @@ void Unit::SendTameFailure(uint8 result)
 
 void Unit::SendTeleportPacket(Position& pos)
 {
-    Position oldPos = { GetPositionX(), GetPositionY(), GetPositionZ(), GetOrientation() };
+    Position oldPos = { GetPositionX(), GetPositionY(), GetPositionZ(), GetFacing() };
     if (GetTypeId() == TYPEID_UNIT)
         Relocate(&pos);
     if (GetTypeId() == TYPEID_PLAYER)
@@ -20227,7 +20227,7 @@ bool Unit::UpdatePosition(float x, float y, float z, float orientation, bool tel
     if (!Acore::IsValidMapCoord(x, y, z, orientation))
         return false;
 
-    float old_orientation = GetOrientation();
+    float old_orientation = GetFacing();
     float current_z = GetPositionZ();
     bool turn = (old_orientation != orientation);
     bool relocated = (teleport || GetPositionX() != x || GetPositionY() != y || current_z != z);

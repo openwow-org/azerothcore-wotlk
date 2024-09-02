@@ -1025,7 +1025,7 @@ class spell_class_call_handler : public SpellScript
         }
 
         Position tp = caster->GetFirstCollisionPosition(5.f, 0.f);
-        target->NearTeleportTo(tp.GetPositionX(), tp.GetPositionY(), tp.GetPositionZ(), tp.GetOrientation());
+        target->NearTeleportTo(tp.GetPositionX(), tp.GetPositionY(), tp.GetPositionZ(), tp.GetFacing());
     }
 
     void HandleOnHitWarlock()

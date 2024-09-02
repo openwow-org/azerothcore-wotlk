@@ -265,7 +265,7 @@ public:
                     Talk(EMOTE_SPIDERS);
                     for (uint8 i = 0; i < 8; ++i)
                     {
-                        me->SummonCreature(NPC_MAEXXNA_SPIDERLING, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation());
+                        me->SummonCreature(NPC_MAEXXNA_SPIDERLING, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetFacing());
                     }
                     events.Repeat(40s);
                     break;

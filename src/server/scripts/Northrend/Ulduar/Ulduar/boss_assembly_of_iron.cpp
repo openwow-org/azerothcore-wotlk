@@ -689,7 +689,7 @@ public:
         {
             if (!pInstance)
                 return;
-            me->NearTeleportTo(me->GetPositionX(), me->GetPositionY(), 427.5, me->GetOrientation());
+            me->NearTeleportTo(me->GetPositionX(), me->GetPositionY(), 427.5, me->GetFacing());
             if (IsEncounterComplete(pInstance, me))
             {
                 pInstance->SetData(TYPE_ASSEMBLY, DONE);

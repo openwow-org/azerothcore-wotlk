@@ -608,7 +608,7 @@ public:
                                  zoneId, (zoneEntry ? zoneEntry->area_name[handler->GetSessionDbcLocale()] : "<unknown>"),
                                  areaId, (areaEntry ? areaEntry->area_name[handler->GetSessionDbcLocale()] : "<unknown>"),
                                  object->GetPhaseMask(),
-                                 object->GetPositionX(), object->GetPositionY(), object->GetPositionZ(), object->GetOrientation(),
+                                 object->GetPositionX(), object->GetPositionY(), object->GetPositionZ(), object->GetFacing(),
                                  cell.GridX(), cell.GridY(), cell.CellX(), cell.CellY(), object->GetInstanceId(),
                                  zoneX, zoneY, groundZ, floorZ, haveMap, haveVMap, haveMMAP);
 
@@ -621,7 +621,7 @@ public:
 
         if (object->GetTransport())
         {
-            handler->PSendSysMessage("Transport offset: %.2f, %.2f, %.2f, %.2f", object->m_movement.transport.pos.GetPositionX(), object->m_movement.transport.pos.GetPositionY(), object->m_movement.transport.pos.GetPositionZ(), object->m_movement.transport.pos.GetOrientation());
+            handler->PSendSysMessage("Transport offset: %.2f, %.2f, %.2f, %.2f", object->m_movement.transport.pos.GetPositionX(), object->m_movement.transport.pos.GetPositionY(), object->m_movement.transport.pos.GetPositionZ(), object->m_movement.transport.pos.GetFacing());
         }
 
         return true;
@@ -792,7 +792,7 @@ public:
                 m_player->SaveRecallPosition();
             }
 
-            if (m_player->Teleport(targetPlayer->GetMapId(), targetPlayer->GetPositionX(), targetPlayer->GetPositionY(), targetPlayer->GetPositionZ() + 0.25f, m_player->GetOrientation(), TELE_TO_GM_MODE, targetPlayer))
+            if (m_player->Teleport(targetPlayer->GetMapId(), targetPlayer->GetPositionX(), targetPlayer->GetPositionY(), targetPlayer->GetPositionZ() + 0.25f, m_player->GetFacing(), TELE_TO_GM_MODE, targetPlayer))
             {
                 m_player->SetPhaseMask(targetPlayer->GetPhaseMask() | 1, false);
             }
@@ -829,7 +829,7 @@ public:
                 m_player->SaveRecallPosition();
             }
 
-            m_player->Teleport(map, x, y, z, m_player->GetOrientation());
+            m_player->Teleport(map, x, y, z, m_player->GetFacing());
         }
 
         return true;
@@ -932,7 +932,7 @@ public:
             // before GM
             float x, y, z;
             handler->GetSession()->GetPlayer()->GetClosePoint(x, y, z, targetPlayer->GetObjectSize());
-            targetPlayer->Teleport(handler->GetSession()->GetPlayer()->GetMapId(), x, y, z, targetPlayer->GetOrientation(), 0, handler->GetSession()->GetPlayer());
+            targetPlayer->Teleport(handler->GetSession()->GetPlayer()->GetMapId(), x, y, z, targetPlayer->GetFacing(), 0, handler->GetSession()->GetPlayer());
         }
         else
         {
@@ -949,7 +949,7 @@ public:
                                      handler->GetSession()->GetPlayer()->GetPositionX(),
                                      handler->GetSession()->GetPlayer()->GetPositionY(),
                                      handler->GetSession()->GetPlayer()->GetPositionZ(),
-                                     handler->GetSession()->GetPlayer()->GetOrientation(),
+                                     handler->GetSession()->GetPlayer()->GetFacing(),
                                      handler->GetSession()->GetPlayer()->GetZoneId(),
                                      target->GetGUID());
         }
@@ -1057,7 +1057,7 @@ public:
             // before GM
             float x, y, z;
             handler->GetSession()->GetPlayer()->GetClosePoint(x, y, z, player->GetObjectSize());
-            player->Teleport(handler->GetSession()->GetPlayer()->GetMapId(), x, y, z, player->GetOrientation(), 0, handler->GetSession()->GetPlayer());
+            player->Teleport(handler->GetSession()->GetPlayer()->GetMapId(), x, y, z, player->GetFacing(), 0, handler->GetSession()->GetPlayer());
         }
 
         return true;
@@ -1427,7 +1427,7 @@ public:
 
         if (location->empty() || *location == "inn")
         {
-            player->Teleport(player->m_homebindMapId, player->m_homebindX, player->m_homebindY, player->m_homebindZ, player->GetOrientation());
+            player->Teleport(player->m_homebindMapId, player->m_homebindX, player->m_homebindY, player->m_homebindZ, player->GetFacing());
             return true;
         }
 

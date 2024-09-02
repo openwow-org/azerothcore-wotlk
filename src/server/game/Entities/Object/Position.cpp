@@ -32,10 +32,10 @@ bool Position::operator==(Position const& a) const
 
 void Position::RelocatePolarOffset(float angle, float dist, float z /*= 0.0f*/)
 {
-    SetOrientation(GetOrientation() + angle);
+    SetOrientation(GetFacing() + angle);
 
-    m_positionX = GetPositionX() + dist * std::cos(GetOrientation());
-    m_positionY = GetPositionY() + dist * std::sin(GetOrientation());
+    m_positionX = GetPositionX() + dist * std::cos(GetFacing());
+    m_positionY = GetPositionY() + dist * std::sin(GetFacing());
     m_positionZ = GetPositionZ() + z;
 }
 
@@ -57,10 +57,10 @@ std::string Position::ToString() const
 
 void Position::RelocateOffset(const Position& offset)
 {
-    m_positionX = GetPositionX() + (offset.GetPositionX() * std::cos(GetOrientation()) + offset.GetPositionY() * std::sin(GetOrientation() + M_PI));
-    m_positionY = GetPositionY() + (offset.GetPositionY() * std::cos(GetOrientation()) + offset.GetPositionX() * std::sin(GetOrientation()));
+    m_positionX = GetPositionX() + (offset.GetPositionX() * std::cos(GetFacing()) + offset.GetPositionY() * std::sin(GetFacing() + M_PI));
+    m_positionY = GetPositionY() + (offset.GetPositionY() * std::cos(GetFacing()) + offset.GetPositionX() * std::sin(GetFacing()));
     m_positionZ = GetPositionZ() + offset.GetPositionZ();
-    m_orientation = GetOrientation() + offset.GetOrientation();
+    m_orientation = GetFacing() + offset.GetFacing();
 }
 
 void Position::GetPositionOffsetTo(const Position& endPos, Position& retOffset) const
@@ -68,10 +68,10 @@ void Position::GetPositionOffsetTo(const Position& endPos, Position& retOffset) 
     float dx = endPos.GetPositionX() - GetPositionX();
     float dy = endPos.GetPositionY() - GetPositionY();
 
-    retOffset.m_positionX = dx * cos(GetOrientation()) + dy * std::sin(GetOrientation());
-    retOffset.m_positionY = dy * cos(GetOrientation()) - dx * std::sin(GetOrientation());
+    retOffset.m_positionX = dx * cos(GetFacing()) + dy * std::sin(GetFacing());
+    retOffset.m_positionY = dy * cos(GetFacing()) - dx * std::sin(GetFacing());
     retOffset.m_positionZ = endPos.GetPositionZ() - GetPositionZ();
-    retOffset.m_orientation = endPos.GetOrientation() - GetOrientation();
+    retOffset.m_orientation = endPos.GetFacing() - GetFacing();
 }
 
 float Position::GetAngle(const Position* obj) const
@@ -113,7 +113,7 @@ bool Position::IsWithinBox(const Position& center, float xradius, float yradius,
     // is-in-cube check and we have to calculate only one point instead of 4
 
     // 2PI = 360*, keep in mind that ingame orientation is counter-clockwise
-    double rotation = 2 * M_PI - center.GetOrientation();
+    double rotation = 2 * M_PI - center.GetFacing();
     double sinVal = std::sin(rotation);
     double cosVal = std::cos(rotation);
 

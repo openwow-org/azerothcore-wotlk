@@ -645,7 +645,7 @@ public:
                     MountSelf();
                     if (Creature* mount = me->FindNearestCreature(NPC_SKARLOC_MOUNT, 10.0f))
                     {
-                        me->SetFacingTo(mount->GetOrientation());
+                        me->SetFacingTo(mount->GetFacing());
                         mount->DespawnOrUnsummon();
                     }
                     break;
@@ -950,7 +950,7 @@ public:
                     SetNextWaypoint(27, false);
                     break;
                 case ENCOUNTER_PROGRESS_SKARLOC_KILLED:
-                    if (Creature* mount = me->SummonCreature(NPC_SKARLOC_MOUNT, 2049.12f, 252.31f, 62.855f, me->GetOrientation(), TEMPSUMMON_MANUAL_DESPAWN))
+                    if (Creature* mount = me->SummonCreature(NPC_SKARLOC_MOUNT, 2049.12f, 252.31f, 62.855f, me->GetFacing(), TEMPSUMMON_MANUAL_DESPAWN))
                     {
                         mount->SetImmuneToNPC(true);
                         mount->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);

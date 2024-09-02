@@ -816,7 +816,7 @@ public:
         {
             me->SetNpcFlag(UNIT_NPC_FLAG_GOSSIP);
             me->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_COWER);
-            _heading = me->GetOrientation();
+            _heading = me->GetFacing();
         }
 
         void UpdateAI(uint32 diff) override

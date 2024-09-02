@@ -808,7 +808,7 @@ void User::HandlePlayerLoginFromDB(LoginQueryHolder const& holder)
     data << pCurrChar->GetPositionX();
     data << pCurrChar->GetPositionY();
     data << pCurrChar->GetPositionZ();
-    data << pCurrChar->GetOrientation();
+    data << pCurrChar->GetFacing();
     Send(&data);
 
     // load player specific part before send times
@@ -885,9 +885,9 @@ void User::HandlePlayerLoginFromDB(LoginQueryHolder const& holder)
     {
         AreaTriggerTeleport const* at = sObjectMgr->GetGoBackTrigger(pCurrChar->GetMapId());
         if (at)
-            pCurrChar->Teleport(at->target_mapId, at->target_X, at->target_Y, at->target_Z, pCurrChar->GetOrientation());
+            pCurrChar->Teleport(at->target_mapId, at->target_X, at->target_Y, at->target_Z, pCurrChar->GetFacing());
         else
-            pCurrChar->Teleport(pCurrChar->m_homebindMapId, pCurrChar->m_homebindX, pCurrChar->m_homebindY, pCurrChar->m_homebindZ, pCurrChar->GetOrientation());
+            pCurrChar->Teleport(pCurrChar->m_homebindMapId, pCurrChar->m_homebindX, pCurrChar->m_homebindY, pCurrChar->m_homebindZ, pCurrChar->GetFacing());
 
         // Probably a hackfix, but currently the best workaround to prevent character names showing as Unknown after teleport out from instances at login.
         pCurrChar->User()->SendNameQueryOpcode(pCurrChar->GetGUID());
@@ -1126,7 +1126,7 @@ void User::HandlePlayerLoginToCharInWorld(Player* pCurrChar)
     data << pCurrChar->GetPositionX();
     data << pCurrChar->GetPositionY();
     data << pCurrChar->GetPositionZ();
-    data << pCurrChar->GetOrientation();
+    data << pCurrChar->GetFacing();
     Send(&data);
 
     SendAccountDataTimes(PER_CHARACTER_CACHE_MASK);

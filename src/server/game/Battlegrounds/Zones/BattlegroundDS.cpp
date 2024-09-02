@@ -159,7 +159,7 @@ void BattlegroundDS::HandleAreaTrigger(Player* player, uint32 trigger)
         case 5326: // -10
         case 5343: // -40
         case 5344: // -60
-            player->NearTeleportTo(1330.0f, 800.0f, 3.16f, player->GetOrientation());
+            player->NearTeleportTo(1330.0f, 800.0f, 3.16f, player->GetFacing());
             break;
         /*default:
             Battleground::HandleAreaTrigger(player, trigger);

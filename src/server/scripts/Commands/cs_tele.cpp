@@ -82,7 +82,7 @@ public:
         tele.position_x  = player->GetPositionX();
         tele.position_y  = player->GetPositionY();
         tele.position_z  = player->GetPositionZ();
-        tele.orientation = player->GetOrientation();
+        tele.orientation = player->GetFacing();
         tele.mapId       = player->GetMapId();
         tele.name        = name;
 
@@ -176,7 +176,7 @@ public:
         if (where.index() == 1)    // References target's homebind
         {
             if (Player* target = player->GetConnectedPlayer())
-                target->Teleport(target->m_homebindMapId, target->m_homebindX, target->m_homebindY, target->m_homebindZ, target->GetOrientation());
+                target->Teleport(target->m_homebindMapId, target->m_homebindX, target->m_homebindY, target->m_homebindZ, target->GetFacing());
             else
             {
                 CharacterDatabasePreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SEL_CHAR_HOMEBIND);

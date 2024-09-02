@@ -1306,7 +1306,7 @@ public:
                     Talk(WHISPER_SUMMON_DICIPLE);
                     DoCastAOE(static_cast<uint32>((isCalledBySartharion ? SPELL_GIFT_OF_TWILIGHT_FIRE : SPELL_GIFT_OF_TWILIGHT_SHADOW)), true);
 
-                    if (Creature* acolyte = me->SummonCreature((isCalledBySartharion ? NPC_ACOLYTE_OF_SHADRON : NPC_DISCIPLE_OF_SHADRON), me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation()))
+                    if (Creature* acolyte = me->SummonCreature((isCalledBySartharion ? NPC_ACOLYTE_OF_SHADRON : NPC_DISCIPLE_OF_SHADRON), me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetFacing()))
                     {
                         /// @todo: inpect JustSummoned
                         summons.Summon(acolyte);
@@ -1422,7 +1422,7 @@ public:
                 {
                     Talk(WHISPER_SUMMON_DICIPLE);
                     DoCastSelf(isCalledBySartharion ? static_cast<uint32>(SPELL_TWILIGHT_TORMENT_SARTHARION) : static_cast<uint32>(SPELL_TWILIGHT_TORMENT_VESPERON), true);
-                    if (Creature* acolyte = me->SummonCreature((isCalledBySartharion ? NPC_ACOLYTE_OF_VESPERON : NPC_DISCIPLE_OF_VESPERON), me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation()))
+                    if (Creature* acolyte = me->SummonCreature((isCalledBySartharion ? NPC_ACOLYTE_OF_VESPERON : NPC_DISCIPLE_OF_VESPERON), me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetFacing()))
                     {
                         summons.Summon(acolyte);
                         acolyte->SetPhaseMask(16, true);
@@ -1590,7 +1590,7 @@ class spell_obsidian_sanctum_flame_tsunami : public SpellScript
             if (!target->HasAura(SPELL_FLAME_TSUNAMI_LEAP))
             {
                 target->CastSpell(target, SPELL_FLAME_TSUNAMI_LEAP, true);
-                bool isFacingSouth = std::fabs(GetCaster()->GetOrientation() - M_PI) < M_PI / 4;
+                bool isFacingSouth = std::fabs(GetCaster()->GetFacing() - M_PI) < M_PI / 4;
                 target->KnockbackFrom(isFacingSouth ? 3283.44f : 3208.44f , target->GetPositionY(), 12.5f, 9.0f);
             }
         }

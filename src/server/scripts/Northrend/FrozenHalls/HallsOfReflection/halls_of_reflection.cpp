@@ -2074,7 +2074,7 @@ public:
                     break;
                 case EVENT_ADD_GOSSIP:
                     me->RemoveAura(me->GetEntry() == NPC_JAINA_PART2 ? SPELL_JAINA_ICE_BARRIER : SPELL_SYLVANAS_CLOAK_OF_DARKNESS);
-                    me->SetFacingTo(LeaderEscapePos.GetOrientation());
+                    me->SetFacingTo(LeaderEscapePos.GetFacing());
                     me->SetNpcFlag(UNIT_NPC_FLAG_GOSSIP);
                     break;
                 case EVENT_START_RUN:
@@ -2117,7 +2117,7 @@ public:
                             me->CastSpell((Unit*)nullptr, (me->GetEntry() == NPC_JAINA_PART2 ? SPELL_DESTROY_WALL_JAINA : SPELL_DESTROY_WALL_SYLVANAS), false);
                         else
                         {
-                            me->SetFacingTo(PathWaypoints[PATH_WP_COUNT - 1].GetOrientation());
+                            me->SetFacingTo(PathWaypoints[PATH_WP_COUNT - 1].GetFacing());
                             me->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_ONESHOT_READY1H);
                         }
                     }

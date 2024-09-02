@@ -591,7 +591,7 @@ struct boss_jormungarAI : public ScriptedAI
                         c->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_PACIFIED);
                         c->GetMotionMaster()->MovePoint(0, Locs[LOC_CENTER].GetPositionX() + cos(angle)*dist, Locs[LOC_CENTER].GetPositionY() + std::sin(angle)*dist, me->GetPositionZ());
                     }
-                    me->UpdatePosition(Locs[LOC_CENTER].GetPositionX() + cos(angle)*dist, Locs[LOC_CENTER].GetPositionY() + std::sin(angle)*dist, me->GetPositionZ(), me->GetOrientation(), true);
+                    me->UpdatePosition(Locs[LOC_CENTER].GetPositionX() + cos(angle)*dist, Locs[LOC_CENTER].GetPositionY() + std::sin(angle)*dist, me->GetPositionZ(), me->GetFacing(), true);
                     me->StopMovingOnCurrentPos();
                     DoResetThreatList();
 
@@ -991,7 +991,7 @@ public:
                     // no PopEvent() intended!
                     break;
                 case EVENT_REFRESH_POSITION:
-                    //me->SetFacingTo(me->GetOrientation());
+                    //me->SetFacingTo(me->GetFacing());
 
                     break;
             }

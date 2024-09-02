@@ -5136,7 +5136,7 @@ bool Player::LoadFromDB(WOWGUID playerGuid, CharacterDatabaseQueryHolder const& 
 
     if (!mapEntry || !IsPositionValid())
     {
-        LOG_ERROR("entities.player", "Player (guidlow {}) have invalid coordinates (MapId: {} X: {} Y: {} Z: {} O: {}). Teleport to default race/class locations.", guid, mapId, GetPositionX(), GetPositionY(), GetPositionZ(), GetOrientation());
+        LOG_ERROR("entities.player", "Player (guidlow {}) have invalid coordinates (MapId: {} X: {} Y: {} Z: {} O: {}). Teleport to default race/class locations.", guid, mapId, GetPositionX(), GetPositionY(), GetPositionZ(), GetFacing());
         RelocateToHomebind();
     }
         // Player was saved in Arena or Bg
@@ -5285,13 +5285,13 @@ bool Player::LoadFromDB(WOWGUID playerGuid, CharacterDatabaseQueryHolder const& 
         AreaTriggerTeleport const* at = sObjectMgr->GetGoBackTrigger(mapId);
         if (at)
         {
-            LOG_ERROR("entities.player", "Player (guidlow {}) is teleported to gobacktrigger (Map: {} X: {} Y: {} Z: {} O: {}).", guid, mapId, GetPositionX(), GetPositionY(), GetPositionZ(), GetOrientation());
-            Relocate(at->target_X, at->target_Y, at->target_Z, GetOrientation());
+            LOG_ERROR("entities.player", "Player (guidlow {}) is teleported to gobacktrigger (Map: {} X: {} Y: {} Z: {} O: {}).", guid, mapId, GetPositionX(), GetPositionY(), GetPositionZ(), GetFacing());
+            Relocate(at->target_X, at->target_Y, at->target_Z, GetFacing());
             mapId = at->target_mapId;
         }
         else
         {
-            LOG_ERROR("entities.player", "Player (guidlow {}) is teleported to home (Map: {} X: {} Y: {} Z: {} O: {}).", guid, mapId, GetPositionX(), GetPositionY(), GetPositionZ(), GetOrientation());
+            LOG_ERROR("entities.player", "Player (guidlow {}) is teleported to home (Map: {} X: {} Y: {} Z: {} O: {}).", guid, mapId, GetPositionX(), GetPositionY(), GetPositionZ(), GetFacing());
             RelocateToHomebind();
         }
 
@@ -5301,11 +5301,11 @@ bool Player::LoadFromDB(WOWGUID playerGuid, CharacterDatabaseQueryHolder const& 
             PlayerInfo const* info = sObjectMgr->GetPlayerInfo(getRace(true), getClass());
             mapId = info->mapId;
             Relocate(info->positionX, info->positionY, info->positionZ, 0.0f);
-            LOG_ERROR("entities.player", "Player (guidlow {}) have invalid coordinates (X: {} Y: {} Z: {} O: {}). Teleport to default race/class locations.", guid, GetPositionX(), GetPositionY(), GetPositionZ(), GetOrientation());
+            LOG_ERROR("entities.player", "Player (guidlow {}) have invalid coordinates (X: {} Y: {} Z: {} O: {}). Teleport to default race/class locations.", guid, GetPositionX(), GetPositionY(), GetPositionZ(), GetFacing());
             map = sMapMgr->CreateMap(mapId, this);
             if (!map)
             {
-                LOG_ERROR("entities.player", "Player (guidlow {}) has invalid default map coordinates (X: {} Y: {} Z: {} O: {}). or instance couldn't be created", guid, GetPositionX(), GetPositionY(), GetPositionZ(), GetOrientation());
+                LOG_ERROR("entities.player", "Player (guidlow {}) has invalid default map coordinates (X: {} Y: {} Z: {} O: {}). or instance couldn't be created", guid, GetPositionX(), GetPositionY(), GetPositionZ(), GetFacing());
                 return false;
             }
         }

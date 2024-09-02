@@ -44,7 +44,7 @@ void BattlegroundRV::TeleportUnitToNewZ(Unit* unit, float newZ, bool casting)
     if (!unit->IsAlive())
         return;
 
-    unit->NearTeleportTo(unit->GetPositionX(), unit->GetPositionY(), newZ, unit->GetOrientation(), casting);
+    unit->NearTeleportTo(unit->GetPositionX(), unit->GetPositionY(), newZ, unit->GetFacing(), casting);
     unit->m_positionZ = newZ;
 }
 
@@ -195,10 +195,10 @@ void BattlegroundRV::HandleAreaTrigger(Player* player, uint32 trigger)
             break;
         // OUTSIDE OF ARENA, TELEPORT!
         case 5224:
-            player->NearTeleportTo(765.0f, -294.0f, 28.3f, player->GetOrientation());
+            player->NearTeleportTo(765.0f, -294.0f, 28.3f, player->GetFacing());
             break;
         case 5226:
-            player->NearTeleportTo(765.0f, -272.0f, 28.3f, player->GetOrientation());
+            player->NearTeleportTo(765.0f, -272.0f, 28.3f, player->GetFacing());
             break;
         case 5447:
             player->NearTeleportTo(763.5f, -284, 28.276f, 2.422f);

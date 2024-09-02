@@ -588,8 +588,8 @@ public:
                     me->RemoveAurasDueToSpell(SPELL_FROST_SPHERE);
                     me->SetDisplayId(11686);
                     me->SetObjectScale(2.0f);
-                    me->UpdatePosition(me->GetPositionX(), me->GetPositionY(), 142.7f, me->GetOrientation(), false);
-                    me->SetFacingTo(me->GetOrientation());
+                    me->UpdatePosition(me->GetPositionX(), me->GetPositionY(), 142.7f, me->GetFacing(), false);
+                    me->SetFacingTo(me->GetFacing());
                     me->CastSpell(me, SPELL_PERMAFROST_VISUAL, true);
                     me->CastSpell(me, SPELL_PERMAFROST, true);
                     me->SetCanFly(false);
@@ -647,12 +647,12 @@ public:
 
             if( spell->Id == SPELL_SHADOW_STRIKE )
             {
-                float o = target->GetOrientation();
+                float o = target->GetFacing();
                 if( o >= M_PI )
                     o -= M_PI;
                 else
                     o += M_PI;
-                me->NearTeleportTo(target->GetPositionX() + cos(o) * 5.0f, target->GetPositionY() + std::sin(o) * 5.0f, target->GetPositionZ() + 0.6f, target->GetOrientation());
+                me->NearTeleportTo(target->GetPositionX() + cos(o) * 5.0f, target->GetPositionY() + std::sin(o) * 5.0f, target->GetPositionZ() + 0.6f, target->GetFacing());
                 AttackStart(target);
                 me->GetMotionMaster()->MoveChase(target);
                 events.DelayEvents(3000);

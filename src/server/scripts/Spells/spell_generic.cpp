@@ -2075,7 +2075,7 @@ class spell_spawn_blood_pool : public SpellScript
         LiquidData liquidStatus = caster->GetMap()->GetLiquidData(caster->GetPhaseMask(), caster->GetPositionX(), caster->GetPositionY(), caster->GetPositionZ(), caster->GetCollisionHeight(), MAP_ALL_LIQUIDS);
 
         float level = liquidStatus.Level > INVALID_HEIGHT ? liquidStatus.Level : caster->GetPositionZ();
-        Position pos = Position(caster->GetPositionX(), caster->GetPositionY(), level, caster->GetOrientation());
+        Position pos = Position(caster->GetPositionX(), caster->GetPositionY(), level, caster->GetFacing());
         dest.Relocate(pos);
     }
 

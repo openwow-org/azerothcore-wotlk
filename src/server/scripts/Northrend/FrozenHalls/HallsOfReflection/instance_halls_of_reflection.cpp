@@ -109,7 +109,7 @@ public:
                     _owner.SetReactState(REACT_PASSIVE);
                     _owner.SetImmuneToAll(true);
                     _owner.SetVisible(false);
-                    _owner.UpdatePosition(homePos.GetPositionX(), homePos.GetPositionY(), homePos.GetPositionZ(), homePos.GetOrientation(), true);
+                    _owner.UpdatePosition(homePos.GetPositionX(), homePos.GetPositionY(), homePos.GetPositionZ(), homePos.GetFacing(), true);
                     _owner.StopMovingOnCurrentPos();
                     _owner.GetMotionMaster()->Clear();
                     if (InstanceScript* instance = _owner.GetInstanceScript())
@@ -1146,12 +1146,12 @@ public:
                                 uint8 index = TeamIdInInstance == TEAM_ALLIANCE ? 0 : 1;
                                 for (uint8 i = 0; i < 3; ++i)
                                     if (StairsPos[index][i].GetPositionX())
-                                        if (GameObject* go = leader->SummonGameObject(TeamIdInInstance == TEAM_ALLIANCE ? GO_STAIRS_ALLIANCE : GO_STAIRS_HORDE, StairsPos[index][i].GetPositionX(), StairsPos[index][i].GetPositionY(), StairsPos[index][i].GetPositionZ(), StairsPos[index][i].GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 86400, false))
+                                        if (GameObject* go = leader->SummonGameObject(TeamIdInInstance == TEAM_ALLIANCE ? GO_STAIRS_ALLIANCE : GO_STAIRS_HORDE, StairsPos[index][i].GetPositionX(), StairsPos[index][i].GetPositionY(), StairsPos[index][i].GetPositionZ(), StairsPos[index][i].GetFacing(), 0.0f, 0.0f, 0.0f, 0.0f, 86400, false))
                                             go->SetGameObjectFlag(GO_FLAG_INTERACT_COND | GO_FLAG_NOT_SELECTABLE);
                                 //Position pos = TeamIdInInstance == TEAM_ALLIANCE ? AllyPortalPos : HordePortalPos;
-                                //leader->SummonGameObject(GO_PORTAL_TO_DALARAN, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 86400);
+                                //leader->SummonGameObject(GO_PORTAL_TO_DALARAN, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetFacing(), 0.0f, 0.0f, 0.0f, 0.0f, 86400);
                                 //pos = TeamIdInInstance == TEAM_ALLIANCE ? AllyChestPos : HordeChestPos;
-                                //leader->SummonGameObject(instance->GetSpawnMode() ? GO_CHEST_HEROIC : GO_CHEST_NORMAL, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 86400);
+                                //leader->SummonGameObject(instance->GetSpawnMode() ? GO_CHEST_HEROIC : GO_CHEST_NORMAL, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetFacing(), 0.0f, 0.0f, 0.0f, 0.0f, 86400);
                             }
                             ++outroStep;
                             outroTimer = 1000;

@@ -420,7 +420,7 @@ struct npc_dark_iron_attack_generator : public ScriptedAI
                         thrown = 0;
                         sayer->Say("SOMEONE TRY THIS SUPER BREW!", LANG_UNIVERSAL);
                         //sayer->CastSpell(sayer, SPELL_CREATE_SUPER_BREW, true);
-                        sayer->SummonCreature(NPC_SUPER_BREW_TRIGGER, sayer->GetPositionX() + 15 * cos(sayer->GetOrientation()), sayer->GetPositionY() + 15 * std::sin(sayer->GetOrientation()), sayer->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 30000);
+                        sayer->SummonCreature(NPC_SUPER_BREW_TRIGGER, sayer->GetPositionX() + 15 * cos(sayer->GetFacing()), sayer->GetPositionY() + 15 * std::sin(sayer->GetFacing()), sayer->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 30000);
                     }
                     else
                     {
@@ -1216,7 +1216,7 @@ class spell_brewfest_toss_mug : public SpellScript
             if (!GetCaster() || target->GetGUID() == GetCaster()->GetGUID())
                 return;
 
-            WorldLocation pPosition = WorldLocation(target->GetMapId(), target->GetPositionX(), target->GetPositionY(), target->GetPositionZ() + 4.0f, target->GetOrientation());
+            WorldLocation pPosition = WorldLocation(target->GetMapId(), target->GetPositionX(), target->GetPositionY(), target->GetPositionZ() + 4.0f, target->GetFacing());
             SetExplTargetDest(pPosition);
         }
     }

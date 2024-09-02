@@ -622,7 +622,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
             Unit* caster = me;
             // Areatrigger Cast!
             if (e.GetScriptType() == SMART_SCRIPT_TYPE_AREATRIGGER)
-                caster = unit->SummonTrigger(unit->GetPositionX(), unit->GetPositionY(), unit->GetPositionZ(), unit->GetOrientation(), 5000);
+                caster = unit->SummonTrigger(unit->GetPositionX(), unit->GetPositionY(), unit->GetPositionZ(), unit->GetFacing(), 5000);
 
             if (e.action.cast.targetsLimit)
                 Acore::Containers::RandomResize(targets, e.action.cast.targetsLimit);
@@ -1550,7 +1550,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                     if (!e.action.summonGO.targetsummon)
                         GetBaseObject()->SummonGameObject(e.action.summonGO.entry, x, y, z, o, 0, 0, 0, 0, e.action.summonGO.despawnTime);
                     else
-                        target->SummonGameObject(e.action.summonGO.entry, GetBaseObject()->GetPositionX(), GetBaseObject()->GetPositionY(), GetBaseObject()->GetPositionZ(), GetBaseObject()->GetOrientation(), 0, 0, 0, 0, e.action.summonGO.despawnTime);
+                        target->SummonGameObject(e.action.summonGO.entry, GetBaseObject()->GetPositionX(), GetBaseObject()->GetPositionY(), GetBaseObject()->GetPositionZ(), GetBaseObject()->GetFacing(), 0, 0, 0, 0, e.action.summonGO.despawnTime);
                 }
             }
 
@@ -1749,7 +1749,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
 
             if (e.action.orientation.turnAngle)
             {
-                float turnOri = me->GetOrientation() + (static_cast<float>(e.action.orientation.turnAngle) * M_PI / 180.0f);
+                float turnOri = me->GetFacing() + (static_cast<float>(e.action.orientation.turnAngle) * M_PI / 180.0f);
                 me->SetFacingTo(turnOri);
                 if (e.action.orientation.quickChange)
                     me->SetOrientation(turnOri);
@@ -1758,9 +1758,9 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
 
             if (e.GetTargetType() == SMART_TARGET_SELF)
             {
-                me->SetFacingTo((me->HasUnitMovementFlag(MOVEFLAG_IMMOBILIZED) && me->GetTransGUID() ? me->GetTransportHomePosition() : me->GetHomePosition()).GetOrientation());
+                me->SetFacingTo((me->HasUnitMovementFlag(MOVEFLAG_IMMOBILIZED) && me->GetTransGUID() ? me->GetTransportHomePosition() : me->GetHomePosition()).GetFacing());
                 if (e.action.orientation.quickChange)
-                    me->SetOrientation((me->HasUnitMovementFlag(MOVEFLAG_IMMOBILIZED) && me->GetTransGUID() ? me->GetTransportHomePosition() : me->GetHomePosition()).GetOrientation());
+                    me->SetOrientation((me->HasUnitMovementFlag(MOVEFLAG_IMMOBILIZED) && me->GetTransGUID() ? me->GetTransportHomePosition() : me->GetHomePosition()).GetFacing());
             }
             else if (e.GetTargetType() == SMART_TARGET_POSITION)
             {
@@ -2346,7 +2346,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                             target->ToCreature()->SetHomePosition(x, y, z, o);
                         }
                         else
-                            target->ToCreature()->SetHomePosition(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), target->GetOrientation());
+                            target->ToCreature()->SetHomePosition(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), target->GetFacing());
                     }
             }
             else if (me && e.GetTargetType() == SMART_TARGET_POSITION)
@@ -2728,7 +2728,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
             {
                 // Offset by orientation, should not count into radius calculation,
                 // but is needed for vortex direction (polar coordinates)
-                float phi = target->GetOrientation();
+                float phi = target->GetFacing();
 
                 do
                 {
@@ -2767,10 +2767,10 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                 float currentAngle = -static_cast<float>(count) * deltaAngle / 2.0f;
 
                 if (e.GetTargetType() == SMART_TARGET_SELF || e.GetTargetType() == SMART_TARGET_NONE)
-                    currentAngle += G3D::fuzzyGt(e.target.o, 0.0f) ? (e.target.o - me->GetOrientation()) : 0.0f;
+                    currentAngle += G3D::fuzzyGt(e.target.o, 0.0f) ? (e.target.o - me->GetFacing()) : 0.0f;
                 else if (!targets.empty())
                 {
-                    currentAngle += (me->GetAngle(targets.front()) - me->GetOrientation());
+                    currentAngle += (me->GetAngle(targets.front()) - me->GetFacing());
                 }
 
                 for (uint32 index = 0; index < count; ++index)
@@ -2949,7 +2949,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
 
             TempSummonType spawnType = (e.action.radialSummon.summonDuration > 0) ? TEMPSUMMON_TIMED_DESPAWN : TEMPSUMMON_CORPSE_DESPAWN;
 
-            float startAngle = me->GetOrientation() + (static_cast<float>(e.action.radialSummon.startAngle) * M_PI / 180.0f);
+            float startAngle = me->GetFacing() + (static_cast<float>(e.action.radialSummon.startAngle) * M_PI / 180.0f);
             float stepAngle = static_cast<float>(e.action.radialSummon.stepAngle) * M_PI / 180.0f;
 
             if (e.action.radialSummon.dist)
@@ -3085,7 +3085,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                 case 0: // Reset
                 {
                     for (WorldObject* target : targets)
-                        target->ToCreature()->SetFacingTo((target->ToCreature()->HasUnitMovementFlag(MOVEFLAG_IMMOBILIZED) && target->ToCreature()->GetTransGUID() ? target->ToCreature()->GetTransportHomePosition() : target->ToCreature()->GetHomePosition()).GetOrientation());
+                        target->ToCreature()->SetFacingTo((target->ToCreature()->HasUnitMovementFlag(MOVEFLAG_IMMOBILIZED) && target->ToCreature()->GetTransGUID() ? target->ToCreature()->GetTransportHomePosition() : target->ToCreature()->GetHomePosition()).GetFacing());
 
                     break;
                 }

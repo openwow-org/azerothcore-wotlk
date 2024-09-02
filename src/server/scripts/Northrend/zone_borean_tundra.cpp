@@ -718,7 +718,7 @@ public:
             rebuff = 0;
 
             // xinef: correct visuals
-            me->UpdatePosition(me->GetPositionX(), me->GetPositionY(), 150.517f, me->GetOrientation(), true);
+            me->UpdatePosition(me->GetPositionX(), me->GetPositionY(), 150.517f, me->GetFacing(), true);
             me->SetStandState(UNIT_SITTINGCHAIRMEDIUM);
         }
 
@@ -1363,7 +1363,7 @@ public:
                         _events.ScheduleEvent(EVENT_RESET_ORIENTATION, 5s);
                         break;
                     case EVENT_RESET_ORIENTATION:
-                        me->SetFacingTo(me->GetHomePosition().GetOrientation());
+                        me->SetFacingTo(me->GetHomePosition().GetFacing());
                         break;
                 }
             }
@@ -1663,7 +1663,7 @@ public:
                     case EVENT_THASSARIAN_SCRIPT_9:
                         // Thassarian say text 2
                         Talk(SAY_THASSARIAN_2);
-                        me->SetHomePosition(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation());
+                        me->SetHomePosition(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetFacing());
                         _events.ScheduleEvent(EVENT_THASSARIAN_SCRIPT_10, 6s);
                         break;
                     case EVENT_THASSARIAN_SCRIPT_10:

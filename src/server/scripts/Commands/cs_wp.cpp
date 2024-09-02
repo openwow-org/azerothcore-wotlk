@@ -688,7 +688,7 @@ public:
                     }
                     // re-create
                     Creature* wpCreature2 = new Creature;
-                    if (!wpCreature2->Create(map->GenerateLowGuid<HighGuid::Unit>(), map, chr->GetPhaseMaskForSpawn(), VISUAL_WAYPOINT, 0, chr->GetPositionX(), chr->GetPositionY(), chr->GetPositionZ(), chr->GetOrientation()))
+                    if (!wpCreature2->Create(map->GenerateLowGuid<HighGuid::Unit>(), map, chr->GetPhaseMaskForSpawn(), VISUAL_WAYPOINT, 0, chr->GetPositionX(), chr->GetPositionY(), chr->GetPositionZ(), chr->GetFacing()))
                     {
                         handler->PSendSysMessage(LANG_WAYPOINT_VP_NOTCREATED, VISUAL_WAYPOINT);
                         delete wpCreature2;
@@ -902,7 +902,7 @@ public:
 
                 Player* chr = handler->GetSession()->GetPlayer();
                 Map* map = chr->GetMap();
-                float o = chr->GetOrientation();
+                float o = chr->GetFacing();
 
                 Creature* wpCreature = new Creature;
                 if (!wpCreature->Create(map->GenerateLowGuid<HighGuid::Unit>(), map, chr->GetPhaseMaskForSpawn(), id, 0, x, y, z, o))
@@ -962,7 +962,7 @@ public:
             uint32 id = VISUAL_WAYPOINT;
 
             Player* chr = handler->GetSession()->GetPlayer();
-            float o = chr->GetOrientation();
+            float o = chr->GetFacing();
             Map* map = chr->GetMap();
 
             Creature* creature = new Creature;

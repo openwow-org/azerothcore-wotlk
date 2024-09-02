@@ -425,7 +425,7 @@ public:
             if (!_spawnedMechanic && me->HealthBelowPctDamaged(20, damage))
             {
                 _spawnedMechanic = true;
-                if (Creature* c = me->SummonCreature(34184, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation(), TEMPSUMMON_MANUAL_DESPAWN, 0))
+                if (Creature* c = me->SummonCreature(34184, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetFacing(), TEMPSUMMON_MANUAL_DESPAWN, 0))
                     c->AI()->AttackStart(me->GetVictim());
                 me->InterruptNonMeleeSpells(false);
                 me->CombatStop(true);

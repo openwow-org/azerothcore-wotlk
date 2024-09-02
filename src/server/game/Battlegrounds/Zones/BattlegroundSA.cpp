@@ -911,7 +911,7 @@ void BattlegroundSA::CaptureGraveyard(BG_SA_Graveyards i, Player* Source)
                 ClosestGrave = GetClosestGraveyard(player);
 
             if (ClosestGrave)
-                player->Teleport(GetMapId(), ClosestGrave->x, ClosestGrave->y, ClosestGrave->z, player->GetOrientation());
+                player->Teleport(GetMapId(), ClosestGrave->x, ClosestGrave->y, ClosestGrave->z, player->GetFacing());
         }
 
         // xinef: clear resurrect queue for this creature

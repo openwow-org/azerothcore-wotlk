@@ -334,7 +334,7 @@ class spell_wailing_souls_periodic_aura : public AuraScript
             {
                 // spinning, casting, etc.
                 float diff = (2 * M_PI) / (4 * 30);
-                float new_o = t->GetOrientation() + diff * dir;
+                float new_o = t->GetFacing() + diff * dir;
                 if (new_o >= 2 * M_PI)
                     new_o -= 2 * M_PI;
                 else if (new_o < 0)

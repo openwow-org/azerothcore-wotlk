@@ -1353,7 +1353,7 @@ void User::HandleSetRaidDifficultyOpcode(WDataStore& recv_data)
             for (std::map<Player*, Position>::iterator itr = playerTeleport.begin(); itr != playerTeleport.end(); ++itr)
             {
                 itr->first->SetRaidDifficulty(Difficulty(mode)); // needed for teleport not to fail
-                if (!itr->first->Teleport(*(foundMaps.begin()), itr->second.GetPositionX(), itr->second.GetPositionY(), itr->second.GetPositionZ(), itr->second.GetOrientation()))
+                if (!itr->first->Teleport(*(foundMaps.begin()), itr->second.GetPositionX(), itr->second.GetPositionY(), itr->second.GetPositionZ(), itr->second.GetFacing()))
                     itr->first->User()->KickPlayer("HandleSetRaidDifficultyOpcode 2");
             }
         }
@@ -1555,7 +1555,7 @@ void User::HandleHearthAndResurrect(WDataStore& /*recv_data*/)
     m_player->BuildPlayerRepop();
     m_player->Resurrect(1.0f);
     m_player->SpawnCorpseBones();
-    m_player->Teleport(m_player->m_homebindMapId, m_player->m_homebindX, m_player->m_homebindY, m_player->m_homebindZ, m_player->GetOrientation());
+    m_player->Teleport(m_player->m_homebindMapId, m_player->m_homebindX, m_player->m_homebindY, m_player->m_homebindZ, m_player->GetFacing());
 }
 
 void User::HandleInstanceLockResponse(WDataStore& recvPacket)

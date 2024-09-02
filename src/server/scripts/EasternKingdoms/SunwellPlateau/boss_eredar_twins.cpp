@@ -206,7 +206,7 @@ public:
                         break;
                     }
                 case EVENT_SHADOW_IMAGE:
-                    me->SummonCreature(NPC_SHADOW_IMAGE, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN, 12000);
+                    me->SummonCreature(NPC_SHADOW_IMAGE, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetFacing(), TEMPSUMMON_TIMED_DESPAWN, 12000);
                     events.ScheduleEvent(EVENT_SHADOW_IMAGE, 6000);
                     break;
                 case EVENT_SPELL_CONFLAGRATION:

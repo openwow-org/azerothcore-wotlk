@@ -117,7 +117,7 @@ struct Position
     [[nodiscard]] float GetPositionX() const { return m_positionX; }
     [[nodiscard]] float GetPositionY() const { return m_positionY; }
     [[nodiscard]] float GetPositionZ() const { return m_positionZ; }
-    [[nodiscard]] float GetOrientation() const { return m_orientation; }
+    [[nodiscard]] float GetFacing() const { return m_orientation; }
 
     void GetPosition(float& x, float& y) const
     {
@@ -299,14 +299,14 @@ public:
         x = m_positionX;
         y = m_positionY;
         z = m_positionZ;
-        o = GetOrientation();
+        o = GetFacing();
     }
 
     void GetWorldLocation(WorldLocation* location) const
     {
         if (location)
         {
-            location->Relocate(m_positionX, m_positionY, m_positionZ, GetOrientation());
+            location->Relocate(m_positionX, m_positionY, m_positionZ, GetFacing());
             location->SetMapId(m_mapId);
         }
     }

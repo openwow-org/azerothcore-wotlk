@@ -152,7 +152,7 @@ public:
                     case EVENT_AMBUSH:
                         if (Unit* target = SelectTarget(SelectTargetMethod::Random, 1))
                         {
-                            me->NearTeleportTo(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), me->GetOrientation());
+                            me->NearTeleportTo(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), me->GetFacing());
                             DoCast(target, SPELL_AMBUSH, true);
                         }
                         me->SetDynamicFlag(_dynamicFlags);

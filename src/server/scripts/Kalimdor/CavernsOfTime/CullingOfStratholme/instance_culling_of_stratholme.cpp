@@ -320,34 +320,34 @@ public:
                 case COS_PROGRESS_FINISHED_INTRO:
                     arthas->UpdatePosition(LeaderIntroPos2, true);
                     arthas->SetHomePosition(LeaderIntroPos2);
-                    arthas->SetFacingTo(LeaderIntroPos2.GetOrientation());
+                    arthas->SetFacingTo(LeaderIntroPos2.GetFacing());
                     break;
                 case COS_PROGRESS_FINISHED_CITY_INTRO:
                 case COS_PROGRESS_KILLED_MEATHOOK:
                 case COS_PROGRESS_KILLED_SALRAMM:
                     arthas->UpdatePosition(LeaderIntroPos2special, true);
                     arthas->SetHomePosition(LeaderIntroPos2special);
-                    arthas->SetFacingTo(LeaderIntroPos2special.GetOrientation());
+                    arthas->SetFacingTo(LeaderIntroPos2special.GetFacing());
                     break;
                 case COS_PROGRESS_REACHED_TOWN_HALL:
                     arthas->UpdatePosition(LeaderIntroPos3, true);
                     arthas->SetHomePosition(LeaderIntroPos3);
-                    arthas->SetFacingTo(LeaderIntroPos3.GetOrientation());
+                    arthas->SetFacingTo(LeaderIntroPos3.GetFacing());
                     break;
                 case COS_PROGRESS_KILLED_EPOCH:
                     arthas->UpdatePosition(LeaderIntroPos4, true);
                     arthas->SetHomePosition(LeaderIntroPos4);
-                    arthas->SetFacingTo(LeaderIntroPos4.GetOrientation());
+                    arthas->SetFacingTo(LeaderIntroPos4.GetFacing());
                     break;
                 case COS_PROGRESS_LAST_CITY:
                     arthas->UpdatePosition(LeaderIntroPos5, true);
                     arthas->SetHomePosition(LeaderIntroPos5);
-                    arthas->SetFacingTo(LeaderIntroPos5.GetOrientation());
+                    arthas->SetFacingTo(LeaderIntroPos5.GetFacing());
                     break;
                 case COS_PROGRESS_BEFORE_MALGANIS:
                     arthas->UpdatePosition(LeaderIntroPos6, true);
                     arthas->SetHomePosition(LeaderIntroPos6);
-                    arthas->SetFacingTo(LeaderIntroPos6.GetOrientation());
+                    arthas->SetFacingTo(LeaderIntroPos6.GetFacing());
                     break;
             }
         }

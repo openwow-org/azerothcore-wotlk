@@ -85,7 +85,7 @@ public:
                     barrett->SetVisible(false);
                     if (AttemptsLeft)
                         if (!ObjectAccessor::GetCreature(*barrett, NPC_AnubarakGUID))
-                            barrett->SummonCreature(NPC_ANUBARAK, Locs[LOC_ANUB].GetPositionX(), Locs[LOC_ANUB].GetPositionY(), Locs[LOC_ANUB].GetPositionZ(), Locs[LOC_ANUB].GetOrientation(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 630000000);
+                            barrett->SummonCreature(NPC_ANUBARAK, Locs[LOC_ANUB].GetPositionX(), Locs[LOC_ANUB].GetPositionY(), Locs[LOC_ANUB].GetPositionZ(), Locs[LOC_ANUB].GetFacing(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 630000000);
                 }
 
                 // move corpses
@@ -443,7 +443,7 @@ public:
                                         break;
                                 }
 
-                                if (GameObject* go = c->SummonGameObject(cacheEntry, Locs[LOC_CENTER].GetPositionX(), Locs[LOC_CENTER].GetPositionY(), Locs[LOC_CENTER].GetPositionZ(), Locs[LOC_CENTER].GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 630000000))
+                                if (GameObject* go = c->SummonGameObject(cacheEntry, Locs[LOC_CENTER].GetPositionX(), Locs[LOC_CENTER].GetPositionY(), Locs[LOC_CENTER].GetPositionZ(), Locs[LOC_CENTER].GetFacing(), 0.0f, 0.0f, 0.0f, 0.0f, 630000000))
                                 {
                                     go->SetLootRecipient(instance);
                                 }
@@ -516,7 +516,7 @@ public:
                         {
                             c->UpdatePosition(Locs[LOC_TIRION_FINAL], true);
                             c->StopMovingOnCurrentPos();
-                            c->SetFacingTo(Locs[LOC_TIRION_FINAL].GetOrientation());
+                            c->SetFacingTo(Locs[LOC_TIRION_FINAL].GetFacing());
                             events.RescheduleEvent(EVENT_SCENE_501, 20000);
                         }
                         if( GameObject* floor = instance->GetGameObject(GO_FloorGUID) )
@@ -648,7 +648,7 @@ public:
                 case EVENT_SUMMON_GORMOK:
                     {
                         if( Creature* c = instance->GetCreature(NPC_TirionGUID) )
-                            if( Creature* gormok = c->SummonCreature(NPC_GORMOK, Locs[LOC_BEHIND_GATE].GetPositionX(), Locs[LOC_BEHIND_GATE].GetPositionY(), Locs[LOC_BEHIND_GATE].GetPositionZ(), Locs[LOC_BEHIND_GATE].GetOrientation(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000) )
+                            if( Creature* gormok = c->SummonCreature(NPC_GORMOK, Locs[LOC_BEHIND_GATE].GetPositionX(), Locs[LOC_BEHIND_GATE].GetPositionY(), Locs[LOC_BEHIND_GATE].GetPositionZ(), Locs[LOC_BEHIND_GATE].GetFacing(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000) )
                                 gormok->GetMotionMaster()->MovePoint(0, Locs[LOC_GATE_FRONT].GetPositionX(), Locs[LOC_GATE_FRONT].GetPositionY(), Locs[LOC_GATE_FRONT].GetPositionZ());
 
                         events.RescheduleEvent(EVENT_GORMOK_ATTACK, 10000);
@@ -685,9 +685,9 @@ public:
                     {
                         if( Creature* c = instance->GetCreature(NPC_TirionGUID) )
                         {
-                            if( Creature* dreadscale = c->SummonCreature(NPC_DREADSCALE, Locs[LOC_BEHIND_GATE].GetPositionX(), Locs[LOC_BEHIND_GATE].GetPositionY(), Locs[LOC_BEHIND_GATE].GetPositionZ(), Locs[LOC_BEHIND_GATE].GetOrientation(), TEMPSUMMON_MANUAL_DESPAWN) )
+                            if( Creature* dreadscale = c->SummonCreature(NPC_DREADSCALE, Locs[LOC_BEHIND_GATE].GetPositionX(), Locs[LOC_BEHIND_GATE].GetPositionY(), Locs[LOC_BEHIND_GATE].GetPositionZ(), Locs[LOC_BEHIND_GATE].GetFacing(), TEMPSUMMON_MANUAL_DESPAWN) )
                                 dreadscale->GetMotionMaster()->MovePoint(0, Locs[LOC_BEHIND_GATE].GetPositionX(), Locs[LOC_BEHIND_GATE].GetPositionY() - 25.0f, Locs[LOC_BEHIND_GATE].GetPositionZ());
-                            if( Creature* acidmaw = c->SummonCreature(NPC_ACIDMAW, Locs[LOC_ACIDMAW].GetPositionX(), Locs[LOC_ACIDMAW].GetPositionY(), Locs[LOC_ACIDMAW].GetPositionZ(), Locs[LOC_ACIDMAW].GetOrientation(), TEMPSUMMON_MANUAL_DESPAWN) )
+                            if( Creature* acidmaw = c->SummonCreature(NPC_ACIDMAW, Locs[LOC_ACIDMAW].GetPositionX(), Locs[LOC_ACIDMAW].GetPositionY(), Locs[LOC_ACIDMAW].GetPositionZ(), Locs[LOC_ACIDMAW].GetFacing(), TEMPSUMMON_MANUAL_DESPAWN) )
                                 acidmaw->AddAura(53421, acidmaw);
                         }
 
@@ -745,7 +745,7 @@ public:
                 case EVENT_SUMMON_ICEHOWL:
                     {
                         if( Creature* c = instance->GetCreature(NPC_TirionGUID) )
-                            if( Creature* icehowl = c->SummonCreature(NPC_ICEHOWL, Locs[LOC_BEHIND_GATE].GetPositionX(), Locs[LOC_BEHIND_GATE].GetPositionY(), Locs[LOC_BEHIND_GATE].GetPositionZ(), Locs[LOC_BEHIND_GATE].GetOrientation(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 630000000) )
+                            if( Creature* icehowl = c->SummonCreature(NPC_ICEHOWL, Locs[LOC_BEHIND_GATE].GetPositionX(), Locs[LOC_BEHIND_GATE].GetPositionY(), Locs[LOC_BEHIND_GATE].GetPositionZ(), Locs[LOC_BEHIND_GATE].GetFacing(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 630000000) )
                                 icehowl->GetMotionMaster()->MovePoint(0, Locs[LOC_GATE_FRONT].GetPositionX(), Locs[LOC_GATE_FRONT].GetPositionY(), Locs[LOC_GATE_FRONT].GetPositionZ());
 
                         events.RescheduleEvent(EVENT_ICEHOWL_ATTACK, 10000);
@@ -781,7 +781,7 @@ public:
                         {
                             HandleGameObject(GO_MainGateGUID, true);
                             c->AI()->Talk(SAY_STAGE_1_01);
-                            if( Creature* fizzlebang = c->SummonCreature(NPC_FIZZLEBANG, Locs[LOC_BEHIND_GATE].GetPositionX(), Locs[LOC_BEHIND_GATE].GetPositionY(), Locs[LOC_BEHIND_GATE].GetPositionZ(), Locs[LOC_BEHIND_GATE].GetOrientation(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 300000) )
+                            if( Creature* fizzlebang = c->SummonCreature(NPC_FIZZLEBANG, Locs[LOC_BEHIND_GATE].GetPositionX(), Locs[LOC_BEHIND_GATE].GetPositionY(), Locs[LOC_BEHIND_GATE].GetPositionZ(), Locs[LOC_BEHIND_GATE].GetFacing(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 300000) )
                             {
                                 fizzlebang->AddUnitMovementFlag(MOVEFLAG_WALK);
                                 fizzlebang->GetMotionMaster()->MovePoint(0, Locs[LOC_BEHIND_GATE].GetPositionX(), Locs[LOC_BEHIND_GATE].GetPositionY() - 65.0f, Locs[LOC_BEHIND_GATE].GetPositionZ() - 1.0f);
@@ -813,7 +813,7 @@ public:
                         {
                             c->AI()->Talk(SAY_STAGE_1_03);
                             c->HandleEmoteCommand(EMOTE_STATE_SPELL_PRECAST);
-                            if( Creature* trigger = c->SummonCreature(NPC_PURPLE_GROUND, Locs[LOC_CENTER].GetPositionX(), Locs[LOC_CENTER].GetPositionY(), Locs[LOC_CENTER].GetPositionZ(), Locs[LOC_CENTER].GetOrientation(), TEMPSUMMON_MANUAL_DESPAWN) )
+                            if( Creature* trigger = c->SummonCreature(NPC_PURPLE_GROUND, Locs[LOC_CENTER].GetPositionX(), Locs[LOC_CENTER].GetPositionY(), Locs[LOC_CENTER].GetPositionZ(), Locs[LOC_CENTER].GetFacing(), TEMPSUMMON_MANUAL_DESPAWN) )
                                 NPC_PurpleGroundGUID = trigger->GetGUID();
                         }
 
@@ -824,7 +824,7 @@ public:
                     {
                         if( Creature* c = instance->GetCreature(NPC_FizzlebangGUID) )
                         {
-                            if( Creature* portal = c->SummonCreature(NPC_WORLD_TRIGGER, Locs[LOC_CENTER].GetPositionX(), Locs[LOC_CENTER].GetPositionY(), Locs[LOC_CENTER].GetPositionZ(), Locs[LOC_CENTER].GetOrientation(), TEMPSUMMON_MANUAL_DESPAWN) )
+                            if( Creature* portal = c->SummonCreature(NPC_WORLD_TRIGGER, Locs[LOC_CENTER].GetPositionX(), Locs[LOC_CENTER].GetPositionY(), Locs[LOC_CENTER].GetPositionZ(), Locs[LOC_CENTER].GetFacing(), TEMPSUMMON_MANUAL_DESPAWN) )
                             {
                                 NPC_PortalGUID = portal->GetGUID();
                                 portal->SetObjectScale(3.0f);
@@ -841,7 +841,7 @@ public:
                     {
                         if( Creature* c = instance->GetCreature(NPC_FizzlebangGUID) )
                         {
-                            if( Creature* jaraxxus = c->SummonCreature(NPC_JARAXXUS, Locs[LOC_CENTER].GetPositionX(), Locs[LOC_CENTER].GetPositionY(), Locs[LOC_CENTER].GetPositionZ(), Locs[LOC_CENTER].GetOrientation(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 630000000) )
+                            if( Creature* jaraxxus = c->SummonCreature(NPC_JARAXXUS, Locs[LOC_CENTER].GetPositionX(), Locs[LOC_CENTER].GetPositionY(), Locs[LOC_CENTER].GetPositionZ(), Locs[LOC_CENTER].GetFacing(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 630000000) )
                                 jaraxxus->GetMotionMaster()->MovePoint(0, Locs[LOC_CENTER].GetPositionX(), Locs[LOC_CENTER].GetPositionY() - 10.0f, Locs[LOC_CENTER].GetPositionZ());
                             c->HandleEmoteCommand(EMOTE_STATE_NONE);
                             c->AI()->Talk(SAY_STAGE_1_04);
@@ -1149,9 +1149,9 @@ public:
                         if( Creature* c = instance->GetCreature(NPC_TirionGUID) )
                         {
                             HandleGameObject(GO_MainGateGUID, true);
-                            if( Creature* t = c->SummonCreature(NPC_LIGHTBANE, Locs[LOC_VALKYR_RIGHT].GetPositionX(), Locs[LOC_VALKYR_RIGHT].GetPositionY(), Locs[LOC_VALKYR_RIGHT].GetPositionZ(), Locs[LOC_VALKYR_RIGHT].GetOrientation(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 630000000) )
+                            if( Creature* t = c->SummonCreature(NPC_LIGHTBANE, Locs[LOC_VALKYR_RIGHT].GetPositionX(), Locs[LOC_VALKYR_RIGHT].GetPositionY(), Locs[LOC_VALKYR_RIGHT].GetPositionZ(), Locs[LOC_VALKYR_RIGHT].GetFacing(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 630000000) )
                                 t->GetMotionMaster()->MovePoint(0, Locs[LOC_VALKYR_DEST_RIGHT].GetPositionX(), Locs[LOC_VALKYR_DEST_RIGHT].GetPositionY(), Locs[LOC_VALKYR_DEST_RIGHT].GetPositionZ());
-                            if( Creature* t = c->SummonCreature(NPC_DARKBANE, Locs[LOC_VALKYR_LEFT].GetPositionX(), Locs[LOC_VALKYR_LEFT].GetPositionY(), Locs[LOC_VALKYR_LEFT].GetPositionZ(), Locs[LOC_VALKYR_LEFT].GetOrientation(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 630000000) )
+                            if( Creature* t = c->SummonCreature(NPC_DARKBANE, Locs[LOC_VALKYR_LEFT].GetPositionX(), Locs[LOC_VALKYR_LEFT].GetPositionY(), Locs[LOC_VALKYR_LEFT].GetPositionZ(), Locs[LOC_VALKYR_LEFT].GetFacing(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 630000000) )
                                 t->GetMotionMaster()->MovePoint(0, Locs[LOC_VALKYR_DEST_LEFT].GetPositionX(), Locs[LOC_VALKYR_DEST_LEFT].GetPositionY(), Locs[LOC_VALKYR_DEST_LEFT].GetPositionZ());
                         }
 
@@ -1345,7 +1345,7 @@ public:
                         if( Creature* c = instance->GetCreature(NPC_TirionGUID) )
                         {
                             c->AI()->Talk(SAY_STAGE_4_06);
-                            c->SummonCreature(NPC_ARGENT_MAGE, Locs[LOC_MAGE].GetPositionX(), Locs[LOC_MAGE].GetPositionY(), Locs[LOC_MAGE].GetPositionZ(), Locs[LOC_MAGE].GetOrientation());
+                            c->SummonCreature(NPC_ARGENT_MAGE, Locs[LOC_MAGE].GetPositionX(), Locs[LOC_MAGE].GetPositionY(), Locs[LOC_MAGE].GetPositionZ(), Locs[LOC_MAGE].GetFacing());
                             c->SummonGameObject(195682, 668.15f, 134.57f, 142.12f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 630000000);
                         }
 
@@ -1493,7 +1493,7 @@ public:
                     if( Creature* c = instance->GetCreature(NPC_BarrettGUID) )
                     {
                         c->RemoveNpcFlag(UNIT_NPC_FLAG_GOSSIP);
-                        if( Creature* jaraxxus = c->SummonCreature(NPC_JARAXXUS, Locs[LOC_CENTER].GetPositionX(), Locs[LOC_CENTER].GetPositionY(), Locs[LOC_CENTER].GetPositionZ(), Locs[LOC_CENTER].GetOrientation(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 630000000) )
+                        if( Creature* jaraxxus = c->SummonCreature(NPC_JARAXXUS, Locs[LOC_CENTER].GetPositionX(), Locs[LOC_CENTER].GetPositionY(), Locs[LOC_CENTER].GetPositionZ(), Locs[LOC_CENTER].GetFacing(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 630000000) )
                         {
                             jaraxxus->CastSpell(jaraxxus, 67924, true);
                             jaraxxus->SetReactState(REACT_AGGRESSIVE);
@@ -1541,7 +1541,7 @@ public:
                         {
                             c->SetNpcFlag(UNIT_NPC_FLAG_GOSSIP);
                             c->SetVisible(true);
-                            c->SetFacingTo(c->GetOrientation());
+                            c->SetFacingTo(c->GetFacing());
                         }
                         if (Creature* t = c->FindNearestCreature(NPC_WORLD_TRIGGER, 500.0f, true))
                             t->DespawnOrUnsummon();

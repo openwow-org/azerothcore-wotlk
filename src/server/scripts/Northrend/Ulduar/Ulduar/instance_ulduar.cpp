@@ -250,7 +250,7 @@ public:
                             normalChestPosition.GetPositionX(),
                             normalChestPosition.GetPositionY(),
                             normalChestPosition.GetPositionZ(),
-                            normalChestPosition.GetOrientation(), 0, 0, 0, 0, 0))
+                            normalChestPosition.GetFacing(), 0, 0, 0, 0, 0))
                         {
                             m_hodirNormalChest = go->GetGUID();
                             go->SetGameObjectFlag(GO_FLAG_NOT_SELECTABLE);
@@ -263,7 +263,7 @@ public:
                             hardChestPosition.GetPositionX(),
                             hardChestPosition.GetPositionY(),
                             hardChestPosition.GetPositionZ(),
-                            hardChestPosition.GetOrientation(), 0, 0, 0, 0, 0))
+                            hardChestPosition.GetFacing(), 0, 0, 0, 0, 0))
                         {
                             m_hodirHardmodeChest = go->GetGUID();
                             go->SetGameObjectFlag(GO_FLAG_NOT_SELECTABLE);
@@ -281,7 +281,7 @@ public:
                             normalChestPosition.GetPositionX(),
                             normalChestPosition.GetPositionY(),
                             normalChestPosition.GetPositionZ(),
-                            normalChestPosition.GetOrientation(), 0, 0, 0, 0, 0))
+                            normalChestPosition.GetFacing(), 0, 0, 0, 0, 0))
                         {
                             m_hodirNormalChest = go->GetGUID();
                             go->SetGameObjectFlag(GO_FLAG_NOT_SELECTABLE);
@@ -294,7 +294,7 @@ public:
                             hardChestPosition.GetPositionX(),
                             hardChestPosition.GetPositionY(),
                             hardChestPosition.GetPositionZ(),
-                            hardChestPosition.GetOrientation(), 0, 0, 0, 0, 0))
+                            hardChestPosition.GetFacing(), 0, 0, 0, 0, 0))
                         {
                             m_hodirHardmodeChest = go->GetGUID();
                             go->SetGameObjectFlag(GO_FLAG_NOT_SELECTABLE);

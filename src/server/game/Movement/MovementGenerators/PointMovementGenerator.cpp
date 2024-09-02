@@ -64,8 +64,8 @@ void PointMovementGenerator<T>::DoInitialize(T* unit)
             // Xinef: fix strange client visual bug, moving on z coordinate only switches orientation by 180 degrees (visual only)
             if (G3D::fuzzyEq(unit->GetPositionX(), i_x) && G3D::fuzzyEq(unit->GetPositionY(), i_y))
             {
-                i_x += 0.2f * cos(unit->GetOrientation());
-                i_y += 0.2f * std::sin(unit->GetOrientation());
+                i_x += 0.2f * cos(unit->GetFacing());
+                i_y += 0.2f * std::sin(unit->GetFacing());
             }
 
             init.MoveTo(i_x, i_y, i_z, true);
@@ -76,8 +76,8 @@ void PointMovementGenerator<T>::DoInitialize(T* unit)
         // Xinef: fix strange client visual bug, moving on z coordinate only switches orientation by 180 degrees (visual only)
         if (G3D::fuzzyEq(unit->GetPositionX(), i_x) && G3D::fuzzyEq(unit->GetPositionY(), i_y))
         {
-            i_x += 0.2f * cos(unit->GetOrientation());
-            i_y += 0.2f * std::sin(unit->GetOrientation());
+            i_x += 0.2f * cos(unit->GetFacing());
+            i_y += 0.2f * std::sin(unit->GetFacing());
         }
 
         init.MoveTo(i_x, i_y, i_z, true);

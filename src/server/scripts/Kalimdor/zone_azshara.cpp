@@ -213,7 +213,7 @@ public:
                 if (TeleportTimer <= diff)
                 {
                     // temp solution - unit can't be teleported by core using spelleffect 5, only players
-                    me->NearTeleportTo(3706.39f, -3969.15f, 35.9118f, me->GetOrientation());
+                    me->NearTeleportTo(3706.39f, -3969.15f, 35.9118f, me->GetFacing());
 
                     //begin swimming and summon depth charges
                     Player* player = ObjectAccessor::GetPlayer(*me, PlayerGUID);

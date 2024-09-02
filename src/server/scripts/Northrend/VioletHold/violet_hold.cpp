@@ -102,7 +102,7 @@ public:
                 SendGossipMenuFor(player, NPC_TEXT_SINCLARI_ITEM, creature->GetGUID());
                 break;
             case GOSSIP_ACTION_INFO_DEF+3:
-                player->NearTeleportTo(playerTeleportPosition.GetPositionX(), playerTeleportPosition.GetPositionY(), playerTeleportPosition.GetPositionZ(), playerTeleportPosition.GetOrientation(), true);
+                player->NearTeleportTo(playerTeleportPosition.GetPositionX(), playerTeleportPosition.GetPositionY(), playerTeleportPosition.GetPositionZ(), playerTeleportPosition.GetFacing(), true);
                 CloseGossipMenuFor(player);
                 break;
         }

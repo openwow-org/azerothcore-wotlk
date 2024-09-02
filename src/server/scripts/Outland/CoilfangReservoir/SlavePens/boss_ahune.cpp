@@ -513,15 +513,15 @@ struct npc_earthen_ring_flamecaller : public ScriptedAI
         {
         case POINT_FLAMECALLER_000:
             _mySpot = POINT_FLAMECALLER_000;
-            me->SetOrientation(FlameCallerSpots[_mySpot].GetOrientation());
+            me->SetOrientation(FlameCallerSpots[_mySpot].GetFacing());
             break;
         case POINT_FLAMECALLER_001:
             _mySpot = POINT_FLAMECALLER_001;
-            me->SetOrientation(FlameCallerSpots[_mySpot].GetOrientation());
+            me->SetOrientation(FlameCallerSpots[_mySpot].GetFacing());
             break;
         case POINT_FLAMECALLER_002:
             _mySpot = POINT_FLAMECALLER_002;
-            me->SetOrientation(FlameCallerSpots[_mySpot].GetOrientation());
+            me->SetOrientation(FlameCallerSpots[_mySpot].GetFacing());
             break;
         default:
             break;

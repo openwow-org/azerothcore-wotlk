@@ -1805,7 +1805,7 @@ public:
             {
                 if (id == 1)
                 {
-                    me->SetFacingTo(PosTalkLocations[talkWing].GetOrientation());
+                    me->SetFacingTo(PosTalkLocations[talkWing].GetFacing());
                     TurnAudience();
 
                     switch (talkWing)

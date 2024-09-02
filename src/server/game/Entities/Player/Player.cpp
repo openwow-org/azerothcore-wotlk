@@ -1357,7 +1357,7 @@ bool Player::Teleport(uint32 mapid, float x, float y, float z, float orientation
     if (!MapMgr::IsValidMapCoord(mapid, x, y, z, orientation))
     {
         LOG_ERROR("entities.player", "Teleport: invalid map ({}) or invalid coordinates (X: {}, Y: {}, Z: {}, O: {}) given when teleporting player ({}, name: {}, map: {}, X: {}, Y: {}, Z: {}, O: {}).",
-                       mapid, x, y, z, orientation, GetGUID().ToString(), GetName(), GetMapId(), GetPositionX(), GetPositionY(), GetPositionZ(), GetOrientation());
+                       mapid, x, y, z, orientation, GetGUID().ToString(), GetName(), GetMapId(), GetPositionX(), GetPositionY(), GetPositionZ(), GetFacing());
         return false;
     }
 
@@ -1636,7 +1636,7 @@ bool Player::TeleportToEntryPoint()
 
     if (loc.m_mapId == MAPID_INVALID)
     {
-        return Teleport(m_homebindMapId, m_homebindX, m_homebindY, m_homebindZ, GetOrientation());
+        return Teleport(m_homebindMapId, m_homebindX, m_homebindY, m_homebindZ, GetFacing());
     }
 
     return Teleport(loc);
@@ -4908,7 +4908,7 @@ void Player::RepopAtGraveyard()
     // and don't show spirit healer location
     if (ClosestGrave)
     {
-        Teleport(ClosestGrave->Map, ClosestGrave->x, ClosestGrave->y, ClosestGrave->z, GetOrientation());
+        Teleport(ClosestGrave->Map, ClosestGrave->x, ClosestGrave->y, ClosestGrave->z, GetFacing());
         if (isDead())                                        // not send if alive, because it used in Teleport()
         {
             WDataStore data(SMSG_DEATH_RELEASE_LOC, 4 * 4); // show spirit healer position on minimap
@@ -4920,7 +4920,7 @@ void Player::RepopAtGraveyard()
         }
     }
     else if (GetPositionZ() < GetMap()->GetMinHeight(GetPositionX(), GetPositionY()))
-        Teleport(m_homebindMapId, m_homebindX, m_homebindY, m_homebindZ, GetOrientation());
+        Teleport(m_homebindMapId, m_homebindX, m_homebindY, m_homebindZ, GetFacing());
 
     RemovePlayerFlag(PLAYER_FLAGS_IS_OUT_OF_BOUNDS);
 }
@@ -5631,7 +5631,7 @@ void Player::SaveRecallPosition()
     m_recallX = GetPositionX();
     m_recallY = GetPositionY();
     m_recallZ = GetPositionZ();
-    m_recallO = GetOrientation();
+    m_recallO = GetFacing();
 }
 
 void Player::SendMessageToSet(WDataStore const* data, bool self) const
@@ -10398,7 +10398,7 @@ bool Player::ActivateTaxiPathTo(std::vector<uint32> const& nodes, Creature* npc 
         m_taxi.ClearTaxiDestinations();
         ModifyMoney(-(int32)totalcost);
         UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_GOLD_SPENT_FOR_TRAVELLING, totalcost);
-        Teleport(lastPathNode->map_id, lastPathNode->x, lastPathNode->y, lastPathNode->z, GetOrientation());
+        Teleport(lastPathNode->map_id, lastPathNode->x, lastPathNode->y, lastPathNode->z, GetFacing());
         return false;
     }
     else
@@ -11289,7 +11289,7 @@ void Player::SetEntryPoint()
     if (!m_taxi.empty())
     {
         m_entryPointData.mountSpell  = 0;
-        m_entryPointData.joinPos = WorldLocation(GetMapId(), GetPositionX(), GetPositionY(), GetPositionZ(), GetOrientation());
+        m_entryPointData.joinPos = WorldLocation(GetMapId(), GetPositionX(), GetPositionY(), GetPositionZ(), GetFacing());
 
         m_entryPointData.taxiPath[0] = m_taxi.GetTaxiSource();
         m_entryPointData.taxiPath[1] = m_taxi.GetTaxiDestination();
@@ -11311,7 +11311,7 @@ void Player::SetEntryPoint()
                 m_entryPointData.joinPos = WorldLocation(entry->Map, entry->x, entry->y, entry->z, 0.0f);
         }
         else if (!GetMap()->IsBattlegroundOrArena())
-            m_entryPointData.joinPos = WorldLocation(GetMapId(), GetPositionX(), GetPositionY(), GetPositionZ(), GetOrientation());
+            m_entryPointData.joinPos = WorldLocation(GetMapId(), GetPositionX(), GetPositionY(), GetPositionZ(), GetFacing());
     }
 
     if (m_entryPointData.joinPos.m_mapId == MAPID_INVALID)
@@ -12432,7 +12432,7 @@ void Player::SummonIfPossible(bool agree, WOWGUID summoner_guid)
 
     UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_ACCEPTED_SUMMONINGS, 1);
 
-    Teleport(m_summon_mapid, m_summon_x, m_summon_y, m_summon_z, GetOrientation(), 0, ObjectAccessor::FindPlayer(summoner_guid));
+    Teleport(m_summon_mapid, m_summon_x, m_summon_y, m_summon_z, GetFacing(), 0, ObjectAccessor::FindPlayer(summoner_guid));
 }
 
 void Player::RemoveItemDurations(Item* item)
@@ -12816,7 +12816,7 @@ uint32 Player::GetBaseWeaponSkillValue(WeaponAttackType attType) const
 void Player::ResurectUsingRequestData()
 {
     /// Teleport before resurrecting by player, otherwise the player might get attacked from creatures near his corpse
-    Teleport(m_resurrectMap, m_resurrectX, m_resurrectY, m_resurrectZ, GetOrientation());
+    Teleport(m_resurrectMap, m_resurrectX, m_resurrectY, m_resurrectZ, GetFacing());
 
     if (IsBeingTeleported())
     {
@@ -12875,8 +12875,8 @@ void Player::SetClientControl(Unit* target, bool allowMove, bool packetOnly /*= 
         {
             // Xinef: restore original orientation, important for shooting vehicles!
             Position pos = target->HasUnitMovementFlag(MOVEFLAG_IMMOBILIZED) && target->GetTransGUID() && target->GetTransGUID().IsMOTransport() ? target->ToCreature()->GetTransportHomePosition() : target->ToCreature()->GetHomePosition();
-            target->SetOrientation(pos.GetOrientation());
-            target->SetFacingTo(pos.GetOrientation());
+            target->SetOrientation(pos.GetFacing());
+            target->SetFacingTo(pos.GetFacing());
             target->DisableSpline();
         }
         else
@@ -14620,7 +14620,7 @@ void Player::_SaveEntryPoint(CharacterDatabaseTransaction trans)
     stmt->SetData (1, m_entryPointData.joinPos.GetPositionX());
     stmt->SetData (2, m_entryPointData.joinPos.GetPositionY());
     stmt->SetData (3, m_entryPointData.joinPos.GetPositionZ());
-    stmt->SetData (4, m_entryPointData.joinPos.GetOrientation());
+    stmt->SetData (4, m_entryPointData.joinPos.GetFacing());
     stmt->SetData(5, m_entryPointData.joinPos.GetMapId());
     stmt->SetData(6, m_entryPointData.taxiPath[0]);
     stmt->SetData(7, m_entryPointData.taxiPath[1]);
@@ -14722,7 +14722,7 @@ void Player::_SaveCharacter(bool create, CharacterDatabaseTransaction trans)
         stmt->SetData(index++, finiteAlways(GetPositionX()));
         stmt->SetData(index++, finiteAlways(GetPositionY()));
         stmt->SetData(index++, finiteAlways(GetPositionZ()));
-        stmt->SetData(index++, finiteAlways(GetOrientation()));
+        stmt->SetData(index++, finiteAlways(GetFacing()));
         stmt->SetData(index++, finiteAlways(GetTransOffsetX()));
         stmt->SetData(index++, finiteAlways(GetTransOffsetY()));
         stmt->SetData(index++, finiteAlways(GetTransOffsetZ()));
@@ -14850,7 +14850,7 @@ void Player::_SaveCharacter(bool create, CharacterDatabaseTransaction trans)
             stmt->SetData(index++, finiteAlways(GetPositionX()));
             stmt->SetData(index++, finiteAlways(GetPositionY()));
             stmt->SetData(index++, finiteAlways(GetPositionZ()));
-            stmt->SetData(index++, finiteAlways(GetOrientation()));
+            stmt->SetData(index++, finiteAlways(GetFacing()));
         }
         else
         {
@@ -14860,7 +14860,7 @@ void Player::_SaveCharacter(bool create, CharacterDatabaseTransaction trans)
             stmt->SetData(index++, finiteAlways(GetTeleportDest().GetPositionX()));
             stmt->SetData(index++, finiteAlways(GetTeleportDest().GetPositionY()));
             stmt->SetData(index++, finiteAlways(GetTeleportDest().GetPositionZ()));
-            stmt->SetData(index++, finiteAlways(GetTeleportDest().GetOrientation()));
+            stmt->SetData(index++, finiteAlways(GetTeleportDest().GetFacing()));
         }
 
         stmt->SetData(index++, finiteAlways(GetTransOffsetX()));
@@ -16411,7 +16411,7 @@ static BOOL PlayerCreateMonsterHandler (User*       user,
       float x = plyr->GetPosition().m_positionX;
       float y = plyr->GetPosition().m_positionY;
       float z = plyr->GetPosition().m_positionZ;
-      float facing = plyr->GetPosition().m_orientation;
+      float facing = plyr->GetFacing();
       uint32 phase = plyr->GetPhaseMaskForSpawn();
       Transport* transport = plyr->GetTransport();
 

@@ -503,7 +503,7 @@ struct npc_midsummer_torch_target : public ScriptedAI
         me->m_last_notify_position.Relocate(0.0f, 0.0f, 0.0f);
         me->m_last_notify_mstime = GameTime::GetGameTimeMS().count() + 10000;
 
-        me->NearTeleportTo(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation());
+        me->NearTeleportTo(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetFacing());
     }
 };
 

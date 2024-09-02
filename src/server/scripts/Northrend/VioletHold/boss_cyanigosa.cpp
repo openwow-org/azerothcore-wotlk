@@ -102,7 +102,7 @@ public:
             switch(spell->Id)
             {
                 case SPELL_ARCANE_VACUUM:
-                    target->NearTeleportTo(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ() + 10.0f, target->GetOrientation());
+                    target->NearTeleportTo(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ() + 10.0f, target->GetFacing());
                     break;
             }
         }
@@ -164,7 +164,7 @@ public:
             float h = me->GetMapHeight(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ());
             if (h != INVALID_HEIGHT && me->GetPositionZ() - h > 3.0f)
             {
-                me->UpdatePosition(me->GetPositionX(), me->GetPositionY(), h, me->GetOrientation(), true); // move to ground
+                me->UpdatePosition(me->GetPositionX(), me->GetPositionY(), h, me->GetFacing(), true); // move to ground
                 me->StopMovingOnCurrentPos();
                 me->DestroyForNearbyPlayers();
             }

@@ -47,7 +47,7 @@ void RotateMovementGenerator::Initialize(Unit* owner)
 
 bool RotateMovementGenerator::Update(Unit* owner, uint32 diff)
 {
-    float angle = owner->GetOrientation();
+    float angle = owner->GetFacing();
     if (m_direction == ROTATE_DIRECTION_LEFT)
     {
         angle += (float)diff * static_cast<float>(M_PI * 2) / m_maxDuration;
@@ -92,7 +92,7 @@ void DistractMovementGenerator::Finalize(Unit* owner)
     // If this is a creature, then return orientation to original position (for idle movement creatures)
     if (owner->GetTypeId() == TYPEID_UNIT && owner->ToCreature())
     {
-        float angle = owner->ToCreature()->GetHomePosition().GetOrientation();
+        float angle = owner->ToCreature()->GetHomePosition().GetFacing();
         owner->SetFacingTo(angle);
     }
 }

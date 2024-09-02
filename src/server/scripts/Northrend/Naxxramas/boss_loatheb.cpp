@@ -63,7 +63,7 @@ public:
         explicit boss_loathebAI(Creature* c) : BossAI(c, BOSS_LOATHEB), summons(me)
         {
             pInstance = me->GetInstanceScript();
-            me->SetHomePosition(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation());
+            me->SetHomePosition(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetFacing());
         }
 
         InstanceScript* pInstance;

@@ -290,7 +290,7 @@ class spell_lurker_below_spout : public AuraScript
     {
         PreventDefaultAction();
         Unit* caster = GetUnitOwner();
-        float orientation = GetSpellInfo()->Id == SPELL_SPOUT_PERIODIC_1 ? Position::NormalizeOrientation(caster->GetOrientation() + 0.1f) : Position::NormalizeOrientation(caster->GetOrientation() - 0.1f);
+        float orientation = GetSpellInfo()->Id == SPELL_SPOUT_PERIODIC_1 ? Position::NormalizeOrientation(caster->GetFacing() + 0.1f) : Position::NormalizeOrientation(caster->GetFacing() - 0.1f);
         caster->SetFacingTo(orientation);
         GetUnitOwner()->CastSpell(GetUnitOwner(), aurEff->GetAmount(), true);
     }

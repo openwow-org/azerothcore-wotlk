@@ -42,7 +42,7 @@ void BattlegroundRL::StartingEventOpenDoors()
 
 bool BattlegroundRL::HandlePlayerUnderMap(Player* player)
 {
-    player->NearTeleportTo(1285.810547f, 1667.896851f, 39.957642f, player->GetOrientation());
+    player->NearTeleportTo(1285.810547f, 1667.896851f, 39.957642f, player->GetFacing());
     return true;
 }
 
@@ -86,7 +86,7 @@ void BattlegroundRL::HandleAreaTrigger(Player* player, uint32 trigger)
         case 4941: // under arena +10
         case 5041: // under arena -10
         case 5042: // under arena -30
-            player->NearTeleportTo(1285.810547f, 1667.896851f, 39.957642f, player->GetOrientation());
+            player->NearTeleportTo(1285.810547f, 1667.896851f, 39.957642f, player->GetFacing());
             break;
     }
 }

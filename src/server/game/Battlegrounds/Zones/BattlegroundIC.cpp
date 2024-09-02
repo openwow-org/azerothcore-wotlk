@@ -78,7 +78,7 @@ void BattlegroundIC::DoAction(uint32 action, WOWGUID guid)
     float z = BG_IC_HangarTrigger[player->GetTeamId()].GetPositionZ();
     transport->CalculatePassengerPosition(x, y, z);
 
-    player->Teleport(GetMapId(), x, y, z, player->GetOrientation(), TELE_TO_NOT_LEAVE_TRANSPORT);
+    player->Teleport(GetMapId(), x, y, z, player->GetFacing(), TELE_TO_NOT_LEAVE_TRANSPORT);
 }
 
 void BattlegroundIC::HandlePlayerResurrect(Player* player)
@@ -139,7 +139,7 @@ void BattlegroundIC::PostUpdateImpl(uint32 diff)
                                 if (itr == respawnMap.end() || GameTime::GetGameTime().count() < itr->second)
                                     continue;
 
-                                catapult->Relocate(BG_IC_DocksVehiclesCatapults[j].GetPositionX(), BG_IC_DocksVehiclesCatapults[j].GetPositionY(), BG_IC_DocksVehiclesCatapults[j].GetPositionZ(), BG_IC_DocksVehiclesCatapults[j].GetOrientation());
+                                catapult->Relocate(BG_IC_DocksVehiclesCatapults[j].GetPositionX(), BG_IC_DocksVehiclesCatapults[j].GetPositionY(), BG_IC_DocksVehiclesCatapults[j].GetPositionZ(), BG_IC_DocksVehiclesCatapults[j].GetFacing());
                                 catapult->Respawn(true);
                                 respawnMap.erase(itr);
                             }
@@ -157,7 +157,7 @@ void BattlegroundIC::PostUpdateImpl(uint32 diff)
                                 if (itr == respawnMap.end() || GameTime::GetGameTime().count() < itr->second)
                                     continue;
 
-                                glaiveThrower->Relocate(BG_IC_DocksVehiclesGlaives[j].GetPositionX(), BG_IC_DocksVehiclesGlaives[j].GetPositionY(), BG_IC_DocksVehiclesGlaives[j].GetPositionZ(), BG_IC_DocksVehiclesGlaives[j].GetOrientation());
+                                glaiveThrower->Relocate(BG_IC_DocksVehiclesGlaives[j].GetPositionX(), BG_IC_DocksVehiclesGlaives[j].GetPositionY(), BG_IC_DocksVehiclesGlaives[j].GetPositionZ(), BG_IC_DocksVehiclesGlaives[j].GetFacing());
                                 glaiveThrower->Respawn(true);
                                 respawnMap.erase(itr);
                             }
@@ -186,7 +186,7 @@ void BattlegroundIC::PostUpdateImpl(uint32 diff)
                             if (itr == respawnMap.end() || GameTime::GetGameTime().count() < itr->second)
                                 continue;
 
-                            siege->Relocate(BG_IC_WorkshopVehicles[4].GetPositionX(), BG_IC_WorkshopVehicles[4].GetPositionY(), BG_IC_WorkshopVehicles[4].GetPositionZ(), BG_IC_WorkshopVehicles[4].GetOrientation());
+                            siege->Relocate(BG_IC_WorkshopVehicles[4].GetPositionX(), BG_IC_WorkshopVehicles[4].GetPositionY(), BG_IC_WorkshopVehicles[4].GetPositionZ(), BG_IC_WorkshopVehicles[4].GetFacing());
                             siege->Respawn(true);
                             respawnMap.erase(itr);
                         }
@@ -203,7 +203,7 @@ void BattlegroundIC::PostUpdateImpl(uint32 diff)
                                 if (itr == respawnMap.end() || GameTime::GetGameTime().count() < itr->second)
                                     continue;
 
-                                demolisher->Relocate(BG_IC_WorkshopVehicles[u].GetPositionX(), BG_IC_WorkshopVehicles[u].GetPositionY(), BG_IC_WorkshopVehicles[u].GetPositionZ(), BG_IC_WorkshopVehicles[u].GetOrientation());
+                                demolisher->Relocate(BG_IC_WorkshopVehicles[u].GetPositionX(), BG_IC_WorkshopVehicles[u].GetPositionY(), BG_IC_WorkshopVehicles[u].GetPositionZ(), BG_IC_WorkshopVehicles[u].GetFacing());
                                 demolisher->Respawn(true);
                                 respawnMap.erase(itr);
                             }
@@ -232,7 +232,7 @@ void BattlegroundIC::PostUpdateImpl(uint32 diff)
                 if (!banner) // this should never happen
                     return;
 
-                float cords[4] = {banner->GetPositionX(), banner->GetPositionY(), banner->GetPositionZ(), banner->GetOrientation() };
+                float cords[4] = {banner->GetPositionX(), banner->GetPositionY(), banner->GetPositionZ(), banner->GetFacing() };
 
                 DelObject(nodePoint[i].gameobject_type);
                 AddObject(nodePoint[i].gameobject_type, nodePoint[i].gameobject_entry, cords[0], cords[1], cords[2], cords[3], 0, 0, 0, 0, RESPAWN_ONE_DAY);
@@ -647,7 +647,7 @@ void BattlegroundIC::EventPlayerClickedOnFlag(Player* player, GameObject* gameOb
                 return;
             }
 
-            float cords[4] = {banner->GetPositionX(), banner->GetPositionY(), banner->GetPositionZ(), banner->GetOrientation() };
+            float cords[4] = {banner->GetPositionX(), banner->GetPositionY(), banner->GetPositionZ(), banner->GetFacing() };
 
             DelObject(point.gameobject_type);
             AddObject(point.gameobject_type, point.gameobject_entry, cords[0], cords[1], cords[2], cords[3], 0, 0, 0, 0, RESPAWN_ONE_DAY);
@@ -778,20 +778,20 @@ void BattlegroundIC::HandleCapturedNodes(ICNodePoint* nodePoint, bool recapture)
                 for (uint8 u = 0; u < MAX_HANGAR_TELEPORTERS_SPAWNS; ++u)
                 {
                     uint8 type = BG_IC_GO_HANGAR_TELEPORTER_1 + u;
-                    if (!AddObject(type, (nodePoint->faction == TEAM_ALLIANCE ? GO_ALLIANCE_GUNSHIP_PORTAL : GO_HORDE_GUNSHIP_PORTAL), BG_IC_HangarTeleporters[u].GetPositionX(), BG_IC_HangarTeleporters[u].GetPositionY(), BG_IC_HangarTeleporters[u].GetPositionZ(), BG_IC_HangarTeleporters[u].GetOrientation(), 0, 0, 0, 0, RESPAWN_ONE_DAY))
+                    if (!AddObject(type, (nodePoint->faction == TEAM_ALLIANCE ? GO_ALLIANCE_GUNSHIP_PORTAL : GO_HORDE_GUNSHIP_PORTAL), BG_IC_HangarTeleporters[u].GetPositionX(), BG_IC_HangarTeleporters[u].GetPositionY(), BG_IC_HangarTeleporters[u].GetPositionZ(), BG_IC_HangarTeleporters[u].GetFacing(), 0, 0, 0, 0, RESPAWN_ONE_DAY))
                         LOG_ERROR("bg.battleground", "Isle of Conquest: There was an error spawning a gunship portal. Type: {}", BG_IC_GO_HANGAR_TELEPORTER_1 + u);
                 }
 
                 for (uint8 u = 0; u < MAX_HANGAR_TELEPORTER_EFFECTS_SPAWNS; ++u)
                 {
                     uint8 type = BG_IC_GO_HANGAR_TELEPORTER_EFFECT_1 + u;
-                    if (!AddObject(type, (nodePoint->faction == TEAM_ALLIANCE ? GO_ALLIANCE_GUNSHIP_PORTAL_EFFECTS : GO_HORDE_GUNSHIP_PORTAL_EFFECTS), BG_IC_HangarTeleporterEffects[u].GetPositionX(), BG_IC_HangarTeleporterEffects[u].GetPositionY(), BG_IC_HangarTeleporterEffects[u].GetPositionZ(), BG_IC_HangarTeleporterEffects[u].GetOrientation(), 0, 0, 0, 0, RESPAWN_ONE_DAY, GO_STATE_ACTIVE))
+                    if (!AddObject(type, (nodePoint->faction == TEAM_ALLIANCE ? GO_ALLIANCE_GUNSHIP_PORTAL_EFFECTS : GO_HORDE_GUNSHIP_PORTAL_EFFECTS), BG_IC_HangarTeleporterEffects[u].GetPositionX(), BG_IC_HangarTeleporterEffects[u].GetPositionY(), BG_IC_HangarTeleporterEffects[u].GetPositionZ(), BG_IC_HangarTeleporterEffects[u].GetFacing(), 0, 0, 0, 0, RESPAWN_ONE_DAY, GO_STATE_ACTIVE))
                         LOG_ERROR("bg.battleground", "Isle of Conquest: There was an error spawning a gunship portal effects. Type: {}", BG_IC_GO_HANGAR_TELEPORTER_1 + u);
                 }
 
                 for (uint8 u = 0; u < MAX_TRIGGER_SPAWNS_PER_FACTION; ++u)
                 {
-                    if (!AddCreature(NPC_WORLD_TRIGGER_NOT_FLOATING, BG_IC_NPC_WORLD_TRIGGER_NOT_FLOATING, BG_IC_HangarTrigger[nodePoint->faction].GetPositionX(), BG_IC_HangarTrigger[nodePoint->faction].GetPositionY(), BG_IC_HangarTrigger[nodePoint->faction].GetPositionZ(), BG_IC_HangarTrigger[nodePoint->faction].GetOrientation(), RESPAWN_ONE_DAY, nodePoint->faction == TEAM_ALLIANCE ? gunshipAlliance : gunshipHorde))
+                    if (!AddCreature(NPC_WORLD_TRIGGER_NOT_FLOATING, BG_IC_NPC_WORLD_TRIGGER_NOT_FLOATING, BG_IC_HangarTrigger[nodePoint->faction].GetPositionX(), BG_IC_HangarTrigger[nodePoint->faction].GetPositionY(), BG_IC_HangarTrigger[nodePoint->faction].GetPositionZ(), BG_IC_HangarTrigger[nodePoint->faction].GetFacing(), RESPAWN_ONE_DAY, nodePoint->faction == TEAM_ALLIANCE ? gunshipAlliance : gunshipHorde))
                         LOG_ERROR("bg.battleground", "Isle of Conquest: There was an error spawning a world trigger. Type: {}", BG_IC_NPC_WORLD_TRIGGER_NOT_FLOATING);
                 }
 
@@ -800,11 +800,11 @@ void BattlegroundIC::HandleCapturedNodes(ICNodePoint* nodePoint, bool recapture)
                     uint8 type = BG_IC_NPC_GUNSHIP_CAPTAIN_1 + u;
 
                     if (type == BG_IC_NPC_GUNSHIP_CAPTAIN_1)
-                        if (AddCreature(nodePoint->faction == TEAM_ALLIANCE ? NPC_ALLIANCE_GUNSHIP_CAPTAIN : NPC_HORDE_GUNSHIP_CAPTAIN, type, BG_IC_HangarCaptains[nodePoint->faction == TEAM_ALLIANCE ? 2 : 0].GetPositionX(), BG_IC_HangarCaptains[nodePoint->faction == TEAM_ALLIANCE ? 2 : 0].GetPositionY(), BG_IC_HangarCaptains[nodePoint->faction == TEAM_ALLIANCE ? 2 : 0].GetPositionZ(), BG_IC_HangarCaptains[nodePoint->faction == TEAM_ALLIANCE ? 2 : 0].GetOrientation(), RESPAWN_ONE_DAY))
+                        if (AddCreature(nodePoint->faction == TEAM_ALLIANCE ? NPC_ALLIANCE_GUNSHIP_CAPTAIN : NPC_HORDE_GUNSHIP_CAPTAIN, type, BG_IC_HangarCaptains[nodePoint->faction == TEAM_ALLIANCE ? 2 : 0].GetPositionX(), BG_IC_HangarCaptains[nodePoint->faction == TEAM_ALLIANCE ? 2 : 0].GetPositionY(), BG_IC_HangarCaptains[nodePoint->faction == TEAM_ALLIANCE ? 2 : 0].GetPositionZ(), BG_IC_HangarCaptains[nodePoint->faction == TEAM_ALLIANCE ? 2 : 0].GetFacing(), RESPAWN_ONE_DAY))
                             GetBGCreature(BG_IC_NPC_GUNSHIP_CAPTAIN_1)->GetAI()->DoAction(ACTION_GUNSHIP_READY);
 
                     if (type == BG_IC_NPC_GUNSHIP_CAPTAIN_2)
-                        if (!AddCreature(nodePoint->faction == TEAM_ALLIANCE ? NPC_ALLIANCE_GUNSHIP_CAPTAIN : NPC_HORDE_GUNSHIP_CAPTAIN, type, BG_IC_HangarCaptains[nodePoint->faction == TEAM_ALLIANCE ? 3 : 1].GetPositionX(), BG_IC_HangarCaptains[nodePoint->faction == TEAM_ALLIANCE ? 3 : 1].GetPositionY(), BG_IC_HangarCaptains[nodePoint->faction == TEAM_ALLIANCE ? 3 : 1].GetPositionZ(), BG_IC_HangarCaptains[nodePoint->faction == TEAM_ALLIANCE ? 3 : 1].GetOrientation(), RESPAWN_ONE_DAY, nodePoint->faction == TEAM_ALLIANCE ? gunshipAlliance : gunshipHorde))
+                        if (!AddCreature(nodePoint->faction == TEAM_ALLIANCE ? NPC_ALLIANCE_GUNSHIP_CAPTAIN : NPC_HORDE_GUNSHIP_CAPTAIN, type, BG_IC_HangarCaptains[nodePoint->faction == TEAM_ALLIANCE ? 3 : 1].GetPositionX(), BG_IC_HangarCaptains[nodePoint->faction == TEAM_ALLIANCE ? 3 : 1].GetPositionY(), BG_IC_HangarCaptains[nodePoint->faction == TEAM_ALLIANCE ? 3 : 1].GetPositionZ(), BG_IC_HangarCaptains[nodePoint->faction == TEAM_ALLIANCE ? 3 : 1].GetFacing(), RESPAWN_ONE_DAY, nodePoint->faction == TEAM_ALLIANCE ? gunshipAlliance : gunshipHorde))
                             LOG_ERROR("bg.battleground", "Isle of Conquest: There was an error spawning a world trigger. Type: {}", BG_IC_NPC_GUNSHIP_CAPTAIN_2);
                 }
 
@@ -836,7 +836,7 @@ void BattlegroundIC::HandleCapturedNodes(ICNodePoint* nodePoint, bool recapture)
 
                 if (AddCreature(nodePoint->faction == TEAM_ALLIANCE ? NPC_GLAIVE_THROWER_A : NPC_GLAIVE_THROWER_H, type,
                                 BG_IC_DocksVehiclesGlaives[i].GetPositionX(), BG_IC_DocksVehiclesGlaives[i].GetPositionY(),
-                                BG_IC_DocksVehiclesGlaives[i].GetPositionZ(), BG_IC_DocksVehiclesGlaives[i].GetOrientation(),
+                                BG_IC_DocksVehiclesGlaives[i].GetPositionZ(), BG_IC_DocksVehiclesGlaives[i].GetFacing(),
                                 RESPAWN_ONE_DAY))
                     GetBGCreature(type)->SetFaction(BG_IC_Factions[nodePoint->faction]);
             }
@@ -851,7 +851,7 @@ void BattlegroundIC::HandleCapturedNodes(ICNodePoint* nodePoint, bool recapture)
 
                 if (AddCreature(NPC_CATAPULT, type,
                                 BG_IC_DocksVehiclesCatapults[i].GetPositionX(), BG_IC_DocksVehiclesCatapults[i].GetPositionY(),
-                                BG_IC_DocksVehiclesCatapults[i].GetPositionZ(), BG_IC_DocksVehiclesCatapults[i].GetOrientation(),
+                                BG_IC_DocksVehiclesCatapults[i].GetPositionZ(), BG_IC_DocksVehiclesCatapults[i].GetFacing(),
                                 RESPAWN_ONE_DAY))
                     GetBGCreature(type)->SetFaction(BG_IC_Factions[(nodePoint->faction == TEAM_ALLIANCE ? TEAM_ALLIANCE : TEAM_HORDE)]);
             }
@@ -872,7 +872,7 @@ void BattlegroundIC::HandleCapturedNodes(ICNodePoint* nodePoint, bool recapture)
 
                         if (AddCreature(NPC_DEMOLISHER, type,
                                         BG_IC_WorkshopVehicles[i].GetPositionX(), BG_IC_WorkshopVehicles[i].GetPositionY(),
-                                        BG_IC_WorkshopVehicles[i].GetPositionZ(), BG_IC_WorkshopVehicles[i].GetOrientation(),
+                                        BG_IC_WorkshopVehicles[i].GetPositionZ(), BG_IC_WorkshopVehicles[i].GetFacing(),
                                         RESPAWN_ONE_DAY))
                             GetBGCreature(type)->SetFaction(BG_IC_Factions[(nodePoint->faction == TEAM_ALLIANCE ? TEAM_ALLIANCE : TEAM_HORDE)]);
                     }
@@ -882,7 +882,7 @@ void BattlegroundIC::HandleCapturedNodes(ICNodePoint* nodePoint, bool recapture)
                     {
                         AddCreature((nodePoint->faction == TEAM_ALLIANCE ? NPC_SIEGE_ENGINE_A : NPC_SIEGE_ENGINE_H), siegeType,
                                     BG_IC_WorkshopVehicles[4].GetPositionX(), BG_IC_WorkshopVehicles[4].GetPositionY(),
-                                    BG_IC_WorkshopVehicles[4].GetPositionZ(), BG_IC_WorkshopVehicles[4].GetOrientation(),
+                                    BG_IC_WorkshopVehicles[4].GetPositionZ(), BG_IC_WorkshopVehicles[4].GetFacing(),
                                     RESPAWN_ONE_DAY);
                     }
 
@@ -904,7 +904,7 @@ void BattlegroundIC::HandleCapturedNodes(ICNodePoint* nodePoint, bool recapture)
                 {
                     AddObject(BG_IC_GO_SEAFORIUM_BOMBS_1 + i, GO_SEAFORIUM_BOMBS,
                               workshopBombs[i].GetPositionX(), workshopBombs[i].GetPositionY(),
-                              workshopBombs[i].GetPositionZ(), workshopBombs[i].GetOrientation(),
+                              workshopBombs[i].GetPositionZ(), workshopBombs[i].GetFacing(),
                               0, 0, 0, 0, 10);
 
                     if (GameObject* seaforiumBombs = GetBGObject(BG_IC_GO_SEAFORIUM_BOMBS_1 + i))

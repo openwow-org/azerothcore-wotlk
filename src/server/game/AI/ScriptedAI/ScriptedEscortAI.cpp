@@ -355,8 +355,8 @@ void npc_escortAI::MovementInform(uint32 moveType, uint32 pointId)
         if (m_uiWPWaitTimer <= 1 && !HasEscortState(STATE_ESCORT_PAUSED) && CurrentWP != WaypointList.end())
         {
             //Call WP function
-            me->SetPosition(CurrentWP->x, CurrentWP->y, CurrentWP->z, me->GetOrientation());
-            me->SetHomePosition(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation());
+            me->SetPosition(CurrentWP->x, CurrentWP->y, CurrentWP->z, me->GetFacing());
+            me->SetHomePosition(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetFacing());
             WaypointReached(CurrentWP->id);
 
             m_uiWPWaitTimer = CurrentWP->WaitTimeMs + 1;
@@ -553,7 +553,7 @@ bool npc_escortAI::SetNextWaypoint(uint32 pointId, bool setPosition)
         if (CurrentWP->id == pointId)
         {
             if (setPosition)
-                me->UpdatePosition(CurrentWP->x, CurrentWP->y, CurrentWP->z, me->GetOrientation());
+                me->UpdatePosition(CurrentWP->x, CurrentWP->y, CurrentWP->z, me->GetFacing());
             return true;
         }
     }

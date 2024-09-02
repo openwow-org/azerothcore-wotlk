@@ -312,7 +312,7 @@ public:
                 case 2:
                 case 3:
                 case 4:
-                    me->NearTeleportTo(CENTER_X, CENTER_Y, CENTER_Z, me->GetOrientation());
+                    me->NearTeleportTo(CENTER_X, CENTER_Y, CENTER_Z, me->GetFacing());
                     DoResetThreatList();
                     me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID, 0);
                     me->RemoveAurasDueToSpell(Transform[Phase].unaura);

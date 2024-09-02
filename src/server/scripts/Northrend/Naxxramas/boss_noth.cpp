@@ -191,7 +191,7 @@ public:
             if (me->GetPositionZ() > 270.27f)
             {
                 me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_DISABLE_MOVE);
-                me->NearTeleportTo(nothPosition.GetPositionX(), nothPosition.GetPositionY(), nothPosition.GetPositionZ(), nothPosition.GetOrientation(), true);
+                me->NearTeleportTo(nothPosition.GetPositionX(), nothPosition.GetPositionY(), nothPosition.GetPositionZ(), nothPosition.GetFacing(), true);
             }
             BossAI::JustDied(killer);
             Talk(SAY_DEATH);

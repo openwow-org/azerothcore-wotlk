@@ -801,7 +801,7 @@ class spell_shadow_bolt_whirl : public AuraScript
         uint32 tick = (aurEff->GetTickNumber() + 7/*-1*/) % 8;
 
         // casted in left/right (but triggered spell have wide forward cone)
-        float forward = target->GetOrientation();
+        float forward = target->GetFacing();
         if (tick <= 3)
             target->SetOrientation(forward + 0.75f * M_PI - tick * M_PI / 8);       // Left
         else

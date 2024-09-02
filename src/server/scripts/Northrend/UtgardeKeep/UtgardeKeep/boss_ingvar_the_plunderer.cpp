@@ -183,8 +183,8 @@ public:
                 ValkyrGUID = s->GetGUID();
                 s->SetCanFly(true);
                 s->SetDisableGravity(true);
-                s->SetPosition(s->GetPositionX(), s->GetPositionY(), s->GetPositionZ() + 35.0f, s->GetOrientation());
-                s->SetFacingTo(s->GetOrientation());
+                s->SetPosition(s->GetPositionX(), s->GetPositionY(), s->GetPositionZ() + 35.0f, s->GetFacing());
+                s->SetFacingTo(s->GetFacing());
             }
             else if (s->GetEntry() == NPC_THROW)
             {

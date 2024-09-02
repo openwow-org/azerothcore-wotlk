@@ -325,7 +325,7 @@ public:
     [[nodiscard]] bool IsNotReachableAndNeedRegen() const;
 
     void SetPosition(float x, float y, float z, float o);
-    void SetPosition(const Position& pos) { SetPosition(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation()); }
+    void SetPosition(const Position& pos) { SetPosition(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetFacing()); }
 
     void SetHomePosition(float x, float y, float z, float o) { m_homePosition.Relocate(x, y, z, o); }
     void SetHomePosition(const Position& pos) { m_homePosition.Relocate(pos); }

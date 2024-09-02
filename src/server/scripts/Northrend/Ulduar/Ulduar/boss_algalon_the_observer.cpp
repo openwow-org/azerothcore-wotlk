@@ -568,7 +568,7 @@ public:
                         float x = summon->GetPositionX();
                         float y = summon->GetPositionY();
                         float z = summon->GetPositionZ() + 35.0f;
-                        float o = summon->GetOrientation();
+                        float o = summon->GetFacing();
 
                         summon->GetMotionMaster()->Clear();
                         summon->SetHomePosition(x, y, z, o);

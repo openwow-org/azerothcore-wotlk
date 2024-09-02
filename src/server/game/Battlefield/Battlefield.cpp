@@ -760,12 +760,12 @@ void BfGraveyard::RelocateDeadPlayers()
             continue;
 
         if (closestGrave)
-            player->Teleport(player->GetMapId(), closestGrave->x, closestGrave->y, closestGrave->z, player->GetOrientation());
+            player->Teleport(player->GetMapId(), closestGrave->x, closestGrave->y, closestGrave->z, player->GetFacing());
         else
         {
             closestGrave = m_Bf->GetClosestGraveyard(player);
             if (closestGrave)
-                player->Teleport(player->GetMapId(), closestGrave->x, closestGrave->y, closestGrave->z, player->GetOrientation());
+                player->Teleport(player->GetMapId(), closestGrave->x, closestGrave->y, closestGrave->z, player->GetFacing());
         }
     }
 }

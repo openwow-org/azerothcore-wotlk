@@ -68,7 +68,7 @@ bool Corpse::Create(WOWGUID::LowType guidlow, Player* owner)
 {
     ASSERT(owner);
 
-    Relocate(owner->GetPositionX(), owner->GetPositionY(), owner->GetPositionZ(), owner->GetOrientation());
+    Relocate(owner->GetPositionX(), owner->GetPositionY(), owner->GetPositionZ(), owner->GetFacing());
 
     if (!IsPositionValid())
     {
@@ -98,7 +98,7 @@ void Corpse::SaveToDB()
     stmt->SetData (1, GetPositionX());                                         // posX
     stmt->SetData (2, GetPositionY());                                         // posY
     stmt->SetData (3, GetPositionZ());                                         // posZ
-    stmt->SetData (4, GetOrientation());                                       // orientation
+    stmt->SetData (4, GetFacing());                                       // orientation
     stmt->SetData(5, GetMapId());                                             // mapId
     stmt->SetData(6, GetUInt32Value(CORPSE_FIELD_DISPLAY_ID));                // displayId
     stmt->SetData(7, _ConcatFields(CORPSE_FIELD_ITEM, EQUIPMENT_SLOT_END));   // itemCache

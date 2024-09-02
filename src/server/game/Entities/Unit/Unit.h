@@ -1846,7 +1846,7 @@ public:
     void SendTeleportPacket(Position& pos);
     virtual bool UpdatePosition(float x, float y, float z, float ang, bool teleport = false);
     // returns true if unit's position really changed
-    bool UpdatePosition(const Position& pos, bool teleport = false) { return UpdatePosition(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), teleport); }
+    bool UpdatePosition(const Position& pos, bool teleport = false) { return UpdatePosition(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetFacing(), teleport); }
     void UpdateOrientation(float orientation);
     void UpdateHeight(float newZ);
 

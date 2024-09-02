@@ -77,7 +77,7 @@ namespace Movement
             real_position.x = pos->GetPositionX();
             real_position.y = pos->GetPositionY();
             real_position.z = pos->GetPositionZ();
-            real_position.orientation = unit->GetOrientation();
+            real_position.orientation = unit->GetFacing();
         }
 
         // should i do the things that user should do? - no.
@@ -164,7 +164,7 @@ namespace Movement
             loc.x = pos->GetPositionX();
             loc.y = pos->GetPositionY();
             loc.z = pos->GetPositionZ();
-            loc.orientation = unit->GetOrientation();
+            loc.orientation = unit->GetFacing();
         }
 
         args.flags = MoveSplineFlag::Done;
@@ -205,9 +205,9 @@ namespace Movement
         if (args.TransformForTransport)
         {
             if (Unit* vehicle = unit->GetVehicleBase())
-                angle -= vehicle->GetOrientation();
+                angle -= vehicle->GetFacing();
             else if (Transport* transport = unit->GetTransport())
-                angle -= transport->GetOrientation();
+                angle -= transport->GetFacing();
         }
 
         args.facing.angle = G3D::wrap(angle, 0.f, (float)G3D::twoPi());

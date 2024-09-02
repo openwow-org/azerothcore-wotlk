@@ -258,7 +258,7 @@ public:
                             {
                                 if (c->GetPositionX() < 450.0f)
                                     continue;
-                                c->SetHomePosition(c->GetPositionX(), c->GetPositionY(), c->GetPositionZ(), c->GetOrientation());
+                                c->SetHomePosition(c->GetPositionX(), c->GetPositionY(), c->GetPositionZ(), c->GetFacing());
                                 c->Respawn(true);
                                 c->UpdateEntry(36796, 0, false);
                                 c->SetFacingTo(M_PI);
@@ -558,7 +558,7 @@ public:
                         break;
                     }
                 case 2:
-                    if (Creature* c = me->SummonCreature(NPC_TYRANNUS_VOICE, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ() - 10.0f, me->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN, 1))
+                    if (Creature* c = me->SummonCreature(NPC_TYRANNUS_VOICE, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ() - 10.0f, me->GetFacing(), TEMPSUMMON_TIMED_DESPAWN, 1))
                         c->AI()->Talk(SAY_TYRANNUS_GARFROST);
 
                     events.RescheduleEvent(3, 4s);
@@ -677,17 +677,17 @@ public:
                     me->GetMotionMaster()->MovePoint(2, PTSTyrannusWaitPos1, false);
                     break;
                 case 2:
-                    me->SetFacingTo(PTSTyrannusWaitPos1.GetOrientation());
+                    me->SetFacingTo(PTSTyrannusWaitPos1.GetFacing());
                     me->setActive(false);
                     break;
                 case 3:
                     me->GetMotionMaster()->MovePoint(3, PTSTyrannusWaitPos2, false);
                     break;
                 case 4:
-                    me->SetFacingTo(PTSTyrannusWaitPos2.GetOrientation());
+                    me->SetFacingTo(PTSTyrannusWaitPos2.GetFacing());
                     break;
                 case 5:
-                    me->GetMotionMaster()->MoveTakeoff(10, me->GetPositionX() + 2.0f * cos(me->GetOrientation()), me->GetPositionY() + 2.0f * std::sin(me->GetOrientation()), me->GetPositionZ() + 30.0f, 7.0f);
+                    me->GetMotionMaster()->MoveTakeoff(10, me->GetPositionX() + 2.0f * cos(me->GetFacing()), me->GetPositionY() + 2.0f * std::sin(me->GetFacing()), me->GetPositionZ() + 30.0f, 7.0f);
                     break;
                 case 6:
                     me->GetMotionMaster()->MovePoint(4, PTSTyrannusWaitPos3, false);
@@ -1058,7 +1058,7 @@ public:
                             c->AI()->DoAction(1);
                     break;
                 case 5:
-                    me->SetFacingTo(TSCenterPos.GetOrientation());
+                    me->SetFacingTo(TSCenterPos.GetFacing());
                     Talk(me->GetEntry() == NPC_MARTIN_VICTUS_2 ? SAY_GENERAL_ALLIANCE_OUTRO_1 : SAY_GENERAL_HORDE_OUTRO_1);
                     if (pInstance)
                         if (Creature* c = pInstance->instance->GetCreature(pInstance->GetGuidData(DATA_LEADER_SECOND_GUID)))
@@ -1189,7 +1189,7 @@ public:
             {
                 float angle = rand_norm() * 2 * M_PI;
                 float dist = urand(1, 4);
-                target->ToPlayer()->NearTeleportTo(me->GetPositionX() + cos(angle)*dist, me->GetPositionY() + std::sin(angle)*dist, me->GetPositionZ(), me->GetOrientation());
+                target->ToPlayer()->NearTeleportTo(me->GetPositionX() + cos(angle)*dist, me->GetPositionY() + std::sin(angle)*dist, me->GetPositionZ(), me->GetFacing());
             }
         }
 

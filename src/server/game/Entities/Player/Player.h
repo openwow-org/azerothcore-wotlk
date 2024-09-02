@@ -1103,7 +1103,7 @@ public:
     bool Teleport(uint32 mapid, float x, float y, float z, float orientation, uint32 options = 0, Unit* target = nullptr, bool newInstance = false);
     bool Teleport(WorldLocation const& loc, uint32 options = 0, Unit* target = nullptr)
     {
-        return Teleport(loc.GetMapId(), loc.GetPositionX(), loc.GetPositionY(), loc.GetPositionZ(), loc.GetOrientation(), options, target);
+        return Teleport(loc.GetMapId(), loc.GetPositionX(), loc.GetPositionY(), loc.GetPositionZ(), loc.GetFacing(), options, target);
     }
     bool TeleportToEntryPoint();
 
@@ -2008,7 +2008,7 @@ public:
     void SendResetFailedNotify(uint32 mapid);
 
     bool UpdatePosition(float x, float y, float z, float orientation, bool teleport = false) override;
-    bool UpdatePosition(const Position& pos, bool teleport = false) { return UpdatePosition(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), teleport); }
+    bool UpdatePosition(const Position& pos, bool teleport = false) { return UpdatePosition(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetFacing(), teleport); }
 
     void ProcessTerrainStatusUpdate() override;
 

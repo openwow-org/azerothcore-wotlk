@@ -879,7 +879,7 @@ public:
                 case NPC_DEFILE:
                 case NPC_SHADOW_TRAP_TRIGGER:
                     summon->m_positionZ = 840.86f;
-                    summon->UpdatePosition(summon->GetPositionX(), summon->GetPositionY(), summon->GetPositionZ(), summon->GetOrientation(), true);
+                    summon->UpdatePosition(summon->GetPositionX(), summon->GetPositionY(), summon->GetPositionZ(), summon->GetFacing(), true);
                     summon->StopMovingOnCurrentPos();
                     break;
                 case NPC_VALKYR_SHADOWGUARD:
@@ -3217,7 +3217,7 @@ public:
                             {
                                 summoner->CastSpell((Unit*)nullptr, SPELL_HARVEST_SOUL_VISUAL, true);
                                 summoner->ExitVehicle(summoner);
-                                me->UpdatePosition(me->GetPositionX(), me->GetPositionY(), 840.87f, me->GetOrientation(), true);
+                                me->UpdatePosition(me->GetPositionX(), me->GetPositionY(), 840.87f, me->GetFacing(), true);
                                 me->StopMovingOnCurrentPos();
                                 if (!IsHeroic())
                                     summoner->CastSpell(summoner, SPELL_HARVEST_SOUL_TELEPORT, true);

@@ -887,7 +887,7 @@ public:
                                 if( me->GetUInt32Value(UNIT_NPC_EMOTESTATE) != EMOTE_STATE_WORK )
                                     me->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_WORK);
 
-                                if (std::fabs(me->GetOrientation() - me->GetAngle(c)) > M_PI / 4)
+                                if (std::fabs(me->GetFacing() - me->GetAngle(c)) > M_PI / 4)
                                     me->SetFacingToObject(c);
 
                                 c->AI()->SetData(2, 0);

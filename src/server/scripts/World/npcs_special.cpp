@@ -2297,7 +2297,7 @@ public:
             if (GameObject* launcher = FindNearestLauncher())
             {
                 launcher->SendCustomAnim(ANIM_GO_LAUNCH_FIREWORK);
-                me->SetOrientation(launcher->GetOrientation() + M_PI / 2);
+                me->SetOrientation(launcher->GetFacing() + M_PI / 2);
             }
             else
                 return;
@@ -2329,7 +2329,7 @@ public:
 
                 float displacement = 0.7f;
                 for (uint8 i = 0; i < 4; i++)
-                    me->SummonGameObject(GetFireworkGameObjectId(), me->GetPositionX() + (i % 2 == 0 ? displacement : -displacement), me->GetPositionY() + (i > 1 ? displacement : -displacement), me->GetPositionZ() + 4.0f, me->GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 1);
+                    me->SummonGameObject(GetFireworkGameObjectId(), me->GetPositionX() + (i % 2 == 0 ? displacement : -displacement), me->GetPositionY() + (i > 1 ? displacement : -displacement), me->GetPositionZ() + 4.0f, me->GetFacing(), 0.0f, 0.0f, 0.0f, 0.0f, 1);
             }
             else
                 //me->CastSpell(me, GetFireworkSpell(me->GetEntry()), true);

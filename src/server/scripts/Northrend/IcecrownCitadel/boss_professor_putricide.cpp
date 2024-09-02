@@ -426,7 +426,7 @@ public:
                         if (c->IsInCombat())
                         {
                             instance->SetBossState(DATA_FESTERGUT, IN_PROGRESS);
-                            me->SetFacingTo(festergutWatchPos.GetOrientation());
+                            me->SetFacingTo(festergutWatchPos.GetFacing());
                             DoAction(ACTION_FESTERGUT_GAS);
                             c->CastSpell(c, SPELL_GASEOUS_BLIGHT_LARGE, true, nullptr, nullptr, c->GetGUID());
                         }
@@ -442,7 +442,7 @@ public:
                         if (c->IsInCombat())
                         {
                             instance->SetBossState(DATA_ROTFACE, IN_PROGRESS);
-                            me->SetFacingTo(rotfaceWatchPos.GetOrientation());
+                            me->SetFacingTo(rotfaceWatchPos.GetFacing());
                         }
                         else
                         {
@@ -451,11 +451,11 @@ public:
                     }
                     break;
                 case POINT_TABLE:
-                    me->SetFacingTo(tablePos.GetOrientation());
+                    me->SetFacingTo(tablePos.GetFacing());
                     me->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_USE_STANDING);
                     break;
                 case POINT_TABLE_COMBAT:
-                    me->SetFacingTo(tablePos.GetOrientation());
+                    me->SetFacingTo(tablePos.GetFacing());
                     me->GetMotionMaster()->Clear(false);
                     me->GetMotionMaster()->MoveIdle();
                     events.ScheduleEvent(EVENT_TABLE_DRINK_STUFF, IsHeroic() ? 25s : 0ms);

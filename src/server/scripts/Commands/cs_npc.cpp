@@ -210,7 +210,7 @@ public:
         float x = chr->GetPositionX();
         float y = chr->GetPositionY();
         float z = chr->GetPositionZ();
-        float o = chr->GetOrientation();
+        float o = chr->GetFacing();
         Map* map = chr->GetMap();
 
         if (Transport* tt = chr->GetTransport())
@@ -733,7 +733,7 @@ public:
         float x = handler->GetSession()->GetPlayer()->GetPositionX();
         float y = handler->GetSession()->GetPlayer()->GetPositionY();
         float z = handler->GetSession()->GetPlayer()->GetPositionZ();
-        float o = handler->GetSession()->GetPlayer()->GetOrientation();
+        float o = handler->GetSession()->GetPlayer()->GetFacing();
 
         if (creature)
         {
@@ -1219,7 +1219,7 @@ public:
 
         Player* chr = handler->GetSession()->GetPlayer();
         FormationInfo group_member;
-        group_member.follow_angle   = (creature->GetAngle(chr) - chr->GetOrientation()) * 180 / M_PI;
+        group_member.follow_angle   = (creature->GetAngle(chr) - chr->GetFacing()) * 180 / M_PI;
         group_member.follow_dist    = sqrtf(pow(chr->GetPositionX() - creature->GetPositionX(), int(2)) + pow(chr->GetPositionY() - creature->GetPositionY(), int(2)));
         group_member.leaderGUID     = leaderGUID;
         group_member.groupAI        = 0;

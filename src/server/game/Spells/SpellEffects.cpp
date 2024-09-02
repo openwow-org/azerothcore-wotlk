@@ -1204,7 +1204,7 @@ void Spell::EffectTeleportUnits(SpellEffIndex /*effIndex*/)
     float x, y, z, orientation;
     destTarget->GetPosition(x, y, z, orientation);
     if (!orientation && m_targets.GetUnitTarget())
-        orientation = m_targets.GetUnitTarget()->GetOrientation();
+        orientation = m_targets.GetUnitTarget()->GetFacing();
     LOG_DEBUG("spells.aura", "Spell::EffectTeleportUnits - teleport unit to {} {} {} {} {}\n", mapid, x, y, z, orientation);
 
     if (mapid == unitTarget->GetMapId())
@@ -3162,7 +3162,7 @@ void Spell::EffectSummonPet(SpellEffIndex effIndex)
             float px, py, pz;
             owner->GetClosePoint(px, py, pz, OldSummon->GetObjectSize());
 
-            OldSummon->NearTeleportTo(px, py, pz, OldSummon->GetOrientation());
+            OldSummon->NearTeleportTo(px, py, pz, OldSummon->GetFacing());
             OldSummon->UpdateObjectVisibility();
 
             OldSummon->SetHealth(OldSummon->GetMaxHealth());
@@ -3193,7 +3193,7 @@ void Spell::EffectSummonPet(SpellEffIndex effIndex)
 
     float x, y, z;
     owner->GetClosePoint(x, y, z, owner->GetObjectSize());
-    Pet* pet = owner->SummonPet(petentry, x, y, z, owner->GetOrientation(), SUMMON_PET);
+    Pet* pet = owner->SummonPet(petentry, x, y, z, owner->GetFacing(), SUMMON_PET);
     if (!pet)
         return;
 
@@ -3732,7 +3732,7 @@ void Spell::EffectSummonObjectWild(SpellEffIndex effIndex)
 
     Map* map = target->GetMap();
 
-    if (!pGameObj->Create(map->GenerateLowGuid<HighGuid::GameObject>(), gameobject_id, map, m_caster->GetPhaseMask(), x, y, z, target->GetOrientation(), G3D::Quat(), 100, GO_STATE_READY))
+    if (!pGameObj->Create(map->GenerateLowGuid<HighGuid::GameObject>(), gameobject_id, map, m_caster->GetPhaseMask(), x, y, z, target->GetFacing(), G3D::Quat(), 100, GO_STATE_READY))
     {
         delete pGameObj;
         return;
@@ -4118,7 +4118,7 @@ void Spell::EffectDuel(SpellEffIndex effIndex)
                           m_caster->GetPositionX() + (unitTarget->GetPositionX() - m_caster->GetPositionX()) / 2,
                           m_caster->GetPositionY() + (unitTarget->GetPositionY() - m_caster->GetPositionY()) / 2,
                           m_caster->GetPositionZ(),
-                          m_caster->GetOrientation(), G3D::Quat(), 0, GO_STATE_READY))
+                          m_caster->GetFacing(), G3D::Quat(), 0, GO_STATE_READY))
     {
         delete pGameObj;
         return;
@@ -4186,7 +4186,7 @@ void Spell::EffectStuck(SpellEffIndex /*effIndex*/)
         float o = rand_norm() * 2 * M_PI;
         Position pos = *target;
         target->MovePositionToFirstCollision(pos, 5.0f, o);
-        target->NearTeleportTo(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), target->GetOrientation());
+        target->NearTeleportTo(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), target->GetFacing());
         return;
     }
 
@@ -4594,7 +4594,7 @@ void Spell::EffectSummonObject(SpellEffIndex effIndex)
         m_caster->GetClosePoint(x, y, z, DEFAULT_WORLD_OBJECT_SIZE);
 
     Map* map = m_caster->GetMap();
-    if (!pGameObj->Create(map->GenerateLowGuid<HighGuid::GameObject>(), gameobjectId, map, m_caster->GetPhaseMask(), x, y, z, m_caster->GetOrientation(), G3D::Quat(), 0, GO_STATE_READY))
+    if (!pGameObj->Create(map->GenerateLowGuid<HighGuid::GameObject>(), gameobjectId, map, m_caster->GetPhaseMask(), x, y, z, m_caster->GetFacing(), G3D::Quat(), 0, GO_STATE_READY))
     {
         delete pGameObj;
         return;
@@ -4692,7 +4692,7 @@ void Spell::EffectLeap(SpellEffIndex /*effIndex*/)
         return;
 
     Position dstpos = destTarget->GetPosition();
-    unitTarget->NearTeleportTo(dstpos.GetPositionX(), dstpos.GetPositionY(), dstpos.GetPositionZ(), dstpos.GetOrientation(), unitTarget == m_caster);
+    unitTarget->NearTeleportTo(dstpos.GetPositionX(), dstpos.GetPositionY(), dstpos.GetPositionZ(), dstpos.GetFacing(), unitTarget == m_caster);
 }
 
 void Spell::EffectReputation(SpellEffIndex effIndex)
@@ -5115,7 +5115,7 @@ void Spell::EffectPullTowards(SpellEffIndex effIndex)
     else //if (m_spellInfo->Effects[i].Effect == SPELL_EFFECT_PULL_TOWARDS)
     {
         // Xinef: Increase Z position a little bit, should protect from falling through textures
-        pos.Relocate(m_caster->GetPositionX(), m_caster->GetPositionY(), m_caster->GetPositionZ() + 1.0f, m_caster->GetOrientation());
+        pos.Relocate(m_caster->GetPositionX(), m_caster->GetPositionY(), m_caster->GetPositionZ() + 1.0f, m_caster->GetFacing());
     }
 
     float speedXY = float(m_spellInfo->Effects[effIndex].MiscValue) ? float(m_spellInfo->Effects[effIndex].MiscValue) * 0.1f : 30.f;
@@ -5205,8 +5205,8 @@ void Spell::EffectResurrectPet(SpellEffIndex /*effIndex*/)
     // We can use a different, more accurate version of GetClosePoint() since we have a pet
     float x, y, z; // Will be used later to reposition the pet if we have one
     player->GetClosePoint(x, y, z, pet->GetCombatReach(), PET_FOLLOW_DIST, pet->GetFollowAngle());
-    pet->NearTeleportTo(x, y, z, player->GetOrientation());
-    pet->Relocate(x, y, z, player->GetOrientation()); // This is needed so SaveStayPosition() will get the proper coords.
+    pet->NearTeleportTo(x, y, z, player->GetFacing());
+    pet->Relocate(x, y, z, player->GetFacing()); // This is needed so SaveStayPosition() will get the proper coords.
     pet->ReplaceAllDynamicFlags(UNIT_DYNFLAG_NONE);
     pet->RemoveUnitFlag(UNIT_FLAG_SKINNABLE);
     pet->setDeathState(DeathState::Alive);
@@ -5381,7 +5381,7 @@ void Spell::EffectTransmitted(SpellEffIndex effIndex)
 
     GameObject* pGameObj = sObjectMgr->IsGameObjectStaticTransport(name_id) ? new StaticTransport() : new GameObject();
 
-    if (!pGameObj->Create(cMap->GenerateLowGuid<HighGuid::GameObject>(), name_id, cMap, m_caster->GetPhaseMask(), fx, fy, fz, m_caster->GetOrientation(), G3D::Quat(), 100, GO_STATE_READY))
+    if (!pGameObj->Create(cMap->GenerateLowGuid<HighGuid::GameObject>(), name_id, cMap, m_caster->GetPhaseMask(), fx, fy, fz, m_caster->GetFacing(), G3D::Quat(), 100, GO_STATE_READY))
     {
         delete pGameObj;
         return;

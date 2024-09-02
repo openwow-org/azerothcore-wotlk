@@ -763,7 +763,7 @@ public:
 
                         me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
 
-                        float angle = VX001->GetOrientation();
+                        float angle = VX001->GetFacing();
                         float v_x = me->GetPositionX() + cos(angle) * 10.0f;
                         float v_y = me->GetPositionY() + std::sin(angle) * 10.0f;
                         me->GetMotionMaster()->MoveJump(v_x, v_y, 364.32f, 7.0f, 7.0f);
@@ -1433,8 +1433,8 @@ public:
                                     if( Creature* trigger = me->SummonCreature(NPC_ROCKET_STRIKE_N, temp->GetPositionX(), temp->GetPositionY(), temp->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_DESPAWN, 6000) )
                                         trigger->CastSpell(trigger, SPELL_ROCKET_STRIKE_AURA, true);
                                     Position exitPos = r->GetPosition();
-                                    exitPos.m_positionX += cos(me->GetOrientation()) * 2.35f;
-                                    exitPos.m_positionY += std::sin(me->GetOrientation()) * 2.35f;
+                                    exitPos.m_positionX += cos(me->GetFacing()) * 2.35f;
+                                    exitPos.m_positionY += std::sin(me->GetFacing()) * 2.35f;
                                     exitPos.m_positionZ += 2.0f * Phase;
                                     r->_ExitVehicle(&exitPos);
                                     me->RemoveAurasByType(SPELL_AURA_CONTROL_VEHICLE, r->GetGUID());
@@ -1451,7 +1451,7 @@ public:
                     {
                         for (uint8 i = 5; i <= 6; ++i)
                             if (!vk->GetPassenger(i))
-                                if (TempSummon* accessory = me->SummonCreature(NPC_ROCKET_VISUAL, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ() + 4.0f, me->GetOrientation(), TEMPSUMMON_MANUAL_DESPAWN))
+                                if (TempSummon* accessory = me->SummonCreature(NPC_ROCKET_VISUAL, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ() + 4.0f, me->GetFacing(), TEMPSUMMON_MANUAL_DESPAWN))
                                     if (!me->HandleSpellClick(accessory, i))
                                         accessory->UnSummon();
                     }
@@ -1808,13 +1808,13 @@ public:
                     me->CastSpell(me, SPELL_MAGNETIC_CORE, true);
                     me->CastSpell(me, SPELL_SPINNING, true);
                     me->MonsterMoveWithSpeed(me->GetPositionX(), me->GetPositionY(), 365.34f, me->GetExactDist(me->GetPositionX(), me->GetPositionY(), 365.34f));
-                    me->UpdatePosition(me->GetPositionX(), me->GetPositionY(), 365.34f, me->GetOrientation(), false);
+                    me->UpdatePosition(me->GetPositionX(), me->GetPositionY(), 365.34f, me->GetFacing(), false);
                     events.ScheduleEvent(EVENT_MAGNETIC_CORE_FREE, 20s);
                     break;
                 case EVENT_MAGNETIC_CORE_FREE:
                     me->RemoveAura(SPELL_SPINNING);
                     me->MonsterMoveWithSpeed(me->GetPositionX(), me->GetPositionY(), 381.34f, me->GetDistance(me->GetPositionX(), me->GetPositionY(), 381.34f));
-                    me->UpdatePosition(me->GetPositionX(), me->GetPositionY(), 381.34f, me->GetOrientation(), false);
+                    me->UpdatePosition(me->GetPositionX(), me->GetPositionY(), 381.34f, me->GetFacing(), false);
                     events.ScheduleEvent(EVENT_MAGNETIC_CORE_REMOVE_IMMOBILIZE, 1s);
                     break;
                 case EVENT_MAGNETIC_CORE_REMOVE_IMMOBILIZE:
@@ -2007,7 +2007,7 @@ public:
                 if (c->GetExactDist2d(me) <= 10.0f)
                 {
                     me->SendMonsterMove(c->GetPositionX(), c->GetPositionY(), 364.313f, 1);
-                    me->UpdatePosition(c->GetPositionX(), c->GetPositionY(), 364.313f, me->GetOrientation(), true);
+                    me->UpdatePosition(c->GetPositionX(), c->GetPositionY(), 364.313f, me->GetFacing(), true);
                     me->StopMovingOnCurrentPos();
                     c->AI()->SetData(2, 1);
                     despawnTimer = 20000;
@@ -2416,7 +2416,7 @@ public:
                         if (dist <= 5.0f)
                             events.ScheduleEvent(EVENT_EMERGENCY_BOT_ATTACK, 0ms);
                         else
-                            me->GetMotionMaster()->MovePoint(1, me->GetPositionX() + (dist - 5.0f)*cos(me->GetOrientation()), me->GetPositionY() + (dist - 5.0f)*sin(me->GetOrientation()), 364.32f);
+                            me->GetMotionMaster()->MovePoint(1, me->GetPositionX() + (dist - 5.0f)*cos(me->GetFacing()), me->GetPositionY() + (dist - 5.0f)*sin(me->GetFacing()), 364.32f);
                     }
                     break;
                 case EVENT_EMERGENCY_BOT_ATTACK:

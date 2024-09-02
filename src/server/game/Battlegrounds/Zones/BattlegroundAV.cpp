@@ -1357,7 +1357,7 @@ bool BattlegroundAV::SetupBattleground()
             std::get<1>(BG_AV_GenericObjectPos[i]).GetPositionX(),
             std::get<1>(BG_AV_GenericObjectPos[i]).GetPositionY(),
             std::get<1>(BG_AV_GenericObjectPos[i]).GetPositionZ(),
-            std::get<1>(BG_AV_GenericObjectPos[i]).GetOrientation(),
+            std::get<1>(BG_AV_GenericObjectPos[i]).GetFacing(),
             std::get<2>(BG_AV_GenericObjectPos[i])[0],
             std::get<2>(BG_AV_GenericObjectPos[i])[1],
             std::get<2>(BG_AV_GenericObjectPos[i])[2],

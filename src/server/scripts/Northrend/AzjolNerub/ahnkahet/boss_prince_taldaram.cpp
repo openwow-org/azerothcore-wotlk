@@ -245,7 +245,7 @@ struct boss_taldaram : public BossAI
     {
         if (action == ACTION_REMOVE_PRISON || action == ACTION_REMOVE_PRISON_AT_RESET)
         {
-            me->SetHomePosition(me->GetPositionX(), me->GetPositionY(), DATA_GROUND_POSITION_Z, me->GetOrientation());
+            me->SetHomePosition(me->GetPositionX(), me->GetPositionY(), DATA_GROUND_POSITION_Z, me->GetFacing());
             instance->HandleGameObject(instance->GetGuidData(DATA_PRINCE_TALDARAM_PLATFORM), true);
 
             if (action == ACTION_REMOVE_PRISON)

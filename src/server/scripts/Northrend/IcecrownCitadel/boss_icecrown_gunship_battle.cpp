@@ -475,7 +475,7 @@ private:
         newPos.m_positionX = _spawnPoint->GetPositionX() + 2.0f * std::cos(angle);
         newPos.m_positionY = _spawnPoint->GetPositionY() + 2.0f * std::sin(angle);
         newPos.m_positionZ = _spawnPoint->GetPositionZ();
-        newPos.SetOrientation(_spawnPoint->GetOrientation());
+        newPos.SetOrientation(_spawnPoint->GetFacing());
         _transport->CalculatePassengerPosition(newPos.m_positionX, newPos.m_positionY, newPos.m_positionZ, &(newPos.m_orientation));
         return newPos;
     }
@@ -1540,7 +1540,7 @@ struct gunship_npc_AI : public ScriptedAI
     {
         if (type == POINT_MOTION_TYPE && pointId == EVENT_CHARGE_PREPATH && Slot)
         {
-            me->SetFacingTo(Slot->TargetPosition.GetOrientation());
+            me->SetFacingTo(Slot->TargetPosition.GetFacing());
             me->m_Events.AddEvent(new BattleExperienceEvent(me), me->m_Events.CalculateTime(BattleExperienceEvent::ExperiencedTimes[0]));
             me->CastSpell(me, SPELL_BATTLE_EXPERIENCE, true);
             me->SetReactState(REACT_AGGRESSIVE);
@@ -1604,7 +1604,7 @@ struct npc_gunship_boarding_addAI : public ScriptedAI
     {
         if (type == POINT_MOTION_TYPE && pointId == EVENT_CHARGE_PREPATH && Slot)
         {
-            me->SetFacingTo(Slot->TargetPosition.GetOrientation());
+            me->SetFacingTo(Slot->TargetPosition.GetFacing());
             me->m_Events.AddEvent(new BattleExperienceEvent(me), me->m_Events.CalculateTime(BattleExperienceEvent::ExperiencedTimes[0]));
             me->CastSpell(me, SPELL_BATTLE_EXPERIENCE, true);
             me->SetReactState(REACT_AGGRESSIVE);
@@ -1801,7 +1801,7 @@ public:
         {
             if (type == POINT_MOTION_TYPE && pointId == EVENT_CHARGE_PREPATH && Slot)
             {
-                me->SetFacingTo(Slot->TargetPosition.GetOrientation());
+                me->SetFacingTo(Slot->TargetPosition.GetFacing());
                 switch (Index)
                 {
                     case SLOT_FREEZE_MAGE:

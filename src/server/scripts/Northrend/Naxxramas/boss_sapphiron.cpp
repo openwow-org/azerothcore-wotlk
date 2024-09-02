@@ -317,7 +317,7 @@ public:
                         {
                             if (Unit* target = ObjectAccessor::GetUnit(*me, currentTarget))
                             {
-                                me->SummonGameObject(GO_ICE_BLOCK, target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), target->GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 0);
+                                me->SummonGameObject(GO_ICE_BLOCK, target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), target->GetFacing(), 0.0f, 0.0f, 0.0f, 0.0f, 0);
                             }
                         }
 

@@ -259,9 +259,9 @@ public:
                     case MI_POINT_INTRO_SIDE_2:
                     case MI_POINT_INTRO_SIDE_3:
                         {
-                            float angle = me->GetOrientation();
+                            float angle = me->GetFacing();
                             float dist = 75.0f;
-                            if (Creature* c = me->SummonCreature(NPC_PORTAL, me->GetPositionX() + cos(angle) * dist, me->GetPositionY() + std::sin(angle) * dist, me->GetPositionZ(), FourSidesPos[id].GetOrientation(), TEMPSUMMON_TIMED_DESPAWN, 13000))
+                            if (Creature* c = me->SummonCreature(NPC_PORTAL, me->GetPositionX() + cos(angle) * dist, me->GetPositionY() + std::sin(angle) * dist, me->GetPositionZ(), FourSidesPos[id].GetFacing(), TEMPSUMMON_TIMED_DESPAWN, 13000))
                                 me->CastSpell(c, SPELL_PORTAL_BEAM, false);
                             timer2 = INTRO_MOVEMENT_INTERVAL - 10000;
                         }
@@ -484,7 +484,7 @@ public:
                         me->HandleEmoteCommand(EMOTE_STATE_CUSTOM_SPELL_01);
 
                         Position pos;
-                        float angle = (me->GetOrientation() >= M_PI / 4 ? me->GetOrientation() - M_PI / 4 : 7 * M_PI / 4 + me->GetOrientation());
+                        float angle = (me->GetFacing() >= M_PI / 4 ? me->GetFacing() - M_PI / 4 : 7 * M_PI / 4 + me->GetFacing());
                         pos.m_positionX = CenterPos.GetPositionX() + cos(angle) * 40.0f;
                         pos.m_positionY = CenterPos.GetPositionY() + std::sin(angle) * 40.0f;
                         pos.m_positionZ = CenterPos.GetPositionZ() + 20.0f;
@@ -523,7 +523,7 @@ public:
 
                                             Movement::MoveSplineInit init(pPlayer);
                                             init.MoveTo(CenterPos.GetPositionX(), CenterPos.GetPositionY(), CenterPos.GetPositionZ());
-                                            init.SetFacing(pPlayer->GetOrientation());
+                                            init.SetFacing(pPlayer->GetFacing());
                                             init.SetTransportExit();
                                             init.Launch();
 
@@ -1014,7 +1014,7 @@ public:
                     me->GetMotionMaster()->MoveIdle();
                     me->DisableSpline();
                     me->MonsterMoveWithSpeed(me->GetPositionX(), me->GetPositionY(), CenterPos.GetPositionZ(), 100.0f);
-                    me->SetPosition(me->GetPositionX(), me->GetPositionY(), CenterPos.GetPositionZ(), me->GetOrientation());
+                    me->SetPosition(me->GetPositionX(), me->GetPositionY(), CenterPos.GetPositionZ(), me->GetFacing());
                     me->ReplaceAllUnitFlags(UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_DISABLE_MOVE);
                     me->RemoveAura(SPELL_POWER_SPARK_VISUAL);
                     me->CastSpell(me, SPELL_POWER_SPARK_GROUND_BUFF, true);
@@ -1276,7 +1276,7 @@ public:
                     me->SetSpeed(MOVE_FLIGHT, 0.6f);
                 }
 
-                who->SetFacingTo(me->GetOrientation());
+                who->SetFacingTo(me->GetFacing());
                 me->SetCanFly(true);
             }
             else

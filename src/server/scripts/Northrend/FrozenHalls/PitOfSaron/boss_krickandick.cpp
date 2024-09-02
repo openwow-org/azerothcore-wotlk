@@ -140,7 +140,7 @@ public:
                     krick->InterruptNonMeleeSpells(true);
                     krick->RemoveAllAuras();
                     Position myPos(*me), exitPos;
-                    float ang = me->GetOrientation() + 3 * M_PI / 2;
+                    float ang = me->GetFacing() + 3 * M_PI / 2;
                     float dist = 3.0f;
                     exitPos.Relocate(myPos.GetPositionX() + dist * cos(ang), myPos.GetPositionY() + dist * std::sin(ang), 515.0f, M_PI);
                     exitPos.m_positionZ = me->GetMap()->GetHeight(exitPos.GetPositionX(), exitPos.GetPositionY(), exitPos.GetPositionZ());

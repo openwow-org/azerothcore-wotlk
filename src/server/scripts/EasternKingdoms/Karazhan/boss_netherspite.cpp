@@ -170,7 +170,7 @@ struct boss_netherspite : public BossAI
                         BeamerGUID[j].Clear();
                     }
                     // create new one and start beaming on the target
-                    if (Creature* beamer = portal->SummonCreature(PortalID[j], portal->GetPositionX(), portal->GetPositionY(), portal->GetPositionZ(), portal->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN, 60000))
+                    if (Creature* beamer = portal->SummonCreature(PortalID[j], portal->GetPositionX(), portal->GetPositionY(), portal->GetPositionZ(), portal->GetFacing(), TEMPSUMMON_TIMED_DESPAWN, 60000))
                     {
                         beamer->CastSpell(target, PortalBeam[j], false);
                         BeamerGUID[j] = beamer->GetGUID();

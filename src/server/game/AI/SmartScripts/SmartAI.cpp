@@ -601,7 +601,7 @@ void SmartAI::MovepointReached(uint32 id)
 
     if (mLastWP)
     {
-        me->SetPosition(mLastWP->x, mLastWP->y, mLastWP->z, me->GetOrientation());
+        me->SetPosition(mLastWP->x, mLastWP->y, mLastWP->z, me->GetFacing());
         me->SetHomePosition(me->GetPosition());
     }
 

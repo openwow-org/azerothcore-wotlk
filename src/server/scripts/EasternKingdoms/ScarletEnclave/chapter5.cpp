@@ -768,7 +768,7 @@ public:
                     Talk(SAY_LIGHT_OF_DAWN31);
                     break;
                 case EVENT_OUTRO_SCENE_6:
-                    if (Creature* alex = me->SummonCreature(NPC_HIGHLORD_ALEXANDROS_MOGRAINE, LightOfDawnPos[7].GetPositionX(), LightOfDawnPos[7].GetPositionY(), LightOfDawnPos[7].GetPositionZ(), LightOfDawnPos[7].GetOrientation(), TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 300000))
+                    if (Creature* alex = me->SummonCreature(NPC_HIGHLORD_ALEXANDROS_MOGRAINE, LightOfDawnPos[7].GetPositionX(), LightOfDawnPos[7].GetPositionY(), LightOfDawnPos[7].GetPositionZ(), LightOfDawnPos[7].GetFacing(), TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 300000))
                     {
                         alex->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
                         alex->GetMotionMaster()->MovePoint(0, LightOfDawnPos[8].GetPositionX(), LightOfDawnPos[8].GetPositionY(), LightOfDawnPos[8].GetPositionZ());
@@ -792,7 +792,7 @@ public:
                     Talk(SAY_LIGHT_OF_DAWN34);
                     break;
                 case EVENT_OUTRO_SCENE_10:
-                    if (Creature* darion = me->SummonCreature(NPC_DARION_MOGRAINE, LightOfDawnPos[9].GetPositionX(), LightOfDawnPos[9].GetPositionY(), LightOfDawnPos[9].GetPositionZ(), LightOfDawnPos[9].GetOrientation(), TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 300000))
+                    if (Creature* darion = me->SummonCreature(NPC_DARION_MOGRAINE, LightOfDawnPos[9].GetPositionX(), LightOfDawnPos[9].GetPositionY(), LightOfDawnPos[9].GetPositionZ(), LightOfDawnPos[9].GetFacing(), TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 300000))
                     {
                         darion->AI()->Talk(SAY_LIGHT_OF_DAWN35);
                         darion->SetWalk(false);
@@ -863,7 +863,7 @@ public:
                     events.ScheduleEvent(EVENT_OUTRO_SCENE_36, 81s);
                     break;
                 case EVENT_OUTRO_SCENE_20:
-                    if (Creature* lk = me->SummonCreature(NPC_THE_LICH_KING, LightOfDawnPos[12].GetPositionX(), LightOfDawnPos[12].GetPositionY(), LightOfDawnPos[12].GetPositionZ(), LightOfDawnPos[12].GetOrientation(), TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 300000))
+                    if (Creature* lk = me->SummonCreature(NPC_THE_LICH_KING, LightOfDawnPos[12].GetPositionX(), LightOfDawnPos[12].GetPositionY(), LightOfDawnPos[12].GetPositionZ(), LightOfDawnPos[12].GetFacing(), TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 300000))
                         lk->AI()->Talk(SAY_LIGHT_OF_DAWN43);
                     break;
                 case EVENT_OUTRO_SCENE_21:
@@ -999,7 +999,7 @@ public:
                     {
                         tirion->RemoveAllAuras();
                         tirion->CastSpell(me, SPELL_REBIRTH_OF_THE_ASHBRINGER, true);
-                        tirion->SummonGameObject(GO_LIGHT_OF_DAWN, tirion->GetPositionX(), tirion->GetPositionY(), tirion->GetPositionZ(), tirion->GetOrientation(), 0, 0, 0, 0, 180);
+                        tirion->SummonGameObject(GO_LIGHT_OF_DAWN, tirion->GetPositionX(), tirion->GetPositionY(), tirion->GetPositionZ(), tirion->GetFacing(), 0, 0, 0, 0, 180);
                         tirion->LoadEquipment(1, true);
                     }
                     me->SetStandState(UNIT_DEAD);

@@ -136,7 +136,7 @@ struct npc_partygoer : public ScriptedAI
 
     void Initialize()
     {
-        _facing = me->GetOrientation();
+        _facing = me->GetFacing();
     }
 
     void Reset() override

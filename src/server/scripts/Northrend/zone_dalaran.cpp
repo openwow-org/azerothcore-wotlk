@@ -485,7 +485,7 @@ public:
                     }
                     break;
             }
-            me->SetOrientation(me->GetHomePosition().GetOrientation());
+            me->SetOrientation(me->GetHomePosition().GetFacing());
             return;
         }
 
@@ -573,7 +573,7 @@ struct npc_minigob_manabonk : public ScriptedAI
                     {
                         playerGUID = player->GetGUID();
                         Position pos = player->GetPosition();
-                        me->NearTeleportTo(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation());
+                        me->NearTeleportTo(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetFacing());
                         me->GetMotionMaster()->MoveRandom(10);
                     }
                     events.ScheduleEvent(EVENT_POLYMORPH, 30s);

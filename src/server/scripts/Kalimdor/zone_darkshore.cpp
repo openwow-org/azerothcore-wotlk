@@ -549,7 +549,7 @@ public:
         void Initialize()
         {
             _scriptRunning = false;
-            _facing        = me->GetOrientation();
+            _facing        = me->GetFacing();
         }
 
         void Reset() override

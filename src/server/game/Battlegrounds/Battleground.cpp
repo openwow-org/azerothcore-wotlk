@@ -335,7 +335,7 @@ inline void Battleground::_CheckSafePositions(uint32 diff)
             if (pos.GetExactDistSq(startPos) > maxDist)
             {
                 LOG_DEBUG("bg.battleground", "BATTLEGROUND: Sending {} back to start location (map: {}) (possible exploit)", player->GetName(), GetMapId());
-                player->Teleport(GetMapId(), startPos->GetPositionX(), startPos->GetPositionY(), startPos->GetPositionZ(), startPos->GetOrientation());
+                player->Teleport(GetMapId(), startPos->GetPositionX(), startPos->GetPositionY(), startPos->GetPositionZ(), startPos->GetFacing());
             }
         }
     }
@@ -1399,7 +1399,7 @@ void Battleground::RelocateDeadPlayers(WOWGUID queueIndex)
                 closestGrave = GetClosestGraveyard(player);
 
             if (closestGrave)
-                player->Teleport(GetMapId(), closestGrave->x, closestGrave->y, closestGrave->z, player->GetOrientation());
+                player->Teleport(GetMapId(), closestGrave->x, closestGrave->y, closestGrave->z, player->GetFacing());
         }
 
         ghostList.clear();

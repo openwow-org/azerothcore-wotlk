@@ -106,7 +106,7 @@ public:
         float x = float(player->GetPositionX());
         float y = float(player->GetPositionY());
         float z = float(player->GetPositionZ());
-        float o = float(player->GetOrientation());
+        float o = float(player->GetFacing());
         Map* map = player->GetMap();
 
         GameObject* object = sObjectMgr->IsGameObjectStaticTransport(objectInfo->entry) ? new StaticTransport() : new GameObject();
@@ -159,7 +159,7 @@ public:
         float x = player->GetPositionX();
         float y = player->GetPositionY();
         float z = player->GetPositionZ();
-        float ang = player->GetOrientation();
+        float ang = player->GetFacing();
 
         float rot2 = std::sin(ang / 2);
         float rot3 = cos(ang / 2);
@@ -328,7 +328,7 @@ public:
         }
 
         if (!oz)
-            oz = handler->GetSession()->GetPlayer()->GetOrientation();
+            oz = handler->GetSession()->GetPlayer()->GetFacing();
 
         Map* map = object->GetMap();
         object->Relocate(object->GetPositionX(), object->GetPositionY(), object->GetPositionZ(), *oz);
@@ -382,7 +382,7 @@ public:
 
         Map* map = object->GetMap();
 
-        pos.SetOrientation(object->GetOrientation());
+        pos.SetOrientation(object->GetFacing());
         object->Relocate(pos);
 
         // update which cell has this gameobject registered for loading

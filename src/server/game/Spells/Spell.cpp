@@ -1349,7 +1349,7 @@ void Spell::SelectImplicitCasterDestTargets(SpellEffIndex effIndex, SpellImplici
             break;
         case TARGET_DEST_HOME:
             if (Player* playerCaster = m_caster->ToPlayer())
-                dest = SpellDestination(playerCaster->m_homebindX, playerCaster->m_homebindY, playerCaster->m_homebindZ, playerCaster->GetOrientation(), playerCaster->m_homebindMapId);
+                dest = SpellDestination(playerCaster->m_homebindX, playerCaster->m_homebindY, playerCaster->m_homebindZ, playerCaster->GetFacing(), playerCaster->m_homebindMapId);
             break;
         case TARGET_DEST_DB:
             if (SpellTargetPosition const* st = sSpellMgr->GetSpellTargetPosition(m_spellInfo->Id, effIndex))
@@ -1375,7 +1375,7 @@ void Spell::SelectImplicitCasterDestTargets(SpellEffIndex effIndex, SpellImplici
                 float x, y, z, angle;
                 angle = (float)rand_norm() * static_cast<float>(M_PI * 35.0f / 180.0f) - static_cast<float>(M_PI * 17.5f / 180.0f);
                 //m_caster->GetClosePoint(x, y, z, DEFAULT_WORLD_OBJECT_SIZE, dis, angle); this contains extra code that breaks fishing
-                m_caster->GetNearPoint(m_caster, x, y, z, DEFAULT_WORLD_OBJECT_SIZE, dis, m_caster->GetOrientation() + angle);
+                m_caster->GetNearPoint(m_caster, x, y, z, DEFAULT_WORLD_OBJECT_SIZE, dis, m_caster->GetFacing() + angle);
 
                 float ground = m_caster->GetMapHeight(x, y, z, true);
                 float liquidLevel = VMAP_INVALID_HEIGHT_VALUE;
@@ -1407,7 +1407,7 @@ void Spell::SelectImplicitCasterDestTargets(SpellEffIndex effIndex, SpellImplici
                     return;
                 }
 
-                dest = SpellDestination(x, y, liquidLevel, m_caster->GetOrientation());
+                dest = SpellDestination(x, y, liquidLevel, m_caster->GetFacing());
                 break;
             }
         case TARGET_DEST_CASTER_FRONT_LEAP:
@@ -1423,8 +1423,8 @@ void Spell::SelectImplicitCasterDestTargets(SpellEffIndex effIndex, SpellImplici
                 Position lastpos;
                 m_caster->GetPosition(startx, starty, startz, starto);
                 pos.Relocate(startx, starty, startz, starto);
-                float destx = pos.GetPositionX() + distance * cos(pos.GetOrientation());
-                float desty = pos.GetPositionY() + distance * sin(pos.GetOrientation());
+                float destx = pos.GetPositionX() + distance * cos(pos.GetFacing());
+                float desty = pos.GetPositionY() + distance * sin(pos.GetFacing());
 
                 float ground = map->GetHeight(phasemask, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ());
 
@@ -1556,15 +1556,15 @@ void Spell::SelectImplicitCasterDestTargets(SpellEffIndex effIndex, SpellImplici
                         {
                             if ((overdistance > 0.0f) && (overdistance < 1.f))
                             {
-                                destx = prevX + overdistance * cos(pos.GetOrientation());
-                                desty = prevY + overdistance * sin(pos.GetOrientation());
+                                destx = prevX + overdistance * cos(pos.GetFacing());
+                                desty = prevY + overdistance * sin(pos.GetFacing());
                                 //LOG_ERROR("spells", "(collision) collision occured 1");
                             }
                             else
                             {
                                 // move back a bit
-                                destx = tstX - (0.6 * cos(pos.GetOrientation()));
-                                desty = tstY - (0.6 * sin(pos.GetOrientation()));
+                                destx = tstX - (0.6 * cos(pos.GetFacing()));
+                                desty = tstY - (0.6 * sin(pos.GetFacing()));
                                 //LOG_ERROR("spells", "(collision) collision occured 2");
                             }
 
@@ -1605,7 +1605,7 @@ void Spell::SelectImplicitCasterDestTargets(SpellEffIndex effIndex, SpellImplici
                         // we have correct destz now
                     }
 
-                    lastpos.Relocate(destx, desty, destz, pos.GetOrientation());
+                    lastpos.Relocate(destx, desty, destz, pos.GetFacing());
                     dest = SpellDestination(lastpos);
                 }
                 else
@@ -1619,11 +1619,11 @@ void Spell::SelectImplicitCasterDestTargets(SpellEffIndex effIndex, SpellImplici
                     if (col || dcol)
                     {
                         // move back a bit
-                        destx = destx - (0.6 * cos(pos.GetOrientation()));
-                        desty = desty - (0.6 * sin(pos.GetOrientation()));
+                        destx = destx - (0.6 * cos(pos.GetFacing()));
+                        desty = desty - (0.6 * sin(pos.GetFacing()));
                     }
 
-                    lastpos.Relocate(destx, desty, z, pos.GetOrientation());
+                    lastpos.Relocate(destx, desty, z, pos.GetFacing());
                     dest = SpellDestination(lastpos);
                     //float range = sqrt((desty - pos.GetPositionY())*(desty - pos.GetPositionY()) + (destx - pos.GetPositionX())*(destx - pos.GetPositionX()));
                     //LOG_ERROR("spells", "Blink number 2, in falling but at a hight, distance of blink = {}", range);
@@ -1990,8 +1990,8 @@ void Spell::SelectImplicitTrajTargets(SpellEffIndex effIndex, SpellImplicitTarge
 
     if (m_targets.GetSrcPos()->GetExactDist2d(m_targets.GetDstPos()) > bestDist)
     {
-        float x = m_targets.GetSrcPos()->m_positionX + cos(m_caster->GetOrientation()) * bestDist;
-        float y = m_targets.GetSrcPos()->m_positionY + std::sin(m_caster->GetOrientation()) * bestDist;
+        float x = m_targets.GetSrcPos()->m_positionX + cos(m_caster->GetFacing()) * bestDist;
+        float y = m_targets.GetSrcPos()->m_positionY + std::sin(m_caster->GetFacing()) * bestDist;
         float z = m_targets.GetSrcPos()->m_positionZ + bestDist * (a * bestDist + b);
 
         if (itr != targets.end())
@@ -2013,7 +2013,7 @@ void Spell::SelectImplicitTrajTargets(SpellEffIndex effIndex, SpellImplicitTarge
         }
 
         Position trajDst;
-        trajDst.Relocate(x, y, z, m_caster->GetOrientation());
+        trajDst.Relocate(x, y, z, m_caster->GetFacing());
         SpellDestination dest(*m_targets.GetDst());
         dest.Relocate(trajDst);
 

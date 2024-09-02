@@ -1320,7 +1320,7 @@ void Map::RemoveAllPlayers()
             {
                 // this is happening for bg
                 LOG_ERROR("maps", "Map::UnloadAll: player {} is still in map {} during unload, this should not happen!", player->GetName(), GetId());
-                player->Teleport(player->m_homebindMapId, player->m_homebindX, player->m_homebindY, player->m_homebindZ, player->GetOrientation());
+                player->Teleport(player->m_homebindMapId, player->m_homebindX, player->m_homebindY, player->m_homebindZ, player->GetFacing());
             }
         }
     }
@@ -3708,7 +3708,7 @@ Corpse* Map::ConvertCorpseToBones(WOWGUID const ownerGuid, bool insignia /*= fal
             bones->SetUInt32Value(i, corpse->GetUInt32Value(i));
 
         bones->SetCellCoord(corpse->GetCellCoord());
-        bones->Relocate(corpse->GetPositionX(), corpse->GetPositionY(), corpse->GetPositionZ(), corpse->GetOrientation());
+        bones->Relocate(corpse->GetPositionX(), corpse->GetPositionY(), corpse->GetPositionZ(), corpse->GetFacing());
         bones->SetPhaseMask(corpse->GetPhaseMask(), false);
 
         bones->SetUInt32Value(CORPSE_FIELD_FLAGS, CORPSE_FLAG_UNK2 | CORPSE_FLAG_BONES);

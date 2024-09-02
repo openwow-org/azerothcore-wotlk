@@ -64,7 +64,7 @@ class spell_q11065_wrangle_some_aether_rays_aura : public AuraScript
                 Player* player = GetCaster()->ToPlayer();
 
                 player->KilledMonsterCredit(23343);
-                if (Creature* cr = GetCaster()->SummonCreature(23343, ar->GetPositionX(), ar->GetPositionY(), ar->GetPositionZ(), ar->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN, 180000))
+                if (Creature* cr = GetCaster()->SummonCreature(23343, ar->GetPositionX(), ar->GetPositionY(), ar->GetPositionZ(), ar->GetFacing(), TEMPSUMMON_TIMED_DESPAWN, 180000))
                 {
                     cr->CastSpell(player, 40926, true);
                     cr->GetMotionMaster()->MoveFollow(player, 5.0f, 2 * M_PI * rand_norm());
@@ -161,9 +161,9 @@ class spell_q12014_steady_as_a_rock : public SpellScript
 
         if (caster->ToPlayer()->GetQuestStatus(12014 /*QUEST_STEADY_AS_A_ROCK*/) == QUEST_STATUS_INCOMPLETE)
         {
-            float x = caster->GetPositionX() + 3.0f * cos(caster->GetOrientation());
-            float y = caster->GetPositionY() + 3.0f * std::sin(caster->GetOrientation());
-            float o = caster->GetOrientation() < M_PI ? caster->GetOrientation() + M_PI : caster->GetOrientation() - M_PI;
+            float x = caster->GetPositionX() + 3.0f * cos(caster->GetFacing());
+            float y = caster->GetPositionY() + 3.0f * std::sin(caster->GetFacing());
+            float o = caster->GetFacing() < M_PI ? caster->GetFacing() + M_PI : caster->GetFacing() - M_PI;
             caster->SummonGameObject(188367, x, y, caster->GetPositionZ(), o, 0.0f, 0.0f, 0.0f, 0.0f, 60000);
         }
     }
@@ -2439,7 +2439,7 @@ class spell_q9847_a_spirit_ally : public SpellScript
     void HandleSendEvent(SpellEffIndex /*effIndex*/)
     {
         float dist = 5.0f;
-        float angle = GetCaster()->GetOrientation() - 1.25f;
+        float angle = GetCaster()->GetFacing() - 1.25f;
         Position pos = GetCaster()->GetNearPosition(dist, angle);
         GetCaster()->SummonCreature(NPC_FERALFEN_TOTEM, pos, TEMPSUMMON_TIMED_DESPAWN, 1 * MINUTE * IN_MILLISECONDS);
     }

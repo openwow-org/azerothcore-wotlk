@@ -439,7 +439,7 @@ class spell_ignis_scorch_aura : public AuraScript
     {
         if (aurEff->GetTotalTicks() >= 0 && aurEff->GetTickNumber() == uint32(aurEff->GetTotalTicks()))
             if (Unit* caster = GetCaster())
-                if (Creature* summon = caster->SummonCreature(NPC_SCORCHED_GROUND, caster->GetPositionX() + 20.0f * cos(caster->GetOrientation()), caster->GetPositionY() + 20.0f * std::sin(caster->GetOrientation()), 361.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN, 30000))
+                if (Creature* summon = caster->SummonCreature(NPC_SCORCHED_GROUND, caster->GetPositionX() + 20.0f * cos(caster->GetFacing()), caster->GetPositionY() + 20.0f * std::sin(caster->GetFacing()), 361.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN, 30000))
                 {
                     if (!summon->FindNearestCreature(NPC_WATER_TRIGGER, 25.0f, true)) // must be away from the water
                         summon->CastSpell(summon, (aurEff->GetId() == SPELL_SCORCH_10 ? SPELL_SCORCHED_GROUND_10 : SPELL_SCORCHED_GROUND_25), true);

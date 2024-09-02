@@ -510,7 +510,7 @@ public:
             {
                 me->SetNpcFlag(UNIT_NPC_FLAG_GOSSIP);
                 me->SetHomePosition(MajordomoRagnaros);
-                me->NearTeleportTo(MajordomoRagnaros.GetPositionX(), MajordomoRagnaros.GetPositionY(), MajordomoRagnaros.GetPositionZ(), MajordomoRagnaros.GetOrientation());
+                me->NearTeleportTo(MajordomoRagnaros.GetPositionX(), MajordomoRagnaros.GetPositionY(), MajordomoRagnaros.GetPositionZ(), MajordomoRagnaros.GetFacing());
                 events.SetPhase(PHASE_NONE);
             }
         }

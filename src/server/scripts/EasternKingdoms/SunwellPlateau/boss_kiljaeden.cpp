@@ -764,7 +764,7 @@ public:
         std::list<Creature*> cList;
         _owner->GetCreaturesWithEntryInRange(cList, 20.0f, NPC_SHATTERED_SUN_SOLDIER);
         for (std::list<Creature*>::const_iterator itr = cList.begin(); itr != cList.end(); ++itr)
-            (*itr)->SetFacingTo(_owner->GetOrientation());
+            (*itr)->SetFacingTo(_owner->GetFacing());
         return true;
     }
 

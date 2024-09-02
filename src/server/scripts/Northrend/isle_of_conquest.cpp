@@ -450,7 +450,7 @@ class spell_ioc_launch : public SpellScript
         {
             player->ExitVehicle();
             player->DisableSpline();
-            player->GetMap()->PlayerRelocation(player, GetCaster()->GetPositionX(), GetCaster()->GetPositionY(), GetCaster()->GetPositionZ(), GetCaster()->GetOrientation());
+            player->GetMap()->PlayerRelocation(player, GetCaster()->GetPositionX(), GetCaster()->GetPositionY(), GetCaster()->GetPositionZ(), GetCaster()->GetFacing());
 
             float dist = position->GetExactDist2d(player->GetPositionX(), player->GetPositionY());
             float elevation = GetSpell()->m_targets.GetElevation();

@@ -131,7 +131,7 @@ public:
             uint32 count = 1;
             for (FlyByCamera const& cam : *flyByCameras)
             {
-                handler->PSendSysMessage("%02u - %7ums [%s (%f degrees)]", count, cam.timeStamp, cam.locations.ToString().c_str(), cam.locations.GetOrientation() * (180 / M_PI));
+                handler->PSendSysMessage("%02u - %7ums [%s (%f degrees)]", count, cam.timeStamp, cam.locations.ToString().c_str(), cam.locations.GetFacing() * (180 / M_PI));
                 ++count;
             }
             handler->PSendSysMessage("%u waypoints dumped", flyByCameras->size());
@@ -903,7 +903,7 @@ public:
 
     static bool HandleDebugSpawnVehicleCommand(ChatHandler* handler, uint32 entry, Optional<uint32> id)
     {
-        float x, y, z, o = handler->GetPlayer()->GetOrientation();
+        float x, y, z, o = handler->GetPlayer()->GetFacing();
         handler->GetPlayer()->GetClosePoint(x, y, z, handler->GetPlayer()->GetCombatReach());
 
         if (!id)
@@ -1256,13 +1256,13 @@ public:
         if (!type)
         {
             // waypoint_data - id, point, X, Y, Z, O, delay, move_type, action, action_chance, wpguid
-            LOG_INFO("sql.dev", "(@PATH, XX, {:.3f}, {:.3f}, {:.5f}, {:.5f}, 0, 0, 0, 100, 0),", player->GetPositionX(), player->GetPositionY(), player->GetPositionZ(), player->GetOrientation());
+            LOG_INFO("sql.dev", "(@PATH, XX, {:.3f}, {:.3f}, {:.5f}, {:.5f}, 0, 0, 0, 100, 0),", player->GetPositionX(), player->GetPositionY(), player->GetPositionZ(), player->GetFacing());
         }
 
         if (type == "sai")
         {
             // waypoint (SAI) - entry, pointid, X, Y, Z, O, delay
-            LOG_INFO("sql.dev", "(@PATH, XX, {:.3f}, {:.3f}, {:.5f}, {:.5f}, 0),", player->GetPositionX(), player->GetPositionY(), player->GetPositionZ(), player->GetOrientation());
+            LOG_INFO("sql.dev", "(@PATH, XX, {:.3f}, {:.3f}, {:.5f}, {:.5f}, 0),", player->GetPositionX(), player->GetPositionY(), player->GetPositionZ(), player->GetFacing());
         }
 
         handler->PSendSysMessage("Waypoint SQL written to SQL Developer log");

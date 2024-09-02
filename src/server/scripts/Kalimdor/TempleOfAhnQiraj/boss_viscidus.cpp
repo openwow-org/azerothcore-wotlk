@@ -185,7 +185,7 @@ struct boss_viscidus : public BossAI
                     me->NearTeleportTo(roomCenter.GetPositionX(),
                         roomCenter.GetPositionY(),
                         roomCenter.GetPositionZ(),
-                        roomCenter.GetOrientation());
+                        roomCenter.GetFacing());
                 });
         }
         else if (_hitcounter == HITCOUNTER_SHATTER)

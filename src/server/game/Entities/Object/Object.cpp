@@ -401,10 +401,10 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
                 *data << object->GetPositionZ();
             }
 
-            *data << object->GetOrientation();
+            *data << object->GetFacing();
 
             if (GetTypeId() == TYPEID_CORPSE)
-                *data << float(object->GetOrientation());
+                *data << float(object->GetFacing());
             else
                 *data << float(0);
         }
@@ -484,7 +484,7 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
         if (unit->HasUnitMovementFlag(MOVEFLAG_IMMOBILIZED))
             *data << float(unit->GetTransOffsetO());
         else
-            *data << float(unit->GetOrientation());
+            *data << float(unit->GetFacing());
     }
 
     // 0x200
@@ -1524,7 +1524,7 @@ Position WorldObject::GetRandomPoint(const Position& srcPos, float distance) con
 {
     float x, y, z;
     GetRandomPoint(srcPos, distance, x, y, z);
-    return Position(x, y, z, GetOrientation());
+    return Position(x, y, z, GetFacing());
 }
 
 void WorldObject::UpdateGroundPositionZ(float x, float y, float &z) const
@@ -2238,7 +2238,7 @@ TempSummon* Map::SummonCreature(uint32 entry, Position const& pos, SummonPropert
     }
 
     EnsureGridLoaded(Cell(pos.GetPositionX(), pos.GetPositionY()));
-    if (!summon->Create(GenerateLowGuid<HighGuid::Unit>(), this, phase, entry, vehId, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation()))
+    if (!summon->Create(GenerateLowGuid<HighGuid::Unit>(), this, phase, entry, vehId, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetFacing()))
     {
         delete summon;
         return nullptr;
@@ -2289,7 +2289,7 @@ TempSummon* WorldObject::SummonCreature(uint32 id, float x, float y, float z, fl
     if (!x && !y && !z)
     {
         GetClosePoint(x, y, z, GetObjectSize());
-        ang = GetOrientation();
+        ang = GetFacing();
     }
     Position pos;
     pos.Relocate(x, y, z, ang);
@@ -2324,7 +2324,7 @@ GameObject* Map::SummonGameObject(uint32 entry, float x, float y, float z, float
 
 GameObject* Map::SummonGameObject(uint32 entry, Position const& pos, float rotation0, float rotation1, float rotation2, float rotation3, uint32 respawnTime, bool checkTransport)
 {
-    return SummonGameObject(entry, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), rotation0, rotation1, rotation2, rotation3, respawnTime, checkTransport);
+    return SummonGameObject(entry, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetFacing(), rotation0, rotation1, rotation2, rotation3, respawnTime, checkTransport);
 }
 
 void WorldObject::SetZoneScript()
@@ -2690,13 +2690,13 @@ void WorldObject::GetNearPoint(WorldObject const* searcher, float& x, float& y, 
 void WorldObject::GetVoidClosePoint(float& x, float& y, float& z, float size, float distance2d /*= 0*/, float relAngle /*= 0*/, float controlZ /*= 0*/) const
 {
     // angle calculated from current orientation
-    GetNearPoint(nullptr, x, y, z, size, distance2d, GetOrientation() + relAngle, controlZ);
+    GetNearPoint(nullptr, x, y, z, size, distance2d, GetFacing() + relAngle, controlZ);
 }
 
 bool WorldObject::GetClosePoint(float& x, float& y, float& z, float size, float distance2d, float angle, WorldObject const* forWho, bool force) const
 {
     // angle calculated from current orientation
-    GetNearPoint(forWho, x, y, z, size, distance2d, GetOrientation() + angle);
+    GetNearPoint(forWho, x, y, z, size, distance2d, GetFacing() + angle);
 
     if (std::fabs(this->GetPositionZ() - z) > 3.0f || !IsWithinLOS(x, y, z))
     {
@@ -2772,7 +2772,7 @@ void WorldObject::GetChargeContactPoint(WorldObject const* obj, float& x, float&
 
 void WorldObject::MovePosition(Position& pos, float dist, float angle)
 {
-    angle += GetOrientation();
+    angle += GetFacing();
     float destx, desty, destz, ground, floor;
     destx = pos.m_positionX + dist * cos(angle);
     desty = pos.m_positionY + dist * std::sin(angle);
@@ -2812,7 +2812,7 @@ void WorldObject::MovePosition(Position& pos, float dist, float angle)
     Acore::NormalizeMapCoord(pos.m_positionX);
     Acore::NormalizeMapCoord(pos.m_positionY);
     UpdateGroundPositionZ(pos.m_positionX, pos.m_positionY, pos.m_positionZ);
-    pos.SetOrientation(GetOrientation());
+    pos.SetOrientation(GetFacing());
 }
 
 Position WorldObject::GetFirstCollisionPosition(float startX, float startY, float startZ, float destX, float destY)
@@ -2854,7 +2854,7 @@ Position WorldObject::GetFirstCollisionPosition(float dist, float angle)
 
 void WorldObject::MovePositionToFirstCollision(Position& pos, float dist, float angle)
 {
-    angle += GetOrientation();
+    angle += GetFacing();
     float destx, desty, destz;
     destx = pos.m_positionX + dist * cos(angle);
     desty = pos.m_positionY + dist * std::sin(angle);
@@ -2863,7 +2863,7 @@ void WorldObject::MovePositionToFirstCollision(Position& pos, float dist, float 
     if (!GetMap()->CheckCollisionAndGetValidCoords(this, pos.m_positionX, pos.m_positionY, pos.m_positionZ, destx, desty, destz, false))
         return;
 
-    pos.SetOrientation(GetOrientation());
+    pos.SetOrientation(GetFacing());
     pos.Relocate(destx, desty, destz);
 }
 

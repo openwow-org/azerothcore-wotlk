@@ -228,7 +228,7 @@ void User::HandleMoveSplineDoneOpcode(WDataStore& recvData)
                 TaxiPathNodeEntry const* node = flight->GetPath()[flight->GetCurrentNode()];
                 flight->SkipCurrentNode();
 
-                GetPlayer()->Teleport(curDestNode->map_id, node->x, node->y, node->z, GetPlayer()->GetOrientation(), TELE_TO_NOT_LEAVE_TAXI);
+                GetPlayer()->Teleport(curDestNode->map_id, node->x, node->y, node->z, GetPlayer()->GetFacing(), TELE_TO_NOT_LEAVE_TAXI);
             }
         }
 

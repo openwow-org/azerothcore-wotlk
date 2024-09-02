@@ -282,7 +282,7 @@ public:
             for (uint8 i = 0; i < 30; ++i)
             {
                 float x, y, z;
-                const Position pPos = { player->GetPositionX(), player->GetPositionY(), player->GetPositionZ(), player->GetOrientation() };
+                const Position pPos = { player->GetPositionX(), player->GetPositionY(), player->GetPositionZ(), player->GetFacing() };
                 player->GetRandomPoint(pPos, 8.0f, x, y, z);
                 z = player->GetPositionZ() + 1;
                 player->SummonCreature(uiEntry, x, y, z, 0, TEMPSUMMON_DEAD_DESPAWN, 0)->AI()->AttackStart(player);
@@ -360,7 +360,7 @@ public:
                         {
                             if (barthilas->IsAlive())
                             {
-                                barthilas->NearTeleportTo(BarthilasPos.GetPositionX(), BarthilasPos.GetPositionY(), BarthilasPos.GetPositionZ(), BarthilasPos.GetOrientation());
+                                barthilas->NearTeleportTo(BarthilasPos.GetPositionX(), BarthilasPos.GetPositionY(), BarthilasPos.GetPositionZ(), BarthilasPos.GetFacing());
                                 barthilas->SetHomePosition(BarthilasPos);
                             }
                         }

@@ -159,7 +159,7 @@ public:
                     }
                     else
                     {
-                        cr->SetHomePosition(cr->GetPositionX(), cr->GetPositionY(), cr->GetPositionZ(), cr->GetOrientation());
+                        cr->SetHomePosition(cr->GetPositionX(), cr->GetPositionY(), cr->GetPositionZ(), cr->GetFacing());
                         cr->AI()->AttackStart(who);
                     }
                 }

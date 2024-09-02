@@ -173,7 +173,7 @@ bool OutdoorPvPSI::HandleDropFlag(Player* player, uint32 spellId)
                                 return true;
                             }
 
-                            if (!go->Create(map->GenerateLowGuid<HighGuid::GameObject>(), SI_SILITHYST_MOUND, map, player->GetPhaseMask(), player->GetPositionX(), player->GetPositionY(), player->GetPositionZ(), player->GetOrientation(), G3D::Quat(), 100, GO_STATE_READY))
+                            if (!go->Create(map->GenerateLowGuid<HighGuid::GameObject>(), SI_SILITHYST_MOUND, map, player->GetPhaseMask(), player->GetPositionX(), player->GetPositionY(), player->GetPositionZ(), player->GetFacing(), G3D::Quat(), 100, GO_STATE_READY))
                             {
                                 delete go;
                                 return true;
@@ -207,7 +207,7 @@ bool OutdoorPvPSI::HandleDropFlag(Player* player, uint32 spellId)
                                 return true;
                             }
 
-                            if (!go->Create(map->GenerateLowGuid<HighGuid::GameObject>(), SI_SILITHYST_MOUND, map, player->GetPhaseMask(), player->GetPositionX(), player->GetPositionY(), player->GetPositionZ(), player->GetOrientation(), G3D::Quat(), 100, GO_STATE_READY))
+                            if (!go->Create(map->GenerateLowGuid<HighGuid::GameObject>(), SI_SILITHYST_MOUND, map, player->GetPhaseMask(), player->GetPositionX(), player->GetPositionY(), player->GetPositionZ(), player->GetFacing(), G3D::Quat(), 100, GO_STATE_READY))
                             {
                                 delete go;
                                 return true;

@@ -192,7 +192,7 @@ public:
         else
             player->SaveRecallPosition();
 
-        player->Teleport(gy->Map, gy->x, gy->y, gy->z, player->GetOrientation());
+        player->Teleport(gy->Map, gy->x, gy->y, gy->z, player->GetFacing());
         return true;
     }
 
@@ -225,7 +225,7 @@ public:
         Map const* map = sMapMgr->CreateBaseMap(mapId);
         float z = std::max(map->GetHeight(x, y, MAX_HEIGHT), map->GetWaterLevel(x, y));
 
-        player->Teleport(mapId, x, y, z, player->GetOrientation());
+        player->Teleport(mapId, x, y, z, player->GetFacing());
         return true;
     }
 
@@ -298,7 +298,7 @@ public:
 
         float z = std::max(map->GetHeight(x, y, MAX_HEIGHT), map->GetWaterLevel(x, y));
 
-        player->Teleport(zoneEntry->mapid, x, y, z, player->GetOrientation());
+        player->Teleport(zoneEntry->mapid, x, y, z, player->GetFacing());
         return true;
     }
 
@@ -362,7 +362,7 @@ public:
 
         float z = locationValues.size() >= 3 ? locationValues[2] : std::max(map->GetHeight(x, y, MAX_HEIGHT), map->GetWaterLevel(x, y));
         // map ID (locationValues[3]) already handled above
-        float o = locationValues.size() >= 5 ? locationValues[4] : player->GetOrientation();
+        float o = locationValues.size() >= 5 ? locationValues[4] : player->GetFacing();
 
         if (!MapMgr::IsValidMapCoord(mapId, x, y, z, o))
         {

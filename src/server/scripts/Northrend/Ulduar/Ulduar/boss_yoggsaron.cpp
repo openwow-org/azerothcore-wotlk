@@ -425,7 +425,7 @@ public:
 
             Position pos;
             pos = me->GetHomePosition();
-            me->NearTeleportTo(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation());
+            me->NearTeleportTo(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetFacing());
             Reset();
             me->setActive(false);
         }
@@ -888,8 +888,8 @@ public:
                     me->SetOrientation(M_PI);
                     me->SetDisplayId(SARA_TRANSFORM_MODEL);
 
-                    me->NearTeleportTo(me->GetPositionX(), me->GetPositionY(), 355, me->GetOrientation());
-                    me->SetPosition(me->GetPositionX(), me->GetPositionY(), 355, me->GetOrientation());
+                    me->NearTeleportTo(me->GetPositionX(), me->GetPositionY(), 355, me->GetFacing());
+                    me->SetPosition(me->GetPositionX(), me->GetPositionY(), 355, me->GetFacing());
 
                     SpawnTentacle(NPC_CRUSHER_TENTACLE);
                     SpawnTentacle(NPC_CONSTRICTOR_TENTACLE);

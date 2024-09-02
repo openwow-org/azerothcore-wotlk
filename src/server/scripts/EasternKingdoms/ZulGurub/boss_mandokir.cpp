@@ -195,11 +195,11 @@ public:
             events.ScheduleEvent(EVENT_WATCH_PLAYER, 12s, 24s);
             events.ScheduleEvent(EVENT_CHARGE_PLAYER, 30s, 40s);
             events.ScheduleEvent(EVENT_CLEAVE, 1s);
-            me->SetHomePosition(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation());
+            me->SetHomePosition(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetFacing());
             Talk(SAY_AGGRO);
             me->Dismount();
             // Summon Ohgan (Spell missing) TEMP HACK
-            me->SummonCreature(NPC_OHGAN, me->GetPositionX() - 3, me->GetPositionY(), me->GetPositionZ(), me->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 35000);
+            me->SummonCreature(NPC_OHGAN, me->GetPositionX() - 3, me->GetPositionY(), me->GetPositionZ(), me->GetFacing(), TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 35000);
             for (int i = 0; i < CHAINED_SPIRIT_COUNT; ++i)
             {
                 me->SummonCreature(NPC_CHAINED_SPIRIT, PosSummonChainedSpirits[i], TEMPSUMMON_CORPSE_DESPAWN);

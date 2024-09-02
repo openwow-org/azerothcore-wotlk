@@ -507,7 +507,7 @@ void boss_flame_leviathan::boss_flame_leviathanAI::BindPlayers()
 
 void boss_flame_leviathan::boss_flame_leviathanAI::RadioSay(uint8 textid)
 {
-    if (Creature* r = me->SummonCreature(NPC_BRANN_RADIO, me->GetPositionX() - 150, me->GetPositionY(), me->GetPositionZ(), me->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN, 5000))
+    if (Creature* r = me->SummonCreature(NPC_BRANN_RADIO, me->GetPositionX() - 150, me->GetPositionY(), me->GetPositionZ(), me->GetFacing(), TEMPSUMMON_TIMED_DESPAWN, 5000))
     {
         r->AI()->Talk(textid);
     }
@@ -1325,7 +1325,7 @@ public:
                     if (Unit* target = me->SelectNearbyTarget(nullptr, 80.0f))
                     {
                         ++_amount;
-                        if (Creature* cr = me->SummonCreature(NPC_DEFENDER_GENERATED, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ() + 4, me->GetOrientation(), TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 900000))
+                        if (Creature* cr = me->SummonCreature(NPC_DEFENDER_GENERATED, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ() + 4, me->GetFacing(), TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 900000))
                             cr->AI()->AttackStart(target);
                     }
                 }

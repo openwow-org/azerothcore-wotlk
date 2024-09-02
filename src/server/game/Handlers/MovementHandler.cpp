@@ -92,12 +92,12 @@ void User::HandleMoveWorldportAck()
     if (!newMap || newMap->CannotEnter(GetPlayer(), false))
     {
         LOG_ERROR("network.opcode", "Map {} could not be created for player {}, porting player to homebind", loc.GetMapId(), GetPlayer()->GetGUID().ToString());
-        GetPlayer()->Teleport(GetPlayer()->m_homebindMapId, GetPlayer()->m_homebindX, GetPlayer()->m_homebindY, GetPlayer()->m_homebindZ, GetPlayer()->GetOrientation());
+        GetPlayer()->Teleport(GetPlayer()->m_homebindMapId, GetPlayer()->m_homebindX, GetPlayer()->m_homebindY, GetPlayer()->m_homebindZ, GetPlayer()->GetFacing());
         return;
     }
 
     float z = loc.GetPositionZ() + GetPlayer()->GetHoverHeight();
-    GetPlayer()->Relocate(loc.GetPositionX(), loc.GetPositionY(), z, loc.GetOrientation());
+    GetPlayer()->Relocate(loc.GetPositionX(), loc.GetPositionY(), z, loc.GetFacing());
 
     GetPlayer()->ResetMap();
     GetPlayer()->SetMap(newMap);
@@ -111,7 +111,7 @@ void User::HandleMoveWorldportAck()
             GetPlayer()->GetName(), GetPlayer()->GetGUID().ToString(), loc.GetMapId());
         GetPlayer()->ResetMap();
         GetPlayer()->SetMap(oldMap);
-        GetPlayer()->Teleport(GetPlayer()->m_homebindMapId, GetPlayer()->m_homebindX, GetPlayer()->m_homebindY, GetPlayer()->m_homebindZ, GetPlayer()->GetOrientation());
+        GetPlayer()->Teleport(GetPlayer()->m_homebindMapId, GetPlayer()->m_homebindX, GetPlayer()->m_homebindY, GetPlayer()->m_homebindZ, GetPlayer()->GetFacing());
         return;
     }
 
@@ -296,7 +296,7 @@ void User::HandleMoveTeleportAck(WDataStore& recvData)
     if (Pet* pet = plMover->GetPet())
     {
         if (!pet->IsWithinDist3d(plMover, plMover->GetMap()->GetVisibilityRange() - 5.0f))
-            pet->NearTeleportTo(plMover->GetPositionX(), plMover->GetPositionY(), plMover->GetPositionZ(), pet->GetOrientation());
+            pet->NearTeleportTo(plMover->GetPositionX(), plMover->GetPositionY(), plMover->GetPositionZ(), pet->GetFacing());
     }
 
     if (oldPos.GetExactDist2d(plMover) > 100.0f)
@@ -433,7 +433,7 @@ void User::HandleMovementOpcodes(WDataStore& recvData)
         }
 
         if (!Acore::IsValidMapCoord(movementInfo.pos.GetPositionX() + movementInfo.transport.pos.GetPositionX(), movementInfo.pos.GetPositionY() + movementInfo.transport.pos.GetPositionY(),
-                                    movementInfo.pos.GetPositionZ() + movementInfo.transport.pos.GetPositionZ(), movementInfo.pos.GetOrientation() + movementInfo.transport.pos.GetOrientation()))
+                                    movementInfo.pos.GetPositionZ() + movementInfo.transport.pos.GetPositionZ(), movementInfo.pos.GetFacing() + movementInfo.transport.pos.GetFacing()))
         {
             if (plrMover)
             {
@@ -565,9 +565,9 @@ void User::HandleMovementOpcodes(WDataStore& recvData)
     {
         if (VehicleSeatEntry const* seat = vehicle->GetSeatForPassenger(mover))
         {
-            if (seat->m_flags & VEHICLE_SEAT_FLAG_ALLOW_TURNING && movementInfo.pos.GetOrientation() != mover->GetOrientation())
+            if (seat->m_flags & VEHICLE_SEAT_FLAG_ALLOW_TURNING && movementInfo.pos.GetFacing() != mover->GetFacing())
             {
-                mover->SetOrientation(movementInfo.pos.GetOrientation());
+                mover->SetOrientation(movementInfo.pos.GetFacing());
                 mover->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_TURNING);
             }
         }
@@ -600,8 +600,8 @@ void User::HandleMovementOpcodes(WDataStore& recvData)
                     GraveyardStruct const* grave = sGraveyard->GetClosestGraveyard(plrMover, plrMover->GetTeamId());
                     if (grave)
                     {
-                        plrMover->Teleport(grave->Map, grave->x, grave->y, grave->z, plrMover->GetOrientation());
-                        plrMover->Relocate(grave->x, grave->y, grave->z, plrMover->GetOrientation());
+                        plrMover->Teleport(grave->Map, grave->x, grave->y, grave->z, plrMover->GetFacing());
+                        plrMover->Relocate(grave->x, grave->y, grave->z, plrMover->GetFacing());
                     }
                 }
             }

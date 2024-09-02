@@ -265,7 +265,7 @@ public:
                         }
 
                         me->GetMotionMaster()->MovePoint(0, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ() + 20.0f);
-                        me->SetPosition(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ() + 20.0f, me->GetOrientation());
+                        me->SetPosition(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ() + 20.0f, me->GetFacing());
                         break;
                     }
                 case EVENT_VALHALAS_SECOND:
@@ -534,7 +534,7 @@ public:
                 case EVENT_SCENE_1:
                     if (Creature* soul = ObjectAccessor::GetCreature(*me, _landgrenSoulGUID))
                     {
-                        soul->SetPosition(soul->GetPositionX(), soul->GetPositionY(), soul->GetPositionZ() + 5.0f, soul->GetOrientation());
+                        soul->SetPosition(soul->GetPositionX(), soul->GetPositionY(), soul->GetPositionZ() + 5.0f, soul->GetFacing());
                         soul->CastSpell(soul, 64462, true); // Drown
                         soul->AI()->Talk(SAY_SOUL_0);
                     }

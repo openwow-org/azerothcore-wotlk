@@ -248,7 +248,7 @@ public:
         {
             for (uint8 i = 0; i < MAX_CARAVAN_SUMMONS; ++i)
                 if (Creature* summon = ObjectAccessor::GetCreature(*me, summons[i]))
-                    summon->SetHomePosition(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation());
+                    summon->SetHomePosition(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetFacing());
         }
 
         void ImmuneFlagSet(bool remove, uint32 faction)
@@ -459,7 +459,7 @@ public:
         {
             if (who->GetEntry() == NPC_SMEED && me->IsWithinDistInMap(who, 10.0f) && !me->HasAura(SPELL_KODO_KOMBO_GOSSIP))
             {
-                me->SetHomePosition(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation());
+                me->SetHomePosition(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetFacing());
                 me->GetMotionMaster()->Clear();
                 me->GetMotionMaster()->MoveIdle();
 

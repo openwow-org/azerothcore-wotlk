@@ -149,7 +149,7 @@ struct boss_alar : public BossAI
             {
                 if (_noQuillTimes++ > 0)
                 {
-                    me->SetOrientation(alarPoints[_platform].GetOrientation());
+                    me->SetOrientation(alarPoints[_platform].GetFacing());
                     SpawnPhoenixes(1, me);
                 }
                 me->GetMotionMaster()->MovePoint(POINT_PLATFORM, alarPoints[_platform], false, true);

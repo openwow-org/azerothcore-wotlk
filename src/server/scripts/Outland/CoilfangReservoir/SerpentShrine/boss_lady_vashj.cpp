@@ -185,7 +185,7 @@ struct boss_lady_vashj : public BossAI
             return;
         }
         me->AddUnitState(UNIT_STATE_ROOT);
-        me->SetFacingTo(me->GetHomePosition().GetOrientation());
+        me->SetFacingTo(me->GetHomePosition().GetFacing());
         instance->SetData(DATA_ACTIVATE_SHIELD, 0);
         scheduler.Schedule(2400ms, [this](TaskContext context)
         {

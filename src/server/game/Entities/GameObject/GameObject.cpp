@@ -315,7 +315,7 @@ bool GameObject::Create(WOWGUID::LowType guidlow, uint32 name_id, Map* map, uint
             }
             else
             {
-                SetLocalRotationAngles(NormalizeOrientation(GetOrientation()), 0.0f, 0.0f);
+                SetLocalRotationAngles(NormalizeOrientation(GetFacing()), 0.0f, 0.0f);
             }
             break;
     }
@@ -1072,7 +1072,7 @@ void GameObject::SaveToDB(uint32 mapid, uint8 spawnMask, uint32 phaseMask, bool 
     data.posX = GetPositionX();
     data.posY = GetPositionY();
     data.posZ = GetPositionZ();
-    data.orientation = GetOrientation();
+    data.orientation = GetFacing();
     data.rotation = m_localRotation;
     data.spawntimesecs = m_spawnedByDefault ? m_respawnDelayTime : -(int32)m_respawnDelayTime;
     data.animprogress = GetGoAnimProgress();
@@ -1098,7 +1098,7 @@ void GameObject::SaveToDB(uint32 mapid, uint8 spawnMask, uint32 phaseMask, bool 
     stmt->SetData(index++, GetPositionX());
     stmt->SetData(index++, GetPositionY());
     stmt->SetData(index++, GetPositionZ());
-    stmt->SetData(index++, GetOrientation());
+    stmt->SetData(index++, GetFacing());
     stmt->SetData(index++, m_localRotation.x);
     stmt->SetData(index++, m_localRotation.y);
     stmt->SetData(index++, m_localRotation.z);
@@ -1574,7 +1574,7 @@ void GameObject::Use(Unit* user)
 
                 // the object orientation + 1/2 pi
                 // every slot will be on that straight line
-                float orthogonalOrientation = GetOrientation() + M_PI * 0.5f;
+                float orthogonalOrientation = GetFacing() + M_PI * 0.5f;
                 // find nearest slot
                 bool found_free_slot = false;
                 for (ChairSlotAndUser::iterator itr = ChairListSlots.begin(); itr != ChairListSlots.end(); ++itr)
@@ -1618,7 +1618,7 @@ void GameObject::Use(Unit* user)
                     if (itr != ChairListSlots.end())
                     {
                         itr->second = player->GetGUID(); //this slot in now used by player
-                        player->Teleport(GetMapId(), x_lowest, y_lowest, GetPositionZ(), GetOrientation(), TELE_TO_NOT_LEAVE_TRANSPORT | TELE_TO_NOT_LEAVE_COMBAT | TELE_TO_NOT_UNSUMMON_PET);
+                        player->Teleport(GetMapId(), x_lowest, y_lowest, GetPositionZ(), GetFacing(), TELE_TO_NOT_LEAVE_TRANSPORT | TELE_TO_NOT_LEAVE_COMBAT | TELE_TO_NOT_UNSUMMON_PET);
                         player->SetStandState(UNIT_SITTINGCHAIRLOW + info->chair.height);
                         return;
                     }
@@ -2033,7 +2033,7 @@ void GameObject::Use(Unit* user)
                 Player* player = user->ToPlayer();
 
                 // fallback, will always work
-                player->Teleport(GetMapId(), GetPositionX(), GetPositionY(), GetPositionZ(), GetOrientation(), TELE_TO_NOT_LEAVE_TRANSPORT | TELE_TO_NOT_LEAVE_COMBAT | TELE_TO_NOT_UNSUMMON_PET);
+                player->Teleport(GetMapId(), GetPositionX(), GetPositionY(), GetPositionZ(), GetFacing(), TELE_TO_NOT_LEAVE_TRANSPORT | TELE_TO_NOT_LEAVE_COMBAT | TELE_TO_NOT_UNSUMMON_PET);
 
                 WDataStore data(SMSG_ENABLE_BARBER_SHOP, 0);
                 player->User()->Send(&data);
@@ -2152,8 +2152,8 @@ bool GameObject::IsInRange(float x, float y, float z, float radius) const
     if (!info)
         return IsWithinDist3d(x, y, z, radius);
 
-    float sinA = std::sin(GetOrientation());
-    float cosA = cos(GetOrientation());
+    float sinA = std::sin(GetFacing());
+    float cosA = cos(GetFacing());
     float dx = x - GetPositionX();
     float dy = y - GetPositionY();
     float dz = z - GetPositionZ();
@@ -2226,7 +2226,7 @@ void GameObject::SetLocalRotation(G3D::Quat const& rot)
     G3D::Quat rotation;
     // Temporary solution for gameobjects that have no rotation data in DB:
     if (G3D::fuzzyEq(rot.z, 0.f) && G3D::fuzzyEq(rot.w, 0.f))
-        rotation = G3D::Quat::fromAxisAngleRotation(G3D::Vector3::unitZ(), GetOrientation());
+        rotation = G3D::Quat::fromAxisAngleRotation(G3D::Vector3::unitZ(), GetFacing());
     else
         rotation = rot;
 
@@ -2847,7 +2847,7 @@ void GameObject::GetRespawnPosition(float& x, float& y, float& z, float* ori /* 
     y = GetPositionY();
     z = GetPositionZ();
     if (ori)
-        *ori = GetOrientation();
+        *ori = GetFacing();
 }
 
 void GameObject::SetPosition(float x, float y, float z, float o)
@@ -2936,7 +2936,7 @@ public:
     uint32 GetDisplayId() const override { return _owner->GetDisplayId(); }
     uint32 GetPhaseMask() const override { return (_owner->GetGoState() == GO_STATE_READY || _owner->IsTransport()) ? _owner->GetPhaseMask() : 0; }
     G3D::Vector3 GetPosition() const override { return G3D::Vector3(_owner->GetPositionX(), _owner->GetPositionY(), _owner->GetPositionZ()); }
-    float GetOrientation() const override { return _owner->GetOrientation(); }
+    float GetFacing() const override { return _owner->GetFacing(); }
     float GetScale() const override { return _owner->GetObjectScale(); }
     void DebugVisualizeCorner(G3D::Vector3 const& corner) const override { const_cast<GameObject*>(_owner)->SummonCreature(1, corner.x, corner.y, corner.z, 0.0f, TEMPSUMMON_TIMED_DESPAWN, 10000); }
 

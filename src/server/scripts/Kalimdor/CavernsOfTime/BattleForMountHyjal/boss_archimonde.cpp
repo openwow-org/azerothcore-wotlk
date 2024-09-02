@@ -171,9 +171,9 @@ struct npc_doomfire_spirit : public ScriptedAI
         }
 
         if (dist || alwaysturn)
-            me->NearTeleportTo(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), Position::NormalizeOrientation(me->GetOrientation() + angle));
+            me->NearTeleportTo(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), Position::NormalizeOrientation(me->GetFacing() + angle));
         else // Orientation does not change if not moving, verified with sniffs
-            me->NearTeleportTo(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), me->GetOrientation());
+            me->NearTeleportTo(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), me->GetFacing());
     }
 
     void UpdateAI(uint32 diff) override

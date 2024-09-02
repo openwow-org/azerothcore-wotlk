@@ -349,7 +349,7 @@ static Position const PredictPosition(Unit* target)
 
      // 0.5 - it's time (0.5 sec) between starting movement opcode (e.g. MSG_MOVE_START_FORWARD) and MSG_MOVE_HEARTBEAT sent by client
     float speed = target->GetSpeed(Movement::SelectSpeedType(target->GetUnitMovementFlags())) * 0.5f;
-    float orientation = target->GetOrientation();
+    float orientation = target->GetFacing();
 
     if ((target->m_movement.m_moveFlags & MOVEFLAG_FORWARD) != 0)
     {
@@ -469,7 +469,7 @@ bool FollowMovementGenerator<T>::DoUpdate(T* owner, uint32 time_diff)
                 i_recheckPredictedDistanceTimer.Reset(1000);
             }
 
-            owner->SetFacingTo(target->GetOrientation());
+            owner->SetFacingTo(target->GetFacing());
         }
     }
     else
@@ -499,7 +499,7 @@ bool FollowMovementGenerator<T>::DoUpdate(T* owner, uint32 time_diff)
         else
             i_path->Clear();
 
-        target->MovePositionToFirstCollision(targetPosition, owner->GetCombatReach() + _range, target->ToAbsoluteAngle(_angle.RelativeAngle) - target->GetOrientation());
+        target->MovePositionToFirstCollision(targetPosition, owner->GetCombatReach() + _range, target->ToAbsoluteAngle(_angle.RelativeAngle) - target->GetFacing());
 
         float x, y, z;
         targetPosition.GetPosition(x, y, z);

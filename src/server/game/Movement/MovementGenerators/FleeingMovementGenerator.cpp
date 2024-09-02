@@ -214,7 +214,7 @@ void FleeingMovementGenerator<T>::GetPoint(T* owner, Position& position)
 
     // In MovePositionToFirstCollision we have added owner's orientation
     // so now let's subtract it
-    angle -= owner->GetOrientation();
+    angle -= owner->GetFacing();
 
     owner->MovePositionToFirstCollision(position, distance, angle);
 }

@@ -271,7 +271,7 @@ public:
             requireSummon = 0;
             int8 count = urand(1, 3);
             for (int8 i = 0; i < count; ++i)
-                me->SummonCreature(NPC_WINTERFIN_TADPOLE, me->GetPositionX() + cos(2 * M_PI * i / 3.0f) * 0.60f, me->GetPositionY() + std::sin(2 * M_PI * i / 3.0f) * 0.60f, me->GetPositionZ(), me->GetOrientation(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
+                me->SummonCreature(NPC_WINTERFIN_TADPOLE, me->GetPositionX() + cos(2 * M_PI * i / 3.0f) * 0.60f, me->GetPositionY() + std::sin(2 * M_PI * i / 3.0f) * 0.60f, me->GetPositionZ(), me->GetFacing(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
         }
 
         void OnStateChanged(uint32 state, Unit*  /*unit*/) override
@@ -1072,7 +1072,7 @@ public:
         }
 
         if (BirdEntry)
-            player->SummonCreature(BirdEntry, fX, fY, fZ, go->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
+            player->SummonCreature(BirdEntry, fX, fY, fZ, go->GetFacing(), TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
 
         return false;
     }

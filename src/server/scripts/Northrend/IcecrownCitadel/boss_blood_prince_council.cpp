@@ -1261,7 +1261,7 @@ public:
             _started = false;
             if (me->GetEntry() == NPC_BALL_OF_INFERNO_FLAME)
                 me->CastSpell(me, SPELL_BALL_OF_FLAMES_PROC, true);
-            me->NearTeleportTo(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ() + 5.0f, me->GetOrientation());
+            me->NearTeleportTo(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ() + 5.0f, me->GetFacing());
         }
 
         InstanceScript* _instance;

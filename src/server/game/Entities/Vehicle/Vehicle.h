@@ -78,7 +78,7 @@ private:
     {
         TransportBase::CalculatePassengerPosition(x, y, z, o,
                 GetBase()->GetPositionX(), GetBase()->GetPositionY(),
-                GetBase()->GetPositionZ(), GetBase()->GetOrientation());
+                GetBase()->GetPositionZ(), GetBase()->GetFacing());
     }
 
     /// This method transforms supplied global coordinates into local offsets
@@ -86,7 +86,7 @@ private:
     {
         TransportBase::CalculatePassengerOffset(x, y, z, o,
                                                 GetBase()->GetPositionX(), GetBase()->GetPositionY(),
-                                                GetBase()->GetPositionZ(), GetBase()->GetOrientation());
+                                                GetBase()->GetPositionZ(), GetBase()->GetFacing());
     }
 
     Unit* _me;

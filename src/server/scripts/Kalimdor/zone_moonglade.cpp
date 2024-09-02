@@ -621,7 +621,7 @@ public:
 
             if (pointId == 1)
             {
-                me->SetHomePosition(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation());
+                me->SetHomePosition(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetFacing());
                 me->SetImmuneToPC(false);
                 if (Player* player = me->SelectNearestPlayer(40.0f))
                     AttackStart(player);

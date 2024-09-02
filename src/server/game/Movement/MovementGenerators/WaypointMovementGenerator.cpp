@@ -120,7 +120,7 @@ bool WaypointMovementGenerator<Creature>::StartMove(Creature* creature)
             float x = i_path->at(i_currentNode)->x;
             float y = i_path->at(i_currentNode)->y;
             float z = i_path->at(i_currentNode)->z;
-            float o = creature->GetOrientation();
+            float o = creature->GetFacing();
 
             if (!transportPath)
                 creature->SetHomePosition(x, y, z, o);
@@ -128,7 +128,7 @@ bool WaypointMovementGenerator<Creature>::StartMove(Creature* creature)
             {
                 if (Transport* trans = (creature->GetTransport() ? creature->GetTransport()->ToMotionTransport() : nullptr))
                 {
-                    o -= trans->GetOrientation();
+                    o -= trans->GetFacing();
                     creature->SetTransportHomePosition(x, y, z, o);
                     trans->CalculatePassengerPosition(x, y, z, &o);
                     creature->SetHomePosition(x, y, z, o);

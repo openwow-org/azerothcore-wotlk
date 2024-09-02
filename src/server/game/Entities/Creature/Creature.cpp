@@ -1438,7 +1438,7 @@ void Creature::SaveToDB(uint32 mapid, uint8 spawnMask, uint32 phaseMask)
         data.posX = GetPositionX();
         data.posY = GetPositionY();
         data.posZ = GetPositionZ();
-        data.orientation = GetOrientation();
+        data.orientation = GetFacing();
     }
     else
     {
@@ -1483,7 +1483,7 @@ void Creature::SaveToDB(uint32 mapid, uint8 spawnMask, uint32 phaseMask)
     stmt->SetData(index++, GetPositionX());
     stmt->SetData(index++, GetPositionY());
     stmt->SetData(index++, GetPositionZ());
-    stmt->SetData(index++, GetOrientation());
+    stmt->SetData(index++, GetFacing());
     stmt->SetData(index++, m_respawnDelay);
     stmt->SetData(index++, m_wanderDistance);
     stmt->SetData(index++, 0);
@@ -2933,7 +2933,7 @@ void Creature::GetRespawnPosition(float& x, float& y, float& z, float* ori, floa
         y = GetPositionY();
         z = GetPositionZ();
         if (ori)
-            *ori = GetOrientation();
+            *ori = GetFacing();
     }
     else
     {
@@ -2942,7 +2942,7 @@ void Creature::GetRespawnPosition(float& x, float& y, float& z, float* ori, floa
         y = homePos.GetPositionY();
         z = homePos.GetPositionZ();
         if (ori)
-            *ori = homePos.GetOrientation();
+            *ori = homePos.GetFacing();
     }
     if (dist)
         *dist = 0;
@@ -3516,7 +3516,7 @@ void Creature::FocusTarget(Spell const* focusSpell, WorldObject const* target)
 
     // Set serverside orientation if needed (needs to be after attribute check)
     if (this == target && (movespline->Finalized() || GetMotionMaster()->GetCurrentMovementGeneratorType() == CHASE_MOTION_TYPE))
-        SetFacingTo(GetOrientation());
+        SetFacingTo(GetFacing());
     else
         SetInFront(target);
 }
