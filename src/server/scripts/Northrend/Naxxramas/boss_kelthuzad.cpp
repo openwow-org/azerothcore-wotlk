@@ -223,7 +223,7 @@ public:
             events.Reset();
             summons.DespawnAll();
             me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_DISABLE_MOVE);
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             if (GameObject* go = me->GetMap()->GetGameObject(pInstance->GetGuidData(DATA_KELTHUZAD_FLOOR)))
             {
                 go->SetPhaseMask(1, true);
@@ -304,7 +304,7 @@ public:
             me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_DISABLE_MOVE);
             me->RemoveAllAttackers();
             me->SetTarget();
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->CastSpell(me, SPELL_KELTHUZAD_CHANNEL, false);
             events.ScheduleEvent(EVENT_SPAWN_POOL, 5s);
             events.ScheduleEvent(EVENT_SUMMON_SOLDIER, 6400ms);
@@ -387,7 +387,7 @@ public:
                     me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_DISABLE_MOVE);
                     me->GetMotionMaster()->MoveChase(me->GetVictim());
                     me->RemoveAura(SPELL_KELTHUZAD_CHANNEL);
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     events.ScheduleEvent(EVENT_FROST_BOLT_SINGLE, 2s, 10s);
                     events.ScheduleEvent(EVENT_FROST_BOLT_MULTI, 15s, 30s);
                     events.ScheduleEvent(EVENT_DETONATE_MANA, 30s);

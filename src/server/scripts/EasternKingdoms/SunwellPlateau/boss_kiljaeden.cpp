@@ -286,7 +286,7 @@ public:
         boss_kiljaedenAI(Creature* creature) : ScriptedAI(creature)
         {
             instance = creature->GetInstanceScript();
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         InstanceScript* instance;
@@ -314,14 +314,14 @@ public:
 
         void EnterEvadeMode(EvadeReason why) override
         {
-            if (me->GetReactState() == REACT_PASSIVE)
+            if (me->GetReactState() == PET_MODE_PASSIVE)
                 return;
             ScriptedAI::EnterEvadeMode(why);
         }
 
         void AttackStart(Unit* who) override
         {
-            if (me->GetReactState() == REACT_PASSIVE)
+            if (me->GetReactState() == PET_MODE_PASSIVE)
                 return;
             ScriptedAI::AttackStart(who);
         }
@@ -331,7 +331,7 @@ public:
             if (damage >= me->GetHealth())
             {
                 me->SetTarget();
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 me->RemoveAllAuras();
                 me->GetThreatMgr().ClearAllThreat();
                 me->SetRegeneratingHealth(false);
@@ -424,7 +424,7 @@ public:
                     EmpowerOrb(true);
                     break;
                 case EVENT_INIT_FIGHT:
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
                     me->SetInCombatWithZone();
                     return;
@@ -494,7 +494,7 @@ public:
                     break;
             }
 
-            if (me->GetReactState() != REACT_AGGRESSIVE)
+            if (me->GetReactState() != PET_MODE_AGGRESSIVE)
                 return;
 
             if (!UpdateVictim())

@@ -218,7 +218,7 @@ public:
                     me->CombatStop(true);
                     damage = 0;
 
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     me->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
                     me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                     me->SetRegeneratingHealth(false);
@@ -240,7 +240,7 @@ public:
                     Talk(0);
                     me->SetRegeneratingHealth(true);
                     restoreTimer = 0;
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                     me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
                 }

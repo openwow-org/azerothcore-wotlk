@@ -1697,10 +1697,10 @@ public:
                 me->InitCharmInfo();
                 me->GetCharmInfo()->InitEmptyActionBar(false);
 
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
             }
             else
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
         }
     };
 
@@ -2597,7 +2597,7 @@ public:
     npc_arcanite_dragonling(Creature* creature) : ScriptedAI(creature)
     {
         creature->SetCanModifyStats(true);
-        creature->SetReactState(REACT_AGGRESSIVE);
+        creature->SetReactState(PET_MODE_AGGRESSIVE);
     }
 
     void Reset() override

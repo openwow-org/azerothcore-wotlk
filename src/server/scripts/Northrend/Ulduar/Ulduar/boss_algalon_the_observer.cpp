@@ -381,7 +381,7 @@ public:
 
             events.Reset();
             summons.DespawnAll();
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->SetImmuneToPC(false);
             me->SetSheath(SHEATH_STATE_UNARMED);
             me->SetFaction(190);
@@ -445,7 +445,7 @@ public:
                     events.ScheduleEvent(EVENT_DESPAWN_ALGALON_5, 32s);
                     me->DespawnOrUnsummon(39000);
 
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     me->AttackStop();
                     me->SetFaction(FACTION_FRIENDLY);
                     me->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
@@ -611,7 +611,7 @@ public:
             {
                 _fightWon = true;
                 damage = 0;
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 me->AttackStop();
                 me->SetFaction(FACTION_FRIENDLY);
                 me->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
@@ -677,7 +677,7 @@ public:
                     events.SetPhase(PHASE_NORMAL);
                     me->CastSpell((Unit*)nullptr, SPELL_SUPERMASSIVE_FAIL, true);
                     // Hack: _IsValidTarget failed earlier due to flags, call AttackStart again
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     me->SetFaction(FACTION_MONSTER);
                     if (Player* target = SelectTargetFromPlayerList(150.0f))
                         AttackStart(target);
@@ -973,7 +973,7 @@ public:
     {
         npc_living_constellationAI(Creature* creature) : ScriptedAI(creature)
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         EventMap events;
@@ -996,7 +996,7 @@ public:
             switch (action)
             {
                 case ACTION_ACTIVATE_STAR:
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
                     me->SetImmuneToAll(false);
                     _isActive = true;

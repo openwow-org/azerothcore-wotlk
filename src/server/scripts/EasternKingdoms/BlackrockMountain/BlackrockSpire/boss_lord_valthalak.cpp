@@ -62,7 +62,7 @@ public:
         {
             BossAI::Reset();
 
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
 
             frenzy40 = false;
@@ -94,7 +94,7 @@ public:
 
         void StartTalking(uint32 talkGroupId, uint32 timer)
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
             me->AttackStop();
 
@@ -108,7 +108,7 @@ public:
         {
             events.SetPhase(EVENT_PHASE_FIGHT);
 
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
 
             DoZoneInCombat();

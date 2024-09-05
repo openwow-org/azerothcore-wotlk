@@ -122,7 +122,7 @@ struct boss_jeklik : public BossAI
         me->SetHomePosition(JeklikCaveHomePosition);
 
         me->SetDisableGravity(false);
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
         BossAI::me->SetCombatMovement(false);
         batRidersCount = 0;
 
@@ -149,7 +149,7 @@ struct boss_jeklik : public BossAI
 
         me->SetDisableGravity(false);
         me->SetCombatMovement(true);
-        me->SetReactState(REACT_AGGRESSIVE);
+        me->SetReactState(PET_MODE_AGGRESSIVE);
 
         //
         // Phase 1
@@ -290,7 +290,7 @@ struct npc_batrider : public CreatureAI
             me->SetUnitFlag(UNIT_FLAG_IMMUNE_TO_PC);
             me->SetUnitFlag(UNIT_FLAG_IMMUNE_TO_NPC);
 
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
 
             me->SetSpeed(MOVE_WALK, 5.0f, true);
 
@@ -301,7 +301,7 @@ struct npc_batrider : public CreatureAI
         {
             _mode = BATRIDER_MODE_TRASH;
 
-            me->SetReactState(REACT_DEFENSIVE);
+            me->SetReactState(PET_MODE_DEFENSIVE);
 
             // don't interrupt casting
             _scheduler.SetValidator([this]

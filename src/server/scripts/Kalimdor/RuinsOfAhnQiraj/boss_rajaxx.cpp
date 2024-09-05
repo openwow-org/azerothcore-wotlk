@@ -191,7 +191,7 @@ struct npc_general_andorov : public npc_escortAI
 
     void InitializeAI() override
     {
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
 
         for (uint8 i = 0; i < 4; ++i)
         {
@@ -199,7 +199,7 @@ struct npc_general_andorov : public npc_escortAI
             {
                 kaldoreielitist->SetImmuneToNPC(true);
                 kaldoreielitist->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-                kaldoreielitist->SetReactState(REACT_PASSIVE);
+                kaldoreielitist->SetReactState(PET_MODE_PASSIVE);
                 CAST_AI(SmartAI, kaldoreielitist->AI())->SetFollow(me, 2.5f, 0.f + i * (M_PI / 2));
             }
         }
@@ -246,7 +246,7 @@ struct npc_general_andorov : public npc_escortAI
 
                     me->SetImmuneToNPC(false);
                     me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
 
                     for (WOWGUID const& guid : _summons)
                     {
@@ -254,7 +254,7 @@ struct npc_general_andorov : public npc_escortAI
                         {
                             kaldoreielitist->SetImmuneToNPC(false);
                             kaldoreielitist->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-                            kaldoreielitist->SetReactState(REACT_AGGRESSIVE);
+                            kaldoreielitist->SetReactState(PET_MODE_AGGRESSIVE);
                         }
                     }
                 }

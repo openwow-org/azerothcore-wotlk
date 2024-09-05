@@ -110,7 +110,7 @@ struct npc_pilgrims_bounty_chair : public VehicleAI
         plateGUID.Clear();
         timerSpawnPlate = 1;
         timerRotateChair = 0;
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
     }
 
     void MoveInLineOfSight(Unit*  /*who*/) override {}

@@ -1587,7 +1587,7 @@ bool SmartAIMgr::IsEventValid(SmartScriptHolder& e)
             break;
         case SMART_ACTION_SET_REACT_STATE:
             {
-                if (e.action.react.state > REACT_AGGRESSIVE)
+                if (e.action.react.state > PET_MODE_AGGRESSIVE)
                 {
                     LOG_ERROR("sql.sql", "SmartAIMgr: Creature {} Event {} Action {} uses invalid React State {}, skipped.", e.entryOrGuid, e.event_id, e.GetActionType(), e.action.react.state);
                     return false;
@@ -1639,7 +1639,7 @@ bool SmartAIMgr::IsEventValid(SmartScriptHolder& e)
                 // Remember to remove this once the clean is complete.
                 constexpr uint32 TEMPORARY_EXTRA_VALUE_FOR_DB_CLEANUP = 1;
 
-                if (e.action.wpStart.reactState > (REACT_AGGRESSIVE + TEMPORARY_EXTRA_VALUE_FOR_DB_CLEANUP))
+                if (e.action.wpStart.reactState > (PET_MODE_AGGRESSIVE + TEMPORARY_EXTRA_VALUE_FOR_DB_CLEANUP))
                 {
                     LOG_ERROR("sql.sql", "SmartAIMgr: Creature {} Event {} Action {} uses invalid React State {}, skipped.", e.entryOrGuid, e.event_id, e.GetActionType(), e.action.wpStart.reactState);
                     return false;

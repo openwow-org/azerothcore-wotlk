@@ -145,7 +145,7 @@ public:
             me->SetHealth(me->GetMaxHealth());
             me->SetStandState(UNIT_SLEEPING);
             me->SetDisableGravity(false);
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
             events2.Reset();
 
@@ -193,7 +193,7 @@ public:
                 {
                     Sath->RemoveAllAuras();
                     Sath->GetMotionMaster()->MovementExpired();
-                    Sath->SetReactState(REACT_PASSIVE);
+                    Sath->SetReactState(PET_MODE_PASSIVE);
                     Sath->NearTeleportTo(1696.20f, 915.0f, DRAGON_REALM_Z, Sath->GetFacing());
                 }
             }
@@ -241,7 +241,7 @@ public:
                 case EVENT_TALK_GOOD_1:
                     me->SetRegeneratingHealth(false);
                     me->RemoveAllAuras();
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     me->CombatStop();
                     me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                     me->SetFaction(FACTION_FRIENDLY);
@@ -269,7 +269,7 @@ public:
                     me->KillSelf();
                     break;
                 case EVENT_TALK_BAD_1:
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     me->CombatStop();
                     me->RemoveAllAuras();
                     me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);

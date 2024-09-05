@@ -91,7 +91,7 @@ struct boss_nalorakk : public BossAI
     {
         _ranIntro = false;
         _active = true;
-        creature->SetReactState(REACT_PASSIVE);
+        creature->SetReactState(PET_MODE_PASSIVE);
         me->SetImmuneToAll(true);
     }
 
@@ -108,7 +108,7 @@ struct boss_nalorakk : public BossAI
         if (_ranIntro)
         {
             _phase = PHASE_START_COMBAT;
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             _active = false;
 
         }
@@ -214,7 +214,7 @@ struct boss_nalorakk : public BossAI
                                 _introScheduler.CancelGroup(GROUP_CHECK_DEAD);
                                 me->SetHomePosition(me->GetPosition());
                                 me->SetImmuneToAll(false);
-                                me->SetReactState(REACT_AGGRESSIVE);
+                                me->SetReactState(PET_MODE_AGGRESSIVE);
                                 me->SetInCombatWithZone();
                                 _waveList.clear();
                                 _phase = PHASE_START_COMBAT;

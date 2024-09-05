@@ -87,13 +87,13 @@ public:
         BossAI::Reset();
 
         me->RemoveAllAuras();
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
     }
 
     void JustEngagedWith(Unit* /*who*/) override
     {
         _JustEngagedWith();
-        me->SetReactState(REACT_AGGRESSIVE);
+        me->SetReactState(PET_MODE_AGGRESSIVE);
 
         // Both phases
         scheduler.Schedule(8s, [this](TaskContext context)

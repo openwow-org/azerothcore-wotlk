@@ -442,7 +442,7 @@ struct npc_pet_gen_valkyr_guardian : public ScriptedAI
 {
     npc_pet_gen_valkyr_guardian(Creature* c) : ScriptedAI(c)
     {
-        me->SetReactState(REACT_DEFENSIVE);
+        me->SetReactState(PET_MODE_DEFENSIVE);
         me->SetDisableGravity(true);
         me->AddUnitState(UNIT_STATE_NO_ENVIRONMENT_UPD);
         targetCheck = 0;

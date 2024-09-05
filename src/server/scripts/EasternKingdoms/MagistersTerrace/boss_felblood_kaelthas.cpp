@@ -163,7 +163,7 @@ struct boss_felblood_kaelthas : public ScriptedAI
                 me->SetUnitFlag(UNIT_FLAG_DISABLE_MOVE);
                 me->SetImmuneToAll(true);
                 me->CombatStop();
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 LapseAction(ACTION_REMOVE_FLY);
                 events.Reset();
                 events2.ScheduleEvent(EVENT_FINISH_TALK, 6000);

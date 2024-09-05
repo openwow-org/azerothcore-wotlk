@@ -167,7 +167,7 @@ struct boss_eye_of_cthun : public BossAI
         //to avoid having a following void zone
         Creature* pPortal = me->FindNearestCreature(NPC_CTHUN_PORTAL, 10);
         if (pPortal)
-            pPortal->SetReactState(REACT_PASSIVE);
+            pPortal->SetReactState(PET_MODE_PASSIVE);
 
         BossAI::Reset();
     }
@@ -278,7 +278,7 @@ struct boss_eye_of_cthun : public BossAI
                 scheduler.CancelGroup(GROUP_BEAM_PHASE);
 
                 me->StopMoving();
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 me->InterruptNonMeleeSpells(false);
                 me->SetTarget(WOWGUID::Empty);
 
@@ -316,7 +316,7 @@ struct boss_eye_of_cthun : public BossAI
                         if (tasker.GetRepeatCounter() >= 35)
                         {
                             scheduler.CancelAll();
-                            me->SetReactState(REACT_AGGRESSIVE);
+                            me->SetReactState(PET_MODE_AGGRESSIVE);
                             me->RemoveAurasDueToSpell(SPELL_RED_COLORATION);
                             me->RemoveAurasDueToSpell(SPELL_FREEZE_ANIM);
                             me->InterruptNonMeleeSpells(false);
@@ -582,7 +582,7 @@ struct npc_eye_tentacle : public ScriptedAI
     {
         if (Creature* portal = me->SummonCreature(NPC_SMALL_PORTAL, *me, TEMPSUMMON_CORPSE_DESPAWN))
         {
-            portal->SetReactState(REACT_PASSIVE);
+            portal->SetReactState(PET_MODE_PASSIVE);
             _portalGUID = portal->GetGUID();
 
             if (me->ToTempSummon())
@@ -655,7 +655,7 @@ struct npc_claw_tentacle : public ScriptedAI
 
         if (Creature* portal = me->SummonCreature(NPC_SMALL_PORTAL, *me, TEMPSUMMON_CORPSE_DESPAWN))
         {
-            portal->SetReactState(REACT_PASSIVE);
+            portal->SetReactState(PET_MODE_PASSIVE);
             _portalGUID = portal->GetGUID();
 
             if (me->ToTempSummon())
@@ -724,7 +724,7 @@ struct npc_giant_claw_tentacle : public ScriptedAI
 
         if (Creature* portal = me->SummonCreature(NPC_GIANT_PORTAL, *me, TEMPSUMMON_CORPSE_DESPAWN))
         {
-            portal->SetReactState(REACT_PASSIVE);
+            portal->SetReactState(PET_MODE_PASSIVE);
             _portalGUID = portal->GetGUID();
 
             if (me->ToTempSummon())
@@ -834,7 +834,7 @@ struct npc_giant_claw_tentacle : public ScriptedAI
             me->NearTeleportTo(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), 0);
             if (Creature* portal = me->SummonCreature(NPC_GIANT_PORTAL, pos, TEMPSUMMON_CORPSE_DESPAWN))
             {
-                portal->SetReactState(REACT_PASSIVE);
+                portal->SetReactState(PET_MODE_PASSIVE);
                 _portalGUID = portal->GetGUID();
             }
 
@@ -874,7 +874,7 @@ struct npc_giant_eye_tentacle : public ScriptedAI
 
         if (Creature* portal = me->SummonCreature(NPC_GIANT_PORTAL, *me, TEMPSUMMON_CORPSE_DESPAWN))
         {
-            portal->SetReactState(REACT_PASSIVE);
+            portal->SetReactState(PET_MODE_PASSIVE);
             _portalGUID = portal->GetGUID();
 
             if (me->ToTempSummon())

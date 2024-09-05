@@ -64,7 +64,7 @@ struct boss_kelidan_the_breaker : public BossAI
     {
         _Reset();
         ApplyImmunities(true);
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
         me->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
         DoCastSelf(SPELL_EVOCATION);
         if (instance)
@@ -126,7 +126,7 @@ struct boss_kelidan_the_breaker : public BossAI
                     return;
             }
             me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             me->SetInCombatWithZone();
         }
 

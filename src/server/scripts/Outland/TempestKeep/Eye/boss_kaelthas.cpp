@@ -246,7 +246,7 @@ struct boss_kaelthas : public BossAI
                 advisor->Respawn(true);
                 advisor->StopMovingOnCurrentPos();
                 advisor->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-                advisor->SetReactState(REACT_PASSIVE);
+                advisor->SetReactState(PET_MODE_PASSIVE);
                 summons.Summon(advisor);
             }
         }
@@ -261,7 +261,7 @@ struct boss_kaelthas : public BossAI
                 {
                     if (summonedCreature->GetEntry() >= NPC_LORD_SANGUINAR && summonedCreature->GetEntry() <= NPC_THALADRED)
                     {
-                        summonedCreature->SetReactState(REACT_PASSIVE);
+                        summonedCreature->SetReactState(PET_MODE_PASSIVE);
                         summonedCreature->setDeathState(DeathState::JustRespawned);
                         summonedCreature->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
                     }
@@ -300,7 +300,7 @@ struct boss_kaelthas : public BossAI
             scheduler.CancelAll();
             me->CastStop();
             me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->GetMotionMaster()->MovePoint(POINT_MIDDLE, me->GetHomePosition(), true, true);
             me->ClearUnitState(UNIT_STATE_MELEE_ATTACKING);
             me->SendMeleeAttackStop();
@@ -328,7 +328,7 @@ struct boss_kaelthas : public BossAI
             {
                 if (Creature* thaladred = summons.GetCreatureWithEntry(NPC_THALADRED))
                 {
-                    thaladred->SetReactState(REACT_AGGRESSIVE);
+                    thaladred->SetReactState(PET_MODE_AGGRESSIVE);
                     thaladred->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                     if (Unit* target = SelectTarget(SelectTargetMethod::Random, 0))
                         thaladred->AI()->AttackStart(target);
@@ -355,7 +355,7 @@ struct boss_kaelthas : public BossAI
         if (summon->GetEntry() == NPC_NETHER_VAPOR)
             summon->GetMotionMaster()->MoveRandom(20.0f);
         if (summon->GetEntry() >= NPC_NETHERSTRAND_LONGBOW && summon->GetEntry() <= NPC_STAFF_OF_DISINTEGRATION)
-            summon->SetReactState(REACT_PASSIVE);
+            summon->SetReactState(PET_MODE_PASSIVE);
     }
 
     void DoAction(int32 action) override
@@ -384,7 +384,7 @@ struct boss_kaelthas : public BossAI
                         {
                             if (!summonedCreature->GetSpawnId())
                             {
-                                summonedCreature->SetReactState(REACT_AGGRESSIVE);
+                                summonedCreature->SetReactState(PET_MODE_AGGRESSIVE);
                                 summonedCreature->SetInCombatWithZone();
                                 if (Unit* target = SelectTarget(SelectTargetMethod::Random, 0))
                                 {
@@ -439,7 +439,7 @@ struct boss_kaelthas : public BossAI
             me->SetDisableGravity(false);
             me->SetWalk(false);
             me->RemoveAurasDueToSpell(SPELL_KAEL_FULL_POWER);
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
             //re-set validator
             scheduler.SetValidator([this]{
@@ -655,7 +655,7 @@ struct boss_kaelthas : public BossAI
         {
             if (Creature* advisor = summons.GetCreatureWithEntry(advisorNPCId))
             {
-                advisor->SetReactState(REACT_AGGRESSIVE);
+                advisor->SetReactState(PET_MODE_AGGRESSIVE);
                 advisor->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                 if (Unit* target = SelectTarget(SelectTargetMethod::Random, 0))
                     advisor->AI()->AttackStart(target);
@@ -680,7 +680,7 @@ struct boss_kaelthas : public BossAI
                 {
                     if (summonedCreature->GetSpawnId())
                     {
-                        summonedCreature->SetReactState(REACT_AGGRESSIVE);
+                        summonedCreature->SetReactState(PET_MODE_AGGRESSIVE);
                         summonedCreature->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
                         summonedCreature->SetInCombatWithZone();
                         if (Unit* target = SelectTarget(SelectTargetMethod::Random, 0))
@@ -779,7 +779,7 @@ struct npc_lord_sanguinar : public ScriptedAI
     {
         scheduler.CancelAll();
         _hasDied = false;
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
     }
 
     void JustEngagedWith(Unit* /*who*/) override
@@ -840,12 +840,12 @@ struct npc_capernian : public ScriptedAI
     {
         scheduler.CancelAll();
         _hasDied = false;
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
     }
 
     void AttackStart(Unit* who) override
     {
-        if (who && who->isTargetableForAttack() && me->GetReactState() != REACT_PASSIVE)
+        if (who && who->isTargetableForAttack() && me->GetReactState() != PET_MODE_PASSIVE)
         {
             if (me->Attack(who, false))
             {
@@ -929,7 +929,7 @@ struct npc_telonicus : public ScriptedAI
     {
         scheduler.CancelAll();
         _hasDied = false;
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
     }
 
     void JustEngagedWith(Unit* /*who*/) override
@@ -992,7 +992,7 @@ struct npc_thaladred : public ScriptedAI
     void Reset() override
     {
         scheduler.CancelAll();
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
         _hasDied = false;
     }
 

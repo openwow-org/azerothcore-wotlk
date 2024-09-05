@@ -2416,7 +2416,7 @@ void Spell::EffectSummonType(SpellEffIndex effIndex)
                         summon->ReplaceAllNpcFlags(NPCFlags(summon->GetCreatureTemplate()->npcflag));
 
                         summon->SetImmuneToAll(true);
-                        summon->SetReactState(REACT_PASSIVE);
+                        summon->SetReactState(PET_MODE_PASSIVE);
 
                         // Xinef: Pet can have some auras in creature_addon or in scripts, do not remove them instantly
                         //summon->AI()->EnterEvadeMode();
@@ -3200,9 +3200,9 @@ void Spell::EffectSummonPet(SpellEffIndex effIndex)
     if (m_caster->GetTypeId() == TYPEID_UNIT)
     {
         if (m_caster->ToCreature()->IsTotem())
-            pet->SetReactState(REACT_AGGRESSIVE);
+            pet->SetReactState(PET_MODE_AGGRESSIVE);
         else
-            pet->SetReactState(REACT_DEFENSIVE);
+            pet->SetReactState(PET_MODE_DEFENSIVE);
     }
 
     pet->SetUInt32Value(UNIT_CREATED_BY_SPELL, m_spellInfo->Id);

@@ -164,7 +164,7 @@ public:
 
         void Reset() override
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->getHostileRefMgr().setOnlineOfflineState(false);
         }
 
@@ -363,7 +363,7 @@ public:
             pInstance = pCreature->GetInstanceScript();
             MountPhase = true;
             SetDespawnAtEnd(false);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             BossOrder = 0;
             NewMountGUID.Clear();
             me->CastSpell(me, SPELL_BOSS_DEFEND_PERIODIC, true);
@@ -409,7 +409,7 @@ public:
                 me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                 me->SetImmuneToAll(false);
                 me->SetUInt32Value(UNIT_FIELD_MOUNTDISPLAYID, 0);
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
             }
         }
 
@@ -553,7 +553,7 @@ public:
                 {
                     events.Reset();
                     damage = me->GetHealth() - 1;
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     me->RemoveAllAuras();
                     AddCreatureAddonAuras();
                     me->GetThreatMgr().ClearAllThreat();
@@ -584,7 +584,7 @@ public:
                     MountPhase = true;
                     events.Reset();
                     damage = me->GetHealth() - 1;
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     me->RemoveAllAuras();
                     AddCreatureAddonAuras();
                     me->GetThreatMgr().ClearAllThreat();
@@ -634,7 +634,7 @@ public:
                             events.ScheduleEvent(EVENT_MOUNT_CHARGE, 2500ms, 4000ms);
                             events.ScheduleEvent(EVENT_SHIELD_BREAKER, 5s, 8s);
                             events.ScheduleEvent(EVENT_THRUST, 3s, 5s);
-                            me->SetReactState(REACT_AGGRESSIVE);
+                            me->SetReactState(PET_MODE_AGGRESSIVE);
                             me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                             me->SetImmuneToAll(false);
                             if( Unit* target = me->SelectNearestTarget(200.0f) )

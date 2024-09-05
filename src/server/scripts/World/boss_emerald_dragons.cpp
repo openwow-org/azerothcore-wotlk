@@ -103,7 +103,7 @@ struct emerald_dragonAI : public WorldBossAI
     {
         WorldBossAI::Reset();
         me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
-        me->SetReactState(REACT_AGGRESSIVE);
+        me->SetReactState(PET_MODE_AGGRESSIVE);
         DoCast(me, SPELL_MARK_OF_NATURE_AURA, true);
         events.ScheduleEvent(EVENT_TAIL_SWEEP, 4000);
         events.ScheduleEvent(EVENT_NOXIOUS_BREATH, urand(7500, 15000));
@@ -661,7 +661,7 @@ public:
                 _shades += count;
                 DoCast(SPELL_SHADE);
                 me->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
 
                 ++_stage;
             }
@@ -699,7 +699,7 @@ public:
 
                     me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
                     me->RemoveAurasDueToSpell(SPELL_SHADE);
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                 }
                 // _banishtimer has not expired, and we still have active shades:
                 else

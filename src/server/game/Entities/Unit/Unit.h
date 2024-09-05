@@ -26,6 +26,7 @@
 #include "ItemTemplate.h"
 #include "MotionMaster.h"
 #include "Object.h"
+#include "PetAction.h"  //TODO
 #include "SpellAuraDefines.h"
 #include "SpellDefines.h"
 #include "ThreatMgr.h"
@@ -1040,13 +1041,7 @@ enum ActiveStates : uint8
     ACT_DECIDE   = 0x00                                     // custom
 };
 
-enum ReactStates : uint8
-{
-    REACT_PASSIVE    = 0,
-    REACT_DEFENSIVE  = 1,
-    REACT_AGGRESSIVE = 2
-};
-
+//TODO: Move to Object/PetAction.h
 enum CommandStates
 {
     COMMAND_STAY    = 0,
@@ -1169,8 +1164,8 @@ public:
     WOWGUID GetForcedTarget() { return _forcedTargetGUID; }
 
     // Player react states
-    void SetPlayerReactState(ReactStates s) { _oldReactState = s; }
-    [[nodiscard]] ReactStates GetPlayerReactState() const { return _oldReactState; }
+    void SetPlayerReactState(PET_MODE s) { _oldReactState = s; }
+    [[nodiscard]] PET_MODE GetPlayerReactState() const { return _oldReactState; }
 
 private:
     Unit* _unit;
@@ -1180,7 +1175,7 @@ private:
     uint32 _petnumber;
 
     //for restoration after charmed
-    ReactStates     _oldReactState;
+    PET_MODE     _oldReactState;
 
     bool _isCommandAttack;
     bool _isCommandFollow;

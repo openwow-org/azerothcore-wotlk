@@ -250,7 +250,7 @@ struct npc_amanitar_mushrooms : public ScriptedAI
 
     void Reset() override
     {
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
         DoCastSelf(SPELL_PUTRID_MUSHROOM);
 
         if (me->GetEntry() == NPC_POISONOUS_MUSHROOM)

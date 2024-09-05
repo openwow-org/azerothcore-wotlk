@@ -668,7 +668,7 @@ public:
     {
         npc_frost_freeze_trapAI(Creature* creature) : NullCreatureAI(creature)
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         void DoAction(int32 action) override
@@ -726,7 +726,7 @@ public:
 
         void Reset() override
         {
-            me->SetReactState(REACT_DEFENSIVE);
+            me->SetReactState(PET_MODE_DEFENSIVE);
             _didUnderTenPercentText = false;
             _wipeCheckTimer = 3000;
             _handledWP4 = false;
@@ -1002,7 +1002,7 @@ public:
         {
             _Reset();
             me->SetImmuneToAll(true);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->SetCanFly(true);
             me->SetDisableGravity(true);
             me->SendMovementFlagUpdate();
@@ -1113,7 +1113,7 @@ public:
             me->SetImmuneToAll(false);
             me->SetCanFly(false);
             me->SetDisableGravity(false);
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             DoZoneInCombat(nullptr, 150.0f);
         }
 
@@ -1800,7 +1800,7 @@ public:
 
         void Reset() override
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             _vehicleCheckTimer = 500;
         }
 
@@ -1903,7 +1903,7 @@ public:
         {
             if (Creature* target = GetTarget()->ToCreature())
             {
-                target->SetReactState(REACT_PASSIVE);
+                target->SetReactState(PET_MODE_PASSIVE);
                 target->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
                 target->SetImmuneToPC(true);
                 target->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_CUSTOM_SPELL_02);
@@ -1914,7 +1914,7 @@ public:
         {
             if (Creature* target = GetTarget()->ToCreature())
             {
-                target->SetReactState(REACT_AGGRESSIVE);
+                target->SetReactState(PET_MODE_AGGRESSIVE);
                 target->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
                 target->SetImmuneToPC(false);
                 target->SetUInt32Value(UNIT_NPC_EMOTESTATE, 0);

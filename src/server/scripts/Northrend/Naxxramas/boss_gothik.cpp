@@ -228,7 +228,7 @@ public:
             summons.DespawnAll();
             me->RemoveUnitFlag(UNIT_FLAG_DISABLE_MOVE);
             me->SetImmuneToPC(false);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             secondPhase = false;
             gateOpened = false;
             waveCount = 0;
@@ -284,7 +284,7 @@ public:
                 {
                     summon->AI()->AttackStart(target);
                     summon->SetInCombatWithZone();
-                    summon->SetReactState(REACT_AGGRESSIVE);
+                    summon->SetReactState(PET_MODE_AGGRESSIVE);
                     summon->CallForHelp(150.0f);
                 }
             }
@@ -310,7 +310,7 @@ public:
                     Player* target = tList[urand(0, tList.size() - 1)];
                     summon->AI()->AttackStart(target);
                     summon->SetInCombatWithZone();
-                    summon->SetReactState(REACT_AGGRESSIVE);
+                    summon->SetReactState(PET_MODE_AGGRESSIVE);
                     summon->CallForHelp(150.0f);
                 }
             }
@@ -495,7 +495,7 @@ public:
                         Talk(SAY_PHASE_TWO);
                         Talk(EMOTE_PHASE_TWO);
                         me->CastSpell(me, SPELL_TELEPORT_LIVE, false);
-                        me->SetReactState(REACT_AGGRESSIVE);
+                        me->SetReactState(PET_MODE_AGGRESSIVE);
                         me->RemoveUnitFlag(UNIT_FLAG_DISABLE_MOVE);
                         me->SetImmuneToPC(false);
                         me->RemoveAllAuras();
@@ -545,7 +545,7 @@ public:
 
         void Reset() override
         {
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             me->SetNoCallAssistance(false);
             events.Reset();
         }

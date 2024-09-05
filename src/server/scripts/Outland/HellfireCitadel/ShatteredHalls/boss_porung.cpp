@@ -96,7 +96,7 @@ struct npc_shattered_hand_scout : public ScriptedAI
         if (!me->HasUnitFlag(UNIT_FLAG_NOT_SELECTABLE) && me->IsWithinDist2d(who, 50.0f) && who->GetPositionZ() > -3.0f
             && who->IsPlayer())
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             DoCastSelf(SPELL_CLEAR_ALL);
             me->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
             Talk(SAY_INVADERS_BREACHED);

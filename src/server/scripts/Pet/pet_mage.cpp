@@ -93,7 +93,7 @@ struct npc_pet_mage_mirror_image : CasterAI
         else
             me->GetMotionMaster()->MoveFollow(owner, PET_FOLLOW_DIST, me->GetFollowAngle(), MOTION_SLOT_ACTIVE);
 
-        me->SetReactState(REACT_DEFENSIVE);
+        me->SetReactState(PET_MODE_DEFENSIVE);
 
         // Xinef: Inherit Master's Threat List (not yet implemented)
         //owner->CastSpell((Unit*)nullptr, SPELL_MAGE_MASTERS_THREAT_LIST, true);

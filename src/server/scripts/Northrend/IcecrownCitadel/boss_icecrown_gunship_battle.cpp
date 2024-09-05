@@ -1079,7 +1079,7 @@ public:
             if (_instance->GetBossState(DATA_ICECROWN_GUNSHIP_BATTLE) != IN_PROGRESS)
                 return false;
             if (target->GetEntry() == NPC_SKYBREAKER_MARINE || target->GetEntry() == NPC_SKYBREAKER_SERGEANT)
-                return target->ToCreature()->GetReactState() != REACT_PASSIVE;
+                return target->ToCreature()->GetReactState() != PET_MODE_PASSIVE;
             return target->GetTransport() == me->GetTransport() && target->GetPositionY() < (_instance->GetData(DATA_TEAMID_IN_INSTANCE) == TEAM_HORDE ? 2431.0f : 2025.0f);
         }
 
@@ -1418,7 +1418,7 @@ public:
             if (_instance->GetBossState(DATA_ICECROWN_GUNSHIP_BATTLE) != IN_PROGRESS)
                 return false;
             if (target->GetEntry() == NPC_KOR_KRON_REAVER || target->GetEntry() == NPC_KOR_KRON_SERGEANT)
-                return target->ToCreature()->GetReactState() != REACT_PASSIVE;
+                return target->ToCreature()->GetReactState() != PET_MODE_PASSIVE;
             return target->GetTransport() == me->GetTransport() && target->GetPositionY() > (_instance->GetData(DATA_TEAMID_IN_INSTANCE) == TEAM_ALLIANCE ? 2042.0f : 2445.0f);
         }
 
@@ -1447,7 +1447,7 @@ public:
     {
         npc_zafod_boomboxAI(Creature* creature) : NullCreatureAI(creature)
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         void sGossipSelect(Player* player, uint32 /*sender*/, uint32 /*action*/) override
@@ -1509,7 +1509,7 @@ struct gunship_npc_AI : public ScriptedAI
         if (type == ACTION_SET_SLOT)
         {
             SetSlotInfo(data);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             float x, y, z, o;
             Slot->TargetPosition.GetPosition(x, y, z, o);
             me->SetTransportHomePosition(Slot->TargetPosition);
@@ -1543,7 +1543,7 @@ struct gunship_npc_AI : public ScriptedAI
             me->SetFacingTo(Slot->TargetPosition.GetFacing());
             me->m_Events.AddEvent(new BattleExperienceEvent(me), me->m_Events.CalculateTime(BattleExperienceEvent::ExperiencedTimes[0]));
             me->CastSpell(me, SPELL_BATTLE_EXPERIENCE, true);
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
         }
     }
 
@@ -1575,7 +1575,7 @@ struct npc_gunship_boarding_addAI : public ScriptedAI
         if (type == ACTION_SET_SLOT)
         {
             SetSlotInfo(data);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->m_Events.AddEvent(new DelayedMovementEvent(me, Slot->TargetPosition), me->m_Events.CalculateTime(3000 * (Index - SLOT_MARINE_1)));
         }
     }
@@ -1607,7 +1607,7 @@ struct npc_gunship_boarding_addAI : public ScriptedAI
             me->SetFacingTo(Slot->TargetPosition.GetFacing());
             me->m_Events.AddEvent(new BattleExperienceEvent(me), me->m_Events.CalculateTime(BattleExperienceEvent::ExperiencedTimes[0]));
             me->CastSpell(me, SPELL_BATTLE_EXPERIENCE, true);
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
 
             Position const& otherTransportPos = Instance->GetData(DATA_TEAMID_IN_INSTANCE) == TEAM_HORDE ? OrgrimsHammerTeleportExit : SkybreakerTeleportExit;
             float x, y, z, o;
@@ -1696,7 +1696,7 @@ public:
         {
             if (Instance->GetBossState(DATA_ICECROWN_GUNSHIP_BATTLE) != IN_PROGRESS)
                 return;
-            if (me->GetReactState() == REACT_PASSIVE)
+            if (me->GetReactState() == PET_MODE_PASSIVE)
                 return;
             npc_gunship_boarding_addAI::UpdateAI(diff);
             _events.Update(diff);
@@ -1753,7 +1753,7 @@ public:
         {
             if (Instance->GetBossState(DATA_ICECROWN_GUNSHIP_BATTLE) != IN_PROGRESS)
                 return;
-            if (me->GetReactState() == REACT_PASSIVE)
+            if (me->GetReactState() == PET_MODE_PASSIVE)
                 return;
             npc_gunship_boarding_addAI::UpdateAI(diff);
             _events.Update(diff);
@@ -1828,7 +1828,7 @@ public:
         {
             if (Instance->GetBossState(DATA_ICECROWN_GUNSHIP_BATTLE) != IN_PROGRESS)
                 return;
-            if (me->GetReactState() == REACT_PASSIVE)
+            if (me->GetReactState() == PET_MODE_PASSIVE)
                 return;
             gunship_npc_AI::UpdateAI(diff);
         }
@@ -1875,7 +1875,7 @@ public:
         {
             if (Instance->GetBossState(DATA_ICECROWN_GUNSHIP_BATTLE) != IN_PROGRESS)
                 return;
-            if (me->GetReactState() == REACT_PASSIVE)
+            if (me->GetReactState() == PET_MODE_PASSIVE)
                 return;
             if (checkTimer <= diff)
             {
@@ -1946,7 +1946,7 @@ public:
         {
             if (Instance->GetBossState(DATA_ICECROWN_GUNSHIP_BATTLE) != IN_PROGRESS)
                 return;
-            if (me->GetReactState() == REACT_PASSIVE)
+            if (me->GetReactState() == PET_MODE_PASSIVE)
                 return;
 
             UpdateVictim();

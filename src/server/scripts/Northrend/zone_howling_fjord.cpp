@@ -238,7 +238,7 @@ public:
             switch (waypointId)
             {
                 case 1:
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     SetRun(true);
                     break;
                 case 23:

@@ -289,7 +289,7 @@ public:
             _mysticBuffetStack = 0;
             _Reset();
             me->SetSpeed(MOVE_RUN, me->GetCreatureTemplate()->speed_run);
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             me->CastSpell(me, SPELL_TANK_MARKER, true);
         }
 
@@ -437,7 +437,7 @@ public:
                         _isInAirPhase = false;
                         me->SetDisableGravity(false);
                         me->SetSpeed(MOVE_RUN, me->GetCreatureTemplate()->speed_run);
-                        me->SetReactState(REACT_AGGRESSIVE);
+                        me->SetReactState(PET_MODE_AGGRESSIVE);
                         if (Unit* target = me->SelectVictim())
                             AttackStart(target);
                         break;
@@ -574,7 +574,7 @@ public:
 
                     _isInAirPhase = true;
                     Talk(SAY_AIR_PHASE);
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     me->SetSpeed(MOVE_RUN, 4.28571f);
                     me->SendMeleeAttackStop(me->GetVictim());
                     me->AttackStop();
@@ -689,7 +689,7 @@ public:
     {
         npc_ice_tombAI(Creature* creature) : NullCreatureAI(creature)
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             _existenceCheckTimer = 1000;
             _asphyxiationTimer = 22500;
         }
@@ -1307,7 +1307,7 @@ public:
             _events.ScheduleEvent(EVENT_BELLOWING_ROAR, 20s, 25s);
             _events.ScheduleEvent(EVENT_CLEAVE_SPINESTALKER, 10s, 15s);
             _events.ScheduleEvent(EVENT_TAIL_SWEEP, 8s, 12s);
-            me->SetReactState(REACT_DEFENSIVE);
+            me->SetReactState(PET_MODE_DEFENSIVE);
 
             if (!_summoned)
             {
@@ -1437,7 +1437,7 @@ public:
             _events.Reset();
             _events.ScheduleEvent(EVENT_FROST_BREATH_RIMEFANG, 12s, 15s);
             _events.ScheduleEvent(EVENT_ICY_BLAST, 30s, 35s);
-            me->SetReactState(REACT_DEFENSIVE);
+            me->SetReactState(PET_MODE_DEFENSIVE);
             _icyBlastCounter = 0;
 
             if (!_summoned)
@@ -1504,7 +1504,7 @@ public:
             else if (point == POINT_LAND_GROUND)
             {
                 me->SetDisableGravity(false);
-                me->SetReactState(REACT_DEFENSIVE);
+                me->SetReactState(PET_MODE_DEFENSIVE);
                 if (Unit* victim = me->SelectVictim())
                     AttackStart(victim);
             }
@@ -1539,7 +1539,7 @@ public:
                 case EVENT_ICY_BLAST:
                     {
                         _icyBlastCounter = RAID_MODE<uint8>(5, 7, 6, 8);
-                        me->SetReactState(REACT_PASSIVE);
+                        me->SetReactState(PET_MODE_PASSIVE);
 
                         me->GetMotionMaster()->MoveIdle();
                         me->StopMoving();

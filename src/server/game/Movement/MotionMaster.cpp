@@ -674,7 +674,7 @@ void MotionMaster::MoveSeekAssistance(float x, float y, float z)
         LOG_DEBUG("movement.motionmaster", "Creature ({}) seek assistance (X: {} Y: {} Z: {})", _owner->GetGUID().ToString(), x, y, z);
         _owner->AttackStop();
         _owner->CastStop(0, false);
-        _owner->ToCreature()->SetReactState(REACT_PASSIVE);
+        _owner->ToCreature()->SetReactState(PET_MODE_PASSIVE);
         Mutate(new AssistanceMovementGenerator(x, y, z), MOTION_SLOT_ACTIVE);
     }
 }

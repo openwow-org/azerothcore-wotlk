@@ -81,7 +81,7 @@ struct boss_jindo : public BossAI
         switch (summon->GetEntry())
         {
             case NPC_BRAIN_WASH_TOTEM:
-                summon->SetReactState(REACT_PASSIVE);
+                summon->SetReactState(PET_MODE_PASSIVE);
                 if (Unit* target = SelectTarget(SelectTargetMethod::Random, me->GetThreatMgr().GetThreatListSize() > 1 ? 1 : 0))
                 {
                     summon->CastSpell(target, summon->m_spells[0], true);

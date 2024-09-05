@@ -153,12 +153,12 @@ struct boss_twinemperorsAI : public BossAI
         if (action == ACTION_AFTER_TELEPORT)
         {
             DoResetThreatList();
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             DoCastSelf(SPELL_TWIN_TELEPORT_VISUAL, true);
             scheduler.DelayAll(2300ms);
             scheduler.Schedule(2s, [this](TaskContext /*context*/)
             {
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
                 me->SetControlled(false, UNIT_STATE_ROOT);
                 if (Unit* victim = me->SelectNearestTarget())
                 {
@@ -392,7 +392,7 @@ struct boss_veklor : public boss_twinemperorsAI
 
     void AttackStart(Unit* who) override
     {
-        if (who && who->isTargetableForAttack() && me->GetReactState() != REACT_PASSIVE)
+        if (who && who->isTargetableForAttack() && me->GetReactState() != PET_MODE_PASSIVE)
         {
             // VL doesn't melee
             if (me->Attack(who, false))
@@ -469,7 +469,7 @@ class spell_mutate_explode_bug : public SpellScript
         if (m_scriptSpellId == SPELL_MUTATE_BUG)
             target->CastSpell(target, SPELL_VIRULENT_POISON_PROC, true);
         target->SetFaction(FACTION_HOSTILE);
-        target->SetReactState(REACT_AGGRESSIVE);
+        target->SetReactState(PET_MODE_AGGRESSIVE);
         target->SetInCombatWithZone();
     }
 

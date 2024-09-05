@@ -162,7 +162,7 @@ public:
             _offtankGUID.Clear();
             _vampires.clear();
             CleanAuras();
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
 
             events.Reset();
             summons.DespawnAll();
@@ -293,7 +293,7 @@ public:
                 case POINT_GROUND:
                     me->SetCanFly(false);
                     me->SetDisableGravity(false);
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     if (Unit* target = me->SelectVictim())
                         AttackStart(target);
                     events.RescheduleEvent(EVENT_PACT_OF_THE_DARKFALLEN, 5s);
@@ -402,7 +402,7 @@ public:
                     events.ScheduleEvent(EVENT_BLOOD_MIRROR, 2500ms);
                     break;
                 case EVENT_DELIRIOUS_SLASH:
-                    if (!me->HasReactState(REACT_PASSIVE))
+                    if (!me->HasReactState(PET_MODE_PASSIVE))
                     {
                         Unit* target = nullptr;
                         if (_offtankGUID)
@@ -424,7 +424,7 @@ public:
                     events.ScheduleEvent(EVENT_DELIRIOUS_SLASH, 5s);
                     break;
                 case EVENT_PACT_OF_THE_DARKFALLEN:
-                    if (!me->HasReactState(REACT_PASSIVE))
+                    if (!me->HasReactState(PET_MODE_PASSIVE))
                     {
                         std::list<Player*> myList;
                         const Map::PlayerList& pl = me->GetMap()->GetPlayers();
@@ -447,7 +447,7 @@ public:
                     events.ScheduleEvent(EVENT_PACT_OF_THE_DARKFALLEN, 5s);
                     break;
                 case EVENT_SWARMING_SHADOWS:
-                    if (!me->HasReactState(REACT_PASSIVE))
+                    if (!me->HasReactState(PET_MODE_PASSIVE))
                     {
                         std::list<Player*> myList;
                         const Map::PlayerList& pl = me->GetMap()->GetPlayers();
@@ -471,7 +471,7 @@ public:
                     events.ScheduleEvent(EVENT_SWARMING_SHADOWS, 5s);
                     break;
                 case EVENT_TWILIGHT_BLOODBOLT:
-                    if (!me->HasReactState(REACT_PASSIVE))
+                    if (!me->HasReactState(PET_MODE_PASSIVE))
                     {
                         std::list<Player*> myList;
                         const Map::PlayerList& pl = me->GetMap()->GetPlayers();
@@ -491,7 +491,7 @@ public:
                     break;
                 case EVENT_AIR_PHASE:
                     me->AttackStop();
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     me->GetMotionMaster()->MovePoint(POINT_CENTER, centerPos);
                     break;
                 case EVENT_AIR_START_FLYING:

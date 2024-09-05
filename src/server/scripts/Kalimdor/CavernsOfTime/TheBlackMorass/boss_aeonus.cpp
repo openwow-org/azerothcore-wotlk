@@ -55,7 +55,7 @@ struct boss_aeonus : public BossAI
 
     void IsSummonedBy(WorldObject* /*summoner*/) override
     {
-        me->SetReactState(REACT_DEFENSIVE);
+        me->SetReactState(PET_MODE_DEFENSIVE);
 
         if (Creature* medivh = instance->GetCreature(DATA_MEDIVH))
         {

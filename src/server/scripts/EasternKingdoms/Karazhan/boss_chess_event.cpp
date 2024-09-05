@@ -1446,7 +1446,7 @@ struct npc_chesspiece : public ScriptedAI
         me->ApplySpellImmune(0, IMMUNITY_ID, SPELL_GAME_IN_SESSION, true);
 
         me->SetSheath(SHEATH_STATE_MELEE);
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
         me->SetWalk(true);
 
         DoCastSelf(SPELL_MELEE_ATTACK_TIMER, true);
@@ -2048,7 +2048,7 @@ struct npc_chess_move_trigger : public ScriptedAI
 {
     npc_chess_move_trigger(Creature* creature) : ScriptedAI(creature)
     {
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
         me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
     }
 

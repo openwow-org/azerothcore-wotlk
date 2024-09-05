@@ -178,7 +178,7 @@ public:
         {
             summons.Summon(summon);
             if (me->HasUnitFlag(UNIT_FLAG_NOT_SELECTABLE) && summon->GetEntry() != NPC_CRYSTAL_CHANNEL_TARGET && summon->GetEntry() != NPC_CRYSTAL_HANDLER)
-                summon->SetReactState(REACT_DEFENSIVE);
+                summon->SetReactState(PET_MODE_DEFENSIVE);
             else if (summon->GetEntry() != NPC_CRYSTAL_CHANNEL_TARGET)
                 summon->SetInCombatWithZone();
         }

@@ -363,7 +363,7 @@ public:
             if (Creature* ravager = go->FindNearestCreature(NPC_DEATH_RAVAGER, 5.0f, true))
             {
                 ravager->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-                ravager->SetReactState(REACT_AGGRESSIVE);
+                ravager->SetReactState(PET_MODE_AGGRESSIVE);
                 ravager->AI()->AttackStart(player);
             }
         }
@@ -389,7 +389,7 @@ public:
             EnragingBiteTimer = 20000;
 
             me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         void UpdateAI(uint32 diff) override

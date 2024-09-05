@@ -59,7 +59,7 @@ public:
             BossAI::InitializeAI();
             me->GetMotionMaster()->MovePoint(POINT_START, 1638.55f, 919.76f, 104.95f, false);
             me->SetHomePosition(1642.712f, 934.646f, 107.205f, 0.767f);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         void MovementInform(uint32 type, uint32 id) override
@@ -67,7 +67,7 @@ public:
             if (type == POINT_MOTION_TYPE && id == POINT_START)
             {
                 me->CastSpell(me, SPELL_ECK_SPRING_INIT, true);
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
             }
         }
 

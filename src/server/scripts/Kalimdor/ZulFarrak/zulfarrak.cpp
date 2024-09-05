@@ -354,7 +354,7 @@ public:
         {
             if (Creature* crew = ObjectAccessor::GetCreature(*me, instance->GetGuidData(entry)))
             {
-                crew->SetReactState(REACT_AGGRESSIVE);
+                crew->SetReactState(PET_MODE_AGGRESSIVE);
                 crew->SetWalk(true);
                 crew->SetHomePosition(x, y, z, 4.78f);
                 crew->GetMotionMaster()->MovePoint(1, { x, y, z, 4.78f });

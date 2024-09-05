@@ -200,7 +200,7 @@ struct npc_supremus_punch_invisible_stalker : public ScriptedAI
         scheduler.Schedule(6s, 10s, [this](TaskContext /*context*/)
         {
             me->CombatStop();
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         });
     }
 

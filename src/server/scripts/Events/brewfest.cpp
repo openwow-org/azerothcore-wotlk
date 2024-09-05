@@ -477,19 +477,19 @@ struct npc_dark_iron_attack_generator : public ScriptedAI
         {
             if ((cr = me->SummonCreature(NPC_DROHN_KEG, 1183.69f, -4315.15f, 21.1875f, 0.750492f)))
             {
-                cr->SetReactState(REACT_PASSIVE);
+                cr->SetReactState(PET_MODE_PASSIVE);
                 summons.Summon(cr);
                 revelerGUIDs.push_back(cr->GetGUID());
             }
             if ((cr = me->SummonCreature(NPC_VOODOO_KEG, 1182.42f, -4272.45f, 21.1182f, -1.02974f)))
             {
-                cr->SetReactState(REACT_PASSIVE);
+                cr->SetReactState(PET_MODE_PASSIVE);
                 summons.Summon(cr);
                 revelerGUIDs.push_back(cr->GetGUID());
             }
             if ((cr = me->SummonCreature(NPC_GORDOK_KEG, 1223.78f, -4296.48f, 21.1707f, -2.86234f)))
             {
-                cr->SetReactState(REACT_PASSIVE);
+                cr->SetReactState(PET_MODE_PASSIVE);
                 summons.Summon(cr);
                 revelerGUIDs.push_back(cr->GetGUID());
             }
@@ -498,19 +498,19 @@ struct npc_dark_iron_attack_generator : public ScriptedAI
         {
             if ((cr = me->SummonCreature(NPC_BARLEYBREW_KEG, -5187.23f, -599.779f, 397.176f, 0.017453f)))
             {
-                cr->SetReactState(REACT_PASSIVE);
+                cr->SetReactState(PET_MODE_PASSIVE);
                 summons.Summon(cr);
                 revelerGUIDs.push_back(cr->GetGUID());
             }
             if ((cr = me->SummonCreature(NPC_THUNDERBREW_KEG, -5160.05f, -632.632f, 397.178f, 1.39626f)))
             {
-                cr->SetReactState(REACT_PASSIVE);
+                cr->SetReactState(PET_MODE_PASSIVE);
                 summons.Summon(cr);
                 revelerGUIDs.push_back(cr->GetGUID());
             }
             if ((cr = me->SummonCreature(NPC_GORDOK_KEG, -5145.75f, -575.667f, 397.176f, -2.28638f)))
             {
-                cr->SetReactState(REACT_PASSIVE);
+                cr->SetReactState(PET_MODE_PASSIVE);
                 summons.Summon(cr);
                 revelerGUIDs.push_back(cr->GetGUID());
             }
@@ -612,7 +612,7 @@ struct npc_dark_iron_guzzler : public ScriptedAI
 {
     npc_dark_iron_guzzler(Creature* creature) : ScriptedAI(creature)
     {
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
         attacking = false;
     }
 
@@ -1316,7 +1316,7 @@ struct npc_brew_bubble : public NullCreatureAI
 
     void Reset() override
     {
-        me->SetReactState(REACT_AGGRESSIVE);
+        me->SetReactState(PET_MODE_AGGRESSIVE);
         me->GetMotionMaster()->MoveRandom(15.0f);
         timer = 0;
     }

@@ -79,7 +79,7 @@ public:
 
     bool Execute(uint64 /*execTime*/, uint32 /*diff*/) override
     {
-        _boss->SetReactState(REACT_AGGRESSIVE);
+        _boss->SetReactState(PET_MODE_AGGRESSIVE);
         _boss->AI()->SetData(DATA_GOLEM_LORD_ARGELMACH_INIT, DONE);
 
         if (Unit* victim = _boss->GetVictim())
@@ -295,7 +295,7 @@ public:
                     if (encounter[TYPE_RING_OF_LAW] == DONE) // added for crashes
                     {
                         creature->SetFaction(FACTION_NEUTRAL);
-                        creature->SetReactState(REACT_DEFENSIVE);
+                        creature->SetReactState(PET_MODE_DEFENSIVE);
                     }
                     break;
                 case NPC_SHADOWFORGE_PEASANT:
@@ -307,7 +307,7 @@ public:
                     if (encounter[TYPE_RING_OF_LAW] == DONE) // added for crashes
                     {
                         creature->SetFaction(FACTION_NEUTRAL);
-                        creature->SetReactState(REACT_DEFENSIVE);
+                        creature->SetReactState(PET_MODE_DEFENSIVE);
                     }
                     break;
                 case NPC_SHADOWFORGE_SENATOR:
@@ -476,7 +476,7 @@ public:
                             if (Creature* spectator = instance->GetCreature(itr))
                             {
                                 spectator->SetFaction(FACTION_NEUTRAL);
-                                spectator->SetReactState(REACT_DEFENSIVE);
+                                spectator->SetReactState(PET_MODE_DEFENSIVE);
                             }
                         }
                         break;
@@ -590,7 +590,7 @@ public:
 
                         if (!adds.empty())
                         {
-                            argelmach->SetReactState(REACT_PASSIVE);
+                            argelmach->SetReactState(PET_MODE_PASSIVE);
                             argelmach->SetTarget();
                             argelmach->AI()->SetData(DATA_GOLEM_LORD_ARGELMACH_INIT, IN_PROGRESS);
                         }

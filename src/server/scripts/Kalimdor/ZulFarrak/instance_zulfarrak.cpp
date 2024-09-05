@@ -153,23 +153,23 @@ public:
             {
                 case NPC_BLY:
                     BlyGUID = creature->GetGUID();
-                    creature->SetReactState(REACT_PASSIVE); // starts out passive (in a cage)
+                    creature->SetReactState(PET_MODE_PASSIVE); // starts out passive (in a cage)
                     break;
                 case NPC_RAVEN:
                     RavenGUID = creature->GetGUID();
-                    creature->SetReactState(REACT_PASSIVE);// starts out passive (in a cage)
+                    creature->SetReactState(PET_MODE_PASSIVE);// starts out passive (in a cage)
                     break;
                 case NPC_ORO:
                     OroGUID = creature->GetGUID();
-                    creature->SetReactState(REACT_PASSIVE);// starts out passive (in a cage)
+                    creature->SetReactState(PET_MODE_PASSIVE);// starts out passive (in a cage)
                     break;
                 case NPC_WEEGLI:
                     WeegliGUID = creature->GetGUID();
-                    creature->SetReactState(REACT_PASSIVE);// starts out passive (in a cage)
+                    creature->SetReactState(PET_MODE_PASSIVE);// starts out passive (in a cage)
                     break;
                 case NPC_MURTA:
                     MurtaGUID = creature->GetGUID();
-                    creature->SetReactState(REACT_PASSIVE);// starts out passive (in a cage)
+                    creature->SetReactState(PET_MODE_PASSIVE);// starts out passive (in a cage)
                     break;
                 case NPC_SHADOWPRIEST_SEZZZIZ:
                     ShadowpriestGUID = creature->GetGUID();

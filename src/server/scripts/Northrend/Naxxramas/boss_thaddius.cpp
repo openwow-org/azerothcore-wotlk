@@ -331,7 +331,7 @@ public:
                 }
                 case EVENT_THADDIUS_ENTER_COMBAT:
                     Talk(SAY_AGGRO);
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     me->SetControlled(false, UNIT_STATE_STUNNED);
                     me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                     events.ScheduleEvent(EVENT_THADDIUS_CHAIN_LIGHTNING, 14s);

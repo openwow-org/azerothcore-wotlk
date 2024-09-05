@@ -163,7 +163,7 @@ public:
                     if (creature->IsAlive())
                     {
                         creature->CombatStop(true);
-                        creature->SetReactState(REACT_PASSIVE);
+                        creature->SetReactState(PET_MODE_PASSIVE);
                         creature->GetMotionMaster()->MovePoint(0, Position(-7560.568848f, -1028.553345f, 408.491211f, 0.523858f));
                     }
                 }

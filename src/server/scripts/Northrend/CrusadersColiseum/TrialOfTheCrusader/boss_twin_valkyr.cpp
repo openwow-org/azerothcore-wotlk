@@ -108,7 +108,7 @@ struct boss_twin_valkyrAI : public ScriptedAI
     boss_twin_valkyrAI(Creature* pCreature) : ScriptedAI(pCreature), summons(me)
     {
         pInstance = pCreature->GetInstanceScript();
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
         me->SetModifierValue(UNIT_MOD_DAMAGE_OFFHAND, TOTAL_PCT, 1.0f);
         me->UpdateDamagePhysical(OFF_ATTACK);
         LastSynchroHP = (int32)me->GetMaxHealth();
@@ -689,7 +689,7 @@ public:
     {
         npc_concentrated_ballAI(Creature* pCreature) : NullCreatureAI(pCreature)
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->SetCanFly(true);
             me->SetDisableGravity(true);
             me->CastSpell(me, 100101, true); // custom periodic dummy spell

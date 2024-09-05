@@ -80,7 +80,7 @@ struct boss_selin_fireheart : public ScriptedAI
 
     void JustSummoned(Creature* summon) override
     {
-        summon->SetReactState(REACT_PASSIVE);
+        summon->SetReactState(PET_MODE_PASSIVE);
         summons.Summon(summon);
     }
 

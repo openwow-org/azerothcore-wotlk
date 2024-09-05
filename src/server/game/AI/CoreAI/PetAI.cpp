@@ -184,14 +184,14 @@ void PetAI::UpdateAI(uint32 diff)
     }
     else if (!me->GetCharmInfo() || (!me->GetCharmInfo()->GetForcedSpell() && !(me->IsPet() && me->ToPet()->HasTempSpell()) && !me->HasUnitState(UNIT_STATE_CASTING)))
     {
-        if (me->HasReactState(REACT_AGGRESSIVE) || me->GetCharmInfo()->IsAtStay())
+        if (me->HasReactState(PET_MODE_AGGRESSIVE) || me->GetCharmInfo()->IsAtStay())
         {
             // Every update we need to check targets only in certain cases
             // Aggressive - Allow auto select if owner or pet don't have a target
             // Stay - Only pick from pet or owner targets / attackers so targets won't run by
             //   while chasing our owner. Don't do auto select.
             // All other cases (ie: defensive) - Targets are assigned by AttackedBy(), OwnerAttackedBy(), OwnerAttacked(), etc.
-            Unit* nextTarget = SelectNextTarget(me->HasReactState(REACT_AGGRESSIVE));
+            Unit* nextTarget = SelectNextTarget(me->HasReactState(PET_MODE_AGGRESSIVE));
 
             if (nextTarget)
                 AttackStart(nextTarget);
@@ -214,7 +214,7 @@ void PetAI::UpdateAI(uint32 diff)
             owner->ToPlayer()->User()->HandlePetActionHelper(me, me->GetGUID(), std::abs(me->GetCharmInfo()->GetForcedSpell()), ACT_ENABLED, me->GetCharmInfo()->GetForcedTarget());
 
             // xinef: if spell was casted properly and we are in passive mode, handle return
-            if (!me->GetCharmInfo()->GetForcedSpell() && me->HasReactState(REACT_PASSIVE))
+            if (!me->GetCharmInfo()->GetForcedSpell() && me->HasReactState(PET_MODE_PASSIVE))
             {
                 if (me->HasUnitState(UNIT_STATE_CASTING))
                 {
@@ -434,7 +434,7 @@ void PetAI::OwnerAttackedBy(Unit* attacker)
         return;
 
     // Passive pets don't do anything
-    if (me->HasReactState(REACT_PASSIVE))
+    if (me->HasReactState(PET_MODE_PASSIVE))
         return;
 
     // Prevent pet from disengaging from current target
@@ -455,7 +455,7 @@ void PetAI::OwnerAttacked(Unit* target)
         return;
 
     // Passive pets don't do anything
-    if (me->HasReactState(REACT_PASSIVE))
+    if (me->HasReactState(PET_MODE_PASSIVE))
         return;
 
     // Prevent pet from disengaging from current target
@@ -474,7 +474,7 @@ Unit* PetAI::SelectNextTarget(bool allowAutoSelect) const
     // The parameter: allowAutoSelect lets us disable aggressive pet auto targeting for certain situations
 
     // Passive pets don't do next target selection
-    if (me->HasReactState(REACT_PASSIVE))
+    if (me->HasReactState(PET_MODE_PASSIVE))
         return nullptr;
 
     // Check pet attackers first so we don't drag a bunch of targets to the owner
@@ -574,7 +574,7 @@ void PetAI::HandleReturnMovement()
 void PetAI::SpellHit(Unit* caster, SpellInfo const* spellInfo)
 {
     // Xinef: taunt behavior code
-    if (spellInfo->HasAura(SPELL_AURA_MOD_TAUNT) && !me->HasReactState(REACT_PASSIVE))
+    if (spellInfo->HasAura(SPELL_AURA_MOD_TAUNT) && !me->HasReactState(PET_MODE_PASSIVE))
     {
         me->GetCharmInfo()->SetForcedSpell(0);
         me->GetCharmInfo()->SetForcedTargetGUID();
@@ -601,7 +601,7 @@ void PetAI::DoAttack(Unit* target, bool chase)
         me->SetUnitFlag(UNIT_FLAG_PET_IN_COMBAT);
 
         // Play sound to let the player know the pet is attacking something it picked on its own
-        if (me->HasReactState(REACT_AGGRESSIVE) && !me->GetCharmInfo()->IsCommandAttack())
+        if (me->HasReactState(PET_MODE_AGGRESSIVE) && !me->GetCharmInfo()->IsCommandAttack())
             me->SendPetAIReaction(me->GetGUID());
 
         if (chase)
@@ -696,7 +696,7 @@ bool PetAI::CanAttack(Unit* target, SpellInfo const* spellInfo)
     }
 
     // Passive - passive pets can attack if told to
-    if (me->HasReactState(REACT_PASSIVE))
+    if (me->HasReactState(PET_MODE_PASSIVE))
         return me->GetCharmInfo()->IsCommandAttack();
 
     // CC - mobs under crowd control can be attacked if owner commanded
@@ -788,7 +788,7 @@ void PetAI::AttackedBy(Unit* attacker)
         return;
 
     // Passive pets don't do anything
-    if (me->HasReactState(REACT_PASSIVE))
+    if (me->HasReactState(PET_MODE_PASSIVE))
         return;
 
     // Prevent pet from disengaging from current target

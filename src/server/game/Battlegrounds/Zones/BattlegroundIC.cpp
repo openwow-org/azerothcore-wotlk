@@ -493,12 +493,12 @@ void BattlegroundIC::TurnBosses(bool on)
     if (Creature* boss = GetBGCreature(BG_IC_NPC_OVERLORD_AGMAR))
     {
         boss->SetVisible(on);
-        boss->SetReactState(on ? REACT_AGGRESSIVE : REACT_PASSIVE);
+        boss->SetReactState(on ? PET_MODE_AGGRESSIVE : PET_MODE_PASSIVE);
     }
     if (Creature* boss = GetBGCreature(BG_IC_NPC_HIGH_COMMANDER_HALFORD_WYRMBANE))
     {
         boss->SetVisible(on);
-        boss->SetReactState(on ? REACT_AGGRESSIVE : REACT_PASSIVE);
+        boss->SetReactState(on ? PET_MODE_AGGRESSIVE : PET_MODE_PASSIVE);
     }
 }
 

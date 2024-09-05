@@ -633,7 +633,7 @@ public:
 
             me->SetDisableGravity(false);
             me->SetRegeneratingHealth(true);
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             if (pInstance)
                 pInstance->SetData(TYPE_ASSEMBLY, NOT_STARTED);
         }
@@ -740,7 +740,7 @@ public:
 
         void UpdateAI(uint32 diff) override
         {
-            if (!me->IsInCombat() && me->GetReactState() == REACT_AGGRESSIVE)
+            if (!me->IsInCombat() && me->GetReactState() == PET_MODE_AGGRESSIVE)
             {
                 _channelTimer += diff;
                 if (_channelTimer >= 10000)
@@ -792,7 +792,7 @@ public:
 
                         me->CombatStop();
                         me->StopMoving();
-                        me->SetReactState(REACT_PASSIVE);
+                        me->SetReactState(PET_MODE_PASSIVE);
                         me->SetGuidValue(UNIT_FIELD_TARGET, WOWGUID::Empty);
                         me->SetUnitFlag(UNIT_FLAG_STUNNED);
 
@@ -812,7 +812,7 @@ public:
                 case EVENT_LAND_LAND:
                     me->SetCanFly(false);
                     me->SetHover(false);
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     me->SetDisableGravity(false);
                     if (Unit* flyTarget = ObjectAccessor::GetUnit(*me, _flyTargetGUID))
                     {

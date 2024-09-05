@@ -481,7 +481,7 @@ public:
             me->SetWalk(true);
             me->SetImmuneToAll(true);
             me->setActive(true);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         void UpdateAI(uint32 diff) override

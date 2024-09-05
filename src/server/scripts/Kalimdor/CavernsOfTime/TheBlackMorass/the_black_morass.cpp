@@ -305,7 +305,7 @@ struct npc_time_rift : public NullCreatureAI
                 float o = medivh->GetAngle(summon) + frand(-1.0f, 1.0f);
                 summon->SetHomePosition(medivh->GetPositionX() + 14.0f * cos(o), medivh->GetPositionY() + 14.0f * std::sin(o), medivh->GetPositionZ(), summon->GetAngle(medivh));
                 summon->GetMotionMaster()->MoveTargetedHome(true);
-                summon->SetReactState(REACT_DEFENSIVE);
+                summon->SetReactState(PET_MODE_DEFENSIVE);
             }
         }
     }

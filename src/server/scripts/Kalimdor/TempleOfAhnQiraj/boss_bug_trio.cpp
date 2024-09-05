@@ -146,7 +146,7 @@ public:
         {
             _isEating = true;
             me->SetSpeed(MOVE_RUN, 45.f / 7.f); // From sniffs
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             _scheduler.DelayAll(6s);
         }
 
@@ -175,7 +175,7 @@ public:
 
         _scheduler.Schedule(2s, [this](TaskContext /*context*/)
         {
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             _isEating = false;
             if (Unit* target = me->GetVictim())
             {
@@ -232,7 +232,7 @@ public:
                 return;
 
             _scheduler.CancelAll();
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             _dying = true;
             float x, y, z;
             // Move the other bugs to this bug position

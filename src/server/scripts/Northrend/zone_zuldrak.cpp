@@ -266,7 +266,7 @@ public:
                 {
                     if (Creature* ghoul = me->FindNearestCreature(NPC_DECAYING_GHOUL, 30.0f, true))
                     {
-                        ghoul->SetReactState(REACT_DEFENSIVE);
+                        ghoul->SetReactState(PET_MODE_DEFENSIVE);
                         float o = me->GetAngle(ghoul);
                         ghoul->GetMotionMaster()->MovePoint(1, me->GetPositionX() + 2 * cos(o), me->GetPositionY() + 2 * std::sin(o), me->GetPositionZ());
                         checkTimer = 1;
@@ -299,7 +299,7 @@ public:
 
                         if (Creature* ghoul = ObjectAccessor::GetCreature(*me, ghoulFed))
                         {
-                            ghoul->SetReactState(REACT_AGGRESSIVE);
+                            ghoul->SetReactState(PET_MODE_AGGRESSIVE);
                             ghoul->GetMotionMaster()->MoveTargetedHome();
                         }
 

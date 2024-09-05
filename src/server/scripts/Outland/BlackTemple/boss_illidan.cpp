@@ -276,7 +276,7 @@ public:
                 me->SetFacingToObject(summon);
                 summon->SetFacingToObject(me);
                 summon->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
-                summon->SetReactState(REACT_PASSIVE);
+                summon->SetReactState(PET_MODE_PASSIVE);
                 summon->CastSpell(summon, SPELL_TELEPORT_VISUAL_ONLY, true);
             }
         }
@@ -381,7 +381,7 @@ public:
                     {
                         maiev->StopMovingOnCurrentPos();
                         maiev->GetMotionMaster()->Clear();
-                        maiev->SetReactState(REACT_PASSIVE);
+                        maiev->SetReactState(PET_MODE_PASSIVE);
                         maiev->SetFullHealth();
                         maiev->RemoveAllAuras();
                         maiev->CombatStop();
@@ -557,7 +557,7 @@ public:
                     me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
                     if (Creature* maiev = summons.GetCreatureWithEntry(NPC_MAIEV_SHADOWSONG))
                     {
-                        maiev->SetReactState(REACT_AGGRESSIVE);
+                        maiev->SetReactState(PET_MODE_AGGRESSIVE);
                         maiev->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
                         maiev->AI()->AttackStart(me);
                     }
@@ -810,7 +810,7 @@ public:
 
         void Reset() override
         {
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             me->SetNpcFlag(UNIT_NPC_FLAG_GOSSIP);
             me->setActive(false);
             events.Reset();
@@ -825,7 +825,7 @@ public:
 
             if (instance->GetBossState(DATA_AKAMA_ILLIDAN) != DONE)
             {
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 Start(false, true);
                 SetDespawnAtEnd(false);
             }
@@ -896,7 +896,7 @@ public:
             {
                 me->ReplaceAllNpcFlags(UNIT_NPC_FLAG_GOSSIP);
                 me->setActive(false);
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
             }
         }
 

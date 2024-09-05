@@ -109,5 +109,5 @@ bool DistractMovementGenerator::Update(Unit* owner, uint32 time_diff)
 void AssistanceDistractMovementGenerator::Finalize(Unit* unit)
 {
     unit->ClearUnitState(UNIT_STATE_DISTRACTED);
-    unit->ToCreature()->SetReactState(REACT_AGGRESSIVE);
+    unit->ToCreature()->SetReactState(PET_MODE_AGGRESSIVE);
 }

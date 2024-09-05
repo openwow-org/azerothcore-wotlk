@@ -127,7 +127,7 @@ struct boss_nightbane : public BossAI
         me->SetSpeed(MOVE_RUN, me->GetCreatureTemplate()->speed_run);
         me->SetCanFly(true);
         me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
 
         ScheduleHealthCheckEvent({ 75, 50, 25 }, [&]{
             TriggerHealthTakeOff();
@@ -308,7 +308,7 @@ struct boss_nightbane : public BossAI
                 me->HandleEmoteCommand(EMOTE_ONESHOT_LAND);
                 me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_IMMUNE_TO_PC);
                 _phase = PHASE_GROUND;
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
                 me->SetInCombatWithZone();
             }).Schedule(8s, [this](TaskContext /*context*/)
             {

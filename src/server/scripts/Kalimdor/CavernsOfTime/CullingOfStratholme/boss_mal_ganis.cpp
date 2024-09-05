@@ -114,7 +114,7 @@ public:
                 me->SetRegeneratingHealth(false);
                 me->SetImmuneToAll(true);
                 me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 if (InstanceScript* pInstance = me->GetInstanceScript())
                 {
                     if (Creature* cr = ObjectAccessor::GetCreature(*me, pInstance->GetGuidData(DATA_ARTHAS)))

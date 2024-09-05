@@ -101,7 +101,7 @@ struct npc_taldaram_flamesphere : public NullCreatureAI
         uiDespawnTimer(13000),
         moveTimer(0)
     {
-        pCreature->SetReactState(REACT_PASSIVE);
+        pCreature->SetReactState(PET_MODE_PASSIVE);
     }
 
     void DoAction(int32 action) override

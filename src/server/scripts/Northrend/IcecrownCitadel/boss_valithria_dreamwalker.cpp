@@ -294,7 +294,7 @@ public:
         boss_valithria_dreamwalkerAI(Creature* creature) : ScriptedAI(creature),
             _instance(creature->GetInstanceScript()), _portalCount(RAID_MODE<uint32>(3, 8, 3, 8))
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         void Reset() override
@@ -514,7 +514,7 @@ public:
             summons.DespawnAll();
             if (instance->GetBossState(DATA_VALITHRIA_DREAMWALKER) != DONE)
                 instance->SetBossState(DATA_VALITHRIA_DREAMWALKER, NOT_STARTED);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             checkTimer = 5000;
         }
 
@@ -627,7 +627,7 @@ public:
         npc_the_lich_king_controllerAI(Creature* creature) : ScriptedAI(creature),
             _instance(creature->GetInstanceScript())
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         void Reset() override
@@ -969,7 +969,7 @@ public:
         npc_suppresserAI(Creature* creature) : ScriptedAI(creature),
             _instance(creature->GetInstanceScript())
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         InstanceScript* const _instance;

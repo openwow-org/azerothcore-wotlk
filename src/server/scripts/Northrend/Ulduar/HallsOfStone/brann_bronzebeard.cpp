@@ -316,7 +316,7 @@ public:
             ResetEvent();
 
             me->SetFaction(FACTION_FRIENDLY);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->ReplaceAllNpcFlags(UNIT_NPC_FLAG_GOSSIP | UNIT_NPC_FLAG_QUESTGIVER);
 
             if(pInstance)

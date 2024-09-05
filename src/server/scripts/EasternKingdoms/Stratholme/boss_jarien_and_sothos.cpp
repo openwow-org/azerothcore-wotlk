@@ -77,7 +77,7 @@ void HandleBothDead(Creature* creature, bool jarien, Unit* killer)
         if (Creature* spirit = creature->FindNearestCreature(NPC_SPIRIT_OF_JARIEN, 100.f))
         {
             spirit->AttackStop();
-            spirit->SetReactState(REACT_PASSIVE);
+            spirit->SetReactState(PET_MODE_PASSIVE);
             spirit->AI()->Talk(SAY_SPIRIT_BOTH_DEAD);
         }
     }
@@ -86,7 +86,7 @@ void HandleBothDead(Creature* creature, bool jarien, Unit* killer)
         if (Creature* spirit = creature->FindNearestCreature(NPC_SPIRIT_OF_SOTHOS, 100.f))
         {
             spirit->AttackStop();
-            spirit->SetReactState(REACT_PASSIVE);
+            spirit->SetReactState(PET_MODE_PASSIVE);
             spirit->AI()->Talk(SAY_SPIRIT_BOTH_DEAD);
         }
     }
@@ -110,7 +110,7 @@ struct boss_jarien : public BossAI
                 return !me->HasUnitState(UNIT_STATE_CASTING);
             });
 
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
         me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
         me->SetImmuneToNPC(true);
         _talked = false;
@@ -145,7 +145,7 @@ struct boss_jarien : public BossAI
                 Talk(SAY_JARIEN_ON_SUMMON_2);
                 _talked = true;
                 _phase = PHASE_FIGHT;
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
                 me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                 me->SetImmuneToNPC(false);
             });
@@ -235,7 +235,7 @@ struct boss_sothos : public BossAI
                 return !me->HasUnitState(UNIT_STATE_CASTING);
             });
 
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
         me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
         me->SetImmuneToNPC(true);
         _talked = false;
@@ -263,7 +263,7 @@ struct boss_sothos : public BossAI
             {
                 _talked = true;
                 _phase = PHASE_FIGHT;
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
                 me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                 me->SetImmuneToNPC(false);
             })

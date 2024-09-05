@@ -1816,7 +1816,7 @@ spell_gen_feign_death_all_flags applies all 3 flags
 spell_gen_feign_death_no_dyn_flag applies no UNIT_DYNFLAG_DEAD (does not make the creature appear dead)
 spell_gen_feign_death_no_prevent_emotes applies no UNIT_FLAG_PREVENT_EMOTES_FROM_CHAT_TEXT
 
-REACT_PASSIVE should be handled directly in scripts since not all creatures should be passive. Otherwise
+PET_MODE_PASSIVE should be handled directly in scripts since not all creatures should be passive. Otherwise
 creature will be not able to aggro or execute MoveInLineOfSight events. Removing may cause more issues
 than already exists
 */
@@ -1833,7 +1833,7 @@ class spell_gen_feign_death_all_flags : public AuraScript
         target->SetUnitFlag(UNIT_FLAG_PREVENT_EMOTES_FROM_CHAT_TEXT);
 
         if (target->GetTypeId() == TYPEID_UNIT)
-            target->ToCreature()->SetReactState(REACT_PASSIVE);
+            target->ToCreature()->SetReactState(PET_MODE_PASSIVE);
     }
 
     void HandleEffectRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
@@ -1868,7 +1868,7 @@ class spell_gen_feign_death_no_dyn_flag : public AuraScript
         target->SetUnitFlag(UNIT_FLAG_PREVENT_EMOTES_FROM_CHAT_TEXT);
 
         if (target->GetTypeId() == TYPEID_UNIT)
-            target->ToCreature()->SetReactState(REACT_PASSIVE);
+            target->ToCreature()->SetReactState(PET_MODE_PASSIVE);
     }
 
     void HandleEffectRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
@@ -1901,7 +1901,7 @@ class spell_gen_feign_death_no_prevent_emotes : public AuraScript
         target->SetUnitFlag(UNIT_FLAG_PREVENT_EMOTES_FROM_CHAT_TEXT);
 
         if (target->GetTypeId() == TYPEID_UNIT)
-            target->ToCreature()->SetReactState(REACT_PASSIVE);
+            target->ToCreature()->SetReactState(PET_MODE_PASSIVE);
     }
 
     void HandleEffectRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
@@ -4859,7 +4859,7 @@ class spell_gen_threshalisk_charge : public SpellScript
         {
             if (Unit* victim = caster->GetVictim())
             {
-                if (caster->GetReactState() != REACT_PASSIVE)
+                if (caster->GetReactState() != PET_MODE_PASSIVE)
                 {
                     caster->CastSpell(victim, GetSpellInfo()->Effects[EFFECT_1].TriggerSpell, true);
                 }

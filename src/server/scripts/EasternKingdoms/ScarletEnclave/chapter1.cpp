@@ -64,7 +64,7 @@ struct npc_eye_of_acherus : public ScriptedAI
     npc_eye_of_acherus(Creature* creature) : ScriptedAI(creature)
     {
         creature->SetDisplayFromModel(0);
-        creature->SetReactState(REACT_PASSIVE);
+        creature->SetReactState(PET_MODE_PASSIVE);
     }
 
     void InitializeAI() override
@@ -492,7 +492,7 @@ public:
         {
             me->SetUnitFlag(UNIT_FLAG_DISABLE_MOVE);
             ScriptedAI::InitializeAI();
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
 
             events.ScheduleEvent(EVENT_GHOUL_EMOTE, 1ms);
             events.ScheduleEvent(EVENT_GHOUL_RESTORE_STATE, 3500ms);
@@ -500,7 +500,7 @@ public:
 
         void OwnerAttackedBy(Unit* attacker) override
         {
-            if (!me->IsInCombat() && me->GetReactState() == REACT_DEFENSIVE)
+            if (!me->IsInCombat() && me->GetReactState() == PET_MODE_DEFENSIVE)
                 AttackStart(attacker);
         }
 
@@ -534,7 +534,7 @@ public:
                     me->CastSpell(me, SPELL_GHOUL_EMERGE, true);
                     break;
                 case EVENT_GHOUL_RESTORE_STATE:
-                    me->SetReactState(REACT_DEFENSIVE);
+                    me->SetReactState(PET_MODE_DEFENSIVE);
                     me->RemoveUnitFlag(UNIT_FLAG_DISABLE_MOVE);
                     if (Player* owner = me->GetCharmerOrOwnerPlayerOrPlayerItself())
                         me->GetMotionMaster()->MoveFollow(owner, PET_FOLLOW_DIST, frand(0.0f, 2 * M_PI));
@@ -727,7 +727,7 @@ public:
     {
         npc_unworthy_initiateAI(Creature* creature) : ScriptedAI(creature)
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             if (!me->GetCurrentEquipmentId())
                 me->SetCurrentEquipmentId(me->GetOriginalEquipmentId());
         }
@@ -1030,7 +1030,7 @@ public:
     {
         npc_scarlet_minerAI(Creature* creature) : npc_escortAI(creature)
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         uint32 IntroTimer;

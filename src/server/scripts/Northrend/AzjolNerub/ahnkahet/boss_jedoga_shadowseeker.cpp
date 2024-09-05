@@ -167,7 +167,7 @@ struct boss_jedoga_shadowseeker : public BossAI
 
     void Reset() override
     {
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
         me->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
         me->SetImmuneToAll(true);
         me->AddUnitState(UNIT_STATE_NO_ENVIRONMENT_UPD);
@@ -257,7 +257,7 @@ struct boss_jedoga_shadowseeker : public BossAI
                         if (TempSummon* summon = me->SummonCreature(NPC_TWILIGHT_VOLUNTEER, VolunteerSpotPositions[i][0], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 5000))
                         {
                             summon->GetMotionMaster()->MovePoint(POINT_INITIAL, VolunteerSpotPositions[i][1]);
-                            summon->SetReactState(REACT_PASSIVE);
+                            summon->SetReactState(PET_MODE_PASSIVE);
                             summon->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
                             summon->SetImmuneToAll(true);
                             summons.Summon(summon);
@@ -298,7 +298,7 @@ struct boss_jedoga_shadowseeker : public BossAI
             me->SetCombatMovement(false);
             me->InterruptNonMeleeSpells(false);
             me->AttackStop();
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
 
             events.SetPhase(PHASE_RITUAL);
@@ -363,7 +363,7 @@ struct boss_jedoga_shadowseeker : public BossAI
                 ReschedulleCombatEvents();
                 me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
                 me->SetImmuneToAll(false);
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
 
                 me->RemoveAurasDueToSpell(SPELL_SPHERE_VISUAL);
                 me->RemoveAurasDueToSpell(SPELL_LIGHTNING_BOLTS);

@@ -703,7 +703,7 @@ public:
         {
             _instance = creature->GetInstanceScript();
             _introSpoken = _instance->GetData(TYPE_RAZORSCALE) == DONE;
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
         }
 
         void MoveInLineOfSight(Unit* who) override

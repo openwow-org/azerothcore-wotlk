@@ -138,7 +138,7 @@ public:
             bool appear = instance->GetBossState(DATA_BRUTALLUS) == DONE;
             creature->SetVisible(appear);
             creature->SetStandState(UNIT_SLEEPING);
-            creature->SetReactState(REACT_PASSIVE);
+            creature->SetReactState(PET_MODE_PASSIVE);
         }
 
         EventMap events2;
@@ -157,7 +157,7 @@ public:
         {
             BossAI::Reset();
             me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->SetDisableGravity(false);
             events2.Reset();
             instance->DoRemoveAurasDueToSpellOnPlayers(SPELL_FOG_OF_CORRUPTION_CHARM);
@@ -284,7 +284,7 @@ public:
             switch(events.ExecuteEvent())
             {
                 case EVENT_RESTORE_COMBAT:
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     break;
                 case EVENT_RESTORE_COMBAT2:
                     me->SetTarget(me->GetVictim()->GetGUID());
@@ -317,7 +317,7 @@ public:
                 case EVENT_FLIGHT:
                     events.CancelEventGroup(1);
                     events.ScheduleEvent(EVENT_FLIGHT_SEQ, 1000);
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     me->StopMoving();
                     me->GetMotionMaster()->Clear();
                     break;

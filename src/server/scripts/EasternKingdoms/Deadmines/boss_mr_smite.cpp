@@ -68,7 +68,7 @@ public:
             me->SetCanDualWield(false);
             me->SetStandState(UNIT_STANDING);
             me->RemoveUnitFlag(UNIT_FLAG_PACIFIED);
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
         }
 
         void JustEngagedWith(Unit* /*who*/) override
@@ -95,7 +95,7 @@ public:
                         me->GetMotionMaster()->MovePoint(EQUIP_TWO_SWORDS, 1.859f, -780.72f, 9.831f);
                         Talk(SAY_SWAP1);
                         me->SetUnitFlag(UNIT_FLAG_PACIFIED);
-                        me->SetReactState(REACT_PASSIVE);
+                        me->SetReactState(PET_MODE_PASSIVE);
                         health67 = true;
                         break;
                     }
@@ -110,7 +110,7 @@ public:
                         me->GetMotionMaster()->MovePoint(EQUIP_MACE, 1.859f, -780.72f, 9.831f);
                         Talk(SAY_SWAP2);
                         me->SetUnitFlag(UNIT_FLAG_PACIFIED);
-                        me->SetReactState(REACT_PASSIVE);
+                        me->SetReactState(PET_MODE_PASSIVE);
                         health34 = true;
                         break;
                     }
@@ -134,7 +134,7 @@ public:
                     me->SetCanDualWield(false);
                     break;
                 case EVENT_RESTORE_COMBAT:
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     me->RemoveUnitFlag(UNIT_FLAG_PACIFIED);
                     me->SetStandState(UNIT_STANDING);
                     if (me->GetVictim())

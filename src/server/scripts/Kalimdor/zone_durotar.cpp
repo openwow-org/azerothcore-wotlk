@@ -316,7 +316,7 @@ public:
             me->AddAura(SPELL_VOLUNTEER_AURA, me);
             me->AddAura(SPELL_MOUNTING_CHECK, me);
             DoCast(me, SPELL_PETACT_AURA);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             Talk(SAY_VOLUNTEER_START);
         }
 

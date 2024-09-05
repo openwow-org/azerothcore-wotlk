@@ -117,7 +117,7 @@ struct npc_love_in_air_snivel : public NullCreatureAI
     void Reset() override
     {
         delay = 0;
-        me->SetReactState(REACT_AGGRESSIVE);
+        me->SetReactState(PET_MODE_AGGRESSIVE);
     }
 
     bool AllowAction(Player* player)

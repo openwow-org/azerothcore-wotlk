@@ -118,7 +118,7 @@ void LoadHelper(CellGuidSet const& guid_set, CellCoord& cell, GridRefMgr<Creatur
 
         if (!obj->IsMoveInLineOfSightDisabled() && obj->GetDefaultMovementType() == IDLE_MOTION_TYPE && !obj->isNeedNotify(NOTIFY_VISIBILITY_CHANGED | NOTIFY_AI_RELOCATION))
         {
-            if (obj->IsAlive() && !obj->HasUnitState(UNIT_STATE_SIGHTLESS) && obj->HasReactState(REACT_AGGRESSIVE) && !obj->IsImmuneToNPC())
+            if (obj->IsAlive() && !obj->HasUnitState(UNIT_STATE_SIGHTLESS) && obj->HasReactState(PET_MODE_AGGRESSIVE) && !obj->IsImmuneToNPC())
             {
                 // call MoveInLineOfSight for nearby grid creatures
                 Acore::AIRelocationNotifier notifier(*obj);

@@ -90,7 +90,7 @@ public:
                             _pursuitTargetGUID = target->GetGUID();
                         }
                         DoCast(me, SPELL_AVATAR);
-                        me->SetReactState(REACT_PASSIVE);
+                        me->SetReactState(PET_MODE_PASSIVE);
                         DoResetThreatList();
                         events.ScheduleEvent(EVENT_START_PURSUIT, 2s);
                         events.ScheduleEvent(EVENT_STOP_PURSUIT, 15s);
@@ -101,7 +101,7 @@ public:
                         events.ScheduleEvent(EVENT_GROUND_TREMOR, 12s, 16s);
                         break;
                     case EVENT_START_PURSUIT:
-                        me->SetReactState(REACT_AGGRESSIVE);
+                        me->SetReactState(PET_MODE_AGGRESSIVE);
                         if (Unit* pursuitTarget = ObjectAccessor::GetUnit(*me, _pursuitTargetGUID))
                         {
                             me->GetThreatMgr().AddThreat(pursuitTarget, 1000000.f);

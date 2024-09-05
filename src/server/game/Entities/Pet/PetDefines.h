@@ -24,7 +24,7 @@
 #include <string>
 #include <vector>
 
-enum ReactStates : uint8;
+enum PET_MODE : uint8;
 
 enum PetType : uint8
 {
@@ -217,7 +217,7 @@ public:
         uint32 LastSaveTime = 0;
         uint32 CreatedBySpellId = 0;
         uint8 Level = 0;
-        ReactStates ReactState = ReactStates(0);
+        PET_MODE ReactState = PET_MODE(0);
         PetType Type = MAX_PET_TYPE;
         bool WasRenamed = false;
     };

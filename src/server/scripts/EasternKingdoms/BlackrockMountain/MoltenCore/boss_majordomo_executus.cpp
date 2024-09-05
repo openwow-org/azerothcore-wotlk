@@ -154,7 +154,7 @@ public:
                 summon->CastSpell(summon, SPELL_RAGNAROS_SUBMERGE_EFFECT, true);
                 summon->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                 summon->SetImmuneToAll(true);
-                summon->SetReactState(REACT_PASSIVE);
+                summon->SetReactState(PET_MODE_PASSIVE);
             }
         }
 

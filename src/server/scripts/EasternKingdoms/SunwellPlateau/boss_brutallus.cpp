@@ -80,7 +80,7 @@ public:
 
         void DamageTaken(Unit* who, uint32& damage, DamageEffectType, SpellSchoolMask) override
         {
-            if (me->GetReactState() == REACT_PASSIVE && (!who || who->GetEntry() != NPC_MADRIGOSA))
+            if (me->GetReactState() == PET_MODE_PASSIVE && (!who || who->GetEntry() != NPC_MADRIGOSA))
             {
                 if (who)
                     Unit::Kill(me, who);
@@ -253,7 +253,7 @@ public:
                     if (Creature* brutallus = ObjectAccessor::GetCreature(*me, instance->GetGuidData(NPC_BRUTALLUS)))
                     {
                         me->SetTarget(brutallus->GetGUID());
-                        brutallus->SetReactState(REACT_PASSIVE);
+                        brutallus->SetReactState(PET_MODE_PASSIVE);
                         brutallus->setActive(true);
                     }
                     me->GetMotionMaster()->MovePoint(1, 1477.94f, 643.22f, 21.21f);
@@ -389,7 +389,7 @@ public:
                 case EVENT_MAD_21:
                     if (Creature* brutallus = ObjectAccessor::GetCreature(*me, instance->GetGuidData(NPC_BRUTALLUS)))
                     {
-                        brutallus->SetReactState(REACT_AGGRESSIVE);
+                        brutallus->SetReactState(PET_MODE_AGGRESSIVE);
                         brutallus->SetHealth(brutallus->GetMaxHealth());
                         brutallus->AI()->EnterEvadeMode();
                         brutallus->setActive(false);

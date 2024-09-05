@@ -105,7 +105,7 @@ public:
         void Reset() override
         {
             timer = 1000;
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
         }
 
@@ -120,7 +120,7 @@ public:
             {
                 me->RemoveAura(38757);
                 me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
                 if (InstanceScript* instance = me->GetInstanceScript())
                     if (Creature* ignis = ObjectAccessor::GetCreature(*me, instance->GetGuidData(TYPE_IGNIS)))
                     {

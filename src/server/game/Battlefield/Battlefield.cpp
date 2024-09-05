@@ -492,7 +492,7 @@ void Battlefield::RegisterZone(uint32 zoneId)
 void Battlefield::HideNpc(Creature* creature)
 {
     creature->CombatStop();
-    creature->SetReactState(REACT_PASSIVE);
+    creature->SetReactState(PET_MODE_PASSIVE);
     creature->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
     creature->SetPhaseMask(2, false); // pussywizard: false because UpdateObjectVisibility(true) is called below in SetVisible(), no need to have it here
     creature->DisappearAndDie();
@@ -507,11 +507,11 @@ void Battlefield::ShowNpc(Creature* creature, bool aggressive)
     if (!creature->IsAlive())
         creature->Respawn(true);
     if (aggressive)
-        creature->SetReactState(REACT_AGGRESSIVE);
+        creature->SetReactState(PET_MODE_AGGRESSIVE);
     else
     {
         creature->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-        creature->SetReactState(REACT_PASSIVE);
+        creature->SetReactState(PET_MODE_PASSIVE);
     }
 }
 
@@ -685,7 +685,7 @@ void BfGraveyard::SetSpirit(Creature* spirit, TeamId team)
     }
 
     m_SpiritGuide[team] = spirit->GetGUID();
-    spirit->SetReactState(REACT_PASSIVE);
+    spirit->SetReactState(PET_MODE_PASSIVE);
 }
 
 float BfGraveyard::GetDistance(Player* player)

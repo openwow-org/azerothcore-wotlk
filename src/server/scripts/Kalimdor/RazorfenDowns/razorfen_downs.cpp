@@ -96,7 +96,7 @@ public:
                 eventProgress = 0;
                 spawnerCount  = 0;
                 me->SetNpcFlag(UNIT_NPC_FLAG_QUESTGIVER);
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
             }
         }
 
@@ -155,7 +155,7 @@ public:
                         DoCast(me, SPELL_IDOL_SHUTDOWN_VISUAL);
                         events.ScheduleEvent(EVENT_IDOL_ROOM_SPAWNER, 100ms);
                         events.ScheduleEvent(EVENT_PROGRESS, 120s);
-                        me->SetReactState(REACT_PASSIVE);
+                        me->SetReactState(PET_MODE_PASSIVE);
                         break;
                     case EVENT_IDOL_ROOM_SPAWNER:
                         if (Creature* creature = me->SummonCreature(NPC_IDOL_ROOM_SPAWNER, PosSummonSpawner[urand(0, 2)], TEMPSUMMON_TIMED_DESPAWN, 4000))

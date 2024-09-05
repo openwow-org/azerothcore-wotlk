@@ -521,7 +521,7 @@ public:
                     darnavan->CombatStop(true);
                     darnavan->GetMotionMaster()->MoveIdle();
                     darnavan->StopMoving();
-                    darnavan->SetReactState(REACT_PASSIVE);
+                    darnavan->SetReactState(PET_MODE_PASSIVE);
                     darnavan->m_Events.AddEvent(new DaranavanMoveEvent(*darnavan), darnavan->m_Events.CalculateTime(10000));
                     darnavan->AI()->Talk(SAY_DARNAVAN_RESCUED);
                     if (Player* owner = killer->GetCharmerOrOwnerPlayerOrPlayerItself())
@@ -699,7 +699,7 @@ public:
                     me->CastSpell(me, SPELL_DARK_TRANSFORMATION, false);
                     break;
                 case SPELL_DARK_MARTYRDOM_T:
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     me->InterruptNonMeleeSpells(true);
                     ApplyMechanicImmune(me, true);
                     me->AttackStop();
@@ -750,7 +750,7 @@ public:
                     me->RemoveUnitFlag2(UNIT_FLAG2_FEIGN_DEATH);
                     me->UpdateEntry(NPC_REANIMATED_FANATIC);
                     me->RemoveUnitFlag(UNIT_FLAG_STUNNED | UNIT_FLAG_PREVENT_EMOTES_FROM_CHAT_TEXT | UNIT_FLAG_NOT_SELECTABLE);
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     DoZoneInCombat(me);
                     me->CastSpell(me, SPELL_FANATIC_S_DETERMINATION);
 
@@ -812,7 +812,7 @@ public:
                     me->CastSpell(me, SPELL_DARK_EMPOWERMENT, false);
                     break;
                 case SPELL_DARK_MARTYRDOM_T:
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     me->InterruptNonMeleeSpells(true);
                     ApplyMechanicImmune(me, true);
                     me->AttackStop();
@@ -871,7 +871,7 @@ public:
                     me->RemoveUnitFlag2(UNIT_FLAG2_FEIGN_DEATH);
                     me->UpdateEntry(NPC_REANIMATED_ADHERENT);
                     me->RemoveUnitFlag(UNIT_FLAG_STUNNED | UNIT_FLAG_PREVENT_EMOTES_FROM_CHAT_TEXT | UNIT_FLAG_NOT_SELECTABLE);
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     DoZoneInCombat(me);
                     me->CastSpell(me, SPELL_ADHERENT_S_DETERMINATION);
 

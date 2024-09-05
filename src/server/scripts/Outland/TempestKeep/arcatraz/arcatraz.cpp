@@ -94,7 +94,7 @@ public:
         {
             ScriptedAI::InitializeAI();
 
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->SetImmuneToAll(true);
             events2.Reset();
             events2.ScheduleEvent(EVENT_TELEPORT_VISUAL, 0);
@@ -188,7 +188,7 @@ public:
                     me->SetFacingTo(M_PI * 1.5f);
                     me->SetHomePosition(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), M_PI * 1.5f);
                     me->SetImmuneToAll(false);
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     events2.ScheduleEvent(EVENT_SEARCH_FIGHT, 1000);
                     break;
                 case EVENT_SEARCH_FIGHT:

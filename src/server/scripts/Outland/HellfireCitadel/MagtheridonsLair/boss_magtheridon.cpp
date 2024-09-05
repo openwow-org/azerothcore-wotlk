@@ -104,7 +104,7 @@ struct boss_magtheridon : public BossAI
             context.Repeat(90s);
         });
         DoCastSelf(SPELL_SHADOW_CAGE, true);
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
         me->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
         me->SetImmuneToPC(true);
 
@@ -158,7 +158,7 @@ struct boss_magtheridon : public BossAI
         DoResetThreatList();
         me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
         me->SetImmuneToPC(false);
-        me->SetReactState(REACT_AGGRESSIVE);
+        me->SetReactState(PET_MODE_AGGRESSIVE);
         instance->SetData(DATA_ACTIVATE_CUBES, 1);
         me->RemoveAurasDueToSpell(SPELL_SHADOW_CAGE);
 
@@ -175,14 +175,14 @@ struct boss_magtheridon : public BossAI
             DoCastSelf(SPELL_QUAKE);
             _castingQuake = true;
             me->GetMotionMaster()->Clear();
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->SetOrientation(me->GetAngle(me->GetVictim()));
             me->SetTarget(WOWGUID::Empty);
             scheduler.DelayAll(6999ms);
             scheduler.Schedule(7s, [this](TaskContext)
             {
                 _castingQuake = false;
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
                 me->GetMotionMaster()->MoveChase(me->GetVictim());
             });
             context.Repeat(56300ms, 64300ms);
@@ -272,7 +272,7 @@ struct npc_target_trigger : public ScriptedAI
 {
     npc_target_trigger(Creature* creature) : ScriptedAI(creature), _cast(false)
     {
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
     }
 
     void Reset() override

@@ -214,7 +214,7 @@ public:
                 me->SetDynamicFlag(UNIT_DYNFLAG_DEAD);
                 me->SetUnitFlag2(UNIT_FLAG2_FEIGN_DEATH);
                 me->SetImmuneToAll(true);
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
             }
         }
 
@@ -232,7 +232,7 @@ public:
             _isEmpowered = false;
             _evading = false;
             me->SetHealth(me->GetMaxHealth());
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
         }
 
         void JustEngagedWith(Unit* who) override
@@ -259,7 +259,7 @@ public:
             if (!me->hasLootRecipient())
                 me->SetLootRecipient(who);
             me->LowerPlayerDamageReq(me->GetMaxHealth());
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             instance->SendEncounterUnit(ENCOUNTER_FRAME_ENGAGE, me);
 
             if (Creature* taldaram = ObjectAccessor::GetCreature(*me, instance->GetGuidData(DATA_PRINCE_TALDARAM_GUID)))
@@ -372,7 +372,7 @@ public:
                     me->SetImmuneToAll(false);
                     me->RemoveDynamicFlag(UNIT_DYNFLAG_DEAD);
                     me->RemoveUnitFlag2(UNIT_FLAG2_FEIGN_DEATH);
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     me->ForceValuesUpdateAtIndex(UNIT_NPC_FLAGS);   // was in sniff. don't ask why
                     me->m_Events.AddEvent(new StandUpEvent(*me), me->m_Events.CalculateTime(1000));
                     DoAction(ACTION_REMOVE_INVOCATION);
@@ -474,7 +474,7 @@ public:
                 me->SetDynamicFlag(UNIT_DYNFLAG_DEAD);
                 me->SetUnitFlag2(UNIT_FLAG2_FEIGN_DEATH);
                 me->SetImmuneToAll(true);
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
             }
         }
 
@@ -492,7 +492,7 @@ public:
             _isEmpowered = false;
             _evading = false;
             me->SetHealth(me->GetMaxHealth());
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
         }
 
         void JustEngagedWith(Unit* who) override
@@ -519,7 +519,7 @@ public:
             if (!me->hasLootRecipient())
                 me->SetLootRecipient(who);
             me->LowerPlayerDamageReq(me->GetMaxHealth());
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             instance->SendEncounterUnit(ENCOUNTER_FRAME_ENGAGE, me);
 
             if (Creature* keleseth = ObjectAccessor::GetCreature(*me, instance->GetGuidData(DATA_PRINCE_KELESETH_GUID)))
@@ -642,7 +642,7 @@ public:
                     me->SetImmuneToAll(false);
                     me->RemoveDynamicFlag(UNIT_DYNFLAG_DEAD);
                     me->RemoveUnitFlag2(UNIT_FLAG2_FEIGN_DEATH);
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     me->ForceValuesUpdateAtIndex(UNIT_NPC_FLAGS);   // was in sniff. don't ask why
                     me->m_Events.AddEvent(new StandUpEvent(*me), me->m_Events.CalculateTime(1000));
                     DoAction(ACTION_REMOVE_INVOCATION);
@@ -759,7 +759,7 @@ public:
                 me->SetDynamicFlag(UNIT_DYNFLAG_DEAD);
                 me->SetUnitFlag2(UNIT_FLAG2_FEIGN_DEATH);
                 me->SetImmuneToAll(true);
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
             }
         }
 
@@ -776,7 +776,7 @@ public:
             _isEmpowered = false;
             _evading = false;
             me->SetHealth(me->GetMaxHealth());
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             instance->SetBossState(DATA_BLOOD_PRINCE_COUNCIL, NOT_STARTED);
         }
 
@@ -806,7 +806,7 @@ public:
             if (!me->hasLootRecipient())
                 me->SetLootRecipient(who);
             me->LowerPlayerDamageReq(me->GetMaxHealth());
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             instance->SendEncounterUnit(ENCOUNTER_FRAME_ENGAGE, me);
 
             if (Creature* keleseth = ObjectAccessor::GetCreature(*me, instance->GetGuidData(DATA_PRINCE_KELESETH_GUID)))
@@ -884,7 +884,7 @@ public:
             switch (summon->GetEntry())
             {
                 case NPC_KINETIC_BOMB_TARGET:
-                    summon->SetReactState(REACT_PASSIVE);
+                    summon->SetReactState(PET_MODE_PASSIVE);
                     summon->CastSpell(summon, SPELL_KINETIC_BOMB, true, nullptr, nullptr, me->GetGUID());
                     break;
                 case NPC_SHOCK_VORTEX:
@@ -936,7 +936,7 @@ public:
                     me->SetImmuneToAll(false);
                     me->RemoveDynamicFlag(UNIT_DYNFLAG_DEAD);
                     me->RemoveUnitFlag2(UNIT_FLAG2_FEIGN_DEATH);
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     me->ForceValuesUpdateAtIndex(UNIT_NPC_FLAGS);   // was in sniff. don't ask why
                     me->m_Events.AddEvent(new StandUpEvent(*me), me->m_Events.CalculateTime(1000));
                     me->SetHealth(me->GetMaxHealth());
@@ -1185,7 +1185,7 @@ public:
         void Reset() override
         {
             timer = 0;
-            me->SetReactState(REACT_DEFENSIVE);
+            me->SetReactState(PET_MODE_DEFENSIVE);
             me->SetHover(true);
             me->CastSpell(me, SPELL_SHADOW_RESONANCE_AURA, true);
         }
@@ -1282,7 +1282,7 @@ public:
             if (type == CHASE_MOTION_TYPE && !_exploded)
             {
                 me->RemoveAurasDueToSpell(SPELL_BALL_OF_FLAMES_PERIODIC);
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 me->SetControlled(true, UNIT_STATE_ROOT);
                 me->StopMoving();
                 me->CastSpell(me, SPELL_FLAMES, true);

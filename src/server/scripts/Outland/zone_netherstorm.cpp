@@ -672,7 +672,7 @@ public:
         void Reset() override
         {
             me->RestoreFaction();
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
     };
 };

@@ -108,7 +108,7 @@ struct boss_shade_of_akama : public BossAI
 
         me->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
         me->SetWalk(true);
-        me->SetReactState(REACT_DEFENSIVE);
+        me->SetReactState(PET_MODE_DEFENSIVE);
         BossAI::Reset();
     }
 
@@ -174,7 +174,7 @@ struct boss_shade_of_akama : public BossAI
 
             if (Creature* akama = instance->GetCreature(DATA_AKAMA_SHADE))
             {
-                akama->SetReactState(REACT_AGGRESSIVE);
+                akama->SetReactState(PET_MODE_AGGRESSIVE);
                 akama->InterruptSpell(CURRENT_CHANNELED_SPELL);
                 DoCast(akama, SPELL_THREAT, true);
                 me->AddThreat(akama, 900000.0f);

@@ -148,7 +148,7 @@ struct boss_warchief_kargath_bladefist : public BossAI
         scheduler
             .Schedule(30s, [this](TaskContext context)
                 {
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     _danceCount = 0;
                     DoCastAOE(SPELL_BLADE_DANCE_TARGETING);
                     context.Repeat(32850ms, 41350ms);
@@ -175,7 +175,7 @@ struct boss_warchief_kargath_bladefist : public BossAI
                 });
         }
         else
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
     }
 
     bool IsInRoom()

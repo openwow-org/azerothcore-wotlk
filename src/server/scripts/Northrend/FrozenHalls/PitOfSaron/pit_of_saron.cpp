@@ -262,7 +262,7 @@ public:
                                 c->Respawn(true);
                                 c->UpdateEntry(36796, 0, false);
                                 c->SetFacingTo(M_PI);
-                                c->SetReactState(REACT_PASSIVE);
+                                c->SetReactState(PET_MODE_PASSIVE);
                             }
                     }
 
@@ -702,7 +702,7 @@ public:
                         if (Creature* c = me->SummonCreature(NPC_YMIRJAR_DEATHBRINGER, 950.61f, 50.91f, 567.85f, 1.82f))
                         {
                             deathbringerGUID[0] = c->GetGUID();
-                            c->SetReactState(REACT_PASSIVE);
+                            c->SetReactState(PET_MODE_PASSIVE);
                             c->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                             c->SetHomePosition(915.10f, 75.31f, 553.81f, 3.75f);
                             c->SetWalk(false);
@@ -711,7 +711,7 @@ public:
                         if (Creature* c = me->SummonCreature(NPC_YMIRJAR_DEATHBRINGER, 949.05f, 61.18f, 566.60f, 1.73f))
                         {
                             deathbringerGUID[1] = c->GetGUID();
-                            c->SetReactState(REACT_PASSIVE);
+                            c->SetReactState(PET_MODE_PASSIVE);
                             c->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                             c->SetHomePosition(883.15f, 54.6254f, 528.5f, 3.75f);
                             c->SetWalk(false);
@@ -759,14 +759,14 @@ public:
                 case 35:
                     if (Creature* c = pInstance->instance->GetCreature(deathbringerGUID[0]))
                     {
-                        c->SetReactState(REACT_AGGRESSIVE);
+                        c->SetReactState(PET_MODE_AGGRESSIVE);
                         c->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                     }
                     break;
                 case 36:
                     if (Creature* c = pInstance->instance->GetCreature(deathbringerGUID[1]))
                     {
-                        c->SetReactState(REACT_AGGRESSIVE);
+                        c->SetReactState(PET_MODE_AGGRESSIVE);
                         c->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                     }
                     break;
@@ -933,7 +933,7 @@ public:
                 {
                     c->AI()->Talk(SAY_BOSS_TYRANNUS_INTRO_1);
                     c->SetImmuneToPC(false);
-                    c->SetReactState(REACT_AGGRESSIVE);
+                    c->SetReactState(PET_MODE_AGGRESSIVE);
                     //c->ClearUnitState(UNIT_STATE_ONVEHICLE);
                     if (Player* plr = c->SelectNearestPlayer(100.0f))
                     {

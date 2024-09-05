@@ -143,7 +143,7 @@ struct boss_ouro : public BossAI
             return;
 
         me->AttackStop();
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
         me->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
         _submergeMelee = 0;
         _submerged = true;
@@ -202,7 +202,7 @@ struct boss_ouro : public BossAI
     {
         DoCastSelf(SPELL_BIRTH);
         DoCastSelf(SPELL_SUMMON_SANDWORM_BASE, true);
-        me->SetReactState(REACT_AGGRESSIVE);
+        me->SetReactState(PET_MODE_AGGRESSIVE);
         CastGroundRupture();
         scheduler.Schedule(20s, GROUP_EMERGED, [this](TaskContext context)
                 {

@@ -211,7 +211,7 @@ public:
             if (summon->GetEntry() == NPC_ENSLAVED_SOUL)
                 return;
 
-            summon->SetReactState(REACT_PASSIVE);
+            summon->SetReactState(PET_MODE_PASSIVE);
             summon->CastSpell(summon, SPELL_EMERGE_VISUAL, true);
             me->m_Events.AddEventAtOffset([&] {
                 summons.DoAction(ACTION_ENGAGE_ESSENCE);
@@ -274,7 +274,7 @@ public:
             if (param == ACTION_ENGAGE_ESSENCE)
             {
                 me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
                 me->SetInCombatWithZone();
             }
         }
@@ -299,7 +299,7 @@ public:
                     me->RemoveAurasDueToSpell(SPELL_ESSENCE_OF_SUFFERING_PASSIVE); // prevent fixate from triggering
                     me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                     Talk(SUFF_SAY_RECAP);
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     me->GetMotionMaster()->Clear();
                     me->GetMotionMaster()->MovePoint(POINT_GO_BACK, me->GetHomePosition(), false);
                     scheduler.CancelAll();
@@ -382,7 +382,7 @@ public:
             if (param == ACTION_ENGAGE_ESSENCE)
             {
                 me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
                 me->SetInCombatWithZone();
             }
         }
@@ -406,7 +406,7 @@ public:
                 {
                     me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                     Talk(DESI_SAY_RECAP);
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     me->GetMotionMaster()->Clear();
                     me->GetMotionMaster()->MovePoint(POINT_GO_BACK, me->GetHomePosition(), false);
                     scheduler.CancelAll();
@@ -498,7 +498,7 @@ public:
             if (param == ACTION_ENGAGE_ESSENCE)
             {
                 me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
                 me->SetInCombatWithZone();
             }
         }

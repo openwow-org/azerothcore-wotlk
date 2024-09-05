@@ -105,7 +105,7 @@ void Totem::InitSummon()
     // xinef: this is better than the script, 100% sure to work
     if (GetEntry() == SENTRY_TOTEM_ENTRY)
     {
-        SetReactState(REACT_AGGRESSIVE);
+        SetReactState(PET_MODE_AGGRESSIVE);
         GetOwner()->CastSpell(this, 6277, true);
 
         // Farsight objects should be active

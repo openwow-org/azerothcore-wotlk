@@ -77,7 +77,7 @@ struct boss_high_astromancer_solarian : public BossAI
     {
         BossAI::Reset();
         me->SetModelVisible(true);
-        me->SetReactState(REACT_AGGRESSIVE);
+        me->SetReactState(PET_MODE_AGGRESSIVE);
 
         ScheduleHealthCheckEvent(20, [&]{
             Talk(SAY_VOID);
@@ -151,7 +151,7 @@ struct boss_high_astromancer_solarian : public BossAI
             context.Repeat(33900ms, 48100ms);
         }).Schedule(52100ms, [this](TaskContext context)
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             scheduler.DelayAll(22s);
             // blink to room center in this line using SPELL_TELEPORT_START_POSITION and START_POSITION_X, START_POSITION_Y, START_POSITION_Z
             scheduler.Schedule(1s, [this](TaskContext)
@@ -198,7 +198,7 @@ struct boss_high_astromancer_solarian : public BossAI
                 });
             }).Schedule(23s, [this](TaskContext)
             {
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
                 summons.DoForAllSummons([&](WorldObject* summon)
                 {
                     if (Creature* light = summon->ToCreature())
@@ -230,7 +230,7 @@ struct boss_high_astromancer_solarian : public BossAI
 
         scheduler.Update(diff);
 
-        if (me->GetReactState() == REACT_AGGRESSIVE)
+        if (me->GetReactState() == PET_MODE_AGGRESSIVE)
         {
             DoMeleeAttackIfReady();
         }

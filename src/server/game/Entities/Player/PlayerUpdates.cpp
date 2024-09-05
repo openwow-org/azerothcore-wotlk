@@ -1951,9 +1951,9 @@ void Player::UpdateCharmedAI()
         bool follow = false;
         if (!target)
         {
-            if (charmInfo->GetPlayerReactState() == REACT_PASSIVE)
+            if (charmInfo->GetPlayerReactState() == PET_MODE_PASSIVE)
                 follow = true;
-            else if (charmInfo->GetPlayerReactState() == REACT_DEFENSIVE)
+            else if (charmInfo->GetPlayerReactState() == PET_MODE_DEFENSIVE)
             {
                 if (charmer->GetVictim())
                     target = charmer->GetVictim();

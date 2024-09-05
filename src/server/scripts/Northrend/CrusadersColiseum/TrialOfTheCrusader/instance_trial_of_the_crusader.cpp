@@ -660,7 +660,7 @@ public:
                         northrendBeastsMask = 0;
                         if( Creature* c = instance->GetCreature(NPC_GormokGUID) )
                         {
-                            c->SetReactState(REACT_AGGRESSIVE);
+                            c->SetReactState(PET_MODE_AGGRESSIVE);
                             c->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                             c->RemoveUnitMovementFlag(MOVEFLAG_WALK);
                             if( Unit* target = c->SelectNearestTarget(200.0f) )
@@ -708,7 +708,7 @@ public:
                         HandleGameObject(GO_MainGateGUID, false);
                         if( Creature* c = instance->GetCreature(NPC_DreadscaleGUID) )
                         {
-                            c->SetReactState(REACT_AGGRESSIVE);
+                            c->SetReactState(PET_MODE_AGGRESSIVE);
                             c->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                             c->RemoveUnitMovementFlag(MOVEFLAG_WALK);
                             if( Unit* target = c->SelectNearestTarget(200.0f) )
@@ -719,7 +719,7 @@ public:
                         }
                         if( Creature* c = instance->GetCreature(NPC_AcidmawGUID) )
                         {
-                            c->SetReactState(REACT_AGGRESSIVE);
+                            c->SetReactState(PET_MODE_AGGRESSIVE);
                             c->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                             c->RemoveUnitMovementFlag(MOVEFLAG_WALK);
                             if( Unit* target = c->SelectNearestTarget(200.0f) )
@@ -756,7 +756,7 @@ public:
                     {
                         if( Creature* c = instance->GetCreature(NPC_IcehowlGUID) )
                         {
-                            c->SetReactState(REACT_AGGRESSIVE);
+                            c->SetReactState(PET_MODE_AGGRESSIVE);
                             c->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                             c->RemoveUnitMovementFlag(MOVEFLAG_WALK);
                             if( Unit* target = c->SelectNearestTarget(200.0f) )
@@ -828,7 +828,7 @@ public:
                             {
                                 NPC_PortalGUID = portal->GetGUID();
                                 portal->SetObjectScale(3.0f);
-                                portal->SetReactState(REACT_PASSIVE);
+                                portal->SetReactState(PET_MODE_PASSIVE);
                                 portal->CastSpell(portal, SPELL_WILFRED_PORTAL, true);
                             }
                             c->HandleEmoteCommand(EMOTE_STATE_SPELL_PRECAST);
@@ -910,7 +910,7 @@ public:
                         InstanceProgress = INSTANCE_PROGRESS_JARAXXUS_INTRO_DONE;
                         if( Creature* c = instance->GetCreature(NPC_JaraxxusGUID) )
                         {
-                            c->SetReactState(REACT_AGGRESSIVE);
+                            c->SetReactState(PET_MODE_AGGRESSIVE);
                             c->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                             c->RemoveUnitMovementFlag(MOVEFLAG_WALK);
                             if( Unit* target = c->SelectNearestTarget(200.0f) )
@@ -1107,7 +1107,7 @@ public:
                         for (WOWGUID const& guid : NPC_ChampionGUIDs)
                             if (Creature* c = instance->GetCreature(guid))
                             {
-                                c->SetReactState(REACT_AGGRESSIVE);
+                                c->SetReactState(PET_MODE_AGGRESSIVE);
                                 c->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                                 c->RemoveUnitMovementFlag(MOVEFLAG_WALK);
                                 //if( Unit* target = c->SelectNearestTarget(200.0f) )
@@ -1174,7 +1174,7 @@ public:
                     {
                         if( Creature* c = instance->GetCreature(NPC_LightbaneGUID) )
                         {
-                            c->SetReactState(REACT_AGGRESSIVE);
+                            c->SetReactState(PET_MODE_AGGRESSIVE);
                             c->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                             /*if( Unit* target = c->SelectNearestTarget(200.0f) )
                             {
@@ -1184,7 +1184,7 @@ public:
                         }
                         if( Creature* c = instance->GetCreature(NPC_DarkbaneGUID) )
                         {
-                            c->SetReactState(REACT_AGGRESSIVE);
+                            c->SetReactState(PET_MODE_AGGRESSIVE);
                             c->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                             /*if( Unit* target = c->SelectNearestTarget(200.0f) )
                             {
@@ -1228,7 +1228,7 @@ public:
                         if( Creature* c = instance->GetCreature(NPC_TirionGUID) )
                             if( Creature* t = c->SummonCreature(NPC_LICH_KING, Locs[LOC_ARTHAS_PORTAL]) )
                             {
-                                t->SetReactState(REACT_PASSIVE);
+                                t->SetReactState(PET_MODE_PASSIVE);
                                 t->AddUnitMovementFlag(MOVEFLAG_WALK);
                                 t->SetDisplayId(11686);
                                 t->AI()->Talk(SAY_STAGE_4_02);
@@ -1243,7 +1243,7 @@ public:
                         if( Creature* c = instance->GetCreature(NPC_TirionGUID) )
                             if( Creature* t = c->SummonCreature(NPC_WORLD_TRIGGER, Locs[LOC_ARTHAS_PORTAL], TEMPSUMMON_TIMED_DESPAWN, 60000) )
                             {
-                                t->SetReactState(REACT_PASSIVE);
+                                t->SetReactState(PET_MODE_PASSIVE);
                                 t->CastSpell(t, 51807, true);
                             }
 
@@ -1496,7 +1496,7 @@ public:
                         if( Creature* jaraxxus = c->SummonCreature(NPC_JARAXXUS, Locs[LOC_CENTER].GetPositionX(), Locs[LOC_CENTER].GetPositionY(), Locs[LOC_CENTER].GetPositionZ(), Locs[LOC_CENTER].GetFacing(), TEMPSUMMON_CORPSE_TIMED_DESPAWN, 630000000) )
                         {
                             jaraxxus->CastSpell(jaraxxus, 67924, true);
-                            jaraxxus->SetReactState(REACT_AGGRESSIVE);
+                            jaraxxus->SetReactState(PET_MODE_AGGRESSIVE);
                             jaraxxus->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                             jaraxxus->RemoveUnitMovementFlag(MOVEFLAG_WALK);
                         }

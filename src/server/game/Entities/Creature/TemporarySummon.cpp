@@ -361,7 +361,7 @@ void Minion::InitStats(uint32 duration)
 {
     TempSummon::InitStats(duration);
 
-    SetReactState(REACT_PASSIVE);
+    SetReactState(PET_MODE_PASSIVE);
 
     if (Unit* owner = GetOwner())
     {
@@ -438,7 +438,7 @@ void Guardian::InitStats(uint32 duration)
             m_charmInfo->InitCharmCreateSpells();
     }
 
-    SetReactState(REACT_AGGRESSIVE);
+    SetReactState(PET_MODE_AGGRESSIVE);
 }
 
 void Guardian::InitSummon()
@@ -471,7 +471,7 @@ void Puppet::InitStats(uint32 duration)
 {
     Minion::InitStats(duration);
     SetLevel(GetOwner()->GetLevel());
-    SetReactState(REACT_PASSIVE);
+    SetReactState(PET_MODE_PASSIVE);
 }
 
 void Puppet::InitSummon()

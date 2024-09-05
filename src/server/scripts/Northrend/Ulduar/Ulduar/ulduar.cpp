@@ -417,7 +417,7 @@ public:
         void PassengerBoarded(Unit* p, int8  /*seat*/, bool  /*apply*/) override
         {
             me->SetFaction(p->GetFaction());
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         void DamageTaken(Unit*, uint32& damage, DamageEffectType, SpellSchoolMask) override
@@ -429,7 +429,7 @@ public:
                     c->AI()->AttackStart(me->GetVictim());
                 me->InterruptNonMeleeSpells(false);
                 me->CombatStop(true);
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 me->SetRegeneratingHealth(false);
                 me->SetFaction(FACTION_PREY);
                 me->SetNpcFlag(UNIT_NPC_FLAG_SPELLCLICK);

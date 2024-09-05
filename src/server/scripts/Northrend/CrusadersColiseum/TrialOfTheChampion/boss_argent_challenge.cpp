@@ -103,7 +103,7 @@ public:
         void Reset() override
         {
             events.Reset();
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             if( pInstance )
                 pInstance->SetData(BOSS_ARGENT_CHALLENGE, NOT_STARTED);
         }
@@ -230,7 +230,7 @@ public:
                     memory->DespawnOrUnsummon();
                 MemoryGUID.Clear();
             }
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             if( pInstance )
                 pInstance->SetData(BOSS_ARGENT_CHALLENGE, NOT_STARTED);
         }
@@ -395,7 +395,7 @@ public:
         {
             pInstance = pCreature->GetInstanceScript();
             events.Reset();
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->SetObjectScale(0.01f);
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
             me->SetImmuneToAll(true);
@@ -441,7 +441,7 @@ public:
                         AttackStart(target);
                         DoZoneInCombat();
                     }
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     events.ScheduleEvent(EVENT_SPELL_OLD_WOUNDS, 8s);
                     events.ScheduleEvent(EVENT_SPELL_SHADOWS_PAST, 4s);
                     events.ScheduleEvent(EVENT_SPELL_WAKING_NIGHTMARE, 20s, 30s);
@@ -523,7 +523,7 @@ public:
         npc_argent_soldierAI(Creature* pCreature) : npc_escortAI(pCreature)
         {
             pInstance = pCreature->GetInstanceScript();
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             SetDespawnAtEnd(false);
             uiWaypoint = 0;
         }

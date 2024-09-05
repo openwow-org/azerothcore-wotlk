@@ -96,7 +96,7 @@ public:
                     if (Creature* worg = me->SummonCreature(NPC_HUNGRY_WORG, me->GetPositionX() + 5, me->GetPositionY() + 2, me->GetPositionZ() + 1, 3.229f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 120000))
                         if (Creature* Mrfloppy = ObjectAccessor::GetCreature(*me, _mrfloppyGUID))
                         {
-                            worg->SetReactState(REACT_AGGRESSIVE);
+                            worg->SetReactState(PET_MODE_AGGRESSIVE);
                             worg->GetAI()->AttackStart(Mrfloppy);
                         }
                 }
@@ -111,7 +111,7 @@ public:
                 Talk(SAY_WORGRAGGRO3);
                 if (Creature* RWORG = me->SummonCreature(NPC_RAVENOUS_WORG, me->GetPositionX() + 10, me->GetPositionY() + 8, me->GetPositionZ() + 2, 3.229f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 120000))
                 {
-                    RWORG->SetReactState(REACT_PASSIVE);
+                    RWORG->SetReactState(PET_MODE_PASSIVE);
                     RWORG->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                     RWORG->SetUnitFlag(UNIT_FLAG_PACIFIED);
                     _RavenousworgGUID = RWORG->GetGUID();
@@ -544,7 +544,7 @@ public:
 
     void Initialize()
     {
-        me->SetReactState(REACT_DEFENSIVE);
+        me->SetReactState(PET_MODE_DEFENSIVE);
     }
 
     void Reset() override
@@ -750,7 +750,7 @@ public:
 
             me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
             me->SetImmuneToPC(false);
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
         }
 
         void UpdateAI(uint32 diff) override
@@ -801,7 +801,7 @@ public:
             {
                 me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                 me->SetImmuneToPC(true);
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 me->CombatStop(false);
                 _playerGUID = caster->GetGUID();
                 _events.ScheduleEvent(EVENT_STRAGGLER_1, 3500ms);

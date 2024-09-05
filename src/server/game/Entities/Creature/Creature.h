@@ -87,9 +87,9 @@ public:
     MovementGeneratorType GetDefaultMovementType() const override { return m_defaultMovementType; }
     void SetDefaultMovementType(MovementGeneratorType mgt) { m_defaultMovementType = mgt; }
 
-    void SetReactState(ReactStates st) { m_reactState = st; }
-    [[nodiscard]] ReactStates GetReactState() const { return m_reactState; }
-    [[nodiscard]] bool HasReactState(ReactStates state) const { return (m_reactState == state); }
+    void SetReactState(PET_MODE st) { m_reactState = st; }
+    [[nodiscard]] PET_MODE GetReactState() const { return m_reactState; }
+    [[nodiscard]] bool HasReactState(PET_MODE state) const { return (m_reactState == state); }
     void InitializeReactState();
 
     ///// @todo RENAME THIS!!!!!
@@ -448,7 +448,7 @@ protected:
     uint32 m_combatPulseTime;                           // (msecs) remaining time for next zone-in-combat pulse
     uint32 m_combatPulseDelay;
 
-    ReactStates m_reactState;                           // for AI, not charmInfo
+    PET_MODE m_reactState;                           // for AI, not charmInfo
     void RegenerateHealth();
     void Regenerate(POWER_TYPE power);
     MovementGeneratorType m_defaultMovementType;

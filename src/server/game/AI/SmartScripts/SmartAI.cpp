@@ -704,10 +704,10 @@ void SmartAI::MoveInLineOfSight(Unit* who)
     if (me->GetVictim())
         return;
 
-    if (me->HasReactState(REACT_PASSIVE) || AssistPlayerInCombatAgainst(who))
+    if (me->HasReactState(PET_MODE_PASSIVE) || AssistPlayerInCombatAgainst(who))
         return;
 
-    if (me->HasReactState(REACT_AGGRESSIVE) && me->CanStartAttack(who))
+    if (me->HasReactState(PET_MODE_AGGRESSIVE) && me->CanStartAttack(who))
     {
         if (me->HasUnitState(UNIT_STATE_DISTRACTED))
         {
@@ -720,7 +720,7 @@ void SmartAI::MoveInLineOfSight(Unit* who)
 
 bool SmartAI::CanAIAttack(Unit const* /*who*/) const
 {
-    return !(me->GetReactState() == REACT_PASSIVE);
+    return !(me->GetReactState() == PET_MODE_PASSIVE);
 }
 
 bool SmartAI::AssistPlayerInCombatAgainst(Unit* who)

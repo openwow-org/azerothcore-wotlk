@@ -65,7 +65,7 @@ public:
             speechTimer = 0;
             speechCounter = 0;
             playerGUID.Clear();
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             me->RestoreFaction();
         }
 
@@ -89,7 +89,7 @@ public:
                         me->SetFaction(player->GetFaction());
                         me->CombatStop(true);
                         me->GetMotionMaster()->MoveIdle();
-                        me->SetReactState(REACT_PASSIVE);
+                        me->SetReactState(PET_MODE_PASSIVE);
                         DoCastAOE(SPELL_THREAT_PULSE, true);
 
                         sCreatureTextMgr->SendChat(me, SAY_PERSUADE_RAND, nullptr, CHAT_MSG_ADDON, LANG_ADDON, TEXT_RANGE_NORMAL, 0, TEAM_NEUTRAL, false, player);
@@ -218,7 +218,7 @@ public:
     {
         npc_koltira_deathweaverAI(Creature* creature) : npc_escortAI(creature), summons(me)
         {
-            me->SetReactState(REACT_DEFENSIVE);
+            me->SetReactState(PET_MODE_DEFENSIVE);
         }
 
         uint32 m_uiWave;

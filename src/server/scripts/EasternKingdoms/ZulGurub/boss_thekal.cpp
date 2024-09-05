@@ -87,7 +87,7 @@ struct boss_thekal : public BossAI
         scheduler.CancelAll();
 
         me->SetStandState(UNIT_STANDING);
-        me->SetReactState(REACT_AGGRESSIVE);
+        me->SetReactState(PET_MODE_AGGRESSIVE);
         me->RemoveAurasDueToSpell(SPELL_FRENZY);
         me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
         me->LoadEquipment(1, true);
@@ -181,7 +181,7 @@ struct boss_thekal : public BossAI
             if (!_wasDead)
             {
                 me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 me->SetStandState(UNIT_DEAD);
                 me->AttackStop();
                 DoResetThreatList();
@@ -201,7 +201,7 @@ struct boss_thekal : public BossAI
             me->SetUInt32Value(UNIT_FIELD_BYTES_1, 0);
             me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
             me->RestoreFaction();
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             me->SetFullHealth();
             _wasDead = false;
         }
@@ -265,7 +265,7 @@ struct boss_thekal : public BossAI
                     DoCastSelf(SPELL_TIGER_FORM);
                     me->LoadEquipment(0, true);
                     me->SetFullHealth();
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
 
                     scheduler.Schedule(30s, [this](TaskContext context)

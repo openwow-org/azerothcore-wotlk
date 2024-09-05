@@ -313,19 +313,19 @@ void User::HandlePetActionHelper(Unit* pet, WOWGUID guid1, uint32 spellId, uint1
         case ACT_REACTION:                                  // 0x6
             switch (spellId)
             {
-                case REACT_PASSIVE:                         //passive
+                case PET_MODE_PASSIVE:                         //passive
                     pet->AttackStop();
                     if (pet->ToPet())
                         pet->ToPet()->ClearCastWhenWillAvailable();
                     pet->ClearInPetCombat();
                     [[fallthrough]]; /// @todo: Not sure whether the fallthrough was a mistake (forgetting a break) or intended. This should be double-checked.
 
-                case REACT_DEFENSIVE:                       //recovery
-                case REACT_AGGRESSIVE:                      //activete
+                case PET_MODE_DEFENSIVE:                       //recovery
+                case PET_MODE_AGGRESSIVE:                      //activete
                     if (pet->GetTypeId() == TYPEID_UNIT)
-                        pet->ToCreature()->SetReactState(ReactStates(spellId));
+                        pet->ToCreature()->SetReactState(PET_MODE(spellId));
                     else
-                        charmInfo->SetPlayerReactState(ReactStates(spellId));
+                        charmInfo->SetPlayerReactState(PET_MODE(spellId));
                     break;
             }
             break;

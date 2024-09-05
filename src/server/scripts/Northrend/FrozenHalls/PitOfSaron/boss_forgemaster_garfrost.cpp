@@ -89,7 +89,7 @@ public:
         {
             me->RemoveAura(SPELL_PERMAFROST);
             SetEquipmentSlots(true);
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             me->SetControlled(false, UNIT_STATE_ROOT);
             me->DisableRotate(false);
             phase = 0;
@@ -123,7 +123,7 @@ public:
             if (phase == 0 && !HealthAbovePct(66) && !me->HasUnitState(UNIT_STATE_ROOT))
             {
                 phase = 1;
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 me->SetTarget();
                 me->SendMeleeAttackStop(me->GetVictim());
                 events.DelayEvents(8s);
@@ -136,7 +136,7 @@ public:
             {
                 events.CancelEvent(EVENT_SPELL_CHILLING_WAVE);
                 phase = 2;
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 me->SetTarget();
                 me->SendMeleeAttackStop(me->GetVictim());
                 events.DelayEvents(8s);
@@ -180,7 +180,7 @@ public:
             {
                 events.RescheduleEvent(EVENT_SPELL_CHILLING_WAVE, 10000);
                 SetEquipmentSlots(false, EQUIP_ID_SWORD);
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
                 me->SetControlled(false, UNIT_STATE_ROOT);
                 me->DisableRotate(false);
                 if (me->GetVictim())
@@ -193,7 +193,7 @@ public:
             {
                 events.RescheduleEvent(EVENT_SPELL_DEEP_FREEZE, 10s);
                 SetEquipmentSlots(false, EQUIP_ID_MACE);
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
                 me->SetControlled(false, UNIT_STATE_ROOT);
                 me->DisableRotate(false);
                 if (me->GetVictim())

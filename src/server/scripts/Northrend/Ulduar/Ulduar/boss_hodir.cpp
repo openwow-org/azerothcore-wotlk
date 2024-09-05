@@ -339,7 +339,7 @@ public:
             if (damage >= me->GetHealth() || me->GetHealth() < 150000)
             {
                 damage = 0;
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 if (!me->HasUnitFlag(UNIT_FLAG_NON_ATTACKABLE))
                 {
                     if (pInstance)
@@ -783,7 +783,7 @@ public:
         {
             pInstance = me->GetInstanceScript();
             events.Reset();
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         EventMap events;
@@ -881,7 +881,7 @@ public:
         {
             pInstance = me->GetInstanceScript();
             events.Reset();
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         EventMap events;
@@ -979,7 +979,7 @@ public:
         {
             pInstance = me->GetInstanceScript();
             events.Reset();
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         EventMap events;
@@ -1080,7 +1080,7 @@ public:
         {
             pInstance = me->GetInstanceScript();
             events.Reset();
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         EventMap events;

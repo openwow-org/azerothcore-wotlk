@@ -413,7 +413,7 @@ public:
                             IntroTimer = 7500;
                             break;
                         case 3:
-                            me->SetReactState(REACT_AGGRESSIVE);
+                            me->SetReactState(PET_MODE_AGGRESSIVE);
                             IntroPhase = 0;
                             IntroTimer = 0;
                             break;
@@ -513,7 +513,7 @@ struct npc_beryl_sorcererAI : public CreatureAI
 
         void Reset() override
         {
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             Initialize();
         }
 
@@ -712,8 +712,8 @@ public:
 
         void Reset() override
         {
-            if (me->GetReactState() != REACT_PASSIVE)
-                me->SetReactState(REACT_PASSIVE);
+            if (me->GetReactState() != PET_MODE_PASSIVE)
+                me->SetReactState(PET_MODE_PASSIVE);
 
             rebuff = 0;
 
@@ -1578,7 +1578,7 @@ public:
                         {
                             _arthasGUID = arthas->GetGUID();
                             arthas->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-                            arthas->SetReactState(REACT_PASSIVE);
+                            arthas->SetReactState(PET_MODE_PASSIVE);
                             arthas->SetWalk(true);
                         }
                         if (Creature* talbot = me->SummonCreature(NPC_COUNSELOR_TALBOT, 3748.7627f, 3614.0374f, 473.4048f, 4.5553f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 120000))
@@ -1613,7 +1613,7 @@ public:
                             talbot->SetFullHealth();
                             talbot->SetFaction(FACTION_UNDEAD_SCOURGE);
                             talbot->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-                            talbot->SetReactState(REACT_PASSIVE);
+                            talbot->SetReactState(PET_MODE_PASSIVE);
                             talbot->SetStandState(UNIT_KNEEL);
                         }
                         _events.ScheduleEvent(EVENT_THASSARIAN_SCRIPT_5, 7s);
@@ -1736,7 +1736,7 @@ public:
                             talbot->AI()->Talk(SAY_TALBOT_4);
                             talbot->SetFaction(FACTION_UNDEAD_SCOURGE_9);
                             talbot->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-                            talbot->SetReactState(REACT_AGGRESSIVE);
+                            talbot->SetReactState(PET_MODE_AGGRESSIVE);
                             talbot->Attack(me, false);
                         }
                         break;

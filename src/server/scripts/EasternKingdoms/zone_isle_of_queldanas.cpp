@@ -490,7 +490,7 @@ public:
         {
             announced = false;
             playerGUID.Clear();
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
         }
 
         EventMap events;

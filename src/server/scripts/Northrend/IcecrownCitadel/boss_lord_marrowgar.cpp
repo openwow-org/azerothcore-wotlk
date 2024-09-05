@@ -112,7 +112,7 @@ public:
 
     void Reset() override
     {
-        me->SetReactState(REACT_AGGRESSIVE);
+        me->SetReactState(PET_MODE_AGGRESSIVE);
         _Reset();
         events.ScheduleEvent(EVENT_ENABLE_BONE_SLICE, 10s);
         events.ScheduleEvent(EVENT_SPELL_BONE_SPIKE_GRAVEYARD, 10s, 15s);
@@ -194,7 +194,7 @@ public:
                 Talk(SAY_BONE_STORM);
                 me->FinishSpell(CURRENT_MELEE_SPELL, false);
                 me->CastSpell(me, SPELL_BONE_STORM, false);
-                me->SetReactState(REACT_PASSIVE); // to prevent chasing another target on UpdateVictim()
+                me->SetReactState(PET_MODE_PASSIVE); // to prevent chasing another target on UpdateVictim()
                 me->GetMotionMaster()->MoveIdle();
                 me->GetMotionMaster()->MovementExpired();
                 events.Repeat(90s, 95s);
@@ -235,7 +235,7 @@ public:
             case EVENT_END_BONE_STORM:
                 me->StopMoving();
                 me->GetMotionMaster()->MovementExpired();
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
                 DoStartMovement(me->GetVictim());
                 events.CancelEvent(EVENT_BONE_STORM_MOVE);
                 events.ScheduleEvent(EVENT_ENABLE_BONE_SLICE, 10s);

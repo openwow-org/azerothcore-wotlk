@@ -71,7 +71,7 @@ struct boss_sartura : public BossAI
         enraged = false;
         berserked = false;
 
-        me->SetReactState(REACT_AGGRESSIVE);
+        me->SetReactState(PET_MODE_AGGRESSIVE);
     }
 
     void JustEngagedWith(Unit* who) override
@@ -134,7 +134,7 @@ struct boss_sartura : public BossAI
                     break;
                 case EVENT_SARTURA_WHIRLWIND_END:
                     me->GetThreatMgr().ResetAllThreat();
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     events.CancelEvent(EVENT_SARTURA_WHIRLWIND_RANDOM);
                     events.ScheduleEvent(EVENT_SARTURA_WHIRLWIND, 5s, 11s);
                     break;
@@ -146,7 +146,7 @@ struct boss_sartura : public BossAI
                     }
                     break;
                 case EVENT_SARTURA_SUNDERING_CLEAVE:
-                    if (me->HasReactState(REACT_PASSIVE))
+                    if (me->HasReactState(PET_MODE_PASSIVE))
                     {
                         Milliseconds whirlwindTimer = events.GetTimeUntilEvent(EVENT_SARTURA_WHIRLWIND_END);
                         events.RescheduleEvent(EVENT_SARTURA_SUNDERING_CLEAVE, whirlwindTimer + 500ms);
@@ -178,7 +178,7 @@ struct npc_sartura_royal_guard : public ScriptedAI
     {
         events.Reset();
 
-        me->SetReactState(REACT_AGGRESSIVE);
+        me->SetReactState(PET_MODE_AGGRESSIVE);
     }
 
     void JustEngagedWith(Unit* /*who*/) override
@@ -218,7 +218,7 @@ struct npc_sartura_royal_guard : public ScriptedAI
                     break;
                 case EVENT_GUARD_WHIRLWIND_END:
                     me->GetThreatMgr().ResetAllThreat();
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     events.CancelEvent(EVENT_GUARD_WHIRLWIND_RANDOM);
                     events.ScheduleEvent(EVENT_GUARD_WHIRLWIND, 500ms, 9s);
                     break;

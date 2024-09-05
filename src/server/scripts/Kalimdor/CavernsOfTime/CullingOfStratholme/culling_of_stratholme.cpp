@@ -564,7 +564,7 @@ public:
                         cityman->AI()->Talk(SAY_PHASE204_1);
                         me->CastSpell(cityman, SPELL_ARTHAS_CRUSADER_STRIKE, true);
                     }
-                    me->SetReactState(REACT_DEFENSIVE);
+                    me->SetReactState(PET_MODE_DEFENSIVE);
                     SetEscortPaused(true);
                     eventInRun = true;
                     break;
@@ -871,7 +871,7 @@ public:
                             malganis->AI()->Talk(SAY_PHASE206);
                             malganis->SetTarget(me->GetGUID());
                             me->SetTarget(malganis->GetGUID());
-                            malganis->SetReactState(REACT_PASSIVE);
+                            malganis->SetReactState(PET_MODE_PASSIVE);
 
                             std::list<Creature*> unitList;
                             malganis->GetCreaturesWithEntryInRange(unitList, 20.0f, NPC_CITY_MAN);
@@ -911,7 +911,7 @@ public:
                         summons.DespawnEntry(NPC_CITY_MAN);
                         summons.DespawnEntry(NPC_CITY_MAN2);
                         Talk(SAY_PHASE209);
-                        me->SetReactState(REACT_DEFENSIVE);
+                        me->SetReactState(PET_MODE_DEFENSIVE);
                         ScheduleNextEvent(currentEvent, 20000);
                         if (pInstance)
                             pInstance->SetData(DATA_ARTHAS_EVENT, COS_PROGRESS_FINISHED_CITY_INTRO);
@@ -932,7 +932,7 @@ public:
                         break;
                     // After waypoint 22
                     case EVENT_ACTION_PHASE3:
-                        me->SetReactState(REACT_AGGRESSIVE);
+                        me->SetReactState(PET_MODE_AGGRESSIVE);
                         if (Creature* cr = GetEventNpc(NPC_CITY_MAN3))
                             cr->SetTarget(me->GetGUID());
                         if (Creature* cr = GetEventNpc(NPC_CITY_MAN4))
@@ -942,7 +942,7 @@ public:
                         ScheduleNextEvent(currentEvent, 1000);
                         break;
                     case EVENT_ACTION_PHASE3+1:
-                        me->SetReactState(REACT_AGGRESSIVE);
+                        me->SetReactState(PET_MODE_AGGRESSIVE);
                         if (Creature* cr = GetEventNpc(NPC_CITY_MAN3))
                             cr->AI()->Talk(SAY_PHASE302);
 
@@ -975,7 +975,7 @@ public:
                         {
                             cr->UpdateEntry(NPC_INFINITE_HUNTER, nullptr, false);
                             cr->SetImmuneToAll(true);
-                            cr->SetReactState(REACT_PASSIVE);
+                            cr->SetReactState(PET_MODE_PASSIVE);
                         }
                         ScheduleNextEvent(currentEvent, 2000);
                         break;
@@ -984,7 +984,7 @@ public:
                         {
                             cr->UpdateEntry(NPC_INFINITE_AGENT, nullptr, false);
                             cr->SetImmuneToAll(true);
-                            cr->SetReactState(REACT_PASSIVE);
+                            cr->SetReactState(PET_MODE_PASSIVE);
                         }
                         ScheduleNextEvent(currentEvent, 2000);
                         break;
@@ -992,21 +992,21 @@ public:
                         if (Creature* cr = GetEventNpc(NPC_CITY_MAN3))
                         {
                             cr->UpdateEntry(NPC_INFINITE_ADVERSARY, nullptr, false);
-                            cr->SetReactState(REACT_AGGRESSIVE);
+                            cr->SetReactState(PET_MODE_AGGRESSIVE);
                             cr->SetInCombatWithZone();
                             cr->AddThreat(me, 0.0f);
                         }
                         if (Creature* cr = GetEventNpc(NPC_INFINITE_AGENT)) // it is infinite agent now :)
                         {
                             cr->SetImmuneToAll(false);
-                            cr->SetReactState(REACT_AGGRESSIVE);
+                            cr->SetReactState(PET_MODE_AGGRESSIVE);
                             cr->SetInCombatWithZone();
                             cr->AddThreat(me, 0.0f);
                         }
                         if (Creature* cr = GetEventNpc(NPC_INFINITE_HUNTER)) // it is infinite hunter now :)
                         {
                             cr->SetImmuneToAll(false);
-                            cr->SetReactState(REACT_AGGRESSIVE);
+                            cr->SetReactState(PET_MODE_AGGRESSIVE);
                             cr->SetInCombatWithZone();
                             cr->AddThreat(me, 0.0f);
                         }
@@ -1101,7 +1101,7 @@ public:
                         {
                             cr->SetImmuneToAll(false);
                             cr->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-                            cr->SetReactState(REACT_AGGRESSIVE);
+                            cr->SetReactState(PET_MODE_AGGRESSIVE);
                             cr->AddThreat(me, 0.0f);
                             cr->SetInCombatWithZone();
                         }
@@ -1259,7 +1259,7 @@ void npc_arthas::npc_arthasAI::ReorderInstance(uint32 data)
         case COS_PROGRESS_KILLED_MEATHOOK:
         case COS_PROGRESS_KILLED_SALRAMM:
             SetNextWaypoint(12, false);
-            me->SetReactState(REACT_DEFENSIVE);
+            me->SetReactState(PET_MODE_DEFENSIVE);
 
             if (data == COS_PROGRESS_FINISHED_CITY_INTRO)
             {
@@ -1355,7 +1355,7 @@ void npc_arthas::npc_arthasAI::SpawnTimeRift()
 
                 cr->SetInCombatWithZone();
                 cr->AddThreat(me, 0.0f);
-                cr->SetReactState(REACT_AGGRESSIVE);
+                cr->SetReactState(PET_MODE_AGGRESSIVE);
                 cr->GetMotionMaster()->MovePoint(POINT_CHRONOS, RiftAndSpawnsLocations[timeRiftId][i][1], RiftAndSpawnsLocations[timeRiftId][i][2], RiftAndSpawnsLocations[timeRiftId][i][3]);
             }
         }
@@ -1607,7 +1607,7 @@ public:
                 else if (changeTimer >= 14500 && changeTimer < 20000)
                 {
                     me->UpdateEntry(NPC_RISEN_ZOMBIE, nullptr, false);
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     changeTimer = 20000;
                 }
                 else if (changeTimer >= 23000)

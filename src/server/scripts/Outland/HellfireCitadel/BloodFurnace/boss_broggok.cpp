@@ -43,7 +43,7 @@ struct boss_broggok : public BossAI
     void Reset() override
     {
         _Reset();
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
         me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
         me->SetImmuneToAll(true);
     }
@@ -84,7 +84,7 @@ struct boss_broggok : public BossAI
                     DoCastSelf(SPELL_POISON_CLOUD);
                     context.Repeat(20s);
                 });
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
                 me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                 me->SetImmuneToAll(false);
                 break;

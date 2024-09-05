@@ -136,7 +136,7 @@ public:
             if (phase == PHASE_SLOW_DANCE)
             {
                 me->CastStop();
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
                 DoZoneInCombat();
                 events.ScheduleEvent(EVENT_DISRUPTION, 12s, 15s);
                 events.ScheduleEvent(EVENT_DECEPIT_FEVER, 17s);
@@ -149,7 +149,7 @@ public:
                 Talk(SAY_DANCE);
                 me->AttackStop();
                 me->StopMoving();
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 me->CastSpell(me, SPELL_TELEPORT_SELF, false);
                 me->SetFacingTo(2.40f);
                 events.ScheduleEvent(EVENT_PLAGUE_CLOUD, 1s);

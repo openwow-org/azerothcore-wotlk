@@ -156,7 +156,7 @@ public:
     {
         Initialize();
         SetPhase(PHASE_NONE);
-        me->SetReactState(REACT_AGGRESSIVE);
+        me->SetReactState(PET_MODE_AGGRESSIVE);
         me->SetCanFly(false);
         me->SetDisableGravity(false);
         me->SetSpeed(MOVE_RUN, me->GetCreatureTemplate()->speed_run, false);
@@ -350,7 +350,7 @@ public:
             case EVENT_START_PHASE_2:
             {
                 me->AttackStop();
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 me->StopMoving();
                 DoResetThreatList();
                 me->GetMotionMaster()->MovePoint(10, OnyxiaMoveData[0].x, OnyxiaMoveData[0].y, OnyxiaMoveData[0].z);
@@ -482,7 +482,7 @@ public:
             }
             case EVENT_PHASE_3_ATTACK:
             {
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
 
                 if (Unit* target = SelectTarget(SelectTargetMethod::MaxThreat, 0, 0, false))
                 {

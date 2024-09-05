@@ -65,7 +65,7 @@ enum Events
     EVENT_SPELL_MIGHTY_KICK,
     EVENT_SPELL_SHADOW_BOLT,
     EVENT_SPECIAL,
-    EVENT_SET_REACT_AGGRESSIVE,
+    EVENT_SET_PET_MODE_AGGRESSIVE,
 };
 
 class boss_ick : public CreatureScript
@@ -85,7 +85,7 @@ public:
 
         void Reset() override
         {
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             events.Reset();
             if (pInstance)
                 pInstance->SetData(DATA_ICK, NOT_STARTED);
@@ -119,8 +119,8 @@ public:
             {
                 Talk(EMOTE_ICK_CHASE, target);
                 AttackStart(target);
-                me->SetReactState(REACT_PASSIVE);
-                events.RescheduleEvent(EVENT_SET_REACT_AGGRESSIVE, 12s);
+                me->SetReactState(PET_MODE_PASSIVE);
+                events.RescheduleEvent(EVENT_SET_PET_MODE_AGGRESSIVE, 12s);
             }
         }
 
@@ -205,8 +205,8 @@ public:
                             }
                     events.Repeat(2500ms);
                     break;
-                case EVENT_SET_REACT_AGGRESSIVE:
-                    me->SetReactState(REACT_AGGRESSIVE);
+                case EVENT_SET_PET_MODE_AGGRESSIVE:
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     if (!UpdateVictim())
                         return;
 
@@ -259,8 +259,8 @@ public:
         {
             // if during pursuit ick kills his target, set to aggressive again
             if (who && me->GetVictim() && who->GetGUID() == me->GetVictim()->GetGUID())
-                if (me->GetReactState() == REACT_PASSIVE)
-                    me->SetReactState(REACT_AGGRESSIVE);
+                if (me->GetReactState() == PET_MODE_PASSIVE)
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
 
             if (who->GetTypeId() == TYPEID_PLAYER)
                 if (Creature* k = GetKrick())
@@ -411,7 +411,7 @@ public:
                         if (Creature* c = pInstance->instance->GetCreature(pInstance->GetGuidData(DATA_TYRANNUS_EVENT_GUID)))
                             c->CastSpell(c, 69753, false);
 
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     me->SetUnitFlag(UNIT_FLAG_PREVENT_EMOTES_FROM_CHAT_TEXT);
                     me->SetImmuneToAll(true);
                     me->SetUnitFlag2(UNIT_FLAG2_FEIGN_DEATH);

@@ -79,7 +79,7 @@ public:
         {
             if (Creature* c = GetCreature(DATA_DARK_RANGER_MARRAH))
             {
-                c->SetReactState(REACT_PASSIVE);
+                c->SetReactState(PET_MODE_PASSIVE);
                 c->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                 if (plr && plr->GetTeamId() == TEAM_HORDE)
                 {

@@ -15842,7 +15842,7 @@ void Player::_LoadPetStable(uint8 petStableSlots, PreparedQueryResult result)
             petInfo.DisplayId = fields[2].Get<uint32>();
             petInfo.Level = fields[3].Get<uint16>();
             petInfo.Experience = fields[4].Get<uint32>();
-            petInfo.ReactState = ReactStates(fields[5].Get<uint8>());
+            petInfo.ReactState = PET_MODE(fields[5].Get<uint8>());
             PetSaveMode slot = PetSaveMode(fields[6].Get<uint8>());
             petInfo.Name = fields[7].Get<std::string>();
             petInfo.WasRenamed = fields[8].Get<bool>();

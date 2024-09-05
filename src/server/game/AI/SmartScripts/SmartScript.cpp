@@ -538,7 +538,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                 if (!IsCreature(target))
                     continue;
 
-                target->ToCreature()->SetReactState(ReactStates(e.action.react.state));
+                target->ToCreature()->SetReactState(PET_MODE(e.action.react.state));
             }
             break;
         }
@@ -1696,7 +1696,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                 }
             }
 
-            me->SetReactState((ReactStates)e.action.wpStart.reactState);
+            me->SetReactState((PET_MODE)e.action.wpStart.reactState);
             CAST_AI(SmartAI, me->AI())->StartPath(run, entry, repeat, unit);
 
             uint32 quest = e.action.wpStart.quest;

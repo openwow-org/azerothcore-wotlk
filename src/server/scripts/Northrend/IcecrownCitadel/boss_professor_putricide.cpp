@@ -250,7 +250,7 @@ public:
             _phase = 1;
             bChangePhase = false;
             _Reset();
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             me->SetStandState(UNIT_STANDING);
 
             if (instance->GetBossState(DATA_ROTFACE) == DONE && instance->GetBossState(DATA_FESTERGUT) == DONE)
@@ -369,13 +369,13 @@ public:
                     // no possible aura seen in sniff adding the aurastate
                     summon->ModifyAuraState(AURA_STATE_UNKNOWN22, true);
                     summon->CastSpell(summon, SPELL_GASEOUS_BLOAT_PROC, true);
-                    summon->SetReactState(REACT_PASSIVE);
+                    summon->SetReactState(PET_MODE_PASSIVE);
                     break;
                 case NPC_VOLATILE_OOZE:
                     // no possible aura seen in sniff adding the aurastate
                     summon->ModifyAuraState(AURA_STATE_UNKNOWN19, true);
                     summon->CastSpell(summon, SPELL_OOZE_ERUPTION_SEARCH_PERIODIC, true);
-                    summon->SetReactState(REACT_PASSIVE);
+                    summon->SetReactState(PET_MODE_PASSIVE);
                     break;
                 case NPC_CHOKING_GAS_BOMB:
                     summon->CastSpell(summon, SPELL_CHOKING_GAS_BOMB_PERIODIC, true);
@@ -400,13 +400,13 @@ public:
                 case 1:
                     if (HealthAbovePct(80))
                         return;
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     bChangePhase = true;
                     break;
                 case 2:
                     if (HealthAbovePct(35))
                         return;
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     bChangePhase = true;
                     break;
                 default:
@@ -604,7 +604,7 @@ public:
                     }
                     break;
                 case EVENT_RESUME_ATTACK:
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     me->SetStandState(UNIT_STANDING);
                     AttackStart(me->GetVictim());
                     // remove Tear Gas
@@ -740,7 +740,7 @@ public:
     npc_putricide_oozeAI(Creature* creature, uint32 hitTargetSpellId) : ScriptedAI(creature),
         _hitTargetSpellId(hitTargetSpellId), _newTargetSelectTimer(0)
     {
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
     }
 
     WOWGUID targetGUID;

@@ -106,7 +106,7 @@ public:
         {
             pInstance = pCreature->GetInstanceScript();
             me->AddUnitMovementFlag(MOVEFLAG_WALK);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         InstanceScript* pInstance;

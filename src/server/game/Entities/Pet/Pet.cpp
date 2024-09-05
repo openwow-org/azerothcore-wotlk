@@ -1362,7 +1362,7 @@ bool Guardian::InitStatsForLevel(uint8 petlevel)
                             SetCreateHealth(4 * petlevel);
                             SetBaseWeaponDamage(BASE_ATTACK, MINDAMAGE, float(petlevel - 30 - (petlevel / 4) + owner->GetTotalAttackPowerValue(BASE_ATTACK) * 0.006f));
                             SetBaseWeaponDamage(BASE_ATTACK, MAXDAMAGE, float(petlevel - 30 + (petlevel / 4) + owner->GetTotalAttackPowerValue(BASE_ATTACK) * 0.006f));
-                            SetReactState(REACT_DEFENSIVE);
+                            SetReactState(PET_MODE_DEFENSIVE);
                             break;
                         }
                     case NPC_ARMY_OF_THE_DEAD:

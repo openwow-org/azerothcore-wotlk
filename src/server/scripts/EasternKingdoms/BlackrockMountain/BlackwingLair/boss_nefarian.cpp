@@ -536,7 +536,7 @@ struct boss_nefarian : public BossAI
 
     void Reset() override
     {
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
         me->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
         me->SetCanFly(true);
         me->SetDisableGravity(true);
@@ -613,7 +613,7 @@ struct boss_nefarian : public BossAI
         me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
         me->GetMotionMaster()->MoveIdle();
 
-        me->SetReactState(REACT_AGGRESSIVE);
+        me->SetReactState(PET_MODE_AGGRESSIVE);
         DoZoneInCombat();
         if (me->GetVictim())
         {

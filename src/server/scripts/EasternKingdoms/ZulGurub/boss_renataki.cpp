@@ -56,7 +56,7 @@ public:
         void Reset() override
         {
             _Reset();
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             _enraged = false;
             _thousandBladesCount = urand(2, 5);
             _thousandBladesTargets.clear();
@@ -103,12 +103,12 @@ public:
 
         bool CanBeSeen(Player const* /*player*/) override
         {
-            return me->GetReactState() == REACT_AGGRESSIVE;
+            return me->GetReactState() == PET_MODE_AGGRESSIVE;
         }
 
         bool CanSeeAlways(WorldObject const* obj) override
         {
-            if (me->GetReactState() == REACT_PASSIVE)
+            if (me->GetReactState() == PET_MODE_PASSIVE)
             {
                 return obj->ToCreature() && obj->ToCreature()->IsPet();
             }
@@ -118,7 +118,7 @@ public:
 
         bool CanAlwaysBeDetectable(WorldObject const* seer) override
         {
-            if (me->GetReactState() == REACT_PASSIVE)
+            if (me->GetReactState() == PET_MODE_PASSIVE)
             {
                 return seer->ToCreature() && seer->ToCreature()->IsPet();
             }
@@ -141,7 +141,7 @@ public:
                 switch (eventId)
                 {
                     case EVENT_VANISH:
-                        me->SetReactState(REACT_PASSIVE);
+                        me->SetReactState(PET_MODE_PASSIVE);
                         _dynamicFlags = me->GetDynamicFlags();
                         me->RemoveDynamicFlag(UNIT_DYNFLAG_TRACK_UNIT);
                         DoCastSelf(SPELL_VANISH);
@@ -157,7 +157,7 @@ public:
                         }
                         me->SetDynamicFlag(_dynamicFlags);
                         me->RemoveAurasDueToSpell(SPELL_VANISH);
-                        me->SetReactState(REACT_AGGRESSIVE);
+                        me->SetReactState(PET_MODE_AGGRESSIVE);
                         break;
                     case EVENT_GOUGE:
                         DoCastAOE(SPELL_GOUGE);
@@ -244,7 +244,7 @@ public:
                 }
             }
 
-            if (me->GetReactState() == REACT_AGGRESSIVE)
+            if (me->GetReactState() == PET_MODE_AGGRESSIVE)
                 DoMeleeAttackIfReady();
         }
 

@@ -200,7 +200,7 @@ struct npc_voidtraveler : public ScriptedAI
 
     void Reset() override
     {
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
 
         if (TempSummon* summon = me->ToTempSummon())
         {

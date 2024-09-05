@@ -818,7 +818,7 @@ public:
         void Reset() override
         {
             events.Reset();
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             _allowCast = false;
         }
 

@@ -394,7 +394,7 @@ public:
                 pBoss->RemoveUnitMovementFlag(MOVEFLAG_WALK);
                 pBoss->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                 pBoss->SetImmuneToNPC(false);
-                pBoss->SetReactState(REACT_AGGRESSIVE);
+                pBoss->SetReactState(PET_MODE_AGGRESSIVE);
                 if ((WaveCount == 6 && m_auiEncounter[0] == DONE) || (WaveCount == 12 && m_auiEncounter[1] == DONE))
                     pBoss->SetLootMode(0);
             }
@@ -419,7 +419,7 @@ public:
                         for (uint8 i = 0; i < 4; ++i)
                             if (Creature* c = instance->GetCreature(NPC_GuardGUID[i]))
                             {
-                                c->SetReactState(REACT_PASSIVE);
+                                c->SetReactState(PET_MODE_PASSIVE);
                                 c->CombatStop();
                                 c->RemoveUnitMovementFlag(MOVEFLAG_WALK);
                                 c->GetMotionMaster()->MovePoint(0, guardMovePosition);
@@ -577,7 +577,7 @@ public:
                         c->SetVisible(false);
                     else
                         c->SetVisible(true);
-                    c->SetReactState(REACT_AGGRESSIVE);
+                    c->SetReactState(PET_MODE_AGGRESSIVE);
                 }
 
             // remove portal if any

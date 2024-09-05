@@ -874,7 +874,7 @@ public:
                     break;
                 case EVENT_THRALL_RUN_AWAY:
                     me->SetImmuneToAll(true);
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     SetEscortPaused(false);
                     break;
                 case EVENT_TARETHA_TALK_2:

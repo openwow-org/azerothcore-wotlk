@@ -197,7 +197,7 @@ public:
         void JustSummoned(Creature* summon) override
         {
             summons.Summon(summon);
-            summon->SetReactState(REACT_PASSIVE);
+            summon->SetReactState(PET_MODE_PASSIVE);
         }
 
         void EnterEvadeMode(EvadeReason why) override

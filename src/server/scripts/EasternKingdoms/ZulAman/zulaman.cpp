@@ -725,13 +725,13 @@ public:
                                             {
                                                 ptarget->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 0, uint32(WEAPON_SPEAR));
                                                 ptarget->SetImmuneToPC(true);
-                                                ptarget->SetReactState(REACT_PASSIVE);
+                                                ptarget->SetReactState(PET_MODE_PASSIVE);
                                                 ptarget->AI()->SetData(0, 1);
                                             }
                                             else
                                             {
                                                 ptarget->SetImmuneToPC(true);
-                                                ptarget->SetReactState(REACT_PASSIVE);
+                                                ptarget->SetReactState(PET_MODE_PASSIVE);
                                                 ptarget->AI()->SetData(0, 2);
                                             }
                                         }

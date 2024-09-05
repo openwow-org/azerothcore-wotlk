@@ -13571,7 +13571,7 @@ void Unit::CombatStart(Unit* victim, bool initialAggro)
             victim->SetStandState(UNIT_STANDING);
         }
 
-        if (!victim->IsInCombat() && victim->GetTypeId() != TYPEID_PLAYER && !victim->ToCreature()->HasReactState(REACT_PASSIVE) && victim->ToCreature()->IsAIEnabled)
+        if (!victim->IsInCombat() && victim->GetTypeId() != TYPEID_PLAYER && !victim->ToCreature()->HasReactState(PET_MODE_PASSIVE) && victim->ToCreature()->IsAIEnabled)
         {
             if (victim->IsPet())
                 victim->ToCreature()->AI()->AttackedBy(this); // PetAI has special handler before AttackStart()
@@ -13723,7 +13723,7 @@ void Unit::SetInCombatState(bool PvP, Unit* enemy, uint32 duration)
         ++itr;
 
         // Xinef: Dont set combat for passive units, they will evade in next update...
-        if (controlled->GetTypeId() == TYPEID_UNIT && controlled->ToCreature()->HasReactState(REACT_PASSIVE))
+        if (controlled->GetTypeId() == TYPEID_UNIT && controlled->ToCreature()->HasReactState(PET_MODE_PASSIVE))
             continue;
 
         controlled->SetInCombatState(PvP, enemy, duration);
@@ -14600,7 +14600,7 @@ void Unit::TauntApply(Unit* taunter)
 
     Creature* creature = ToCreature();
 
-    if (creature->HasReactState(REACT_PASSIVE))
+    if (creature->HasReactState(PET_MODE_PASSIVE))
         return;
 
     Unit* target = GetVictim();
@@ -14630,7 +14630,7 @@ void Unit::TauntFadeOut(Unit* taunter)
 
     Creature* creature = ToCreature();
 
-    if (creature->HasReactState(REACT_PASSIVE))
+    if (creature->HasReactState(PET_MODE_PASSIVE))
         return;
 
     Unit* target = GetVictim();
@@ -14681,7 +14681,7 @@ Unit* Creature::SelectVictim()
         if (!target && !m_ThreatMgr.isThreatListEmpty())
             target = m_ThreatMgr.getHostileTarget();
     }
-    else if (!HasReactState(REACT_PASSIVE))
+    else if (!HasReactState(PET_MODE_PASSIVE))
     {
         // we have player pet probably
         target = getAttackerForHelper();
@@ -15755,7 +15755,7 @@ void Unit::DeleteCharmInfo()
 }
 
 CharmInfo::CharmInfo(Unit* unit)
-    : _unit(unit), _CommandState(COMMAND_FOLLOW), _petnumber(0), _oldReactState(REACT_PASSIVE),
+    : _unit(unit), _CommandState(COMMAND_FOLLOW), _petnumber(0), _oldReactState(PET_MODE_PASSIVE),
       _isCommandAttack(false), _isCommandFollow(false), _isAtStay(false), _isFollowing(false), _isReturning(false),
       _forcedSpellId(0), _stayX(0.0f), _stayY(0.0f), _stayZ(0.0f)
 {
@@ -15765,7 +15765,7 @@ CharmInfo::CharmInfo(Unit* unit)
     if (_unit->GetTypeId() == TYPEID_UNIT)
     {
         _oldReactState = _unit->ToCreature()->GetReactState();
-        _unit->ToCreature()->SetReactState(REACT_PASSIVE);
+        _unit->ToCreature()->SetReactState(PET_MODE_PASSIVE);
     }
 }
 
@@ -18686,7 +18686,7 @@ bool Unit::SetCharmedBy(Unit* charmer, CharmType type, AuraApplication const* au
 
             // Xinef: convert charm npcs dont have pet bar so initialize them as defensive helpers
             if (type == CHARM_TYPE_CONVERT && GetTypeId() == TYPEID_UNIT)
-                ToCreature()->SetReactState(REACT_DEFENSIVE);
+                ToCreature()->SetReactState(PET_MODE_DEFENSIVE);
         }
     }
 
@@ -20625,7 +20625,7 @@ void Unit::PetSpellFail(SpellInfo const* spellInfo, Unit* target, uint32 result)
 
     if ((DisableMgr::IsPathfindingEnabled(GetMap()) || result != SPELL_FAILED_LINE_OF_SIGHT) && target)
     {
-        if ((result == SPELL_FAILED_LINE_OF_SIGHT || result == SPELL_FAILED_OUT_OF_RANGE) || !ToCreature()->HasReactState(REACT_PASSIVE))
+        if ((result == SPELL_FAILED_LINE_OF_SIGHT || result == SPELL_FAILED_OUT_OF_RANGE) || !ToCreature()->HasReactState(PET_MODE_PASSIVE))
             if (Unit* owner = GetOwner())
             {
                 if (spellInfo->IsPositive() && IsFriendlyTo(target))
@@ -20646,7 +20646,7 @@ void Unit::PetSpellFail(SpellInfo const* spellInfo, Unit* target, uint32 result)
                     charmInfo->SetIsReturning(false);
                     charmInfo->SetIsFollowing(false);
 
-                    if (!ToCreature()->HasReactState(REACT_PASSIVE))
+                    if (!ToCreature()->HasReactState(PET_MODE_PASSIVE))
                         ToCreature()->AI()->AttackStart(target);
                     else
                         GetMotionMaster()->MoveChase(target);

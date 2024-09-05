@@ -224,7 +224,7 @@ public:
             me->CastSpell(me, SPELL_CLEAR_DEBUFFS, false);
 
             me->SetVisible(false);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             _events2.Reset();
             _events2.RescheduleEvent(EVENT_HALION_VISIBILITY, 30s);
         }
@@ -286,7 +286,7 @@ public:
 
         void AttackStart(Unit* who) override
         {
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             BossAI::AttackStart(who);
         }
 
@@ -350,7 +350,7 @@ public:
             {
                 case EVENT_HALION_VISIBILITY:
                     me->SetVisible(instance->GetBossState(DATA_HALION_INTRO_DONE) == DONE);
-                    me->SetReactState(instance->GetBossState(DATA_HALION_INTRO_DONE) == DONE ? REACT_AGGRESSIVE : REACT_PASSIVE);
+                    me->SetReactState(instance->GetBossState(DATA_HALION_INTRO_DONE) == DONE ? PET_MODE_AGGRESSIVE : PET_MODE_PASSIVE);
                     break;
                 case EVENT_TRIGGER_BERSERK:
                     me->CastSpell(me, SPELL_BERSERK, true);
@@ -452,7 +452,7 @@ public:
             me->SetPhaseMask(0x21, true);
             me->SetInCombatWithZone();
             me->SetPhaseMask(0x20, true);
-            me->SetReactState(REACT_DEFENSIVE);
+            me->SetReactState(PET_MODE_DEFENSIVE);
         }
 
         void JustEngagedWith(Unit*  /*who*/) override
@@ -655,7 +655,7 @@ public:
                     if (Creature* halion = ObjectAccessor::GetCreature(*me, _instance->GetGuidData(NPC_HALION)))
                     {
                         halion->SetVisible(true);
-                        halion->SetReactState(REACT_AGGRESSIVE);
+                        halion->SetReactState(PET_MODE_AGGRESSIVE);
                         halion->AI()->Talk(SAY_INTRO);
                     }
                     break;
@@ -1076,7 +1076,7 @@ class spell_halion_twilight_phasing_aura : public AuraScript
     void OnApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*handle*/)
     {
         GetTarget()->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
-        GetTarget()->ToCreature()->SetReactState(REACT_DEFENSIVE);
+        GetTarget()->ToCreature()->SetReactState(PET_MODE_DEFENSIVE);
         GetTarget()->GetMotionMaster()->Clear();
         GetTarget()->GetThreatMgr().clearReferences();
         GetTarget()->RemoveAllAttackers();
@@ -1086,7 +1086,7 @@ class spell_halion_twilight_phasing_aura : public AuraScript
     void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*handle*/)
     {
         GetTarget()->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
-        GetTarget()->ToCreature()->SetReactState(REACT_DEFENSIVE);
+        GetTarget()->ToCreature()->SetReactState(PET_MODE_DEFENSIVE);
         GetTarget()->GetMotionMaster()->Clear();
         GetTarget()->GetThreatMgr().clearReferences();
         GetTarget()->RemoveAllAttackers();

@@ -189,7 +189,7 @@ struct npc_buru_egg : public ScriptedAI
     {
         _instance = me->GetInstanceScript();
         me->SetCombatMovement(false);
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
         me->SetControlled(true, UNIT_STATE_STUNNED);
     }
 

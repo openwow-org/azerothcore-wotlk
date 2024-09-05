@@ -48,7 +48,7 @@ struct boss_hazzarah : public BossAI
         summons.Summon(summon);
 
         summon->SetCorpseDelay(10);
-        summon->SetReactState(REACT_PASSIVE);
+        summon->SetReactState(PET_MODE_PASSIVE);
         summon->SetUnitFlag(UNIT_FLAG_DISABLE_MOVE);
         summon->SetVisible(false);
         summon->m_Events.AddEventAtOffset([summon]()
@@ -59,7 +59,7 @@ struct boss_hazzarah : public BossAI
         summon->m_Events.AddEventAtOffset([summon]()
             {
                 summon->RemoveUnitFlag(UNIT_FLAG_DISABLE_MOVE);
-                summon->SetReactState(REACT_AGGRESSIVE);
+                summon->SetReactState(PET_MODE_AGGRESSIVE);
                 summon->SetInCombatWithZone();
             }, 5s);
     }

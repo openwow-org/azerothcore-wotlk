@@ -41,7 +41,7 @@ struct boss_faction_championsAI : public ScriptedAI
     boss_faction_championsAI(Creature* pCreature, uint32 aitype) : ScriptedAI(pCreature)
     {
         pInstance = pCreature->GetInstanceScript();
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
         mAIType = aitype;
         threatTimer = 2000;
         powerTimer = 1000;

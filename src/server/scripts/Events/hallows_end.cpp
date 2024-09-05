@@ -687,7 +687,7 @@ struct npc_hallows_end_soh : public ScriptedAI
         events.ScheduleEvent(2, 43s);
         events.ScheduleEvent(3, 63s);
 
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
         me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
 
         me->SetCanFly(true);
@@ -768,7 +768,7 @@ struct npc_hallows_end_soh : public ScriptedAI
                 case 4:
                 {
                     me->ReplaceAllUnitFlags(UNIT_FLAG_NONE);
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     if (Unit* target = me->SelectNearestPlayer(30.0f))
                         AttackStart(target);
                     break;

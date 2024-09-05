@@ -60,7 +60,7 @@ struct boss_skeram : public BossAI
         _Reset();
         _flag = 0;
         _hpct = 75.0f;
-        me->SetReactState(REACT_AGGRESSIVE);
+        me->SetReactState(PET_MODE_AGGRESSIVE);
         me->SetImmuneToAll(false);
         me->SetControlled(false, UNIT_STATE_ROOT);
     }
@@ -94,7 +94,7 @@ struct boss_skeram : public BossAI
 
         creature->CastSpell(creature, SPELL_BIRTH, true);
         creature->SetControlled(true, UNIT_STATE_ROOT);
-        creature->SetReactState(REACT_PASSIVE);
+        creature->SetReactState(PET_MODE_PASSIVE);
         creature->SetImmuneToAll(true);
 
         _copiesGUIDs.push_back(creature->GetGUID());
@@ -116,7 +116,7 @@ struct boss_skeram : public BossAI
         while (_flag & (1 << rand))
             rand = urand(0, 2);
 
-        creature->SetReactState(REACT_AGGRESSIVE);
+        creature->SetReactState(PET_MODE_AGGRESSIVE);
         creature->SetImmuneToAll(false);
         creature->SetControlled(false, UNIT_STATE_ROOT);
         creature->CastSpell(creature, BlinkSpells[rand], true);
@@ -187,7 +187,7 @@ struct boss_skeram : public BossAI
                     events.ScheduleEvent(EVENT_EARTH_SHOCK, 1200ms);
                     break;
                 case EVENT_TELEPORT:
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     me->SetImmuneToAll(false);
                     me->SetControlled(false, UNIT_STATE_ROOT);
                     for (WOWGUID const& guid : _copiesGUIDs)
@@ -210,7 +210,7 @@ struct boss_skeram : public BossAI
         {
             _copiesGUIDs.clear();
             DoCast(me, SPELL_SUMMON_IMAGES, true);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->SetImmuneToAll(true);
             me->SetControlled(true, UNIT_STATE_ROOT);
             Talk(SAY_SPLIT);

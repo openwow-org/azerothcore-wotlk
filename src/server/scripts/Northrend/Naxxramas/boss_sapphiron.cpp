@@ -108,7 +108,7 @@ public:
             me->SummonGameObject(GO_SAPPHIRON_BIRTH, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 0, 0, 0, 0, 0, 0);
             me->SetVisible(false);
             me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             ScriptedAI::InitializeAI();
         }
 
@@ -127,7 +127,7 @@ public:
             BossAI::Reset();
             if (me->IsVisible())
             {
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
             }
             events.Reset();
             iceboltCount = 0;
@@ -236,7 +236,7 @@ public:
                 {
                     me->SetVisible(true);
                     me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     spawnTimer = 0;
                 }
                 return;
@@ -295,7 +295,7 @@ public:
                     }
                     events.Repeat(45s);
                     events.DelayEvents(35s);
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     me->AttackStop();
                     float x, y, z, o;
                     me->GetHomePosition(x, y, z, o);
@@ -394,7 +394,7 @@ public:
                     return;
                 case EVENT_GROUND:
                     Talk(EMOTE_GROUND_PHASE);
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     me->SetInCombatWithZone();
                     return;
                 case EVENT_HUNDRED_CLUB:

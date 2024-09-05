@@ -446,7 +446,7 @@ public:
         if (!_tapped)
         {
             me->RestoreFaction();
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
         }
 
         me->SetDisableGravity(false);
@@ -493,7 +493,7 @@ public:
 
                     me->SetDisableGravity(true);
                     me->GetMotionMaster()->MovePoint(POINT_DESPAWN, pos);
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     scheduler.Schedule(100ms, [this](TaskContext)
                     {
                         if (Player* player = _GetPlayer())
@@ -1744,7 +1744,7 @@ public:
 
     void Reset() override
     {
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
         me->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
     }
 

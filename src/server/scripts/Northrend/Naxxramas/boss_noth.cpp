@@ -100,7 +100,7 @@ public:
 
         void StartGroundPhase()
         {
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_DISABLE_MOVE);
             me->SetControlled(false, UNIT_STATE_ROOT);
             events.Reset();
@@ -115,7 +115,7 @@ public:
 
         void StartBalconyPhase()
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->AttackStop();
             me->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_DISABLE_MOVE);
             me->SetControlled(true, UNIT_STATE_ROOT);
@@ -149,7 +149,7 @@ public:
             summons.DespawnAll();
             me->CastSpell(me, SPELL_TELEPORT_BACK, true);
             me->SetControlled(false, UNIT_STATE_ROOT);
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             timesInBalcony = 0;
             if (pInstance)
             {
@@ -293,7 +293,7 @@ public:
                     StartGroundPhase();
                     break;
             }
-            if (me->HasReactState(REACT_AGGRESSIVE))
+            if (me->HasReactState(PET_MODE_AGGRESSIVE))
                 DoMeleeAttackIfReady();
         }
     };

@@ -144,7 +144,7 @@ class spell_mc_play_dead_aura : public AuraScript
         creatureTarget->SetDynamicFlag(UNIT_DYNFLAG_DEAD);
         creatureTarget->SetUnitFlag2(UNIT_FLAG2_FEIGN_DEATH);
         //creatureTarget->SetUnitFlag(UNIT_FLAG_IMMUNE_TO_PC | UNIT_FLAG_IMMUNE_TO_NPC);
-        creatureTarget->SetReactState(REACT_PASSIVE);
+        creatureTarget->SetReactState(PET_MODE_PASSIVE);
         creatureTarget->SetControlled(true, UNIT_STATE_ROOT);
 
         creatureTarget->AttackStop();
@@ -163,7 +163,7 @@ class spell_mc_play_dead_aura : public AuraScript
         creatureTarget->RemoveUnitFlag2(UNIT_FLAG2_FEIGN_DEATH);
         //creatureTarget->RemoveUnitFlag(UNIT_FLAG_IMMUNE_TO_PC | UNIT_FLAG_IMMUNE_TO_NPC);
         creatureTarget->SetControlled(false, UNIT_STATE_ROOT);
-        creatureTarget->SetReactState(REACT_AGGRESSIVE);
+        creatureTarget->SetReactState(PET_MODE_AGGRESSIVE);
 
         if (!creatureTarget->IsInCombat())
         {

@@ -84,7 +84,7 @@ public:
         void Reset() override
         {
             BossAI::Reset();
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
             me->SetVisible(true);
         }
@@ -176,7 +176,7 @@ public:
             events2.Reset();
             events2.ScheduleEvent(EVENT_ENTROPIUS_AURAS, 0);
             events2.ScheduleEvent(EVENT_ENTROPIUS_COMBAT, 3000);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         void EnterEvadeMode(EvadeReason why) override
@@ -225,7 +225,7 @@ public:
                     me->CastSpell(me, SPELL_NEGATIVE_ENERGY_PERIODIC, true);
                     break;
                 case EVENT_ENTROPIUS_COMBAT:
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     me->SetInCombatWithZone();
                     AttackStart(SelectTargetFromPlayerList(50.0f));
                     break;

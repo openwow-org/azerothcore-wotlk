@@ -90,7 +90,7 @@ public:
         {
             pInstance = pCreature->GetInstanceScript();
             TargetGUID.Clear();
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         InstanceScript* pInstance;
@@ -241,7 +241,7 @@ public:
         {
             pInstance = pCreature->GetInstanceScript();
             me->AddUnitMovementFlag(MOVEFLAG_WALK);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         InstanceScript* pInstance;
@@ -471,7 +471,7 @@ struct boss_jormungarAI : public ScriptedAI
     boss_jormungarAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         pInstance = pCreature->GetInstanceScript();
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
     }
 
     InstanceScript* pInstance;
@@ -776,7 +776,7 @@ public:
         {
             pInstance = pCreature->GetInstanceScript();
             me->AddUnitMovementFlag(MOVEFLAG_WALK);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             if (IsHeroic())
                 me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_DISPEL, true);
             me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_DECREASE_SPEED, true);
@@ -794,7 +794,7 @@ public:
 
         void AttackStart(Unit* who) override
         {
-            if (me->GetReactState() != REACT_PASSIVE)
+            if (me->GetReactState() != PET_MODE_PASSIVE)
                 ScriptedAI::AttackStart(who);
         }
 
@@ -856,7 +856,7 @@ public:
                     me->CastSpell(me, SPELL_FROTHING_RAGE, true);
                 }
 
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
             }
         }
 
@@ -892,7 +892,7 @@ public:
                     me->StopMoving();
                     me->GetMotionMaster()->Clear();
                     me->GetMotionMaster()->MoveIdle();
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     me->AttackStop();
                     me->GetMotionMaster()->MoveJump(Locs[LOC_CENTER].GetPositionX(), Locs[LOC_CENTER].GetPositionY(), Locs[LOC_CENTER].GetPositionZ(), 40.0f, 12.0f);
                     me->SetGuidValue(UNIT_FIELD_TARGET, WOWGUID::Empty);
@@ -922,7 +922,7 @@ public:
                         events.RescheduleEvent(EVENT_SPELL_ARCTIC_BREATH, 5s, 8s);
                         events.RescheduleEvent(EVENT_JUMP_MIDDLE, 30s, 50s);
                         me->GetMotionMaster()->MovementExpired();
-                        me->SetReactState(REACT_AGGRESSIVE);
+                        me->SetReactState(PET_MODE_AGGRESSIVE);
                     }
 
                     break;
@@ -986,7 +986,7 @@ public:
                         Talk(EMOTE_TRAMPLE_FAIL);
                         me->CastSpell(me, SPELL_FROTHING_RAGE, true);
                         me->GetMotionMaster()->MovementExpired();
-                        me->SetReactState(REACT_AGGRESSIVE);
+                        me->SetReactState(PET_MODE_AGGRESSIVE);
                     }
                     // no PopEvent() intended!
                     break;
@@ -996,7 +996,7 @@ public:
                     break;
             }
 
-            if( me->GetReactState() != REACT_PASSIVE )
+            if( me->GetReactState() != PET_MODE_PASSIVE )
                 DoMeleeAttackIfReady();
         }
 

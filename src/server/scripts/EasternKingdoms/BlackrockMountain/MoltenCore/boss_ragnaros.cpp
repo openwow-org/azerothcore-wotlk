@@ -137,7 +137,7 @@ public:
             {
                 extraEvents.Reset();
                 extraEvents.SetPhase(PHASE_EMERGED);
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
                 me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
                 me->SetImmuneToAll(false);
                 me->SetUInt32Value(UNIT_NPC_EMOTESTATE, 0);
@@ -281,7 +281,7 @@ public:
                             me->RemoveAurasDueToSpell(SPELL_RAGNAROS_SUBMERGE_EFFECT);
                             me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                             me->SetImmuneToAll(false);
-                            me->SetReactState(REACT_AGGRESSIVE);
+                            me->SetReactState(PET_MODE_AGGRESSIVE);
                             DoZoneInCombat();
                             break;
                         }
@@ -409,7 +409,7 @@ public:
                         events.CancelEventGroup(PHASE_EMERGED);
                         events.SetPhase(PHASE_SUBMERGED);
                         extraEvents.SetPhase(PHASE_SUBMERGED);
-                        me->SetReactState(REACT_PASSIVE);
+                        me->SetReactState(PET_MODE_PASSIVE);
                         me->InterruptNonMeleeSpells(false);
                         me->AttackStop();
                         DoResetThreatList();
@@ -463,7 +463,7 @@ public:
             extraEvents.CancelEventGroup(PHASE_SUBMERGED);
             extraEvents.SetPhase(PHASE_EMERGED);
 
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
             me->SetUInt32Value(UNIT_NPC_EMOTESTATE, 0);
             me->HandleEmoteCommand(EMOTE_ONESHOT_EMERGE);

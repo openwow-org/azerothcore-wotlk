@@ -126,7 +126,7 @@ struct boss_viscidus : public BossAI
     {
         _hitcounter = 0;
         me->RemoveAurasDueToSpell(SPELL_STUN_SELF);
-        me->SetReactState(REACT_AGGRESSIVE);
+        me->SetReactState(PET_MODE_AGGRESSIVE);
         _phase = PHASE_FROST;
         me->RemoveAurasDueToSpell(SPELL_INVIS_SELF);
     }
@@ -163,7 +163,7 @@ struct boss_viscidus : public BossAI
             }
 
             Talk(EMOTE_EXPLODE);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             events.Reset();
             _phase = PHASE_GLOB;
             me->RemoveAura(SPELL_VISCIDUS_FREEZE);
@@ -309,7 +309,7 @@ struct boss_viscidus : public BossAI
             }
         }
 
-        if (_phase != PHASE_GLOB && me->GetReactState() == REACT_AGGRESSIVE)
+        if (_phase != PHASE_GLOB && me->GetReactState() == PET_MODE_AGGRESSIVE)
             DoMeleeAttackIfReady();
     }
 
@@ -322,7 +322,7 @@ struct boss_glob_of_viscidus : public ScriptedAI
 {
     boss_glob_of_viscidus(Creature* creature) : ScriptedAI(creature)
     {
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
     }
 
     void InitializeAI() override
@@ -361,7 +361,7 @@ struct npc_toxic_slime : public ScriptedAI
 {
     npc_toxic_slime(Creature* creature) : ScriptedAI(creature)
     {
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
     }
 
     void InitializeAI() override

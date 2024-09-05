@@ -110,7 +110,7 @@ public:
             events.Reset();
             summons.DespawnAll();
             me->SetSpeed(MOVE_RUN, 1.2f, true);
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
 
             if (m_pInstance)
             {
@@ -228,7 +228,7 @@ public:
             if (id == POINT_ANVIL)
             {
                 me->SetSpeed(MOVE_RUN, 1.2f, true);
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
                 me->CastSpell(me, SPELL_TEMPER, false);
                 PointID = 0;
                 ScheduleEvents(true);
@@ -262,7 +262,7 @@ public:
             events.SetPhase(2);
             HealthCheck -= 20;
             me->SetSpeed(MOVE_RUN, 4.0f, true);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
 
             Talk(SAY_FORGE);
 

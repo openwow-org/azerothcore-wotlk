@@ -254,7 +254,7 @@ public:
         {
             _Reset();
             me->SetImmuneToAll(true);
-            me->SetReactState(REACT_DEFENSIVE);
+            me->SetReactState(PET_MODE_DEFENSIVE);
             events.Reset();
             _introDone = false;
             _frenzied = false;
@@ -534,7 +534,7 @@ public:
         {
             _events.Reset();
             me->SetNpcFlag(UNIT_NPC_FLAG_GOSSIP);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         void DoAction(int32 action) override
@@ -795,7 +795,7 @@ public:
         {
             _events.Reset();
             me->SetNpcFlag(UNIT_NPC_FLAG_GOSSIP);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         void DoAction(int32 action) override
@@ -1003,7 +1003,7 @@ public:
         npc_saurfang_eventAI(Creature* creature) : ScriptedAI(creature)
         {
             _index = 0;
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         void SetData(uint32 type, uint32 data) override

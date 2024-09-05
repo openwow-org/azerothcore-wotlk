@@ -883,7 +883,7 @@ void PretendToDie(Creature* creature)
     creature->InterruptNonMeleeSpells(true);
     creature->RemoveAllAuras();
     creature->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
-    creature->SetReactState(REACT_PASSIVE);
+    creature->SetReactState(PET_MODE_PASSIVE);
     creature->GetMotionMaster()->MovementExpired(false);
     creature->GetMotionMaster()->MoveIdle();
     creature->SetStandState(UNIT_DEAD);
@@ -892,7 +892,7 @@ void PretendToDie(Creature* creature)
 void Resurrect(Creature* target)
 {
     target->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
-    target->SetReactState(REACT_AGGRESSIVE);
+    target->SetReactState(PET_MODE_AGGRESSIVE);
     target->SetFullHealth();
     target->SetStandState(UNIT_STANDING);
     target->CastSpell(target, SPELL_RES_VISUAL, true);

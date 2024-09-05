@@ -96,7 +96,7 @@ struct boss_lady_vashj : public BossAI
             Talk(SAY_PHASE2);
             scheduler.CancelAll();
             me->CastStop();
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->GetMotionMaster()->MovePoint(POINT_HOME, me->GetHomePosition().GetPositionX(), me->GetHomePosition().GetPositionY(), me->GetHomePosition().GetPositionZ(), true, true);
         });
     }
@@ -218,7 +218,7 @@ struct boss_lady_vashj : public BossAI
             {
                 Talk(SAY_PHASE3);
                 me->ClearUnitState(UNIT_STATE_ROOT);
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
                 me->GetMotionMaster()->MoveChase(me->GetVictim());
                 scheduler.CancelAll();
 
@@ -244,7 +244,7 @@ struct boss_lady_vashj : public BossAI
 
         scheduler.Update(diff);
 
-        if (me->GetReactState() != REACT_AGGRESSIVE || !me->isAttackReady())
+        if (me->GetReactState() != PET_MODE_AGGRESSIVE || !me->isAttackReady())
         {
             return;
         }

@@ -62,7 +62,7 @@ public:
         boss_tyrannusAI(Creature* creature) : ScriptedAI(creature)
         {
             pInstance = me->GetInstanceScript();
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             if (Creature* c = pInstance->instance->GetCreature(pInstance->GetGuidData(DATA_RIMEFANG_GUID)))
             {
                 c->SetCanFly(true);
@@ -76,7 +76,7 @@ public:
         {
             me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
             events.Reset();
-            if (me->HasReactState(REACT_AGGRESSIVE)) // Reset() called by EnterEvadeMode()
+            if (me->HasReactState(PET_MODE_AGGRESSIVE)) // Reset() called by EnterEvadeMode()
             {
                 if (!pInstance)
                     return;

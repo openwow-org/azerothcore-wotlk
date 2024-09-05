@@ -74,7 +74,7 @@ struct boss_the_lurker_below : public BossAI
     void Reset() override
     {
         BossAI::Reset();
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
         me->SetStandState(UNIT_SUBMERGED);
         me->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
     }
@@ -109,7 +109,7 @@ struct boss_the_lurker_below : public BossAI
         if (action == ACTION_START_EVENT)
         {
             me->SetStandState(UNIT_SUBMERGED);
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             me->setAttackTimer(BASE_ATTACK, 6000);
             me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
             me->SetInCombatWithZone();
@@ -119,7 +119,7 @@ struct boss_the_lurker_below : public BossAI
 
     void AttackStart(Unit* who) override
     {
-        if (who && me->GetReactState() == REACT_AGGRESSIVE)
+        if (who && me->GetReactState() == PET_MODE_AGGRESSIVE)
         {
             me->Attack(who, true);
         }
@@ -154,7 +154,7 @@ struct boss_the_lurker_below : public BossAI
         {
             Talk(EMOTE_TAKE_BREATH);
             me->CastSpell(me, SPELL_SPOUT_VISUAL, TRIGGERED_IGNORE_SET_FACING);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->SetFacingToObject(me->GetVictim());
             me->SetTarget();
             scheduler.RescheduleGroup(GROUP_GEYSER, 25s);
@@ -202,7 +202,7 @@ struct boss_the_lurker_below : public BossAI
 
         scheduler.Update(diff);
 
-        if (me->GetStandState() != UNIT_STANDING || !me->isAttackReady() || me->GetReactState() != REACT_AGGRESSIVE)
+        if (me->GetStandState() != UNIT_STANDING || !me->isAttackReady() || me->GetReactState() != PET_MODE_AGGRESSIVE)
             return;
 
         Unit* target = nullptr;
@@ -280,7 +280,7 @@ class spell_lurker_below_spout : public AuraScript
         if (Creature* creature = GetUnitOwner()->ToCreature())
         {
             creature->resetAttackTimer();
-            creature->SetReactState(REACT_AGGRESSIVE);
+            creature->SetReactState(PET_MODE_AGGRESSIVE);
             if (Unit* target = creature->GetVictim())
                 creature->SetTarget(target->GetGUID());
         }

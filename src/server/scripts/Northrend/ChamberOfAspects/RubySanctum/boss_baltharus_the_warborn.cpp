@@ -109,7 +109,7 @@ public:
 
     bool Execute(uint64 /*execTime*/, uint32 /*diff*/) override
     {
-        _owner->SetReactState(REACT_AGGRESSIVE);
+        _owner->SetReactState(PET_MODE_AGGRESSIVE);
         _owner->SetInCombatWithZone();
         return true;
     }
@@ -203,7 +203,7 @@ public:
             summons.Summon(summon);
             summon->SetHealth(me->GetHealth());
             summon->CastSpell(summon, SPELL_SPAWN_EFFECT, true);
-            summon->SetReactState(REACT_PASSIVE);
+            summon->SetReactState(PET_MODE_PASSIVE);
             summon->m_Events.AddEvent(new RestoreFight(summon), summon->m_Events.CalculateTime(2000));
         }
 

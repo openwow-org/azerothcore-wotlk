@@ -204,7 +204,7 @@ struct boss_archimonde : public BossAI
         if (instance->GetBossState(DATA_AZGALOR) != DONE)
         {
             me->SetVisible(false);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
         else
         {
@@ -213,7 +213,7 @@ struct boss_archimonde : public BossAI
 
         ScheduleHealthCheckEvent(10, [&]{
             scheduler.CancelAll();
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             DoCastAOE(SPELL_PROTECTION_OF_ELUNE, true);
             Talk(SAY_ENRAGE);
             _enraged = true;
@@ -245,7 +245,7 @@ struct boss_archimonde : public BossAI
         switch (action)
         {
             case ACTION_BECOME_ACTIVE_AND_CHANNEL:
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
                 me->SetVisible(true);
                 if (!_isChanneling)
                 {
@@ -412,8 +412,8 @@ struct boss_archimonde : public BossAI
             if (Creature* doomfire = me->SummonCreature(CREATURE_DOOMFIRE, doomfirePosition, TEMPSUMMON_TIMED_DESPAWN, 27000))
             {
                 doomfireSpirit->SetWalk(false);
-                doomfireSpirit->SetReactState(REACT_PASSIVE);
-                doomfire->SetReactState(REACT_PASSIVE);
+                doomfireSpirit->SetReactState(PET_MODE_PASSIVE);
+                doomfire->SetReactState(PET_MODE_PASSIVE);
                 doomfire->GetMotionMaster()->MoveFollow(doomfireSpirit, 0.0f, 0.0f);
             }
         }

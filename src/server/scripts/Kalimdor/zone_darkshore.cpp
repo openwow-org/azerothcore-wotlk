@@ -72,7 +72,7 @@ public:
             spawnTimer = 0;
             phase      = 0;
             me->SetVisible(false);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         void JustEngagedWith(Unit*) override
@@ -127,7 +127,7 @@ public:
                         if (Creature* cr = me->SummonCreature(NPC_GREYMIST_HUNTER, me->GetPositionX() + irand(-5, 5), me->GetPositionY() + irand(-5, 5), me->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000))
                             cr->AI()->AttackStart(player);
 
-                        me->SetReactState(REACT_AGGRESSIVE);
+                        me->SetReactState(PET_MODE_AGGRESSIVE);
                         me->SetVisible(true);
                         AttackStart(player);
                     }

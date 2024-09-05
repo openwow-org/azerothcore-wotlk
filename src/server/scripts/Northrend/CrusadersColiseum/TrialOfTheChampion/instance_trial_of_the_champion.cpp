@@ -175,7 +175,7 @@ public:
                     NPC_AnnouncerGUID = creature->GetGUID();
                     //if( TeamIdInInstance == TEAM_ALLIANCE )
                     //  creature->UpdateEntry(NPC_ARELAS);
-                    creature->SetReactState(REACT_PASSIVE);
+                    creature->SetReactState(PET_MODE_PASSIVE);
                     break;
 
                 // Highlord Tirion Fordring
@@ -757,7 +757,7 @@ public:
             if( Creature* pBoss = instance->SummonCreature(CHAMPION_TO_SUMMON, SpawnPos) )
             {
                 NPC_GrandChampionGUID[BossOrder] = pBoss->GetGUID();
-                pBoss->ToCreature()->SetReactState(REACT_PASSIVE);
+                pBoss->ToCreature()->SetReactState(PET_MODE_PASSIVE);
                 pBoss->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_PACIFIED);
                 pBoss->SetImmuneToAll(true);
                 pBoss->ToCreature()->SetHomePosition(748.309f, 619.448f, 411.3f, M_PI / 2);
@@ -767,7 +767,7 @@ public:
                     if( Creature* pAdd = instance->SummonCreature(MINION_TO_SUMMON, SpawnPos) )
                     {
                         NPC_GrandChampionMinionsGUID[BossOrder][i] = pAdd->GetGUID();
-                        pAdd->SetReactState(REACT_PASSIVE);
+                        pAdd->SetReactState(PET_MODE_PASSIVE);
                         pAdd->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                         pAdd->SetImmuneToAll(true);
                         pAdd->SetHomePosition(748.309f, 619.448f, 411.3f, M_PI / 2);
@@ -864,7 +864,7 @@ public:
                         for( uint8 i = 0; i < 3; ++i )
                             if( Creature* c = instance->GetCreature(NPC_GrandChampionMinionsGUID[1][i]) )
                             {
-                                c->SetReactState(REACT_AGGRESSIVE);
+                                c->SetReactState(PET_MODE_AGGRESSIVE);
                                 c->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                                 c->SetImmuneToAll(false);
                                 if( Unit* target = c->SelectNearestTarget(200.0f) )
@@ -891,7 +891,7 @@ public:
                         for( uint8 i = 0; i < 3; ++i )
                             if( Creature* c = instance->GetCreature(NPC_GrandChampionMinionsGUID[0][i]) )
                             {
-                                c->SetReactState(REACT_AGGRESSIVE);
+                                c->SetReactState(PET_MODE_AGGRESSIVE);
                                 c->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                                 c->SetImmuneToAll(false);
                                 if( Unit* target = c->SelectNearestTarget(200.0f) )
@@ -917,7 +917,7 @@ public:
                         for( uint8 i = 0; i < 3; ++i )
                             if( Creature* c = instance->GetCreature(NPC_GrandChampionMinionsGUID[2][i]) )
                             {
-                                c->SetReactState(REACT_AGGRESSIVE);
+                                c->SetReactState(PET_MODE_AGGRESSIVE);
                                 c->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                                 c->SetImmuneToAll(false);
                                 if( Unit* target = c->SelectNearestTarget(200.0f) )
@@ -943,7 +943,7 @@ public:
                         for( uint8 i = 0; i < 3; ++i )
                             if( Creature* c = instance->GetCreature(NPC_GrandChampionGUID[i]) )
                             {
-                                c->SetReactState(REACT_AGGRESSIVE);
+                                c->SetReactState(PET_MODE_AGGRESSIVE);
                                 c->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                                 c->SetImmuneToAll(false);
                                 if( Unit* target = c->SelectNearestTarget(200.0f) )
@@ -981,7 +981,7 @@ public:
                         for( uint8 i = 0; i < 3; ++i )
                             if( Creature* c = instance->GetCreature(NPC_GrandChampionGUID[i]) )
                             {
-                                c->SetReactState(REACT_AGGRESSIVE);
+                                c->SetReactState(PET_MODE_AGGRESSIVE);
                                 c->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                                 c->SetImmuneToAll(false);
                                 if( Unit* target = c->SelectNearestTarget(200.0f) )
@@ -1076,7 +1076,7 @@ public:
                             for( uint8 j = 0; j < 3; ++j )
                                 if( Creature* c = instance->GetCreature(NPC_ArgentSoldierGUID[i][j]) )
                                 {
-                                    c->SetReactState(REACT_AGGRESSIVE);
+                                    c->SetReactState(PET_MODE_AGGRESSIVE);
                                     c->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                                     c->SetImmuneToAll(false);
                                     //c->AI()->DoZoneInCombat();
@@ -1098,7 +1098,7 @@ public:
                     {
                         if( Creature* boss = instance->GetCreature(NPC_ArgentChampionGUID) )
                         {
-                            boss->SetReactState(REACT_AGGRESSIVE);
+                            boss->SetReactState(PET_MODE_AGGRESSIVE);
                             boss->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                             boss->SetImmuneToAll(false);
                             if( Unit* target = boss->SelectNearestTarget(200.0f) )
@@ -1149,7 +1149,7 @@ public:
                             if( Creature* bk_vehicle = announcer->SummonCreature(VEHICLE_BLACK_KNIGHT, 769.834f, 651.915f, 447.035f, 0.0f) )
                             {
                                 NPC_BlackKnightVehicleGUID = bk_vehicle->GetGUID();
-                                bk_vehicle->SetReactState(REACT_PASSIVE);
+                                bk_vehicle->SetReactState(PET_MODE_PASSIVE);
                                 bk_vehicle->SetFacingTo(M_PI);
                                 if( Vehicle* v = bk_vehicle->GetVehicleKit() )
                                     if( Unit* bk = v->GetPassenger(0) )
@@ -1157,7 +1157,7 @@ public:
                                         NPC_BlackKnightGUID = bk->GetGUID();
                                         bk->SendMovementFlagUpdate(); // put him on vehicle visually
                                         if( bk->GetTypeId() == TYPEID_UNIT )
-                                            bk->ToCreature()->SetReactState(REACT_PASSIVE);
+                                            bk->ToCreature()->SetReactState(PET_MODE_PASSIVE);
                                     }
 
                                 announcer->SetFacingToObject(bk_vehicle);
@@ -1232,7 +1232,7 @@ public:
                     {
                         if( Creature* bk = instance->GetCreature(NPC_BlackKnightGUID) )
                         {
-                            bk->SetReactState(REACT_AGGRESSIVE);
+                            bk->SetReactState(PET_MODE_AGGRESSIVE);
                             bk->ReplaceAllUnitFlags(UNIT_FLAG_NONE);
                             if( Unit* target = bk->SelectNearestTarget(200.0f) )
                                 bk->AI()->AttackStart(target);

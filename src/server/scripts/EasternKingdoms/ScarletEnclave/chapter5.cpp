@@ -465,7 +465,7 @@ public:
 
             if (battleStarted == ENCOUNTER_STATE_OUTRO && cr->GetEntry() == NPC_DEFENDER_OF_THE_LIGHT)
             {
-                cr->SetReactState(REACT_PASSIVE);
+                cr->SetReactState(PET_MODE_PASSIVE);
                 cr->SetImmuneToAll(true);
                 cr->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_READY1H);
                 cr->HandleEmoteCommand(EMOTE_STATE_READY1H);
@@ -688,7 +688,7 @@ public:
 
                         if (Creature* orbaz = GetEntryFromSummons(NPC_ORBAZ_BLOODBANE))
                         {
-                            orbaz->SetReactState(REACT_PASSIVE);
+                            orbaz->SetReactState(PET_MODE_PASSIVE);
                             orbaz->AI()->Talk(EMOTE_LIGHT_OF_DAWN04);
                             orbaz->GetMotionMaster()->MovePoint(2, LightOfDawnPos[2], true, true);
                             orbaz->DespawnOrUnsummon(7000);
@@ -700,13 +700,13 @@ public:
                                 summon->CombatStop(true);
                                 summon->GetThreatMgr().ClearAllThreat();
                                 summon->SetImmuneToAll(true);
-                                summon->SetReactState(REACT_PASSIVE);
+                                summon->SetReactState(PET_MODE_PASSIVE);
                                 summon->GetMotionMaster()->Clear(false);
                             }
                         me->CombatStop(true);
                         me->GetThreatMgr().ClearAllThreat();
                         me->SetImmuneToAll(true);
-                        me->SetReactState(REACT_PASSIVE);
+                        me->SetReactState(PET_MODE_PASSIVE);
                         me->GetMotionMaster()->Clear(false);
 
                         // Position main stars

@@ -296,7 +296,7 @@ struct npc_frozen_core : public ScriptedAI
 
     void Initialize()
     {
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
         me->SetRegeneratingHealth(false);
         DoCastSelf(SPELL_ICE_SPEAR_CONTROL_AURA);
         DoCastSelf(SPELL_FROZEN_CORE_GETS_HIT);

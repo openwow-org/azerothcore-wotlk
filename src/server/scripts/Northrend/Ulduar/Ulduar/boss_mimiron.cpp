@@ -741,17 +741,17 @@ public:
                         LMK2->AttackStop();
                         LMK2->AI()->SetData(1, 0);
                         LMK2->DespawnOrUnsummon(7000);
-                        LMK2->SetReactState(REACT_PASSIVE);
+                        LMK2->SetReactState(PET_MODE_PASSIVE);
                         VX001->InterruptNonMeleeSpells(false);
                         VX001->AttackStop();
                         VX001->AI()->SetData(1, 0);
                         VX001->DespawnOrUnsummon(7000);
-                        VX001->SetReactState(REACT_PASSIVE);
+                        VX001->SetReactState(PET_MODE_PASSIVE);
                         ACU->InterruptNonMeleeSpells(false);
                         ACU->AttackStop();
                         ACU->AI()->SetData(1, 0);
                         ACU->DespawnOrUnsummon(7000);
-                        ACU->SetReactState(REACT_PASSIVE);
+                        ACU->SetReactState(PET_MODE_PASSIVE);
 
                         Position exitPos = me->GetPosition();
                         me->_ExitVehicle(&exitPos);
@@ -1024,7 +1024,7 @@ public:
                 c->EnterVehicle(me, 3);
             me->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
             me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             me->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_ONESHOT_NONE);
 
             events.Reset();
@@ -1056,7 +1056,7 @@ public:
                                 events.ScheduleEvent(EVENT_FLAME_SUPPRESSION_50000, 60s);
                         break;
                     case 4:
-                        me->SetReactState(REACT_AGGRESSIVE);
+                        me->SetReactState(PET_MODE_AGGRESSIVE);
                         DoResetThreatList();
                         Phase = 4;
                         me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
@@ -1076,9 +1076,9 @@ public:
             if (damage >= me->GetHealth() || me->GetHealth() < 15000)
             {
                 damage = 0;
-                if (me->GetReactState() == REACT_PASSIVE)
+                if (me->GetReactState() == PET_MODE_PASSIVE)
                     return;
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 if (Phase == 1)
                 {
                     if (!me->HasUnitFlag(UNIT_FLAG_NOT_SELECTABLE))
@@ -1086,7 +1086,7 @@ public:
                         me->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
                         me->GetMotionMaster()->Clear();
                         me->AttackStop();
-                        me->SetReactState(REACT_PASSIVE);
+                        me->SetReactState(PET_MODE_PASSIVE);
                         SetData(1, 0);
                         me->InterruptNonMeleeSpells(false);
                         me->RemoveAllAurasExceptType(SPELL_AURA_CONTROL_VEHICLE);
@@ -1239,7 +1239,7 @@ public:
             if( spell->Id == SPELL_SELF_REPAIR )
             {
                 me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
             }
         }
     };
@@ -1351,9 +1351,9 @@ public:
             if (damage >= me->GetHealth() || me->GetHealth() < 15000)
             {
                 damage = 0;
-                if (me->GetReactState() == REACT_PASSIVE)
+                if (me->GetReactState() == PET_MODE_PASSIVE)
                     return;
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 if (Phase == 2)
                 {
                     if (!me->HasUnitFlag(UNIT_FLAG_NOT_SELECTABLE))
@@ -1563,7 +1563,7 @@ public:
             if( spell->Id == SPELL_SELF_REPAIR )
             {
                 me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
             }
         }
     };
@@ -1636,7 +1636,7 @@ public:
                                 events.ScheduleEvent(EVENT_SUMMON_EMERGENCY_FIRE_BOTS, 0ms);
                         break;
                     case 4:
-                        me->SetReactState(REACT_AGGRESSIVE);
+                        me->SetReactState(PET_MODE_AGGRESSIVE);
                         DoResetThreatList();
                         Phase = 4;
                         me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
@@ -1665,9 +1665,9 @@ public:
             if (damage >= me->GetHealth() || me->GetHealth() < 15000)
             {
                 damage = 0;
-                if (me->GetReactState() == REACT_PASSIVE)
+                if (me->GetReactState() == PET_MODE_PASSIVE)
                     return;
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 if (Phase == 3)
                 {
                     if (!me->HasUnitFlag(UNIT_FLAG_NOT_SELECTABLE))
@@ -1676,7 +1676,7 @@ public:
                         me->GetMotionMaster()->Clear();
                         me->StopMoving();
                         me->AttackStop();
-                        me->SetReactState(REACT_PASSIVE);
+                        me->SetReactState(PET_MODE_PASSIVE);
                         SetData(1, 0);
                         me->InterruptNonMeleeSpells(false);
                         me->RemoveAllAurasExceptType(SPELL_AURA_CONTROL_VEHICLE);
@@ -1874,7 +1874,7 @@ public:
             if( spell->Id == SPELL_SELF_REPAIR )
             {
                 me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
             }
         }
     };

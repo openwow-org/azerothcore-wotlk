@@ -73,7 +73,7 @@ public:
         void Reset() override
         {
             BossAI::Reset();
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
         }
 
         void JustEngagedWith(Unit* who) override
@@ -141,7 +141,7 @@ public:
             {
                 case EVENT_FLIGHT:
                     {
-                        me->SetReactState(REACT_PASSIVE);
+                        me->SetReactState(PET_MODE_PASSIVE);
                         me->AttackStop();
                         me->SetDisableGravity(true);
                         me->GetMotionMaster()->MovePoint(POINT_TAKEOFF, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ() + 6.0f, false);
@@ -169,7 +169,7 @@ public:
                     me->GetMotionMaster()->MovePoint(POINT_LAND, 3151.07f, 636.443f, 80.0f, false);
                     break;
                 case EVENT_LAND_GROUND:
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     if (me->GetVictim())
                         me->GetMotionMaster()->MoveChase(me->GetVictim());
                     break;

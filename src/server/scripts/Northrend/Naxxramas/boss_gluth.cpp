@@ -93,7 +93,7 @@ public:
             me->ApplySpellImmune(SPELL_INFECTED_WOUND, IMMUNITY_ID, SPELL_INFECTED_WOUND, true);
             events.Reset();
             summons.DespawnAll();
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
         }
 
         void MoveInLineOfSight(Unit* who) override
@@ -259,7 +259,7 @@ class spell_gluth_decimate : public SpellScript
             {
                 cTarget->SetWalk(true);
                 cTarget->GetMotionMaster()->MoveFollow(GetCaster(), 0.0f, 0.0f, MOTION_SLOT_CONTROLLED);
-                cTarget->SetReactState(REACT_PASSIVE);
+                cTarget->SetReactState(PET_MODE_PASSIVE);
                 Unit::DealDamage(GetCaster(), cTarget, damage);
                 return;
             }

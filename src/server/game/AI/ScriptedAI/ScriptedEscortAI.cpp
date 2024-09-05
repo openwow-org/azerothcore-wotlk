@@ -77,7 +77,7 @@ bool npc_escortAI::AssistPlayerInCombatAgainst(Unit* who)
         return false;
     }
 
-    if (me->HasReactState(REACT_PASSIVE))
+    if (me->HasReactState(PET_MODE_PASSIVE))
     {
         return false;
     }
@@ -141,7 +141,7 @@ void npc_escortAI::MoveInLineOfSight(Unit* who)
         if (HasEscortState(STATE_ESCORT_ESCORTING) && AssistPlayerInCombatAgainst(who))
             return;
 
-    if (me->HasReactState(REACT_AGGRESSIVE) && me->CanStartAttack(who))
+    if (me->HasReactState(PET_MODE_AGGRESSIVE) && me->CanStartAttack(who))
     {
         if (me->HasUnitState(UNIT_STATE_DISTRACTED))
         {

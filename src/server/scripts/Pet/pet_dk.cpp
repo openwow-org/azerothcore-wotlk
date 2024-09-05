@@ -139,7 +139,7 @@ public:
         void Reset() override
         {
             _selectionTimer = 0;
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             MySelectNextTarget();
         }
 
@@ -154,7 +154,7 @@ public:
 
             // Sanctuary
             me->CastSpell(me, SPELL_DK_SANCTUARY, true);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
 
             me->SetSpeed(MOVE_FLIGHT, 1.0f, true);
             me->SetSpeed(MOVE_RUN, 1.0f, true);

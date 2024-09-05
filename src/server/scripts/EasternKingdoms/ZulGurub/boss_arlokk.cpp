@@ -234,7 +234,7 @@ public:
                             me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 1, uint32(EQUIP_UNEQUIP));
                             me->AttackStop();
                             DoResetThreatList();
-                            me->SetReactState(REACT_PASSIVE);
+                            me->SetReactState(PET_MODE_PASSIVE);
                             me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
                             DoCastSelf(SPELL_VANISH_VISUAL);
                             DoCastSelf(SPELL_VANISH);
@@ -253,7 +253,7 @@ public:
                         events.ScheduleEvent(EVENT_VISIBLE, 41s, 47s, 0, PHASE_ONE);
                         break;
                     case EVENT_VISIBLE:
-                        me->SetReactState(REACT_AGGRESSIVE);
+                        me->SetReactState(PET_MODE_AGGRESSIVE);
                         me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
                         if (Unit* target = SelectTarget(SelectTargetMethod::Random, 0))
                             AttackStart(target);

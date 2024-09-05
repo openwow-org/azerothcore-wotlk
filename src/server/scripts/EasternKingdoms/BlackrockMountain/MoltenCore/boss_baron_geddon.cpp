@@ -141,7 +141,7 @@ class spell_geddon_inferno_aura : public AuraScript
     {
         if (Creature* pCreatureTarget = GetTarget()->ToCreature())
         {
-            pCreatureTarget->SetReactState(REACT_PASSIVE);
+            pCreatureTarget->SetReactState(PET_MODE_PASSIVE);
             pCreatureTarget->AttackStop();
         }
     }
@@ -150,7 +150,7 @@ class spell_geddon_inferno_aura : public AuraScript
     {
         if (Creature* pCreatureTarget = GetTarget()->ToCreature())
         {
-            pCreatureTarget->SetReactState(REACT_AGGRESSIVE);
+            pCreatureTarget->SetReactState(PET_MODE_AGGRESSIVE);
         }
     }
 
@@ -201,7 +201,7 @@ class spell_geddon_armageddon_aura : public AuraScript
     {
         if (Creature* pCreatureTarget = GetTarget()->ToCreature())
         {
-            pCreatureTarget->SetReactState(REACT_PASSIVE);
+            pCreatureTarget->SetReactState(PET_MODE_PASSIVE);
             pCreatureTarget->AttackStop();
         }
     }
@@ -210,7 +210,7 @@ class spell_geddon_armageddon_aura : public AuraScript
     {
         if (Creature* pCreatureTarget = GetTarget()->ToCreature())
         {
-            pCreatureTarget->SetReactState(REACT_AGGRESSIVE);
+            pCreatureTarget->SetReactState(PET_MODE_AGGRESSIVE);
         }
     }
 

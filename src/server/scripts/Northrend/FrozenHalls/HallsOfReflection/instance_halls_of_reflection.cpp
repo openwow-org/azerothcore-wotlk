@@ -78,7 +78,7 @@ public:
                 _owner.m_Events.AddEvent(new UtherBatteredHiltEvent(_owner, 8), _owner.m_Events.CalculateTime(4000));
                 break;
             case 8:
-                _owner.SetReactState(REACT_AGGRESSIVE);
+                _owner.SetReactState(PET_MODE_AGGRESSIVE);
                 _owner.SetImmuneToAll(false);
                 if (InstanceScript* instance = _owner.GetInstanceScript())
                     instance->SetData(DATA_BATTERED_HILT, 8);
@@ -106,7 +106,7 @@ public:
             case 14:
                 {
                     Position homePos = _owner.GetHomePosition();
-                    _owner.SetReactState(REACT_PASSIVE);
+                    _owner.SetReactState(PET_MODE_PASSIVE);
                     _owner.SetImmuneToAll(true);
                     _owner.SetVisible(false);
                     _owner.UpdatePosition(homePos.GetPositionX(), homePos.GetPositionY(), homePos.GetPositionZ(), homePos.GetFacing(), true);
@@ -248,12 +248,12 @@ public:
                 case NPC_UTHER:
                     creature->SetVisible(false);
                     NPC_UtherGUID = creature->GetGUID();
-                    creature->SetReactState(REACT_PASSIVE);
+                    creature->SetReactState(PET_MODE_PASSIVE);
                     break;
                 case NPC_LICH_KING_EVENT:
                     creature->SetVisible(false);
                     NPC_LichKingIntroGUID = creature->GetGUID();
-                    creature->SetReactState(REACT_PASSIVE);
+                    creature->SetReactState(PET_MODE_PASSIVE);
                     creature->AddUnitMovementFlag(MOVEFLAG_WALK);
                     break;
                 case NPC_FALRIC:
@@ -281,7 +281,7 @@ public:
                     if (!(EncounterMask & (1 << DATA_MARWYN)))
                     {
                         creature->SetVisible(false);
-                        creature->SetReactState(REACT_PASSIVE);
+                        creature->SetReactState(PET_MODE_PASSIVE);
                     }
                     NPC_FrostswornGeneralGUID = creature->GetGUID();
                     break;
@@ -361,7 +361,7 @@ public:
                     break;
                 case NPC_QUEL_DELAR:
                     NPC_QuelDelarGUID = creature->GetGUID();
-                    creature->SetReactState(REACT_PASSIVE);
+                    creature->SetReactState(PET_MODE_PASSIVE);
                     break;
                 case NPC_HIGH_CAPTAIN_JUSTIN_BARLETT:
                 case NPC_SKY_REAVER_KORM_BLACKSKAR:
@@ -443,7 +443,7 @@ public:
                             {
                                 c->SetVisible(true);
                                 c->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_ONESHOT_NONE);
-                                c->SetReactState(REACT_AGGRESSIVE);
+                                c->SetReactState(PET_MODE_AGGRESSIVE);
                             }
                             if (Creature* c = instance->GetCreature(NPC_FrostswornGeneralGUID))
                             {
@@ -642,7 +642,7 @@ public:
                             case 7:
                                 if (Creature* c = instance->GetCreature(NPC_QuelDelarGUID))
                                 {
-                                    c->SetReactState(REACT_AGGRESSIVE);
+                                    c->SetReactState(PET_MODE_AGGRESSIVE);
                                     c->SetImmuneToAll(false);
                                     c->RemoveAurasDueToSpell(70300);
                                 }

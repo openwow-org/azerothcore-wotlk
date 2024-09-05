@@ -208,7 +208,7 @@ void InstanceScript::UpdateMinionState(Creature* minion, EncounterState state)
                 minion->Respawn();
             else
             {
-                if (minion->GetReactState() == REACT_AGGRESSIVE)
+                if (minion->GetReactState() == PET_MODE_AGGRESSIVE)
                 {
                     minion->AI()->DoZoneInCombat(nullptr, 100.0f);
                 }

@@ -119,7 +119,7 @@ struct boss_alar : public BossAI
         _noQuillTimes = 0;
         _platformMoveRepeatTimer = 16s;
         me->SetModelVisible(true);
-        me->SetReactState(REACT_AGGRESSIVE);
+        me->SetReactState(PET_MODE_AGGRESSIVE);
         ConstructWaypointsAndMove();
     }
 
@@ -231,7 +231,7 @@ struct boss_alar : public BossAI
                 }).Schedule(16001ms, [this](TaskContext)
                 {
                     me->SetHealth(me->GetMaxHealth());
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     _noMelee = false;
                     me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
                     _platform = POINT_MIDDLE;
@@ -249,7 +249,7 @@ struct boss_alar : public BossAI
         creature->InterruptNonMeleeSpells(true);
         creature->RemoveAllAuras();
         creature->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
-        creature->SetReactState(REACT_PASSIVE);
+        creature->SetReactState(PET_MODE_PASSIVE);
         creature->GetMotionMaster()->MovementExpired(false);
         creature->GetMotionMaster()->MoveIdle();
         creature->SetStandState(UNIT_DEAD);

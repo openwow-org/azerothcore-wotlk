@@ -82,7 +82,7 @@ public:
 
     bool Execute(uint64 /*execTime*/, uint32 /*diff*/) override
     {
-        _owner->SetReactState(REACT_AGGRESSIVE);
+        _owner->SetReactState(PET_MODE_AGGRESSIVE);
         _owner->SetInCombatWithZone();
         return true;
     }
@@ -155,7 +155,7 @@ public:
             if (summon->GetEntry() == NPC_DRAKKARI_ELEMENTAL)
             {
                 summon->SetRegeneratingHealth(false);
-                summon->SetReactState(REACT_PASSIVE);
+                summon->SetReactState(PET_MODE_PASSIVE);
                 summon->m_Events.AddEvent(new RestoreFight(summon), summon->m_Events.CalculateTime(3000));
                 if (events.GetNextEventTime(EVENT_COLOSSUS_HEALTH_2) == 0)
                 {
@@ -371,7 +371,7 @@ public:
         {
             if (param == ACTION_MERGE)
             {
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 me->GetMotionMaster()->MoveCharge(1672.96f, 743.488f, 143.338f, 7.0f, POINT_MERGE);
                 me->DespawnOrUnsummon(1200);
             }

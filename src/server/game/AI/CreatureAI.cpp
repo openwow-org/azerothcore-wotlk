@@ -167,7 +167,7 @@ void CreatureAI::MoveInLineOfSight(Unit* who)
                 !me->IsWithinDist(who, ATTACK_DISTANCE, true, false))                      // if in combat and in dist - neutral to all can actually assist other creatures
             return;
 
-    if (me->HasReactState(REACT_AGGRESSIVE) && me->CanStartAttack(who))
+    if (me->HasReactState(PET_MODE_AGGRESSIVE) && me->CanStartAttack(who))
         AttackStart(who);
 }
 
@@ -181,7 +181,7 @@ void CreatureAI::TriggerAlert(Unit const* who) const
     if (me->GetTypeId() != TYPEID_UNIT || me->IsEngaged() || me->HasUnitState(UNIT_STATE_CONFUSED | UNIT_STATE_STUNNED | UNIT_STATE_FLEEING | UNIT_STATE_DISTRACTED))
         return;
     // Only alert for hostiles!
-    if (me->IsCivilian() || me->HasReactState(REACT_PASSIVE) || !me->IsHostileTo(who) || !me->_IsTargetAcceptable(who))
+    if (me->IsCivilian() || me->HasReactState(PET_MODE_PASSIVE) || !me->IsHostileTo(who) || !me->_IsTargetAcceptable(who))
         return;
     // Only alert if target is within line of sight
     if (!me->IsWithinLOSInMap(who))
@@ -244,7 +244,7 @@ void CreatureAI::SetGazeOn(Unit* target)
     if (me->IsValidAttackTarget(target))
     {
         AttackStart(target);
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
     }
 }
 
@@ -253,12 +253,12 @@ bool CreatureAI::UpdateVictimWithGaze()
     if (!me->IsEngaged())
         return false;
 
-    if (me->HasReactState(REACT_PASSIVE))
+    if (me->HasReactState(PET_MODE_PASSIVE))
     {
         if (me->GetVictim())
             return true;
         else
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
     }
 
     if (Unit* victim = me->SelectVictim())
@@ -271,7 +271,7 @@ bool CreatureAI::UpdateVictim()
     if (!me->IsEngaged())
         return false;
 
-    if (!me->HasReactState(REACT_PASSIVE))
+    if (!me->HasReactState(PET_MODE_PASSIVE))
     {
         if (Unit* victim = me->SelectVictim())
             AttackStart(victim);

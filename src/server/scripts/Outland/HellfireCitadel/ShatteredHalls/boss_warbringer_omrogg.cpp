@@ -165,7 +165,7 @@ struct boss_warbringer_omrogg : public BossAI
                 {
                     DoCastSelf(SPELL_BEATDOWN);
                     me->AttackStop();
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     context.Schedule(200ms, GROUP_NON_BURNING_PHASE, [this](TaskContext context)
                     {
                         DoResetThreatList();
@@ -174,7 +174,7 @@ struct boss_warbringer_omrogg : public BossAI
                         HandleHeadTalk(SAY_ON_BEATDOWN);
                         context.Schedule(1200ms, GROUP_NON_BURNING_PHASE, [this](TaskContext /*context*/)
                         {
-                            me->SetReactState(REACT_AGGRESSIVE);
+                            me->SetReactState(PET_MODE_AGGRESSIVE);
                         });
                     });
                     context.Repeat();
@@ -187,7 +187,7 @@ struct boss_warbringer_omrogg : public BossAI
             Schedule(45s, 60s, GROUP_BURNING_PHASE, [this](TaskContext context)
             {
                 me->AttackStop();
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 context.CancelGroup(GROUP_NON_BURNING_PHASE);
                 context.Schedule(1200ms, [this](TaskContext context)
                     {
@@ -201,7 +201,7 @@ struct boss_warbringer_omrogg : public BossAI
                                         DoResetThreatList();
                                         if (Unit* newTarget = SelectTarget(SelectTargetMethod::Random, 1))
                                             me->AddThreat(newTarget, 2250.f);
-                                        me->SetReactState(REACT_AGGRESSIVE);
+                                        me->SetReactState(PET_MODE_AGGRESSIVE);
                                         context.Schedule(4850ms, 8500ms, GROUP_BURNING_PHASE, [this](TaskContext context)
                                             {
                                                 DoCastAOE(SPELL_BLAST_WAVE);

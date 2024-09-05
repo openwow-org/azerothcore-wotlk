@@ -189,14 +189,14 @@ public:
         void HandleEffectApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
         {
             Creature* target = GetUnitOwner()->ToCreature();
-            target->SetReactState(REACT_PASSIVE);
+            target->SetReactState(PET_MODE_PASSIVE);
             target->SetImmuneToAll(true);
         }
 
         void HandleEffectRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
         {
             Creature* target = GetUnitOwner()->ToCreature();
-            target->SetReactState(REACT_AGGRESSIVE);
+            target->SetReactState(PET_MODE_AGGRESSIVE);
             target->SetImmuneToAll(false);
         }
 

@@ -381,7 +381,7 @@ public:
                         copyGUID = cr->GetGUID();
                         summoner->CastSpell(cr, SPELL_CLONE_CASTER, true);
                         cr->SetFaction(summoner->GetFaction());
-                        cr->SetReactState(REACT_AGGRESSIVE);
+                        cr->SetReactState(PET_MODE_AGGRESSIVE);
                     }
                 }
 
@@ -1360,7 +1360,7 @@ public:
             return true;
         _owner->GetMotionMaster()->MoveRandom(5.0f);
         _owner->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
-        _owner->SetReactState(REACT_AGGRESSIVE);
+        _owner->SetReactState(PET_MODE_AGGRESSIVE);
         _owner->CastSpell(_owner, SPELL_SAC_GHOUL_AREA_AURA, true);
         return true;
     }
@@ -1377,7 +1377,7 @@ public:
     bool Execute(uint64 /*time*/, uint32 /*diff*/) override
     {
         _owner->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
-        _owner->SetReactState(REACT_PASSIVE);
+        _owner->SetReactState(PET_MODE_PASSIVE);
         _owner->SetDisplayId(11686);
         return true;
     }
@@ -1446,7 +1446,7 @@ public:
         void Deactivate()
         {
             me->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->SetDisplayId(11686);
         }
 
@@ -1544,7 +1544,7 @@ public:
     {
         npc_q24545_vegardAI(Creature* c) : ScriptedAI(c)
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
             events.Reset();
             events.ScheduleEvent(1, 7s);
@@ -1582,7 +1582,7 @@ public:
                 case 0:
                     break;
                 case 1:
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     me->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
                     if (Unit* t = me->SelectNearestTarget(50.0f))
                         AttackStart(t);

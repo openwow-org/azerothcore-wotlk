@@ -503,7 +503,7 @@ public:
 
     bool Execute(uint64 /*time*/, uint32 /*diff*/) override
     {
-        _owner->SetReactState(REACT_AGGRESSIVE);
+        _owner->SetReactState(PET_MODE_AGGRESSIVE);
         if (!_owner->GetThreatMgr().isThreatListEmpty())
             if (Unit* target = _owner->SelectVictim())
                 _owner->AI()->AttackStart(target);
@@ -526,7 +526,7 @@ public:
 
     bool Execute(uint64 /*time*/, uint32 /*diff*/) override
     {
-        _owner->SetReactState(REACT_AGGRESSIVE);
+        _owner->SetReactState(PET_MODE_AGGRESSIVE);
         _owner->CastSpell(_owner, SPELL_VILE_SPIRIT_MOVE_SEARCH, true);
         _owner->CastSpell((Unit*)nullptr, SPELL_VILE_SPIRIT_DAMAGE_SEARCH, true);
         return true;
@@ -637,7 +637,7 @@ public:
         {
             me->AddAura(SPELL_EMOTE_SIT_NO_SHEATH, me);
             me->SetImmuneToPC(true);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         uint8 _phase;
@@ -675,7 +675,7 @@ public:
 
             me->AddAura(SPELL_EMOTE_SIT_NO_SHEATH, me);
             me->SetImmuneToPC(true);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->SetStandState(UNIT_SITTING);
 
             if (!ObjectAccessor::GetCreature(*me, instance->GetGuidData(DATA_HIGHLORD_TIRION_FORDRING)))
@@ -776,7 +776,7 @@ public:
             if (_phase == PHASE_ONE && !HealthAbovePct(70) && !me->HasUnitState(UNIT_STATE_CASTING))
             {
                 _phase = PHASE_TRANSITION;
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 me->AttackStop();
                 events.CancelEventGroup(EVENT_GROUP_ABILITIES);
                 me->InterruptNonMeleeSpells(false);
@@ -787,7 +787,7 @@ public:
             if (_phase == PHASE_TWO && !HealthAbovePct(40) && !me->HasUnitState(UNIT_STATE_CASTING))
             {
                 _phase = PHASE_TRANSITION;
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 me->AttackStop();
                 events.CancelEventGroup(EVENT_GROUP_ABILITIES);
                 me->InterruptNonMeleeSpells(false);
@@ -802,7 +802,7 @@ public:
                 summons.DoAction(ACTION_TELEPORT_BACK, pred);
                 events.Reset();
                 summons.DespawnAll();
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 me->AttackStop();
                 me->GetMap()->SetZoneMusic(AREA_THE_FROZEN_THRONE, MUSIC_FURY_OF_FROSTMOURNE);
                 me->InterruptNonMeleeSpells(true);
@@ -858,7 +858,7 @@ public:
                 case NPC_DRUDGE_GHOUL:
                     summon->SetHomePosition(CenterPosition);
                     summon->CastSpell(summon, SPELL_RISEN_WITCH_DOCTOR_SPAWN, true);
-                    summon->SetReactState(REACT_PASSIVE);
+                    summon->SetReactState(PET_MODE_PASSIVE);
                     summon->HandleEmoteCommand(EMOTE_ONESHOT_EMERGE);
                     summon->m_Events.AddEvent(new StartMovementEvent(me, summon), summon->m_Events.CalculateTime(5000));
                     break;
@@ -867,7 +867,7 @@ public:
                     break;
                 case NPC_VILE_SPIRIT:
                     {
-                        summon->SetReactState(REACT_PASSIVE);
+                        summon->SetReactState(PET_MODE_PASSIVE);
                         summon->GetMotionMaster()->MoveRandom(10.0f);
                         if (_phase == PHASE_THREE)
                             summon->m_Events.AddEvent(new VileSpiritActivateEvent(summon), summon->m_Events.CalculateTime(15000));
@@ -1002,7 +1002,7 @@ public:
                     me->CastSpell(me, SPELL_BERSERK2, true);
                     break;
                 case EVENT_START_ATTACK:
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     if (_phase == PHASE_FROSTMOURNE)
                     {
                         _bFrostmournePhase = false;
@@ -1013,7 +1013,7 @@ public:
                         for (SummonList::iterator i = summons.begin(); i != summons.end(); ++i)
                             if (Creature* summon = ObjectAccessor::GetCreature(*me, *i))
                                 if (summon->GetEntry() == NPC_RAGING_SPIRIT)
-                                    summon->SetReactState(REACT_AGGRESSIVE);
+                                    summon->SetReactState(PET_MODE_AGGRESSIVE);
                     }
                     break;
                 case EVENT_QUAKE:
@@ -1175,7 +1175,7 @@ public:
                     Talk(SAY_LK_HARVEST_SOUL);
                     me->CastSpell((Unit*)nullptr, SPELL_HARVEST_SOULS, false);
                     _phase = PHASE_FROSTMOURNE;
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     me->AttackStop();
                     events.ScheduleEvent(EVENT_START_ATTACK, 55s);
                     events.DelayEvents(52500, EVENT_GROUP_VILE_SPIRITS);
@@ -1193,14 +1193,14 @@ public:
                                 summon->m_Events.AddEvent(new VileSpiritActivateEvent(summon), summon->m_Events.CalculateTime(55000));
                                 summon->GetMotionMaster()->Clear(true);
                                 summon->StopMoving();
-                                summon->SetReactState(REACT_PASSIVE);
+                                summon->SetReactState(PET_MODE_PASSIVE);
                                 summon->AttackStop();
                             }
                             else if (summon->GetEntry() == NPC_RAGING_SPIRIT)
                             {
                                 summon->GetMotionMaster()->Clear(true);
                                 summon->StopMoving();
-                                summon->SetReactState(REACT_PASSIVE);
+                                summon->SetReactState(PET_MODE_PASSIVE);
                                 summon->AttackStop();
                             }
                         }
@@ -1224,7 +1224,7 @@ public:
                     break;
             }
 
-            if (!me->HasReactState(REACT_PASSIVE) && me->GetVictim() && me->IsWithinMeleeRange(me->GetVictim()) && me->GetMotionMaster()->GetCurrentMovementGeneratorType() != POINT_MOTION_TYPE && !me->IsWithinLOSInMap(me->GetVictim()))
+            if (!me->HasReactState(PET_MODE_PASSIVE) && me->GetVictim() && me->IsWithinMeleeRange(me->GetVictim()) && me->GetMotionMaster()->GetCurrentMovementGeneratorType() != POINT_MOTION_TYPE && !me->IsWithinLOSInMap(me->GetVictim()))
                 me->GetMotionMaster()->MoveCharge(me->GetVictim()->GetPositionX(), me->GetVictim()->GetPositionY(), me->GetVictim()->GetPositionZ(), me->GetSpeed(MOVE_RUN), POINT_NONE);
 
             DoMeleeAttackIfReady();
@@ -1267,7 +1267,7 @@ public:
             instance->SetBossState(DATA_THE_LICH_KING, FAIL);
             me->CastSpell((Unit*)nullptr, SPELL_KILL_FROSTMOURNE_PLAYERS, true);
             BossAI::EnterEvadeMode(why);
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
 
             if (Creature* tirion = ObjectAccessor::GetCreature(*me, instance->GetGuidData(DATA_HIGHLORD_TIRION_FORDRING)))
                 tirion->DespawnOrUnsummon();
@@ -1294,7 +1294,7 @@ public:
             _events.Reset();
             if (_instance->GetBossState(DATA_THE_LICH_KING) == DONE || (me->GetMap()->IsHeroic() && !_instance->GetData(DATA_LK_HC_AVAILABLE)))
                 me->RemoveNpcFlag(UNIT_NPC_FLAG_GOSSIP);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         void MovementInform(uint32 type, uint32 id) override
@@ -1463,7 +1463,7 @@ public:
                     {
                         theLichKing->SetWalk(false);
                         theLichKing->SetImmuneToPC(false);
-                        theLichKing->SetReactState(REACT_AGGRESSIVE);
+                        theLichKing->SetReactState(PET_MODE_AGGRESSIVE);
                         theLichKing->SetInCombatWithZone();
                         if (!theLichKing->IsInCombat())
                             theLichKing->AI()->EnterEvadeMode();
@@ -2216,7 +2216,7 @@ public:
         {
             targetGUID.Clear();
             timer = 250;
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         WOWGUID targetGUID;
@@ -2407,7 +2407,7 @@ public:
                     }
                     break;
                 case EVENT_SOUL_SHRIEK:
-                    if (!me->HasReactState(REACT_PASSIVE))
+                    if (!me->HasReactState(PET_MODE_PASSIVE))
                         me->CastSpell(me->GetVictim(), SPELL_SOUL_SHRIEK, false);
                     _events.ScheduleEvent(EVENT_SOUL_SHRIEK, 12s, 15s);
                     break;
@@ -2525,7 +2525,7 @@ public:
     {
         npc_valkyr_shadowguardAI(Creature* creature) : NullCreatureAI(creature), didbelow50pct(false), dropped(false), _instance(creature->GetInstanceScript())
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_TAUNT, true);
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_ATTACK_ME, true);
             _events.Reset();
@@ -3318,7 +3318,7 @@ public:
                     }
                     me->CastSpell(me, SPELL_TERENAS_LOSES_INSIDE, false);
                     me->SetDisplayId(16946);
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     me->AttackStop();
                     me->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
                     me->DespawnOrUnsummon(2000);
@@ -3351,7 +3351,7 @@ public:
                         warden->CastSpell((Unit*)nullptr, SPELL_DESTROY_SOUL, false);
                     me->CastSpell(me, SPELL_TERENAS_LOSES_INSIDE, false);
                     me->SetDisplayId(16946);
-                    me->SetReactState(REACT_PASSIVE);
+                    me->SetReactState(PET_MODE_PASSIVE);
                     me->AttackStop();
                     me->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
                     _events.Reset();
@@ -3461,7 +3461,7 @@ public:
                 (*itr)->m_Events.KillAllEvents(true);
                 (*itr)->RemoveAllAuras();
                 (*itr)->AI()->EnterEvadeMode();
-                (*itr)->SetReactState(REACT_PASSIVE);
+                (*itr)->SetReactState(PET_MODE_PASSIVE);
             }
         }
 
@@ -3653,7 +3653,7 @@ public:
     {
         npc_lk_spirit_bombAI(Creature* creature) : NullCreatureAI(creature)
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->DespawnOrUnsummon(45000); // for safety
             timer = 0;
         }
@@ -3746,22 +3746,22 @@ public:
         void Reset() override
         {
             me->SetCorpseDelay(0);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         void JustDied(Unit* /*killer*/) override
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         void JustRespawned() override
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         bool CanAIAttack(Unit const* target) const override
         {
-            return me->GetReactState() == REACT_AGGRESSIVE && target->GetTypeId() == TYPEID_PLAYER && target->GetExactDistSq(495.708f, -2523.76f, 1049.95f) < 40.0f * 40.0f;
+            return me->GetReactState() == PET_MODE_AGGRESSIVE && target->GetTypeId() == TYPEID_PLAYER && target->GetExactDistSq(495.708f, -2523.76f, 1049.95f) < 40.0f * 40.0f;
         }
     };
 

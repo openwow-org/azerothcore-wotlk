@@ -734,7 +734,7 @@ public:
     {
         npc_anubarak_spikeAI(Creature* pCreature) : ScriptedAI(pCreature)
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->SetCorpseDelay(0);
         }
 

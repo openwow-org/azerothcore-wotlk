@@ -191,7 +191,7 @@ public:
             me->SetPosition(me->GetHomePosition());
             movementPhase = MOVE_PHASE_NONE;
             currentWaypoint = 0;
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             events.Reset();
             events.RescheduleEvent(EVENT_MARK_CAST, 24s);
             events.RescheduleEvent(EVENT_BERSERK, 10min);
@@ -224,7 +224,7 @@ public:
             if (id % 3 == 2)
             {
                 movementPhase = MOVE_PHASE_FINISHED;
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
                 me->SetInCombatWithZone();
                 if (!UpdateVictim())
                 {
@@ -300,7 +300,7 @@ public:
             if (movementPhase == MOVE_PHASE_NONE)
             {
                 Talk(SAY_AGGRO);
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 movementPhase = MOVE_PHASE_STARTED;
                 me->SetSpeed(MOVE_RUN, me->GetSpeedRate(MOVE_RUN), true);
                 MoveToCorner();

@@ -1418,7 +1418,7 @@ public:
                     if (Creature* temp = me->SummonCreature(NPC_THRALL, AllianceSpawn[17].x, AllianceSpawn[17].y, AllianceSpawn[17].z, TEMPSUMMON_MANUAL_DESPAWN))
                     {
                         thrallGUID = temp->GetGUID();
-                        temp->SetReactState(REACT_PASSIVE);
+                        temp->SetReactState(PET_MODE_PASSIVE);
                         temp->SetImmuneToAll(true);
                         temp->CastSpell(temp, SPELL_THRALL_BUFF);
                         temp->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_READY2H);
@@ -1426,7 +1426,7 @@ public:
                     if (Creature* temp = me->SummonCreature(NPC_SYLVANAS, AllianceSpawn[18].x, AllianceSpawn[18].y, AllianceSpawn[18].z, TEMPSUMMON_MANUAL_DESPAWN))
                     {
                         sylvanasGUID = temp->GetGUID();
-                        temp->SetReactState(REACT_PASSIVE);
+                        temp->SetReactState(PET_MODE_PASSIVE);
                         temp->SetImmuneToAll(true);
                         temp->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_READY2H);
                     }
@@ -1435,7 +1435,7 @@ public:
                         if (Creature* temp = me->SummonCreature(NPC_HORDE_SOLDIER, AllianceSpawn[i + 19].x, AllianceSpawn[i + 19].y, AllianceSpawn[i + 19].z, TEMPSUMMON_MANUAL_DESPAWN))
                         {
                             hordeForcesGUID[i] = temp->GetGUID();
-                            temp->SetReactState(REACT_PASSIVE);
+                            temp->SetReactState(PET_MODE_PASSIVE);
                             temp->SetImmuneToAll(true);
                             temp->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_READY2H);
                         }
@@ -1472,7 +1472,7 @@ public:
                     {
                         jaina->GetMotionMaster()->Clear();
                         jaina->SetImmuneToNPC(false);
-                        jaina->SetReactState(REACT_AGGRESSIVE);
+                        jaina->SetReactState(PET_MODE_AGGRESSIVE);
                     }
                     SetHoldState(true);
                     bStepping = true;
@@ -1608,7 +1608,7 @@ public:
                             if (Creature* jaina = ObjectAccessor::GetCreature(*me, jainaGUID))
                             {
                                 jaina->GetMotionMaster()->MoveFollow(me, 5, PET_FOLLOW_ANGLE);
-                                jaina->SetReactState(REACT_AGGRESSIVE);
+                                jaina->SetReactState(PET_MODE_AGGRESSIVE);
                                 jaina->SetFaction(FACTION_ESCORT_N_NEUTRAL_ACTIVE);
                             }
                             bStepping = false;
@@ -1929,7 +1929,7 @@ public:
                             me->SetImmuneToAll(false);
                             if (Creature* thrall = ObjectAccessor::GetCreature(*me, thrallGUID))
                             {
-                                thrall->SetReactState(REACT_AGGRESSIVE);
+                                thrall->SetReactState(PET_MODE_AGGRESSIVE);
                                 thrall->SetImmuneToNPC(false);
                                 thrall->SetImmuneToPC(true);
                                 thrall->AddThreat(me, 100.0f);
@@ -1938,7 +1938,7 @@ public:
                             }
                             if (Creature* sylvanas = ObjectAccessor::GetCreature(*me, sylvanasGUID))
                             {
-                                sylvanas->SetReactState(REACT_AGGRESSIVE);
+                                sylvanas->SetReactState(PET_MODE_AGGRESSIVE);
                                 sylvanas->SetImmuneToNPC(false);
                                 sylvanas->SetImmuneToPC(true);
                                 sylvanas->AddThreat(me, 100.0f);
@@ -1949,7 +1949,7 @@ public:
                             {
                                 if (Creature* temp = ObjectAccessor::GetCreature(*me, hordeForcesGUID[i]))
                                 {
-                                    temp->SetReactState(REACT_AGGRESSIVE);
+                                    temp->SetReactState(PET_MODE_AGGRESSIVE);
                                     temp->SetImmuneToNPC(false);
                                     temp->SetImmuneToPC(true);
                                 }
@@ -1960,8 +1960,8 @@ public:
                                 {
                                     if (Creature* temp2 = ObjectAccessor::GetCreature(*me, hordeForcesGUID[i]))
                                     {
-                                        temp->SetReactState(REACT_AGGRESSIVE);
-                                        temp2->SetReactState(REACT_AGGRESSIVE);
+                                        temp->SetReactState(PET_MODE_AGGRESSIVE);
+                                        temp2->SetReactState(PET_MODE_AGGRESSIVE);
                                         temp->SetImmuneToAll(false);
                                         temp2->SetImmuneToAll(false);
                                         temp->AddThreat(temp2, 100.0f);
@@ -2547,7 +2547,7 @@ public:
             {
                 sylvanas->GetMotionMaster()->Clear();
                 sylvanas->SetImmuneToAll(false);
-                sylvanas->SetReactState(REACT_AGGRESSIVE);
+                sylvanas->SetReactState(PET_MODE_AGGRESSIVE);
                 sylvanas->SetFaction(FACTION_ESCORT_N_NEUTRAL_ACTIVE);
                 sylvanas->GetMotionMaster()->MoveFollow(me, 1, M_PI * 0.1f);
             }
@@ -3724,7 +3724,7 @@ public:
                                     allianceForcesGUID[i] = temp->GetGUID();
                                     temp->SetImmuneToAll(true);
                                     temp->ApplySpellImmune(0, IMMUNITY_ID, SPELL_SYLVANAS_BUFF, true);
-                                    temp->SetReactState(REACT_PASSIVE);
+                                    temp->SetReactState(PET_MODE_PASSIVE);
                                     temp->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_READY2H);
                                 }
                             }
@@ -3733,14 +3733,14 @@ public:
                                 WrynnGUID = wrynn->GetGUID();
                                 wrynn->SetImmuneToAll(true);
                                 wrynn->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_READY2H);
-                                wrynn->SetReactState(REACT_PASSIVE);
+                                wrynn->SetReactState(PET_MODE_PASSIVE);
                                 wrynn->GetMotionMaster()->MovePoint(0, 1302.543f, 359.472f, -67.295f, true);
                             }
                             if (Creature* jaina = me->SummonCreature(NPC_JAINA, 1308.862f, 381.809f, -66.044243f, TEMPSUMMON_MANUAL_DESPAWN))
                             {
                                 JainaGUID = jaina->GetGUID();
                                 jaina->SetImmuneToAll(true);
-                                jaina->SetReactState(REACT_PASSIVE);
+                                jaina->SetReactState(PET_MODE_PASSIVE);
                             }
                             JumpToNextStep(6 * IN_MILLISECONDS);
                             break;
@@ -3772,7 +3772,7 @@ public:
                             {
                                 wrynn->SetImmuneToNPC(false);
                                 wrynn->SetImmuneToPC(true);
-                                wrynn->SetReactState(REACT_AGGRESSIVE);
+                                wrynn->SetReactState(PET_MODE_AGGRESSIVE);
                                 wrynn->AddThreat(me, 100.0f);
                                 me->AddThreat(wrynn, 100.0f);
                                 wrynn->AI()->AttackStart(me);
@@ -3783,7 +3783,7 @@ public:
                                 if (Creature* temp = ObjectAccessor::GetCreature(*me, allianceForcesGUID[i]))
                                 {
                                     temp->SetImmuneToAll(false);
-                                    temp->SetReactState(REACT_AGGRESSIVE);
+                                    temp->SetReactState(PET_MODE_AGGRESSIVE);
                                     temp->AddThreat(me, 100.0f);
                                     temp->AI()->AttackStart(me);
                                 }

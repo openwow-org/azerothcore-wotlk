@@ -55,7 +55,7 @@ struct boss_warlord_kalithresh : public BossAI
     {
         _Reset();
         instance->DoForAllMinions(DATA_WARLORD_KALITHRESH, [&](Creature* minion) {
-            minion->SetReactState(REACT_PASSIVE);
+            minion->SetReactState(PET_MODE_PASSIVE);
             minion->SetUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
         });
     }

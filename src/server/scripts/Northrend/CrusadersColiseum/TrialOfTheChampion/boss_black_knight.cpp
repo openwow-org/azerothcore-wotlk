@@ -122,7 +122,7 @@ public:
             me->SetDisplayId(me->GetNativeDisplayId());
             me->SetUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
             me->SetImmuneToAll(true);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             if( pInstance )
                 pInstance->SetData(BOSS_BLACK_KNIGHT, NOT_STARTED);
 

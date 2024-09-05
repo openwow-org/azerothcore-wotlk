@@ -70,7 +70,7 @@ struct boss_vazruden_the_herald : public BossAI
     {
         _Reset();
         me->SetVisible(true);
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
         me->SummonCreature(NPC_HELLFIRE_SENTRY, -1372.56f, 1724.31f, 82.967f, 5.3058f);
         me->SummonCreature(NPC_HELLFIRE_SENTRY, -1383.39f, 1711.82f, 82.7961f, 5.67232f);
     }
@@ -191,7 +191,7 @@ struct boss_nazan : public ScriptedAI
         {
             _scheduler.CancelGroup(GROUP_PHASE_1);
             Talk(EMOTE_NAZAN);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->InterruptNonMeleeSpells(true);
             me->GetMotionMaster()->MovePoint(POINT_MIDDLE, -1406.5f, 1746.5f, 81.2f, false);
         }
@@ -203,7 +203,7 @@ struct boss_nazan : public ScriptedAI
         {
             me->SetCanFly(false);
             me->SetDisableGravity(false);
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             me->GetMotionMaster()->MoveChase(me->GetVictim());
             _scheduler.Schedule(5s, GROUP_PHASE_2, [this](TaskContext context)
             {

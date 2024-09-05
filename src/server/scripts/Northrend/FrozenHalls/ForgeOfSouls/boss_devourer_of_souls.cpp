@@ -102,7 +102,7 @@ public:
             bAchiev = true;
             me->SetControlled(false, UNIT_STATE_ROOT);
             me->DisableRotate(false);
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             events.Reset();
             summons.DespawnAll();
             if (pInstance)
@@ -155,7 +155,7 @@ public:
                 me->SetControlled(true, UNIT_STATE_ROOT);
                 me->DisableRotate(true);
                 me->SetGuidValue(UNIT_FIELD_TARGET, WOWGUID::Empty);
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 me->GetMotionMaster()->Clear(false);
                 me->GetMotionMaster()->MoveIdle();
                 me->StopMovingOnCurrentPos();
@@ -348,7 +348,7 @@ class spell_wailing_souls_periodic_aura : public AuraScript
                 t->SetControlled(false, UNIT_STATE_ROOT);
                 t->DisableRotate(false);
                 if (t->GetTypeId() == TYPEID_UNIT)
-                    t->ToCreature()->SetReactState(REACT_AGGRESSIVE);
+                    t->ToCreature()->SetReactState(PET_MODE_AGGRESSIVE);
                 if (t->GetVictim())
                 {
                     t->SetGuidValue(UNIT_FIELD_TARGET, t->GetVictim()->GetGUID());

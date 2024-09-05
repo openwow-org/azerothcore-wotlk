@@ -245,12 +245,12 @@ struct boss_attumen : public BossAI
                 midnight->AI()->DoAction(ACTION_SET_MIDNIGHT_PHASE);
                 midnight->AttackStop();
                 midnight->RemoveAllAttackers();
-                midnight->SetReactState(REACT_PASSIVE);
+                midnight->SetReactState(PET_MODE_PASSIVE);
                 midnight->GetMotionMaster()->MoveFollow(me, 2.0f, 0.0f);
                 midnight->AI()->Talk(EMOTE_MOUNT_UP);
                 me->AttackStop();
                 me->RemoveAllAttackers();
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 me->GetMotionMaster()->MoveFollow(midnight, 2.0f, 0.0f);
                 Talk(SAY_MOUNT);
                 scheduler.Schedule(1s, [this](TaskContext task)
@@ -287,7 +287,7 @@ struct boss_midnight : public BossAI
     {
         BossAI::Reset();
         me->SetVisible(true);
-        me->SetReactState(REACT_DEFENSIVE);
+        me->SetReactState(PET_MODE_DEFENSIVE);
     }
 
     bool CanMeleeHit()

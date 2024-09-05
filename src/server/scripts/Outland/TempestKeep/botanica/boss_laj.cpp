@@ -103,7 +103,7 @@ struct boss_laj : public BossAI
 
         ScheduleTimedEvent(20s, [&] {
             DoCastSelf(SPELL_TELEPORT_SELF);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->GetMotionMaster()->Clear();
 
             scheduler.Schedule(2500ms, [this](TaskContext)
@@ -111,7 +111,7 @@ struct boss_laj : public BossAI
                 Talk(EMOTE_SUMMON);
                 DoCastAOE(SPELL_SUMMON_LASHER_1, true);
                 DoCastAOE(SPELL_SUMMON_FLAYER_1, true);
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
                 me->ResumeChasingVictim();
             });
         }, 30s);

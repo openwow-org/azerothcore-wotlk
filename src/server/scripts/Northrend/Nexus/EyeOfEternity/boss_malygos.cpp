@@ -1073,7 +1073,7 @@ public:
     {
         npc_nexus_lordAI(Creature* pCreature) : ScriptedAI(pCreature)
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             pInstance = me->GetInstanceScript();
             timer = 0;
             events.Reset();
@@ -1166,7 +1166,7 @@ public:
     {
         npc_scion_of_eternityAI(Creature* pCreature) : ScriptedAI(pCreature)
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             pInstance = me->GetInstanceScript();
             events.Reset();
             events.RescheduleEvent(EVENT_TELEPORT_VISUAL, 0ms);
@@ -1311,7 +1311,7 @@ public:
                         if (Unit* pass = v->GetPassenger(0))
                             if (Creature* c = pass->ToCreature())
                             {
-                                c->SetReactState(REACT_AGGRESSIVE);
+                                c->SetReactState(PET_MODE_AGGRESSIVE);
                                 if (Player* plr = c->SelectNearestPlayer(100.0f))
                                     c->AI()->AttackStart(plr);
                             }

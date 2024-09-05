@@ -340,7 +340,7 @@ class spell_panther_cage_key : public SpellScript
                 if (Creature* panther = player->FindNearestCreature(NPC_ENRAGED_PANTHER, 5.0f, true))
                 {
                     panther->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-                    panther->SetReactState(REACT_AGGRESSIVE);
+                    panther->SetReactState(PET_MODE_AGGRESSIVE);
                     panther->AI()->AttackStart(GetCaster());
                 }
             }

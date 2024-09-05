@@ -166,7 +166,7 @@ struct boss_shade_of_aran : public BossAI
 
     void AttackStart(Unit* who) override
     {
-        if (who && who->isTargetableForAttack() && me->GetReactState() != REACT_PASSIVE)
+        if (who && who->isTargetableForAttack() && me->GetReactState() != PET_MODE_PASSIVE)
         {
             if (me->Attack(who, false))
             {
@@ -197,11 +197,11 @@ struct boss_shade_of_aran : public BossAI
     {
         BossAI::DamageTaken(doneBy, damage, damagetype, damageSchoolMask);
 
-        if ((damagetype == DIRECT_DAMAGE || damagetype == SPELL_DIRECT_DAMAGE) && _drinking && me->GetReactState() == REACT_PASSIVE)
+        if ((damagetype == DIRECT_DAMAGE || damagetype == SPELL_DIRECT_DAMAGE) && _drinking && me->GetReactState() == PET_MODE_PASSIVE)
         {
             me->RemoveAurasDueToSpell(SPELL_DRINK);
             me->SetStandState(UNIT_STANDING);
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
             me->SetPower(POWER_TYPE_MANA, me->GetMaxPower(POWER_TYPE_MANA) - 32000);
             _drinkScheduler.CancelGroup(GROUP_DRINKING);
             _drinkScheduler.Schedule(1s, [this](TaskContext)
@@ -218,7 +218,7 @@ struct boss_shade_of_aran : public BossAI
         if (!_hasDrunk && me->GetMaxPower(POWER_TYPE_MANA) && (currentPower * 100 / me->GetMaxPower(POWER_TYPE_MANA)) < 13.5)
         {
             _hasDrunk = true;
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
 
             // Start drinking after conjuring drinks
             _drinkScheduler.Schedule(0s, GROUP_DRINKING, [this](TaskContext)
@@ -239,7 +239,7 @@ struct boss_shade_of_aran : public BossAI
             }).Schedule(12s, GROUP_DRINKING, [this](TaskContext)
             {
                 me->SetStandState(UNIT_STANDING);
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
                 me->SetPower(POWER_TYPE_MANA, me->GetMaxPower(POWER_TYPE_MANA) - 32000);
                 DoCastSelf(SPELL_AOE_PYROBLAST);
                 _drinkScheduler.CancelGroup(GROUP_DRINKING);

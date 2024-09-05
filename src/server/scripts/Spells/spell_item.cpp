@@ -1150,7 +1150,7 @@ class spell_item_draenic_pale_ale : public SpellScript
             summon->SetOwnerGUID(GetCaster()->GetGUID());
             summon->SetFaction(GetCaster()->GetFaction());
             summon->SetImmuneToAll(true);
-            summon->SetReactState(REACT_PASSIVE);
+            summon->SetReactState(PET_MODE_PASSIVE);
             summon->GetMotionMaster()->MoveFollow(GetCaster(), PET_FOLLOW_DIST, GetCaster()->GetAngle(summon), MOTION_SLOT_CONTROLLED);
             GetSpell()->ExecuteLogEffectSummonObject(effIndex, summon);
         }

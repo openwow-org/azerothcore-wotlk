@@ -104,7 +104,7 @@ public:
             if (!_introDone)
             {
                 me->SetStandState(UNIT_DEAD);
-                me->SetReactState(REACT_PASSIVE);
+                me->SetReactState(PET_MODE_PASSIVE);
                 Initialize();
                 _eventsIntro.Reset();
             }
@@ -197,7 +197,7 @@ public:
                             me->SetFaction(FACTION_DRAGONFLIGHT_BLACK);
                             if (PlayerGUID && ObjectAccessor::GetUnit(*me, PlayerGUID))
                                 AttackStart(ObjectAccessor::GetUnit(*me, PlayerGUID));
-                            me->SetReactState(REACT_AGGRESSIVE);
+                            me->SetReactState(PET_MODE_AGGRESSIVE);
                             _introDone = true;
                             break;
                     }

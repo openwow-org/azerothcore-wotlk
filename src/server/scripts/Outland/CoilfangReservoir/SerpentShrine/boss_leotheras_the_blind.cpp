@@ -82,7 +82,7 @@ struct boss_leotheras_the_blind : public BossAI
         BossAI::Reset();
         DoCastSelf(SPELL_CLEAR_CONSUMING_MADNESS, true);
         DoCastSelf(SPELL_DUAL_WIELD, true);
-        me->SetReactState(REACT_PASSIVE);
+        me->SetReactState(PET_MODE_PASSIVE);
         _recentlySpoken = false;
 
         ScheduleHealthCheckEvent(15, [&]{
@@ -102,7 +102,7 @@ struct boss_leotheras_the_blind : public BossAI
             scheduler.CancelGroup(GROUP_DEMON);
             scheduler.DelayAll(10s);
 
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->SetStandState(UNIT_KNEEL);
             me->GetMotionMaster()->Clear();
             me->StopMoving();
@@ -116,7 +116,7 @@ struct boss_leotheras_the_blind : public BossAI
                 DoResetThreatList();
                 me->RemoveUnitFlag(UNIT_FLAG_NOT_SELECTABLE);
                 me->SetStandState(UNIT_STANDING);
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
                 me->ResumeChasingVictim();
 
                 if (me->GetVictim())
@@ -138,7 +138,7 @@ struct boss_leotheras_the_blind : public BossAI
                 {
                     me->RemoveAllAuras();
                     me->LoadEquipment();
-                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetReactState(PET_MODE_AGGRESSIVE);
                     me->SetStandState(UNIT_STANDING);
                     me->SetInCombatWithZone();
                     Talk(SAY_AGGRO);
@@ -222,7 +222,7 @@ struct boss_leotheras_the_blind : public BossAI
 
         if (me->GetDisplayId() == me->GetNativeDisplayId())
         {
-            if (me->GetReactState() != REACT_PASSIVE)
+            if (me->GetReactState() != PET_MODE_PASSIVE)
             {
                 DoMeleeAttackIfReady();
             }

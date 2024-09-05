@@ -180,7 +180,7 @@ public:
         void Reset() override
         {
             ryga = nullptr;
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         void MoveInLineOfSight(Unit* who) override
@@ -291,7 +291,7 @@ public:
 
         void Reset() override
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
             me->FindNearestGameObject(ARAKKOA_CAGE, 10.0f)->SetGoState(GO_STATE_READY);
         }
 
@@ -310,7 +310,7 @@ public:
         {
             if (quest->GetQuestId() == QUEST_ROAD_TO_FALCON_WATCH)
             {
-                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetReactState(PET_MODE_AGGRESSIVE);
                 me->SetFaction(FACTION_ESCORTEE_H_PASSIVE);
                 npc_escortAI::Start(true, false, player->GetGUID());
             }

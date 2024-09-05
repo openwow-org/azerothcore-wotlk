@@ -721,7 +721,7 @@ public:
         boss_flame_leviathan_seatAI(Creature* creature) : VehicleAI(creature), vehicle(creature->GetVehicleKit())
         {
             ASSERT(vehicle);
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         Vehicle* vehicle;
@@ -1068,7 +1068,7 @@ public:
     {
         npc_mimirons_infernoAI(Creature* creature) : npc_escortAI(creature), summons(me)
         {
-            me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(PET_MODE_PASSIVE);
         }
 
         SummonList summons;
@@ -1224,7 +1224,7 @@ public:
 
         void Reset() override
         {
-            me->SetReactState(REACT_AGGRESSIVE);
+            me->SetReactState(PET_MODE_AGGRESSIVE);
         }
 
         void MoveInLineOfSight(Unit* who) override
