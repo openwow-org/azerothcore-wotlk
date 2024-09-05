@@ -1041,15 +1041,6 @@ enum ActiveStates : uint8
     ACT_DECIDE   = 0x00                                     // custom
 };
 
-//TODO: Move to Object/PetAction.h
-enum CommandStates
-{
-    COMMAND_STAY    = 0,
-    COMMAND_FOLLOW  = 1,
-    COMMAND_ATTACK  = 2,
-    COMMAND_ABANDON = 3
-};
-
 #define UNIT_ACTION_BUTTON_ACTION(X) (uint32(X) & 0x00FFFFFF)
 #define UNIT_ACTION_BUTTON_TYPE(X)   ((uint32(X) & 0xFF000000) >> 24)
 #define MAKE_UNIT_ACTION_BUTTON(A, T) (uint32(A) | (uint32(T) << 24))
@@ -1116,9 +1107,9 @@ public:
     [[nodiscard]] uint32 GetPetNumber() const { return _petnumber; }
     void SetPetNumber(uint32 petnumber, bool statwindow);
 
-    void SetCommandState(CommandStates st) { _CommandState = st; }
-    [[nodiscard]] CommandStates GetCommandState() const { return _CommandState; }
-    [[nodiscard]] bool HasCommandState(CommandStates state) const { return (_CommandState == state); }
+    void SetCommandState(PET_ACTION st) { _CommandState = st; }
+    [[nodiscard]] PET_ACTION GetCommandState() const { return _CommandState; }
+    [[nodiscard]] bool HasCommandState(PET_ACTION state) const { return (_CommandState == state); }
 
     void InitPossessCreateSpells();
     void InitCharmCreateSpells();
@@ -1171,7 +1162,7 @@ private:
     Unit* _unit;
     UnitActionBarEntry PetActionBar[MAX_UNIT_ACTION_BAR_INDEX];
     CharmSpellInfo _charmspells[4];
-    CommandStates _CommandState;
+    PET_ACTION _CommandState;
     uint32 _petnumber;
 
     //for restoration after charmed
