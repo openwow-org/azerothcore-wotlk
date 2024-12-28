@@ -74,13 +74,19 @@ ByteBuffer& ByteBuffer::operator>>(double& value)
     return *this;
 }
 
-//===========================================================================
+//=============================================================================
 ByteBuffer &ByteBuffer::Get (uint32_t &val) {
   val = read<uint32_t>();
   return *this;
 }
 
-//===========================================================================
+//=============================================================================
+ByteBuffer &ByteBuffer::Get (uint8_t &val) {
+  val = read<uint8_t>();
+  return *this;
+}
+
+//=============================================================================
 ByteBuffer& ByteBuffer::GetString(char* string, uint32_t maxChars)
 {
     ASSERT(string);
