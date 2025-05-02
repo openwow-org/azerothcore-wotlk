@@ -16650,14 +16650,14 @@ void Unit::SendMovementFlagUpdate(bool self /* = false */)
 }
 
 
-//===========================================================================
+//=============================================================================
 bool Unit::IsSitting() const {
   UNITSTANDSTATE standState = GetStandState();
   return standState == UNIT_SITTING || standState == UNIT_SITTINGCHAIR ||
          (standState >= UNIT_FIRSTCHAIRSIT && standState <= UNIT_LASTCHAIRSIT);
 }
 
-//===========================================================================
+//=============================================================================
 bool Unit::IsStanding() const {
   UNITSTANDSTATE standState = GetStandState();
   return !IsSitting() && standState != UNIT_SLEEPING && standState != UNIT_KNEEL;

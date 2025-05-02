@@ -225,7 +225,7 @@ bool normalizePlayerName(std::string& name)
     return true;
 }
 
-//===========================================================================
+//=============================================================================
 void FormatCharacterName(char* name)
 {
     size_t len = strlen(name);

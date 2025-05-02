@@ -1,4 +1,4 @@
-/****************************************************************************
+/******************************************************************************
 *
 *   Player.cpp
 *
@@ -73,9 +73,10 @@
 #include "MapWeather.h"
 #include "World.h"
 #include "WDataStore.h"
+#include "WowConnectionNet.h"
 
 
-/****************************************************************************
+/******************************************************************************
 *
 *   Message handler declarations
 *
@@ -119,13 +120,13 @@ static void PlayerDechargeCheat (User*        user,
                                  WDataStore*  msg);
 
 
-/****************************************************************************
+/******************************************************************************
 *
 *   Externals
 *
 ***/
 
-//===========================================================================
+//=============================================================================
 void PlayerInitialize () {
   // REGISTER MESSAGE HANDLERS
   WowConnection::SetMessageHandler(CMSG_RECHARGE, PlayerRechargeCheat, GM_SECURITY);
@@ -139,7 +140,7 @@ void PlayerInitialize () {
   WowConnection::SetMessageHandler(CMSG_LEVEL_CHEAT, PlayerLevelCheatHandler, GM_SECURITY);
 }
 
-//===========================================================================
+//=============================================================================
 void PlayerDestroy () {
   // UNREGISTER MESSAGE HANDLERS
   WowConnection::ClearMessageHandler(CMSG_RECHARGE);
@@ -154,13 +155,13 @@ void PlayerDestroy () {
 }
 
 
-/****************************************************************************
+/******************************************************************************
 *
 *   Player class implementation
 *
 ***/
 
-//===========================================================================
+//=============================================================================
 Player::Player(class User* user): Unit(true), m_mover(this)
 {
     m_objectType |= TYPEMASK_PLAYER;
@@ -424,7 +425,7 @@ Player::Player(class User* user): Unit(true), m_mover(this)
     sScriptMgr->OnConstructPlayer(this);
 }
 
-//===========================================================================
+//=============================================================================
 Player::~Player()
 {
     sScriptMgr->OnDestructPlayer(this);
@@ -481,13 +482,13 @@ void Player::CleanupsBeforeDelete(bool finalCleanup)
     Unit::CleanupsBeforeDelete(finalCleanup);
 }
 
-//===========================================================================
+//=============================================================================
 FriendList* Player::FriendListPtr()
 {
     return m_friendListPtr;
 }
 
-//===========================================================================
+//=============================================================================
 bool Player::IsDeadOrGhost() const {
   if (GetHealth() > 0)
     return HasPlayerFlag(PLAYER_FLAGS_GHOST);
@@ -1790,7 +1791,7 @@ void Player::RemoveFromWorld()
     }
 }
 
-//===========================================================================
+//=============================================================================
 void Player::OnGodMode (BOOL enable) {
   if (enable)
     m_cheatFlags |= CHEAT_GODMODE;
@@ -8183,7 +8184,7 @@ void Player::SendNotifyLootItemRemoved(uint8 lootSlot)
     User()->Send(&data);
 }
 
-//===========================================================================
+//=============================================================================
 BAG_RESULT Player::StoreItemInBag(uint32_t  itemId,
                                   uint32_t  quantity,
                                   uint8_t   bag /* = NULL_BAG*/,
@@ -12928,7 +12929,7 @@ void Player::SetMover(Unit* target)
 }
 
 
-/****************************************************************************
+/******************************************************************************
 *
 *   PLAYER CORPSE SYSTEM
 *
@@ -12936,7 +12937,7 @@ void Player::SetMover(Unit* target)
 
 static uint32 s_copseReclaimDelay[MAX_DEATH_COUNT] = { 30, 60, 120 };
 
-//===========================================================================
+//=============================================================================
 uint32 Player::GetCorpseReclaimDelay(bool pvp) const
 {
     if (pvp)
@@ -12954,7 +12955,7 @@ uint32 Player::GetCorpseReclaimDelay(bool pvp) const
     return s_copseReclaimDelay[count];
 }
 
-//===========================================================================
+//=============================================================================
 int32 Player::CalculateCorpseReclaimDelay(bool load)
 {
     Corpse* corpse = GetCorpse();
@@ -16376,7 +16377,7 @@ void Player::SendSystemMessage(std::string_view msg, bool escapeCharacters)
 }
 
 
-/****************************************************************************
+/******************************************************************************
 *
 *   NETMESSAGE HANDLERS
 *

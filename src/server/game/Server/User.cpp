@@ -54,6 +54,7 @@
 #include <zlib.h>
 
 #include "BanMgr.h"
+#include "WowConnectionNet.h"
 #define CAMP_TIME_SECONDS 20  // The time it takes for a character to log out
 
 static bool s_initialized;
@@ -133,7 +134,7 @@ bool WorldSessionFilter::Process(WDataStore* packet)
     return !player->IsInWorld();
 }
 
-//===========================================================================
+//=============================================================================
 Player* User::ActivePlayer() const
 {
     if (!m_player || !m_player->IsInWorld())
@@ -142,7 +143,7 @@ Player* User::ActivePlayer() const
     return m_player;
 }
 
-//===========================================================================
+//=============================================================================
 void User::AddFriend (char const* name, char const* notes) {
   ASSERT(name);
   ASSERT(notes);
@@ -175,7 +176,7 @@ void User::AddFriend (char const* name, char const* notes) {
     SendFriendStatus(FRIEND_NOT_FOUND, WOWGUID());
 }
 
-//===========================================================================
+//=============================================================================
 void User::AddIgnore (char const* name) {
   auto charInfo = sCharacterCache->GetCharacterCacheByName(name);
   if (!charInfo) {
@@ -186,13 +187,13 @@ void User::AddIgnore (char const* name) {
   SendFriendStatus(res, charInfo->Guid);
 }
 
-//===========================================================================
+//=============================================================================
 void User::DelIgnore (WOWGUID& guid) {
   FRIEND_RESULT res = FriendList()->DelIgnore(guid);
   SendFriendStatus(res, guid);
 }
 
-//===========================================================================
+//=============================================================================
 FriendList* User::FriendList () const {
   return m_player->FriendList();
 }
@@ -274,7 +275,7 @@ User::~User()
     LoginDatabase.Execute("UPDATE account SET online = 0 WHERE id = {};", GetAccountId());     // One-time query
 }
 
-//===========================================================================
+//=============================================================================
 void User::CharacterAbortLogout () {
   if (Player* plr = ActivePlayer()) {
     this->m_loggingOut = false;
@@ -288,7 +289,7 @@ void User::CharacterAbortLogout () {
   }
 }
 
-//===========================================================================
+//=============================================================================
 void User::CharacterLogout (bool instant) {
   if (Player* plr = ActivePlayer()) {
     this->m_loggingOut = true;
@@ -309,13 +310,13 @@ void User::CharacterLogout (bool instant) {
   }
 }
 
-//===========================================================================
+//=============================================================================
 char const* User::GetAccountName()
 {
     return m_accountName.c_str();
 }
 
-//===========================================================================
+//=============================================================================
 bool User::IsGMAccount () const {
     return (m_accountFlags & static_cast<uint>(AccountFlag::FLAG_GM)) != 0;
 }
@@ -347,19 +348,19 @@ WOWGUID::LowType User::GetGuidLow() const
     return GetPlayer() ? GetPlayer()->GetGUID().GetCounter() : 0;
 }
 
-//===========================================================================
+//=============================================================================
 void User::SendLogoutCancelAckMessage () {
   WDataStore msg(SMSG_LOGOUT_CANCEL_ACK, 0);
   Send(&msg);
 }
 
-//===========================================================================
+//=============================================================================
 void User::SendLogoutCompleteMessage () {
   WDataStore msg(SMSG_LOGOUT_COMPLETE, 0);
   Send(&msg);
 }
 
-//===========================================================================
+//=============================================================================
 void User::SendLogoutResponse (LogoutResponse& res) {
   WDataStore msg(SMSG_LOGOUT_RESPONSE, sizeof(res));
   msg << res.logoutFailed;
@@ -1458,7 +1459,7 @@ void User::SendAddonsInfo()
     Send(&data);
 }
 
-//===========================================================================
+//=============================================================================
 void User::RemoveFriend(WOWGUID &guid) {
   FRIEND_RESULT res = FriendList()->RemoveFriend(guid);
   SendFriendStatus(res, guid);
@@ -1470,7 +1471,7 @@ void User::RemoveFriend(WOWGUID &guid) {
   }
 }
 
-//===========================================================================
+//=============================================================================
 void User::SendContactList (uint32_t flags) {
   WDataStore msg(SMSG_CONTACT_LIST);
 
@@ -1537,7 +1538,7 @@ void User::SendContactList (uint32_t flags) {
   Send(&msg);
 }
 
-//===========================================================================
+//=============================================================================
 void User::SendFriendStatus (FRIEND_RESULT res, WOWGUID guid) {
   FriendList::Friend const* frnd = FriendList()->GetFriend(guid);
   if (!frnd)
@@ -1564,7 +1565,7 @@ void User::SendFriendStatus (FRIEND_RESULT res, WOWGUID guid) {
   Send(&msg);
 }
 
-//===========================================================================
+//=============================================================================
 void User::SetFriendNotes (WOWGUID const& guid, char const* notes) {
   FriendList()->SetFriendNotes(guid, notes);
 }
@@ -2010,7 +2011,7 @@ void User::InitializeSessionCallback(CharacterDatabaseQueryHolder const& realmHo
     SendTutorialsData();
 }
 
-//===========================================================================
+//=============================================================================
 void User::SendGmResurrectFailure()
 {
     WDataStore msg(SMSG_RESURRECT_FAILED, sizeof(uint32_t));
@@ -2018,7 +2019,7 @@ void User::SendGmResurrectFailure()
     Send(&msg);
 }
 
-//===========================================================================
+//=============================================================================
 void User::SendGmResurrectSuccess()
 {
     WDataStore msg(SMSG_RESURRECT_FAILED, sizeof(uint32_t));
@@ -2026,19 +2027,19 @@ void User::SendGmResurrectSuccess()
     Send(&msg);
 }
 
-//===========================================================================
+//=============================================================================
 void User::SendPlayerNotFoundFailure()
 {
     SendNotification("Player not found");
 }
 
-/****************************************************************************
+/******************************************************************************
 *
 *   MESSAGE HANDLERS
 *
 ***/
 
-//===========================================================================
+//=============================================================================
 static void UserBootMeHandler (User*        user,
                                NETMESSAGE   msgId,
                                uint         eventTime,
@@ -2048,7 +2049,7 @@ static void UserBootMeHandler (User*        user,
   user->KickPlayer();
 }
 
-//===========================================================================
+//=============================================================================
 static void UserBeastmasterHandler (User*       user,
                                     NETMESSAGE  msgId,
                                     uint        eventTime,
@@ -2088,7 +2089,7 @@ static void UserBugReportHandler (User*       user,
   free(title);
 }
 
-//===========================================================================
+//=============================================================================
 static void UserGmResurrectHandler (User*        user,
                                     NETMESSAGE   msgId,
                                     uint         eventTime,
@@ -2112,7 +2113,7 @@ static void UserGmResurrectHandler (User*        user,
     user->SendPlayerNotFoundFailure();
 }
 
-//===========================================================================
+//=============================================================================
 static void UserWorldTeleportHandler (User*       user,
                                       NETMESSAGE  msgId,
                                       uint        eventTime,
@@ -2142,7 +2143,7 @@ static void UserWorldTeleportHandler (User*       user,
   playerPtr->Teleport(continentID, position.x, position.y, position.z, facing, TELE_TO_GM_MODE);
 }
 
-//===========================================================================
+//=============================================================================
 void UserInitialize () {
   if (s_initialized) return;
 
@@ -2155,7 +2156,7 @@ void UserInitialize () {
   s_initialized = true;
 }
 
-//===========================================================================
+//=============================================================================
 void UserDestroy () {
   if (!s_initialized) return;
 
