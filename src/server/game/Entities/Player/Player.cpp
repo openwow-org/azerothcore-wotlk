@@ -11729,23 +11729,24 @@ void Player::SendUpdateToOutOfRangeGroupMembers()
         pet->ResetAuraUpdateMaskForRaid();
 }
 
-void Player::SendTransferAborted(uint32 mapid, TransferAbortReason reason, uint8 arg)
-{
-    WDataStore data(SMSG_TRANSFER_ABORTED, 4 + 2);
-    data << uint32(mapid);
-    data << uint8(reason);                                 // transfer abort reason
-    switch (reason)
-    {
-        case TRANSFER_ABORT_INSUF_EXPAN_LVL:
-        case TRANSFER_ABORT_DIFFICULTY:
-        case TRANSFER_ABORT_UNIQUE_MESSAGE:
-            // these are the ONLY cases that have an extra argument in the packet!!!
-            data << uint8(arg);
-            break;
-        default:
-            break;
+void Player::SendTransferAborted (
+    uint32 mapid,
+    TransferAbortReason transfertAbort,
+    uint8 arg
+) {
+    WDataStore netMsg(SMSG_TRANSFER_ABORTED, 4 + 2);
+    netMsg << mapid;
+    netMsg << uint8(transfertAbort);
+
+    if (
+        transfertAbort == TRANSFER_ABORT_INSUF_EXPAN_LVL ||
+        transfertAbort == TRANSFER_ABORT_DIFFICULTY ||
+        transfertAbort == TRANSFER_ABORT_UNIQUE_MESSAGE
+    ) {
+        netMsg << arg;
     }
-    User()->Send(&data);
+
+    User()->Send(&netMsg);
 }
 
 void Player::SendInstanceResetWarning(uint32 mapid, Difficulty difficulty, uint32 time, bool onEnterMap)

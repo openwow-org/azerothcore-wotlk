@@ -1144,7 +1144,7 @@ public:
 
     void SendInitialPacketsBeforeAddToMap();
     void SendInitialPacketsAfterAddToMap();
-    void SendTransferAborted(uint32 mapid, TransferAbortReason reason, uint8 arg = 0);
+    void SendTransferAborted(uint32 mapid, TransferAbortReason transfertAbort, uint8 arg = 0);
     void SendInstanceResetWarning(uint32 mapid, Difficulty difficulty, uint32 time, bool onEnterMap);
 
     bool CanInteractWithQuestGiver(Object* questGiver);
