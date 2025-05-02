@@ -2049,6 +2049,17 @@ static void UserBootMeHandler (User*        user,
 }
 
 //===========================================================================
+static void UserBeastmasterHandler (User*       user,
+                                    NETMESSAGE  msgId,
+                                    uint        eventTime,
+                                    WDataStore* msg) {
+  uint8_t val;
+  msg->Get(val);
+
+  user->SendNotification("Beastmaster %s for player %s", val ? "enabled" : "disabled", user->GetPlayerName().c_str());
+}
+
+//=============================================================================
 static void UserBugReportHandler (User*       user,
                                   NETMESSAGE  msgId,
                                   uint        eventTime,
@@ -2139,6 +2150,7 @@ void UserInitialize () {
   WowConnection::SetMessageHandler(CMSG_WORLD_TELEPORT, UserWorldTeleportHandler, GM_SECURITY);
   WowConnection::SetMessageHandler(CMSG_GM_RESURRECT, UserGmResurrectHandler, GM_SECURITY);
   WowConnection::SetMessageHandler(CMSG_BUG, UserBugReportHandler);
+  WowConnection::SetMessageHandler(CMSG_BEASTMASTER, UserBeastmasterHandler, GM_SECURITY);
 
   s_initialized = true;
 }
@@ -2151,6 +2163,7 @@ void UserDestroy () {
   WowConnection::ClearMessageHandler(CMSG_WORLD_TELEPORT);
   WowConnection::ClearMessageHandler(CMSG_GM_RESURRECT);
   WowConnection::ClearMessageHandler(CMSG_BUG);
+  WowConnection::ClearMessageHandler(CMSG_BEASTMASTER);
 
   s_initialized = false;
 }

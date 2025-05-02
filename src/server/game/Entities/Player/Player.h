@@ -95,7 +95,8 @@ typedef void(*bgZoneRef)(Battleground*, WDataStore&);
 #define MAKE_SKILL_BONUS(t, p) MAKE_PAIR32(t, p)
 
 enum PLAYERCHEAT {
-  CHEAT_GODMODE             = 0x1
+  CHEAT_GODMODE     = 0x1,
+  CHEAT_BEASTMASTER = 0x2
 };
 
 // Note: SPELLMOD_* values is aura types in fact
