@@ -214,14 +214,6 @@ enum ItemFlags2 : uint32
     ITEM_FLAG2_USED_IN_A_TRADESKILL                     = 0x80000000
 };
 
-enum ItemFlagsExtra
-{
-    ITEM_FLAGS_EXTRA_HORDE_ONLY              = 0x00000001,
-    ITEM_FLAGS_EXTRA_ALLIANCE_ONLY           = 0x00000002,
-    ITEM_FLAGS_EXTRA_EXT_COST_REQUIRES_GOLD  = 0x00000004, // when item uses extended cost, gold is also required
-    ITEM_FLAGS_EXTRA_NEED_ROLL_DISABLED      = 0x00000100
-};
-
 enum ItemFlagsCustom
 {
     ITEM_FLAGS_CU_DURATION_REAL_TIME    = 0x0001,   // Item duration will tick even if player is offline

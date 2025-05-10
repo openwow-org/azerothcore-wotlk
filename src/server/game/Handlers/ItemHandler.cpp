@@ -1091,7 +1091,7 @@ void User::SendListInventory(WOWGUID vendorGuid, uint32 vendorEntry)
                 }
                 // Only display items in vendor lists for the team the
                 // player is on. If GM on, display all items.
-                if (!m_player->IsGameMaster() && ((itemTemplate->Flags2 & ITEM_FLAGS_EXTRA_HORDE_ONLY && m_player->GetTeamId() == TEAM_ALLIANCE) || (itemTemplate->Flags2 & ITEM_FLAGS_EXTRA_ALLIANCE_ONLY && m_player->GetTeamId() == TEAM_HORDE)))
+                if (!m_player->IsGameMaster() && ((itemTemplate->Flags2 & ITEM_FLAG2_FACTION_HORDE && m_player->GetTeamId() == TEAM_ALLIANCE) || (itemTemplate->Flags2 & ITEM_FLAG2_FACTION_ALLIANCE && m_player->GetTeamId() == TEAM_HORDE)))
                 {
                     continue;
                 }

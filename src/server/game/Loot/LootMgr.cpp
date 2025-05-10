@@ -439,12 +439,12 @@ bool LootItem::AllowedForPlayer(Player const* player, WOWGUID source) const
     }
 
     // not show loot for not own team
-    if ((pProto->Flags2 & ITEM_FLAGS_EXTRA_HORDE_ONLY) && player->GetTeamId(true) != TEAM_HORDE)
+    if ((pProto->Flags2 & ITEM_FLAG2_FACTION_HORDE) && player->GetTeamId(true) != TEAM_HORDE)
     {
         return false;
     }
 
-    if ((pProto->Flags2 & ITEM_FLAGS_EXTRA_ALLIANCE_ONLY) && player->GetTeamId(true) != TEAM_ALLIANCE)
+    if ((pProto->Flags2 & ITEM_FLAG2_FACTION_ALLIANCE) && player->GetTeamId(true) != TEAM_ALLIANCE)
     {
         return false;
     }

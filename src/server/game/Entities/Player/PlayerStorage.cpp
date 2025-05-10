@@ -2291,12 +2291,12 @@ BAG_RESULT Player::CanUseItem(ItemTemplate const* proto) const
         return EQUIP_ERR_ITEM_NOT_FOUND;
     }
 
-    if ((proto->Flags2 & ITEM_FLAGS_EXTRA_HORDE_ONLY) && GetTeamId(true) != TEAM_HORDE)
+    if ((proto->Flags2 & ITEM_FLAG2_FACTION_HORDE) && GetTeamId(true) != TEAM_HORDE)
     {
         return EQUIP_ERR_YOU_CAN_NEVER_USE_THAT_ITEM;
     }
 
-    if ((proto->Flags2 & ITEM_FLAGS_EXTRA_ALLIANCE_ONLY) && GetTeamId(true) != TEAM_ALLIANCE)
+    if ((proto->Flags2 & ITEM_FLAG2_FACTION_ALLIANCE) && GetTeamId(true) != TEAM_ALLIANCE)
     {
         return EQUIP_ERR_YOU_CAN_NEVER_USE_THAT_ITEM;
     }
