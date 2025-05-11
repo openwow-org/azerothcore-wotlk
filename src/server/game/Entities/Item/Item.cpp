@@ -468,8 +468,8 @@ bool Item::LoadFromDB(WOWGUID::LowType guid, WOWGUID owner_guid, Field* fields, 
     }
 
     SetUInt32Value(ITEM_FIELD_FLAGS, fields[5].Get<uint32>());
-    // Remove bind flag for items vs NO_BIND set
-    if (IsSoulBound() && proto->Bonding == NO_BIND && sScriptMgr->CanApplySoulboundFlag(this, proto))
+    // Remove bind flag for items vs ITEM_BIND_NONE set
+    if (IsSoulBound() && proto->Bonding == ITEM_BIND_NONE && sScriptMgr->CanApplySoulboundFlag(this, proto))
     {
         ApplyModFlag(ITEM_FIELD_FLAGS, ITEM_FIELD_FLAG_SOULBOUND, false);
         need_save = true;

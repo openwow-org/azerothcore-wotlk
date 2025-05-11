@@ -3112,7 +3112,7 @@ void ObjectMgr::LoadItemTemplates()
             }
         }
 
-        if (itemTemplate.Bonding >= MAX_BIND_TYPE)
+        if (itemTemplate.Bonding > NUM_ITEM_BIND_TYPES-1)
             LOG_ERROR("sql.sql", "Item (Entry: {}) has wrong Bonding value ({})", entry, itemTemplate.Bonding);
 
         if (itemTemplate.PageText && !GetPageText(itemTemplate.PageText))

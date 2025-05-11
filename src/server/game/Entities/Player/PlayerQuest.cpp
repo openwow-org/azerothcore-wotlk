@@ -667,7 +667,7 @@ void Player::RewardQuest(Quest const* quest, uint32 reward, Object* questGiver, 
     {
         if (ItemTemplate const* itemTemplate = sObjectMgr->GetItemTemplate(quest->RequiredItemId[i]))
         {
-            if (quest->RequiredItemCount[i] > 0 && itemTemplate->Bonding == BIND_QUEST_ITEM && !quest->IsRepeatable() && !HasQuestForItem(quest->RequiredItemId[i], quest_id, true))
+            if (quest->RequiredItemCount[i] > 0 && itemTemplate->Bonding == ITEM_BIND_QUEST && !quest->IsRepeatable() && !HasQuestForItem(quest->RequiredItemId[i], quest_id, true))
                 DestroyItemCount(quest->RequiredItemId[i], 9999, true);
             else
                 DestroyItemCount(quest->RequiredItemId[i], quest->RequiredItemCount[i], true);
@@ -677,7 +677,7 @@ void Player::RewardQuest(Quest const* quest, uint32 reward, Object* questGiver, 
     {
         if (ItemTemplate const* itemTemplate = sObjectMgr->GetItemTemplate(quest->ItemDrop[i]))
         {
-            if (quest->ItemDropQuantity[i] > 0 && itemTemplate->Bonding == BIND_QUEST_ITEM && !quest->IsRepeatable() && !HasQuestForItem(quest->ItemDrop[i], quest_id))
+            if (quest->ItemDropQuantity[i] > 0 && itemTemplate->Bonding == ITEM_BIND_QUEST && !quest->IsRepeatable() && !HasQuestForItem(quest->ItemDrop[i], quest_id))
                 DestroyItemCount(quest->ItemDrop[i], 9999, true);
             else
                 DestroyItemCount(quest->ItemDrop[i], quest->ItemDropQuantity[i], true);
@@ -911,12 +911,12 @@ void Player::FailQuest(uint32 questId)
         // Destroy quest items on quest failure.
         for (uint8 i = 0; i < QUEST_ITEM_OBJECTIVES_COUNT; ++i)
             if (ItemTemplate const* itemTemplate = sObjectMgr->GetItemTemplate(quest->RequiredItemId[i]))
-                if (quest->RequiredItemCount[i] > 0 && itemTemplate->Bonding == BIND_QUEST_ITEM)
+                if (quest->RequiredItemCount[i] > 0 && itemTemplate->Bonding == ITEM_BIND_QUEST)
                     DestroyItemCount(quest->RequiredItemId[i], quest->RequiredItemCount[i], true);
 
         for (uint8 i = 0; i < QUEST_SOURCE_ITEM_IDS_COUNT; ++i)
             if (ItemTemplate const* itemTemplate = sObjectMgr->GetItemTemplate(quest->ItemDrop[i]))
-                if (quest->ItemDropQuantity[i] > 0 && itemTemplate->Bonding == BIND_QUEST_ITEM)
+                if (quest->ItemDropQuantity[i] > 0 && itemTemplate->Bonding == ITEM_BIND_QUEST)
                     DestroyItemCount(quest->ItemDrop[i], quest->ItemDropQuantity[i], true);
     }
 }
@@ -928,12 +928,12 @@ void Player::AbandonQuest(uint32 questId)
         // It will Destroy quest items on quests abandons.
         for (uint8 i = 0; i < QUEST_ITEM_OBJECTIVES_COUNT; ++i)
             if (ItemTemplate const* itemTemplate = sObjectMgr->GetItemTemplate(quest->RequiredItemId[i]))
-                if (quest->RequiredItemCount[i] > 0 && itemTemplate->Bonding == BIND_QUEST_ITEM)
+                if (quest->RequiredItemCount[i] > 0 && itemTemplate->Bonding == ITEM_BIND_QUEST)
                     DestroyItemCount(quest->RequiredItemId[i], quest->RequiredItemCount[i], true);
 
         for (uint8 i = 0; i < QUEST_SOURCE_ITEM_IDS_COUNT; ++i)
             if (ItemTemplate const* itemTemplate = sObjectMgr->GetItemTemplate(quest->ItemDrop[i]))
-                if (quest->ItemDropQuantity[i] > 0 && itemTemplate->Bonding == BIND_QUEST_ITEM)
+                if (quest->ItemDropQuantity[i] > 0 && itemTemplate->Bonding == ITEM_BIND_QUEST)
                     DestroyItemCount(quest->ItemDrop[i], quest->ItemDropQuantity[i], true);
     }
 }

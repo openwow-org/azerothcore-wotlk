@@ -2638,9 +2638,9 @@ Item* Player::_StoreItem(uint16 pos, Item* pItem, uint32 count, bool clone, bool
         if (!pItem)
             return nullptr;
 
-        if (pItem->GetTemplate()->Bonding == BIND_WHEN_PICKED_UP ||
-            pItem->GetTemplate()->Bonding == BIND_QUEST_ITEM ||
-            (pItem->GetTemplate()->Bonding == BIND_WHEN_EQUIPPED && IsBagPos(pos)))
+        if (pItem->GetTemplate()->Bonding == ITEM_BIND_ON_ACQUIRE ||
+            pItem->GetTemplate()->Bonding == ITEM_BIND_QUEST ||
+            (pItem->GetTemplate()->Bonding == ITEM_BIND_ON_EQUIP && IsBagPos(pos)))
             pItem->SetBinding(true);
 
         CGBag* pBag = (bag == INVENTORY_SLOT_BAG_0) ? nullptr : GetBagByPos(bag);
@@ -2678,9 +2678,9 @@ Item* Player::_StoreItem(uint16 pos, Item* pItem, uint32 count, bool clone, bool
     }
     else
     {
-        if (pItem2->GetTemplate()->Bonding == BIND_WHEN_PICKED_UP ||
-            pItem2->GetTemplate()->Bonding == BIND_QUEST_ITEM ||
-            (pItem2->GetTemplate()->Bonding == BIND_WHEN_EQUIPPED && IsBagPos(pos)))
+        if (pItem2->GetTemplate()->Bonding == ITEM_BIND_ON_ACQUIRE ||
+            pItem2->GetTemplate()->Bonding == ITEM_BIND_QUEST ||
+            (pItem2->GetTemplate()->Bonding == ITEM_BIND_ON_EQUIP && IsBagPos(pos)))
             pItem2->SetBinding(true);
 
         pItem2->SetCount(pItem2->GetCount() + count);
@@ -2887,8 +2887,8 @@ void Player::VisualizeItem(uint8 slot, Item* pItem)
     if (!pItem)
         return;
 
-    // check also  BIND_WHEN_PICKED_UP and BIND_QUEST_ITEM for .additem or .additemset case by GM (not binded at adding to inventory)
-    if (pItem->GetTemplate()->Bonding == BIND_WHEN_EQUIPPED || pItem->GetTemplate()->Bonding == BIND_WHEN_PICKED_UP || pItem->GetTemplate()->Bonding == BIND_QUEST_ITEM)
+    // check also  ITEM_BIND_ON_ACQUIRE and ITEM_BIND_QUEST for .additem or .additemset case by GM (not binded at adding to inventory)
+    if (pItem->GetTemplate()->Bonding == ITEM_BIND_ON_EQUIP || pItem->GetTemplate()->Bonding == ITEM_BIND_ON_ACQUIRE || pItem->GetTemplate()->Bonding == ITEM_BIND_QUEST)
         pItem->SetBinding(true);
 
     LOG_DEBUG("entities.player.items", "STORAGE: EquipItem slot = {}, item = {}", slot, pItem->GetEntry());

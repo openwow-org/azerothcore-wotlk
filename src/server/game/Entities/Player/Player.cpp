@@ -10753,7 +10753,7 @@ bool Player::BuyItemFromVendorSlot(WOWGUID vendorguid, uint32 vendorslot, uint32
         return false;
     }
 
-    if (!(pProto->AllowableClass & getClassMask()) && pProto->Bonding == BIND_WHEN_PICKED_UP && !IsGameMaster())
+    if (!(pProto->AllowableClass & getClassMask()) && pProto->Bonding == ITEM_BIND_ON_ACQUIRE && !IsGameMaster())
     {
         SendBuyError(BUY_ERR_CANT_FIND_ITEM, nullptr, item, 0);
         return false;

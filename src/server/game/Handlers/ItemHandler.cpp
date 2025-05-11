@@ -1085,7 +1085,7 @@ void User::SendListInventory(WOWGUID vendorGuid, uint32 vendorEntry)
         {
             if (ItemTemplate const* itemTemplate = sObjectMgr->GetItemTemplate(item->item))
             {
-                if (!(itemTemplate->AllowableClass & m_player->getClassMask()) && itemTemplate->Bonding == BIND_WHEN_PICKED_UP && !m_player->IsGameMaster())
+                if (!(itemTemplate->AllowableClass & m_player->getClassMask()) && itemTemplate->Bonding == ITEM_BIND_ON_ACQUIRE && !m_player->IsGameMaster())
                 {
                     continue;
                 }
