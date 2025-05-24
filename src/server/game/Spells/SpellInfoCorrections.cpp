@@ -4822,6 +4822,12 @@ void SpellMgr::LoadSpellInfoCorrections()
         spellInfo->AttributesEx3 |= SPELL_ATTR3_SUPRESS_CASTER_PROCS;
     });
 
+    // Encapsulate
+    ApplySpellFix({ 45662 }, [](SpellInfo* spellInfo)
+    {
+        spellInfo->AttributesEx7 |= SPELL_ATTR7_TREAT_AS_NPC_AOE;
+    });
+
     for (uint32 i = 0; i < GetSpellInfoStoreSize(); ++i)
     {
         SpellInfo* spellInfo = mSpellInfoMap[i];
