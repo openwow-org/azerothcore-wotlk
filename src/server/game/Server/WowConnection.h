@@ -71,7 +71,7 @@ struct ClientPktHeader
 };
 #pragma pack(pop)
 
-struct AuthSession;
+struct RealmConnection;
 
 class AC_GAME_API WowConnection : public Socket<WowConnection>
 {
@@ -122,7 +122,7 @@ private:
     void SendPacketAndLogOpcode(WDataStore const& packet);
     void HandleSendAuthSession();
     void HandleAuthSession(WDataStore& recvPacket);
-    void HandleAuthSessionCallback(std::shared_ptr<AuthSession> authSession, PreparedQueryResult result);
+    void HandleAuthSessionCallback(std::shared_ptr<RealmConnection> authSession, PreparedQueryResult result);
     void LoadSessionPermissionsCallback(PreparedQueryResult result);
     void SendAuthResponseError(uint8 code);
 

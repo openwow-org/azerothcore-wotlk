@@ -1765,7 +1765,7 @@ public:
 
     void PetSpellFail(SpellInfo const* spellInfo, Unit* target, uint32 result);
 
-    int32 CalculateAOEDamageReduction(int32 damage, uint32 schoolMask, Unit* caster) const;
+    int32 CalculateAOEDamageReduction(int32 damage, uint32 schoolMask, bool npcCaster) const;
 
     WOWGUID GetTarget() const { return GetGuidValue(UNIT_FIELD_TARGET); }
     virtual void SetTarget(WOWGUID /*guid*/ = WOWGUID::Empty) = 0;

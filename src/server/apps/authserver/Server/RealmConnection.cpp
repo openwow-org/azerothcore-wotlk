@@ -15,7 +15,7 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "AuthSession.h"
+#include "RealmConnection.h"
 #include "AES.h"
 #include "AuthCodes.h"
 #include "Config.h"
@@ -106,20 +106,20 @@ std::array<uint8, 16> VersionChallenge = { { 0xBA, 0xA3, 0x1E, 0x99, 0xA0, 0x0B,
 #define AUTH_LOGON_CHALLENGE_INITIAL_SIZE 4
 #define REALM_LIST_PACKET_SIZE 5
 
-std::unordered_map<uint8, AuthHandler> AuthSession::InitHandlers()
+std::unordered_map<uint8, AuthHandler> RealmConnection::InitHandlers()
 {
     std::unordered_map<uint8, AuthHandler> handlers;
 
-    handlers[AUTH_LOGON_CHALLENGE] =        { STATUS_CHALLENGE,         AUTH_LOGON_CHALLENGE_INITIAL_SIZE, &AuthSession::HandleLogonChallenge };
-    handlers[AUTH_LOGON_PROOF] =            { STATUS_LOGON_PROOF,       sizeof(AUTH_LOGON_PROOF_C),        &AuthSession::HandleLogonProof };
-    handlers[AUTH_RECONNECT_CHALLENGE] =    { STATUS_CHALLENGE,         AUTH_LOGON_CHALLENGE_INITIAL_SIZE, &AuthSession::HandleReconnectChallenge };
-    handlers[AUTH_RECONNECT_PROOF] =        { STATUS_RECONNECT_PROOF,   sizeof(AUTH_RECONNECT_PROOF_C),    &AuthSession::HandleReconnectProof };
-    handlers[REALM_LIST] =                  { STATUS_AUTHED,            REALM_LIST_PACKET_SIZE,            &AuthSession::HandleRealmList };
+    handlers[AUTH_LOGON_CHALLENGE] =        { STATUS_CHALLENGE,         AUTH_LOGON_CHALLENGE_INITIAL_SIZE, &RealmConnection::HandleLogonChallenge };
+    handlers[AUTH_LOGON_PROOF] =            { STATUS_LOGON_PROOF,       sizeof(AUTH_LOGON_PROOF_C),        &RealmConnection::HandleLogonProof };
+    handlers[AUTH_RECONNECT_CHALLENGE] =    { STATUS_CHALLENGE,         AUTH_LOGON_CHALLENGE_INITIAL_SIZE, &RealmConnection::HandleReconnectChallenge };
+    handlers[AUTH_RECONNECT_PROOF] =        { STATUS_RECONNECT_PROOF,   sizeof(AUTH_RECONNECT_PROOF_C),    &RealmConnection::HandleReconnectProof };
+    handlers[REALM_LIST] =                  { STATUS_AUTHED,            REALM_LIST_PACKET_SIZE,            &RealmConnection::HandleRealmList };
 
     return handlers;
 }
 
-std::unordered_map<uint8, AuthHandler> const Handlers = AuthSession::InitHandlers();
+std::unordered_map<uint8, AuthHandler> const Handlers = RealmConnection::InitHandlers();
 
 void AccountInfo::LoadResult(Field* fields)
 {
@@ -150,10 +150,10 @@ void AccountInfo::LoadResult(Field* fields)
     Utf8ToUpperOnlyLatin(m_accountName);
 }
 
-AuthSession::AuthSession(tcp::socket&& socket) :
+RealmConnection::RealmConnection(tcp::socket&& socket) :
     Socket(std::move(socket)), _status(STATUS_CHALLENGE), _build(0), _expversion(0) { }
 
-void AuthSession::Start()
+void RealmConnection::Start()
 {
     std::string ip_address = GetRemoteIpAddress().to_string();
     LOG_TRACE("session", "Accepted connection from {}", ip_address);
@@ -161,10 +161,10 @@ void AuthSession::Start()
     LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_SEL_IP_INFO);
     stmt->SetData(0, ip_address);
 
-    _queryProcessor.AddCallback(LoginDatabase.AsyncQuery(stmt).WithPreparedCallback(std::bind(&AuthSession::CheckIpCallback, this, std::placeholders::_1)));
+    _queryProcessor.AddCallback(LoginDatabase.AsyncQuery(stmt).WithPreparedCallback(std::bind(&RealmConnection::CheckIpCallback, this, std::placeholders::_1)));
 }
 
-bool AuthSession::Update()
+bool RealmConnection::Update()
 {
     if (!AuthSocket::Update())
         return false;
@@ -174,7 +174,7 @@ bool AuthSession::Update()
     return true;
 }
 
-void AuthSession::CheckIpCallback(PreparedQueryResult result)
+void RealmConnection::CheckIpCallback(PreparedQueryResult result)
 {
     if (result)
     {
@@ -196,7 +196,7 @@ void AuthSession::CheckIpCallback(PreparedQueryResult result)
             pkt << uint8(0x00);
             pkt << uint8(WOW_FAIL_BANNED);
             SendPacket(pkt);
-            LOG_DEBUG("session", "[AuthSession::CheckIpCallback] Banned ip '{}:{}' tries to login!", GetRemoteIpAddress().to_string(), GetRemotePort());
+            LOG_DEBUG("session", "[RealmConnection::CheckIpCallback] Banned ip '{}:{}' tries to login!", GetRemoteIpAddress().to_string(), GetRemotePort());
             return;
         }
     }
@@ -204,7 +204,7 @@ void AuthSession::CheckIpCallback(PreparedQueryResult result)
     AsyncRead();
 }
 
-void AuthSession::ReadHandler()
+void RealmConnection::ReadHandler()
 {
     MessageBuffer& packet = GetReadBuffer();
 
@@ -255,7 +255,7 @@ void AuthSession::ReadHandler()
     AsyncRead();
 }
 
-void AuthSession::SendPacket(ByteBuffer& packet)
+void RealmConnection::SendPacket(ByteBuffer& packet)
 {
     if (!IsOpen())
         return;
@@ -268,7 +268,7 @@ void AuthSession::SendPacket(ByteBuffer& packet)
     }
 }
 
-bool AuthSession::HandleLogonChallenge()
+bool RealmConnection::HandleLogonChallenge()
 {
     _status = STATUS_CLOSED;
 
@@ -298,11 +298,11 @@ bool AuthSession::HandleLogonChallenge()
     stmt->SetData(0, GetRemoteIpAddress().to_string());
     stmt->SetData(1, login);
 
-    _queryProcessor.AddCallback(LoginDatabase.AsyncQuery(stmt).WithPreparedCallback(std::bind(&AuthSession::LogonChallengeCallback, this, std::placeholders::_1)));
+    _queryProcessor.AddCallback(LoginDatabase.AsyncQuery(stmt).WithPreparedCallback(std::bind(&RealmConnection::LogonChallengeCallback, this, std::placeholders::_1)));
     return true;
 }
 
-void AuthSession::LogonChallengeCallback(PreparedQueryResult result)
+void RealmConnection::LogonChallengeCallback(PreparedQueryResult result)
 {
     ByteBuffer pkt;
     pkt << uint8(AUTH_LOGON_CHALLENGE);
@@ -441,7 +441,7 @@ void AuthSession::LogonChallengeCallback(PreparedQueryResult result)
 }
 
 // Logon Proof command handler
-bool AuthSession::HandleLogonProof()
+bool RealmConnection::HandleLogonProof()
 {
     LOG_DEBUG("server.authserver", "Entering _HandleLogonProof");
     _status = STATUS_CLOSED;
@@ -605,7 +605,7 @@ bool AuthSession::HandleLogonProof()
     return true;
 }
 
-bool AuthSession::HandleReconnectChallenge()
+bool RealmConnection::HandleReconnectChallenge()
 {
     _status = STATUS_CLOSED;
 
@@ -636,11 +636,11 @@ bool AuthSession::HandleReconnectChallenge()
     stmt->SetData(0, GetRemoteIpAddress().to_string());
     stmt->SetData(1, login);
 
-    _queryProcessor.AddCallback(LoginDatabase.AsyncQuery(stmt).WithPreparedCallback(std::bind(&AuthSession::ReconnectChallengeCallback, this, std::placeholders::_1)));
+    _queryProcessor.AddCallback(LoginDatabase.AsyncQuery(stmt).WithPreparedCallback(std::bind(&RealmConnection::ReconnectChallengeCallback, this, std::placeholders::_1)));
     return true;
 }
 
-void AuthSession::ReconnectChallengeCallback(PreparedQueryResult result)
+void RealmConnection::ReconnectChallengeCallback(PreparedQueryResult result)
 {
     ByteBuffer pkt;
     pkt << uint8(AUTH_RECONNECT_CHALLENGE);
@@ -666,7 +666,7 @@ void AuthSession::ReconnectChallengeCallback(PreparedQueryResult result)
     SendPacket(pkt);
 }
 
-bool AuthSession::HandleReconnectProof()
+bool RealmConnection::HandleReconnectProof()
 {
     LOG_DEBUG("server.authserver", "Entering _HandleReconnectProof");
     _status = STATUS_CLOSED;
@@ -711,19 +711,19 @@ bool AuthSession::HandleReconnectProof()
     }
 }
 
-bool AuthSession::HandleRealmList()
+bool RealmConnection::HandleRealmList()
 {
     LOG_DEBUG("server.authserver", "Entering _HandleRealmList");
 
     LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_SEL_REALM_CHARACTER_COUNTS);
     stmt->SetData(0, _accountInfo.m_accountId);
 
-    _queryProcessor.AddCallback(LoginDatabase.AsyncQuery(stmt).WithPreparedCallback(std::bind(&AuthSession::RealmListCallback, this, std::placeholders::_1)));
+    _queryProcessor.AddCallback(LoginDatabase.AsyncQuery(stmt).WithPreparedCallback(std::bind(&RealmConnection::RealmListCallback, this, std::placeholders::_1)));
     _status = STATUS_WAITING_FOR_REALM_LIST;
     return true;
 }
 
-void AuthSession::RealmListCallback(PreparedQueryResult result)
+void RealmConnection::RealmListCallback(PreparedQueryResult result)
 {
     std::map<uint32, uint8> characterCounts;
     if (result)
@@ -825,7 +825,7 @@ void AuthSession::RealmListCallback(PreparedQueryResult result)
     _status = STATUS_AUTHED;
 }
 
-bool AuthSession::VerifyVersion(uint8 const* a, int32 aLength, Acore::Crypto::SHA1::Digest const& versionProof, bool isReconnect)
+bool RealmConnection::VerifyVersion(uint8 const* a, int32 aLength, Acore::Crypto::SHA1::Digest const& versionProof, bool isReconnect)
 {
     if (!sConfigMgr->GetOption<bool>("StrictVersionCheck", false))
         return true;

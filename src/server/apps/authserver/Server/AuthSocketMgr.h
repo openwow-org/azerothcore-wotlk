@@ -18,13 +18,13 @@
 #ifndef AuthSocketMgr_h__
 #define AuthSocketMgr_h__
 
-#include "AuthSession.h"
+#include "RealmConnection.h"
 #include "Config.h"
 #include "SocketMgr.h"
 
-class AuthSocketMgr : public SocketMgr<AuthSession>
+class AuthSocketMgr : public SocketMgr<RealmConnection>
 {
-    typedef SocketMgr<AuthSession> BaseSocketMgr;
+    typedef SocketMgr<RealmConnection> BaseSocketMgr;
 
 public:
     static AuthSocketMgr& Instance()
@@ -43,9 +43,9 @@ public:
     }
 
 protected:
-    NetworkThread<AuthSession>* CreateThreads() const override
+    NetworkThread<RealmConnection>* CreateThreads() const override
     {
-        NetworkThread<AuthSession>* threads = new NetworkThread<AuthSession>[1];
+        NetworkThread<RealmConnection>* threads = new NetworkThread<RealmConnection>[1];
 
         bool proxyProtocolEnabled = sConfigMgr->GetOption<bool>("EnableProxyProtocol", false, true);
         if (proxyProtocolEnabled)

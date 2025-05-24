@@ -326,7 +326,7 @@ bool WowConnection::ReadHeaderHandler()
     return true;
 }
 
-struct AuthSession
+struct RealmConnection
 {
     uint32 BattlegroupID = 0;
     uint32 LoginServerType = 0;
@@ -519,7 +519,7 @@ void WowConnection::SendPacket(WDataStore const& packet)
 
 void WowConnection::HandleAuthSession(WDataStore & recvPacket)
 {
-    std::shared_ptr<AuthSession> authSession = std::make_shared<AuthSession>();
+    std::shared_ptr<RealmConnection> authSession = std::make_shared<RealmConnection>();
 
     // Read the content of the packet
     recvPacket >> authSession->Build;
@@ -543,7 +543,7 @@ void WowConnection::HandleAuthSession(WDataStore & recvPacket)
     _queryProcessor.AddCallback(LoginDatabase.AsyncQuery(stmt).WithPreparedCallback(std::bind(&WowConnection::HandleAuthSessionCallback, this, authSession, std::placeholders::_1)));
 }
 
-void WowConnection::HandleAuthSessionCallback(std::shared_ptr<AuthSession> authSession, PreparedQueryResult result)
+void WowConnection::HandleAuthSessionCallback(std::shared_ptr<RealmConnection> authSession, PreparedQueryResult result)
 {
     // Stop if the account is not found
     if (!result)

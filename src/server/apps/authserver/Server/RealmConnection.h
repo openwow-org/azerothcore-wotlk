@@ -78,14 +78,14 @@ struct AccountInfo
     AccountTypes SecurityLevel = SEC_PLAYER;
 };
 
-class AuthSession : public Socket<AuthSession>
+class RealmConnection : public Socket<RealmConnection>
 {
-    typedef Socket<AuthSession> AuthSocket;
+    typedef Socket<RealmConnection> AuthSocket;
 
 public:
     static std::unordered_map<uint8, AuthHandler> InitHandlers();
 
-    AuthSession(tcp::socket&& socket);
+    RealmConnection(tcp::socket&& socket);
 
     void Start() override;
     bool Update() override;
@@ -131,7 +131,7 @@ struct AuthHandler
 {
     AuthStatus status;
     std::size_t packetSize;
-    bool (AuthSession::* handler)();
+    bool (RealmConnection::* handler)();
 };
 
 #pragma pack(pop)
