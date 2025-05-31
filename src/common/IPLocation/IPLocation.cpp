@@ -15,6 +15,7 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "../target/cxxbridge/azerothcore/src/lib.rs.h"
 #include "IPLocation.h"
 #include "Config.h"
 #include "Errors.h"
@@ -34,6 +35,7 @@ void IpLocationStore::Load()
 {
     _ipLocationStore.clear();
     LOG_INFO("server.loading", "Loading IP Location Database...");
+    ffi::lib::print_simple_log();
 
     std::string databaseFilePath = sConfigMgr->GetOption<std::string>("IPLocationFile", "");
     if (databaseFilePath.empty())
