@@ -990,7 +990,7 @@ public:
     bool IsTrainer()      const { return HasNpcFlag(UNIT_NPC_FLAG_TRAINER); }
     bool IsQuestGiver()   const { return HasNpcFlag(UNIT_NPC_FLAG_QUESTGIVER); }
     bool IsGossip()       const { return HasNpcFlag(UNIT_NPC_FLAG_GOSSIP); }
-    bool IsTaxi()         const { return HasNpcFlag(UNIT_NPC_FLAG_FLIGHTMASTER); }
+    bool IsTaxiNode()         const { return HasNpcFlag(UNIT_NPC_FLAG_FLIGHTMASTER); }
     bool IsGuildMaster()  const { return HasNpcFlag(UNIT_NPC_FLAG_PETITIONER); }
     bool IsBattleMaster() const { return HasNpcFlag(UNIT_NPC_FLAG_BATTLEMASTER); }
     bool IsBanker()       const { return HasNpcFlag(UNIT_NPC_FLAG_BANKER); }
