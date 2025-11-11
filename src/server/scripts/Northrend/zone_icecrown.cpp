@@ -1493,7 +1493,7 @@ public:
             if (me->GetAreaId() != AREA_SUNREAVER_PAVILION && me->GetAreaId() != AREA_SILVER_COVENANT_PAVILION)
                 return;
 
-            if (!who || who->GetTypeId() != TYPEID_PLAYER || !me->IsHostileTo(who) || !me->isInBackInMap(who, 5.0f))
+            if (!who || who->GetTypeId() != TYPEID_PLAYER || !me->IsEnemy(who) || !me->isInBackInMap(who, 5.0f))
                 return;
 
             if (who->HasAura(SPELL_TRESPASSER_H) || who->HasAura(SPELL_TRESPASSER_A))

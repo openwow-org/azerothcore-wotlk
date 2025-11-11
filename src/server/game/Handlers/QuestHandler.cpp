@@ -56,7 +56,7 @@ void User::HandleQuestgiverStatusQueryOpcode(WDataStore& recvData)
         case TYPEID_UNIT:
             {
                 LOG_DEBUG("network", "WORLD: Received CMSG_QUESTGIVER_STATUS_QUERY for npc {}", guid.ToString());
-                if (!questGiver->ToCreature()->IsHostileTo(m_player)) // do not show quest status to enemies
+                if (!questGiver->ToCreature()->IsEnemy(m_player)) // do not show quest status to enemies
                     questStatus = m_player->GetQuestDialogStatus(questGiver);
                 break;
             }

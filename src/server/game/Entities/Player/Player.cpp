@@ -7701,7 +7701,7 @@ void Player::SendQuestGiverStatusMultiple()
         {
             // need also pet quests case support
             Creature* questgiver = ObjectAccessor::GetCreatureOrPetOrVehicle(*this, *itr);
-            if (!questgiver || questgiver->IsHostileTo(this))
+            if (!questgiver || questgiver->IsEnemy(this))
                 continue;
             if (!questgiver->HasNpcFlag(UNIT_NPC_FLAG_QUESTGIVER))
                 continue;
@@ -10533,7 +10533,7 @@ void Player::SendTaxiNodeStatusMultiple()
         }
 
         Creature* creature = ObjectAccessor::GetCreature(*this, *itr);
-        if (!creature || creature->IsHostileTo(this))
+        if (!creature || creature->IsEnemy(this))
         {
             continue;
         }
@@ -13021,7 +13021,7 @@ Player* Player::GetNextRandomRaidMember(float radius)
 
         // IsHostileTo check duel and controlled by enemy
         if (Target && Target != this && IsWithinDistInMap(Target, radius) &&
-                !Target->HasInvisibilityAura() && !IsHostileTo(Target))
+                !Target->HasInvisibilityAura() && !IsEnemy(Target))
             nearMembers.push_back(Target);
     }
 

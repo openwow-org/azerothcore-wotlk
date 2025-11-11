@@ -36,7 +36,7 @@ void User::SendTaxiStatus(WOWGUID guid)
 {
     Player* const player = GetPlayer();
     Creature* unit = ObjectAccessor::GetCreature(*player, guid);
-    if (!unit || unit->IsHostileTo(player) || !unit->HasNpcFlag(UNIT_NPC_FLAG_FLIGHTMASTER))
+    if (!unit || unit->IsEnemy(player) || !unit->HasNpcFlag(UNIT_NPC_FLAG_FLIGHTMASTER))
     {
         LOG_DEBUG("network", "User::SendTaxiStatus - Unit ({}) not found.", guid.ToString());
         return;

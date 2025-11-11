@@ -417,7 +417,7 @@ public:
             for( uint8 i = 0; i < 8; ++i )
                 if( me->m_spells[i] == spell->Id )
                 {
-                    if( target && target->IsAlive() && !target->CanFly() && target->IsHostileTo(me) && !spell->IsTargetingArea())
+                    if( target && target->IsAlive() && !target->CanFly() && target->IsEnemy(me) && !spell->IsTargetingArea())
                     {
                         if( Unit* charmer = me->GetCharmer() )
                             Unit::Kill(charmer, charmer, false);

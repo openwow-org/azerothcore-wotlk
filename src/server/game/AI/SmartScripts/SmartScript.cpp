@@ -4227,8 +4227,8 @@ void SmartScript::ProcessEvent(SmartScriptHolder& e, Unit* unit, uint32 var0, ui
                     SmartEvent::LOSHostilityMode hostilityMode = static_cast<SmartEvent::LOSHostilityMode>(e.event.los.hostilityMode);
                     //if friendly event&&who is not hostile OR hostile event&&who is hostile
                     if ((hostilityMode == SmartEvent::LOSHostilityMode::Any) ||
-                        (hostilityMode == SmartEvent::LOSHostilityMode::NotHostile && !me->IsHostileTo(unit)) ||
-                        (hostilityMode == SmartEvent::LOSHostilityMode::Hostile && me->IsHostileTo(unit)))
+                        (hostilityMode == SmartEvent::LOSHostilityMode::NotHostile && !me->IsEnemy(unit)) ||
+                        (hostilityMode == SmartEvent::LOSHostilityMode::Hostile && me->IsEnemy(unit)))
                     {
                         if (e.event.los.playerOnly && unit->GetTypeId() != TYPEID_PLAYER)
                             return;
@@ -4251,8 +4251,8 @@ void SmartScript::ProcessEvent(SmartScriptHolder& e, Unit* unit, uint32 var0, ui
                     SmartEvent::LOSHostilityMode hostilityMode = static_cast<SmartEvent::LOSHostilityMode>(e.event.los.hostilityMode);
                     //if friendly event&&who is not hostile OR hostile event&&who is hostile
                     if ((hostilityMode == SmartEvent::LOSHostilityMode::Any) ||
-                        (hostilityMode == SmartEvent::LOSHostilityMode::NotHostile && !me->IsHostileTo(unit)) ||
-                        (hostilityMode == SmartEvent::LOSHostilityMode::Hostile && me->IsHostileTo(unit)))
+                        (hostilityMode == SmartEvent::LOSHostilityMode::NotHostile && !me->IsEnemy(unit)) ||
+                        (hostilityMode == SmartEvent::LOSHostilityMode::Hostile && me->IsEnemy(unit)))
                     {
                         if (e.event.los.playerOnly && unit->GetTypeId() != TYPEID_PLAYER)
                             return;

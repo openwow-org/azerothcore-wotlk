@@ -3457,7 +3457,7 @@ SpellMissInfo Unit::SpellHitResult(Unit* victim, SpellInfo const* spell, bool Ca
     // All positive spells can`t miss
     /// @todo: client not show miss log for this spells - so need find info for this in dbc and use it!
     if ((spell->IsPositive() || spell->HasEffect(SPELL_EFFECT_DISPEL))
-            && (!IsHostileTo(victim))) // prevent from affecting enemy by "positive" spell
+            && (!IsEnemy(victim))) // prevent from affecting enemy by "positive" spell
         return SPELL_MISS_NONE;
 
     // Check for immune
@@ -3526,7 +3526,7 @@ SpellMissInfo Unit::SpellHitResult(Unit* victim, Spell const* spell, bool CanRef
     // All positive spells can`t miss
     /// @todo: client not show miss log for this spells - so need find info for this in dbc and use it!
     if ((spellInfo->IsPositive() || spellInfo->HasEffect(SPELL_EFFECT_DISPEL))
-        && (!IsHostileTo(victim))) // prevent from affecting enemy by "positive" spell
+        && (!IsEnemy(victim))) // prevent from affecting enemy by "positive" spell
     {
         return SPELL_MISS_NONE;
     }
@@ -10196,7 +10196,7 @@ ReputationRank Unit::GetFactionReactionTo(FactionTemplateEntry const* factionTem
     return REP_NEUTRAL;
 }
 
-bool Unit::IsHostileTo(Unit const* unit) const
+bool Unit::IsEnemy(Unit const* unit) const
 {
     return UnitReaction(unit) <= REP_HOSTILE;
 }
@@ -11097,12 +11097,12 @@ Unit* Unit::GetNextRandomRaidMemberOrPet(float radius)
                 continue;
 
             // IsHostileTo check duel and controlled by enemy
-            if (Target != this && Target->IsAlive() && !IsHostileTo(Target))
+            if (Target != this && Target->IsAlive() && !IsEnemy(Target))
                 nearMembers.push_back(Target);
 
             // Push player's pet to vector
             if (Unit* pet = Target->GetGuardianPet())
-                if (pet != this && pet->IsAlive() && IsWithinDistInMap(pet, radius) && !IsHostileTo(pet))
+                if (pet != this && pet->IsAlive() && IsWithinDistInMap(pet, radius) && !IsEnemy(pet))
                     nearMembers.push_back(pet);
         }
 
@@ -13833,7 +13833,7 @@ bool Unit::_IsValidAttackTarget(Unit const* target, SpellInfo const* bySpell, Wo
     // can't attack own vehicle or passenger
     if (m_vehicle)
         if (IsOnVehicle(target) || m_vehicle->GetBase()->IsOnVehicle(target))
-            if (!IsHostileTo(target)) // pussywizard: actually can attack own vehicle or passenger if it's hostile to us - needed for snobold in Gormok encounter
+            if (!IsEnemy(target)) // pussywizard: actually can attack own vehicle or passenger if it's hostile to us - needed for snobold in Gormok encounter
                 return false;
 
     // can't attack invisible (ignore stealth for aoe spells) also if the area being looked at is from a spell use the dynamic object created instead of the casting unit.
@@ -15102,7 +15102,7 @@ float Unit::GetSpellMaxRangeForTarget(Unit const* target, SpellInfo const* spell
         return spellInfo->GetMaxRange(true);
     }
 
-    return spellInfo->GetMaxRange(!IsHostileTo(target));
+    return spellInfo->GetMaxRange(!IsEnemy(target));
 }
 
 float Unit::GetSpellMinRangeForTarget(Unit const* target, SpellInfo const* spellInfo) const
@@ -15117,7 +15117,7 @@ float Unit::GetSpellMinRangeForTarget(Unit const* target, SpellInfo const* spell
         return spellInfo->GetMinRange();
     }
 
-    return spellInfo->GetMinRange(!IsHostileTo(target));
+    return spellInfo->GetMinRange(!IsEnemy(target));
 }
 
 uint32 Unit::GetCreatureType() const
@@ -17548,12 +17548,12 @@ bool Unit::HandleAuraRaidProcFromChargeWithValue(AuraEffect* triggeredByAura)
                                 continue;
 
                             // IsHostileTo check duel and controlled by enemy
-                            if (Target != this && Target->IsAlive() && !IsHostileTo(Target))
+                            if (Target != this && Target->IsAlive() && !IsEnemy(Target))
                                 nearMembers.push_back(Target);
 
                             // Push player's pet to vector
                             if (Unit* pet = Target->GetGuardianPet())
-                                if (pet != this && pet->IsAlive() && IsWithinDistInMap(pet, radius) && !IsHostileTo(pet))
+                                if (pet != this && pet->IsAlive() && IsWithinDistInMap(pet, radius) && !IsEnemy(pet))
                                     nearMembers.push_back(pet);
                         }
                 }
@@ -18761,7 +18761,7 @@ void Unit::GetPartyMembers(std::list<Unit*>& TagUnitMap)
             Player* Target = itr->GetSource();
 
             // IsHostileTo check duel and controlled by enemy
-            if (Target && Target->IsInMap(owner) && Target->GetSubGroup() == subgroup && !IsHostileTo(Target))
+            if (Target && Target->IsInMap(owner) && Target->GetSubGroup() == subgroup && !IsEnemy(Target))
             {
                 if (Target->IsAlive())
                     TagUnitMap.push_back(Target);

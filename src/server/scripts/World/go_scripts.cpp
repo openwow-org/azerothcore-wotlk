@@ -157,7 +157,7 @@ public:
         if (Creature* creature = player->SummonCreature(NpcPrisonEntry[Random], go->GetPositionX(), go->GetPositionY(), go->GetPositionZ(), go->GetAngle(player),
                                  TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000))
         {
-            if (!creature->IsHostileTo(player))
+            if (!creature->IsEnemy(player))
             {
                 uint32 Spell = 0;
 

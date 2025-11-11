@@ -777,7 +777,7 @@ namespace Acore
         MostHPMissingInRange(Unit const* obj, float range, uint32 hp) : i_obj(obj), i_range(range), i_hp(hp) {}
         bool operator()(Unit* u)
         {
-            if (u->IsAlive() && u->IsInCombat() && !i_obj->IsHostileTo(u) && i_obj->IsWithinDistInMap(u, i_range) && u->GetMaxHealth() - u->GetHealth() > i_hp)
+            if (u->IsAlive() && u->IsInCombat() && !i_obj->IsEnemy(u) && i_obj->IsWithinDistInMap(u, i_range) && u->GetMaxHealth() - u->GetHealth() > i_hp)
             {
                 i_hp = u->GetMaxHealth() - u->GetHealth();
                 return true;
@@ -798,7 +798,7 @@ namespace Acore
 
         bool operator()(Unit* u)
         {
-            if (u->IsAlive() && u->IsInCombat() && !i_obj->IsHostileTo(u) && i_obj->IsWithinDistInMap(u, i_range) &&
+            if (u->IsAlive() && u->IsInCombat() && !i_obj->IsEnemy(u) && i_obj->IsWithinDistInMap(u, i_range) &&
                 i_minHpPct <= u->GetHealthPct() && u->GetHealthPct() <= i_maxHpPct && u->GetHealthPct() < i_hpPct)
             {
                 i_hpPct = u->GetHealthPct();
@@ -820,7 +820,7 @@ namespace Acore
         FriendlyCCedInRange(Unit const* obj, float range) : i_obj(obj), i_range(range) {}
         bool operator()(Unit* u)
         {
-            if (u->IsAlive() && u->IsInCombat() && !i_obj->IsHostileTo(u) && i_obj->IsWithinDistInMap(u, i_range) &&
+            if (u->IsAlive() && u->IsInCombat() && !i_obj->IsEnemy(u) && i_obj->IsWithinDistInMap(u, i_range) &&
                     (u->isFeared() || u->IsCharmed() || u->isFrozen() || u->HasUnitState(UNIT_STATE_STUNNED) || u->HasUnitState(UNIT_STATE_CONFUSED)))
             {
                 return true;
@@ -844,7 +844,7 @@ namespace Acore
         }
         bool operator()(Unit* u)
         {
-            if (u->IsAlive() && u->IsInCombat() && !i_obj->IsHostileTo(u) && i_obj->IsWithinDistInMap(u, i_range) &&
+            if (u->IsAlive() && u->IsInCombat() && !i_obj->IsEnemy(u) && i_obj->IsWithinDistInMap(u, i_range) &&
                     !(u->HasAura(i_spell)))
             {
                 return true;
@@ -1022,7 +1022,7 @@ namespace Acore
             else if (!_refUnit->IsInPartyWith(u))
                 return false;
 
-            return !_refUnit->IsHostileTo(u) && u->IsAlive() && _source->IsWithinDistInMap(u, _range);
+            return !_refUnit->IsEnemy(u) && u->IsAlive() && _source->IsWithinDistInMap(u, _range);
         }
 
     private:
@@ -1056,7 +1056,7 @@ namespace Acore
         bool operator()(Unit* u)
         {
             if (u->isTargetableForAttack(true, i_funit) && i_obj->IsWithinDistInMap(u, i_range) &&
-                (i_funit->IsInCombatWith(u) || u->IsHostileTo(i_funit)) && i_obj->CanSeeOrDetect(u))
+                (i_funit->IsInCombatWith(u) || u->IsEnemy(i_funit)) && i_obj->CanSeeOrDetect(u))
             {
                 i_range = i_obj->GetDistance(u);        // use found unit range as new range limit for next check
                 return true;
@@ -1509,7 +1509,7 @@ namespace Acore
                 return false;
             }
 
-            if (u->IsAlive() && !i_obj->IsHostileTo(u) && i_obj->IsWithinDistInMap(u, i_range) && u->GetMaxHealth() - u->GetHealth() > i_hp)
+            if (u->IsAlive() && !i_obj->IsEnemy(u) && i_obj->IsWithinDistInMap(u, i_range) && u->GetMaxHealth() - u->GetHealth() > i_hp)
             {
                 i_hp = u->GetMaxHealth() - u->GetHealth();
                 return true;

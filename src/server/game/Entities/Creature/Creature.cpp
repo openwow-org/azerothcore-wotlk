@@ -2523,7 +2523,7 @@ bool Creature::CanAssistTo(Unit const* u, Unit const* enemy, bool checkfaction /
     }
 
     // skip non hostile to caster enemy creatures
-    if (!IsHostileTo(enemy))
+    if (!IsEnemy(enemy))
         return false;
 
     // Check if can see the enemy
@@ -2557,7 +2557,7 @@ bool Creature::_IsTargetAcceptable(Unit const* target) const
     Unit const* targetVictim = target->getAttackerForHelper();
 
     // if I'm already fighting target, or I'm hostile towards the target, the target is acceptable
-    if (IsEngagedBy(target) || IsHostileTo(target))
+    if (IsEngagedBy(target) || IsEnemy(target))
         return true;
 
     // if the target's victim is friendly, and the target is neutral, the target is acceptable

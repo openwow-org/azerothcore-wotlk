@@ -584,7 +584,7 @@ void User::HandleRaidTargetUpdateOpcode(WDataStore& recvData)
         {
             Player* target = ObjectAccessor::FindConnectedPlayer(guid);
 
-            if (!target || target->IsHostileTo(GetPlayer()))
+            if (!target || target->IsEnemy(GetPlayer()))
                 return;
         }
 

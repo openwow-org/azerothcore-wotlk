@@ -837,7 +837,7 @@ public:
     ReputationRank UnitReaction(Unit const* target, bool checkOriginalFaction = false) const;
     ReputationRank GetFactionReactionTo(FactionTemplateEntry const* factionTemplateEntry, Unit const* target) const;
 
-    bool IsHostileTo(Unit const* unit) const;
+    bool IsEnemy(Unit const* unit) const;
     bool IsHostileToPlayers() const;
     bool IsPeaceful(Unit const* unit) const;
     bool IsNeutralToAll() const;

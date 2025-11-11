@@ -573,7 +573,7 @@ public:
                 return;
 
             // check if they're hostile
-            if (!(me->IsHostileTo(who) || who->IsHostileTo(me)))
+            if (!(me->IsEnemy(who) || who->IsEnemy(me)))
                 return;
 
             if (me->IsValidAttackTarget(who))

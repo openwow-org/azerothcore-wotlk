@@ -47,7 +47,7 @@ class spell_q10935_the_exorcism_of_colonel_jules : public SpellScript
         if (!target)
             return;
 
-        if (GetCaster()->IsHostileTo(target))
+        if (GetCaster()->IsEnemy(target))
             GetCaster()->CastSpell(target, SPELL_HOLY_FIRE, true);
         else
             GetCaster()->CastSpell(target, SPELL_HEAL_BARADA, true);

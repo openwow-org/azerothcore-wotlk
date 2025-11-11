@@ -184,7 +184,7 @@ struct boss_ouro : public BossAI
         {
             if (Unit* unitTarget = target->ToUnit())
             {
-                if (unitTarget->IsHostileTo(me))
+                if (unitTarget->IsEnemy(me))
                     DoCast(unitTarget, SPELL_GROUND_RUPTURE, true);
             }
         }

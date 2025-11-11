@@ -69,7 +69,7 @@ struct npc_pet_hunter_snake_trap : public ScriptedAI
     //Redefined for random target selection:
     void MoveInLineOfSight(Unit* who) override
     {
-        if (!me->GetVictim() && who->isTargetableForAttack() && (me->IsHostileTo(who)) && who->isInAccessiblePlaceFor(me))
+        if (!me->GetVictim() && who->isTargetableForAttack() && (me->IsEnemy(who)) && who->isInAccessiblePlaceFor(me))
         {
             if (me->GetDistanceZ(who) > CREATURE_Z_ATTACK_RANGE)
                 return;

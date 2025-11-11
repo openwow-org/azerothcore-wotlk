@@ -181,7 +181,7 @@ void CreatureAI::TriggerAlert(Unit const* who) const
     if (me->GetTypeId() != TYPEID_UNIT || me->IsEngaged() || me->HasUnitState(UNIT_STATE_CONFUSED | UNIT_STATE_STUNNED | UNIT_STATE_FLEEING | UNIT_STATE_DISTRACTED))
         return;
     // Only alert for hostiles!
-    if (me->IsCivilian() || me->HasReactState(REACT_PASSIVE) || !me->IsHostileTo(who) || !me->_IsTargetAcceptable(who))
+    if (me->IsCivilian() || me->HasReactState(REACT_PASSIVE) || !me->IsEnemy(who) || !me->_IsTargetAcceptable(who))
         return;
     // Only alert if target is within line of sight
     if (!me->IsWithinLOSInMap(who))
