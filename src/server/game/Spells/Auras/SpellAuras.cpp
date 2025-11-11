@@ -128,7 +128,7 @@ void AuraApplication::_InitFlags(Unit* caster, uint8 effMask)
 
     // aura is casted by self or an enemy
     // one negative effect and we know aura is negative
-    if (IsSelfcasted() || !caster || !caster->IsFriendlyTo(GetTarget()))
+    if (IsSelfcasted() || !caster || !caster->IsPeaceful(GetTarget()))
     {
         bool negativeFound = false;
         for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
@@ -1581,7 +1581,7 @@ void Aura::HandleAuraSpecificMods(AuraApplication const* aurApp, Unit* caster, b
                 // Unholy blight
                 if (GetId() == 50536)
                 {
-                    if (caster->IsFriendlyTo(target))
+                    if (caster->IsPeaceful(target))
                         SetDuration(0);
                 }
                 break;

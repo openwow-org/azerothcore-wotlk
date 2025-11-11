@@ -753,7 +753,7 @@ void BattlefieldWG::HandleKill(Player* killer, Unit* victim)
             victim->SetUnitFlag(UNIT_FLAG_SKINNABLE);
         }
     }
-    else if (victim->IsVehicle() && !killer->IsFriendlyTo(victim))
+    else if (victim->IsVehicle() && !killer->IsPeaceful(victim))
     {
         // Quest - Wintergrasp - PvP Kill - Vehicle
         for (auto& playerGuid : m_PlayersInWar[killerTeam])

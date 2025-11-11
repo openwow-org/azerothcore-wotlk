@@ -2518,7 +2518,7 @@ bool Creature::CanAssistTo(Unit const* u, Unit const* enemy, bool checkfaction /
     }
     else
     {
-        if (!IsFriendlyTo(u))
+        if (!IsPeaceful(u))
             return false;
     }
 
@@ -2542,7 +2542,7 @@ bool Creature::_IsTargetAcceptable(Unit const* target) const
     ASSERT(target);
 
     // if the target cannot be attacked, the target is not acceptable
-    if (IsFriendlyTo(target) || !target->isTargetableForAttack(false, this) || (m_vehicle && (IsOnVehicle(target) || m_vehicle->GetBase()->IsOnVehicle(target))))
+    if (IsPeaceful(target) || !target->isTargetableForAttack(false, this) || (m_vehicle && (IsOnVehicle(target) || m_vehicle->GetBase()->IsOnVehicle(target))))
         return false;
 
     if (target->HasUnitState(UNIT_STATE_DIED))
@@ -2561,7 +2561,7 @@ bool Creature::_IsTargetAcceptable(Unit const* target) const
         return true;
 
     // if the target's victim is friendly, and the target is neutral, the target is acceptable
-    if (targetVictim && !IsNeutralToAll() && IsFriendlyTo(targetVictim))
+    if (targetVictim && !IsNeutralToAll() && IsPeaceful(targetVictim))
         return true;
 
     // if the target's victim is not friendly, or the target is friendly, the target is not acceptable

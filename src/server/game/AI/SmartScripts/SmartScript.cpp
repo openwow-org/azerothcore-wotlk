@@ -4457,7 +4457,7 @@ void SmartScript::ProcessEvent(SmartScriptHolder& e, Unit* unit, uint32 var0, ui
                         GetTargets(targets, e);
                         for (WorldObject* target : targets)
                         {
-                            if (IsUnit(target) && me->IsFriendlyTo(target->ToUnit()) && target->ToUnit()->IsAlive() && target->ToUnit()->IsInCombat())
+                            if (IsUnit(target) && me->IsPeaceful(target->ToUnit()) && target->ToUnit()->IsAlive() && target->ToUnit()->IsInCombat())
                             {
                                 uint32 healthPct = uint32(target->ToUnit()->GetHealthPct());
                                 if (healthPct > e.event.friendlyHealthPct.hpPct)

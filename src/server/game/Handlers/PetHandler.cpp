@@ -420,7 +420,7 @@ void User::HandlePetActionHelper(Unit* pet, WOWGUID guid1, uint32 spellId, uint1
                         pet->SendPetAIReaction(guid1);
                     }
 
-                    if (unit_target && !GetPlayer()->IsFriendlyTo(unit_target) && !pet->isPossessed() && !pet->IsVehicle())
+                    if (unit_target && !GetPlayer()->IsPeaceful(unit_target) && !pet->isPossessed() && !pet->IsVehicle())
                     {
                         // This is true if pet has no target or has target but targets differs.
                         if (pet->GetVictim() != unit_target)
@@ -455,7 +455,7 @@ void User::HandlePetActionHelper(Unit* pet, WOWGUID guid1, uint32 spellId, uint1
 
                     if (pet->isPossessed() || pet->IsVehicle())
                         Spell::SendCastResult(GetPlayer(), spellInfo, 0, result);
-                    else if (GetPlayer()->IsFriendlyTo(unit_target) && !haspositiveeffect)
+                    else if (GetPlayer()->IsPeaceful(unit_target) && !haspositiveeffect)
                         spell->SendPetCastResult(SPELL_FAILED_TARGET_FRIENDLY);
                     else
                         spell->SendPetCastResult(SPELL_FAILED_DONT_REPORT);
@@ -472,7 +472,7 @@ void User::HandlePetActionHelper(Unit* pet, WOWGUID guid1, uint32 spellId, uint1
 
                     bool tempspellIsPositive = false;
 
-                    if (!GetPlayer()->IsFriendlyTo(unit_target))
+                    if (!GetPlayer()->IsPeaceful(unit_target))
                     {
                         // only place where pet can be player
                         Unit* TargetUnit = ObjectAccessor::GetUnit(*m_player, guid2);

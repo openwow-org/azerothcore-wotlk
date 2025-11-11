@@ -2567,7 +2567,7 @@ void Spell::EffectDispel(SpellEffIndex effIndex)
         DispelChargesList::iterator itr = dispel_list.begin();
         std::advance(itr, urand(0, dispel_list.size() - 1));
 
-        int32 chance = itr->first->CalcDispelChance(unitTarget, !unitTarget->IsFriendlyTo(m_caster));
+        int32 chance = itr->first->CalcDispelChance(unitTarget, !unitTarget->IsPeaceful(m_caster));
         // 2.4.3 Patch Notes: "Dispel effects will no longer attempt to remove effects that have 100% dispel resistance."
         if (!chance)
         {
@@ -2613,7 +2613,7 @@ void Spell::EffectDispel(SpellEffIndex effIndex)
         m_caster->SendMessageToSet(&dataFail, true);
 
     // put in combat
-    if (unitTarget->IsFriendlyTo(m_caster))
+    if (unitTarget->IsPeaceful(m_caster))
         unitTarget->getHostileRefMgr().threatAssist(m_caster, 0.0f, m_spellInfo);
 
     if (success_list.empty())
@@ -3651,7 +3651,7 @@ void Spell::EffectThreat(SpellEffIndex /*effIndex*/)
         return;
 
     // xinef: skip if target cannot have threat list or caster is friendly (ghoul leap)
-    if (!unitTarget->CanHaveThreatList() || m_caster->IsFriendlyTo(unitTarget))
+    if (!unitTarget->CanHaveThreatList() || m_caster->IsPeaceful(unitTarget))
         return;
 
     unitTarget->AddThreat(m_caster, float(damage));
@@ -5147,7 +5147,7 @@ void Spell::EffectDispelMechanic(SpellEffIndex effIndex)
         Aura* aura = itr->second;
         if (!aura->GetApplicationOfTarget(unitTarget->GetGUID()))
             continue;
-        if (roll_chance_i(aura->CalcDispelChance(unitTarget, !unitTarget->IsFriendlyTo(m_caster))))
+        if (roll_chance_i(aura->CalcDispelChance(unitTarget, !unitTarget->IsPeaceful(m_caster))))
         {
             if ((aura->GetSpellInfo()->GetAllEffectsMechanicMask() & (1 << mechanic)))
             {
@@ -5168,7 +5168,7 @@ void Spell::EffectDispelMechanic(SpellEffIndex effIndex)
     }
 
     // put in combat
-    if (unitTarget->IsFriendlyTo(m_caster))
+    if (unitTarget->IsPeaceful(m_caster))
         unitTarget->getHostileRefMgr().threatAssist(m_caster, 0.0f, m_spellInfo);
 }
 
@@ -5610,7 +5610,7 @@ void Spell::EffectStealBeneficialBuff(SpellEffIndex effIndex)
         DispelChargesList::iterator itr = steal_list.begin();
         std::advance(itr, urand(0, steal_list.size() - 1));
 
-        int32 chance = itr->first->CalcDispelChance(unitTarget, !unitTarget->IsFriendlyTo(m_caster));
+        int32 chance = itr->first->CalcDispelChance(unitTarget, !unitTarget->IsPeaceful(m_caster));
         // 2.4.3 Patch Notes: "Dispel effects will no longer attempt to remove effects that have 100% dispel resistance."
         if (!chance)
         {

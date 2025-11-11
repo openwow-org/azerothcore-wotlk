@@ -100,7 +100,7 @@ public:
             if (me->GetVictim())
                 return;
 
-            if (me->IsFriendlyTo(pAttacker))
+            if (me->IsPeaceful(pAttacker))
                 return;
 
             AttackStart(pAttacker);

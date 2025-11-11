@@ -147,7 +147,7 @@ namespace Acore
         void SendPacket(Player* player)
         {
             // never send packet to self
-            if (player == i_source || !player->HaveAtClient(i_source) || player->IsFriendlyTo(i_source))
+            if (player == i_source || !player->HaveAtClient(i_source) || player->IsPeaceful(i_source))
                 return;
 
             player->User()->Send(i_message);
@@ -863,7 +863,7 @@ namespace Acore
         AnyUnfriendlyUnitInObjectRangeCheck(WorldObject const* obj, Unit const* funit, float range) : i_obj(obj), i_funit(funit), i_range(range) {}
         bool operator()(Unit* u)
         {
-            if (u->IsAlive() && !u->IsCritter() && i_obj->IsWithinDistInMap(u, i_range) && !i_funit->IsFriendlyTo(u) &&
+            if (u->IsAlive() && !u->IsCritter() && i_obj->IsWithinDistInMap(u, i_range) && !i_funit->IsPeaceful(u) &&
                     (i_funit->GetTypeId() != TYPEID_UNIT || !i_funit->ToCreature()->IsAvoidingAOE())) // pussywizard
                 return true;
             else
@@ -893,7 +893,7 @@ namespace Acore
             if (!u->isTargetableForAttack(false, i_funit))
                 return false;
 
-            return i_obj->IsWithinDistInMap(u, i_range) && !i_funit->IsFriendlyTo(u);
+            return i_obj->IsWithinDistInMap(u, i_range) && !i_funit->IsPeaceful(u);
         }
     private:
         WorldObject const* i_obj;
@@ -961,7 +961,7 @@ namespace Acore
         {
             return u->IsAlive()
                    && i_funit->IsWithinDistInMap(u, i_range)
-                   && !i_funit->IsFriendlyTo(u)
+                   && !i_funit->IsPeaceful(u)
                    && i_funit->IsValidAttackTarget(u)
                    && !u->IsCritter()
                    && !u->IsTotem() //xinef: dont attack totems
@@ -978,7 +978,7 @@ namespace Acore
         AnyFriendlyUnitInObjectRangeCheck(WorldObject const* obj, Unit const* funit, float range, bool playerOnly = false) : i_obj(obj), i_funit(funit), i_range(range), i_playerOnly(playerOnly) {}
         bool operator()(Unit* u)
         {
-            if (u->IsAlive() && i_obj->IsWithinDistInMap(u, i_range) && i_funit->IsFriendlyTo(u) && (!i_playerOnly || u->IsPlayer()))
+            if (u->IsAlive() && i_obj->IsWithinDistInMap(u, i_range) && i_funit->IsPeaceful(u) && (!i_playerOnly || u->IsPlayer()))
                 return true;
             else
                 return false;
@@ -996,7 +996,7 @@ namespace Acore
         AnyFriendlyNotSelfUnitInObjectRangeCheck(WorldObject const* obj, Unit const* funit, float range, bool playerOnly = false) : i_obj(obj), i_funit(funit), i_range(range), i_playerOnly(playerOnly) {}
         bool operator()(Unit* u)
         {
-            if (u != i_obj && u->IsAlive() && i_obj->IsWithinDistInMap(u, i_range) && i_funit->IsFriendlyTo(u) && (!i_playerOnly || u->IsPlayer()))
+            if (u != i_obj && u->IsAlive() && i_obj->IsWithinDistInMap(u, i_range) && i_funit->IsPeaceful(u) && (!i_playerOnly || u->IsPlayer()))
                 return true;
             else
                 return false;
@@ -1431,7 +1431,7 @@ namespace Acore
         AllFriendlyCreaturesInGrid(Unit const* obj) : unit(obj) {}
         bool operator() (Unit* u)
         {
-            if (u->IsAlive() && u->IsVisible() && u->IsFriendlyTo(unit))
+            if (u->IsAlive() && u->IsVisible() && u->IsPeaceful(unit))
                 return true;
 
             return false;

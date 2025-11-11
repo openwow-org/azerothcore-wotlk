@@ -454,7 +454,7 @@ struct npc_pet_gen_valkyr_guardian : public ScriptedAI
     {
         if (Player* owner = me->GetCharmerOrOwnerPlayerOrPlayerItself())
             if (Unit* target = owner->GetSelectedUnit())
-                if (!owner->IsFriendlyTo(target))
+                if (!owner->IsPeaceful(target))
                     AttackStart(target);
     }
 

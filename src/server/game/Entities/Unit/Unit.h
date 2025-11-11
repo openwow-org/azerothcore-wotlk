@@ -839,7 +839,7 @@ public:
 
     bool IsHostileTo(Unit const* unit) const;
     bool IsHostileToPlayers() const;
-    bool IsFriendlyTo(Unit const* unit) const;
+    bool IsPeaceful(Unit const* unit) const;
     bool IsNeutralToAll() const;
     bool IsInPartyWith(Unit const* unit) const;
     bool IsInRaidWith(Unit const* unit) const;

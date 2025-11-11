@@ -6704,7 +6704,7 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
                             if (player->GetReputationRank(934) == REP_EXALTED)
                             {
                                 // triggered at positive/self casts also, current attack target used then
-                                if (target && IsFriendlyTo(target))
+                                if (target && IsPeaceful(target))
                                 {
                                     target = GetVictim();
                                     if (!target)
@@ -6713,7 +6713,7 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
                                         if (!target)
                                             return false;
                                     }
-                                    if (IsFriendlyTo(target))
+                                    if (IsPeaceful(target))
                                         return false;
                                 }
 
@@ -7292,7 +7292,7 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
                             // Dispel Magic shares spellfamilyflag with abolish disease
                             if (procSpell->SpellIconID != 74)
                                 return false;
-                            if (!target || !target->IsFriendlyTo(this))
+                            if (!target || !target->IsPeaceful(this))
                                 return false;
 
                             basepoints0 = int32(target->CountPctFromMaxHealth(triggerAmount));
@@ -10201,7 +10201,7 @@ bool Unit::IsHostileTo(Unit const* unit) const
     return UnitReaction(unit) <= REP_HOSTILE;
 }
 
-bool Unit::IsFriendlyTo(Unit const* unit) const
+bool Unit::IsPeaceful(Unit const* unit) const
 {
     return UnitReaction(unit) >= REP_NEUTRAL;
 }
@@ -18589,7 +18589,7 @@ void Unit::RemoveCharmedBy(Unit* charmer)
     for (CharmThreatMap::const_iterator itr = _charmThreatInfo.begin(); itr != _charmThreatInfo.end(); ++itr)
     {
         if (Unit* target = ObjectAccessor::GetUnit(*this, itr->first))
-            if (!IsFriendlyTo(target))
+            if (!IsPeaceful(target))
                 AddThreat(target, itr->second);
     }
 
@@ -18598,7 +18598,7 @@ void Unit::RemoveCharmedBy(Unit* charmer)
     if (Creature* creature = ToCreature())
     {
         // Vehicle should not attack its passenger after he exists the seat
-        if (type != CHARM_TYPE_VEHICLE && charmer->IsAlive() && !charmer->IsFriendlyTo(creature))
+        if (type != CHARM_TYPE_VEHICLE && charmer->IsAlive() && !charmer->IsPeaceful(creature))
             if (Attack(charmer, true))
                 GetMotionMaster()->MoveChase(charmer);
 
@@ -20269,7 +20269,7 @@ void Unit::PetSpellFail(SpellInfo const* spellInfo, Unit* target, uint32 result)
         if ((result == SPELL_FAILED_LINE_OF_SIGHT || result == SPELL_FAILED_OUT_OF_RANGE) || !ToCreature()->HasReactState(REACT_PASSIVE))
             if (Unit* owner = GetOwner())
             {
-                if (spellInfo->IsPositive() && IsFriendlyTo(target))
+                if (spellInfo->IsPositive() && IsPeaceful(target))
                 {
                     AttackStop();
                     charmInfo->SetIsAtStay(false);

@@ -463,7 +463,7 @@ void User::HandleSetSelectionOpcode(WDataStore& recv_data)
             {
                 if (Unit* unit = ObjectAccessor::GetUnit(*m_player, guid))
                 {
-                    if (unit->IsAlive() && !m_player->IsFriendlyTo(unit) && unit->isTargetableForAttack(true, m_player))
+                    if (unit->IsAlive() && !m_player->IsPeaceful(unit) && unit->isTargetableForAttack(true, m_player))
                     {
                         autoReapeatSpell->m_targets.SetUnitTarget(unit);
                     }

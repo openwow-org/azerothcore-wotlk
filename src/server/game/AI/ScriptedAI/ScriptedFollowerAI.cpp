@@ -77,7 +77,7 @@ bool FollowerAI::AssistPlayerInCombatAgainst(Unit* who)
         return false;
 
     //never attack friendly
-    if (me->IsFriendlyTo(who))
+    if (me->IsPeaceful(who))
         return false;
 
     //too far away and no free sight?

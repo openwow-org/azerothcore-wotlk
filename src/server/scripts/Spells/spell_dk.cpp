@@ -1213,7 +1213,7 @@ class spell_dk_death_coil : public SpellScript
         Unit* caster = GetCaster();
         if (Unit* target = GetHitUnit())
         {
-            if (caster->IsFriendlyTo(target))
+            if (caster->IsPeaceful(target))
             {
                 int32 bp = int32(damage * 1.5f);
                 caster->CastCustomSpell(target, SPELL_DK_DEATH_COIL_HEAL, &bp, nullptr, nullptr, true);
@@ -1232,10 +1232,10 @@ class spell_dk_death_coil : public SpellScript
         Unit* caster = GetCaster();
         if (Unit* target = GetExplTargetUnit())
         {
-            if (!caster->IsFriendlyTo(target) && !caster->isInFront(target))
+            if (!caster->IsPeaceful(target) && !caster->isInFront(target))
                 return SPELL_FAILED_UNIT_NOT_INFRONT;
 
-            if (target->IsFriendlyTo(caster) && target->GetCreatureType() != CREATURE_TYPE_UNDEAD)
+            if (target->IsPeaceful(caster) && target->GetCreatureType() != CREATURE_TYPE_UNDEAD)
                 return SPELL_FAILED_BAD_TARGETS;
         }
         else

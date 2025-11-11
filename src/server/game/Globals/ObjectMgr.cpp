@@ -290,7 +290,7 @@ bool SpellClickInfo::IsFitToRequirements(Unit const* clicker, Unit const* clicke
     switch (userType)
     {
         case SPELL_CLICK_USER_FRIEND:
-            if (!playerClicker->IsFriendlyTo(summoner))
+            if (!playerClicker->IsPeaceful(summoner))
                 return false;
             break;
         case SPELL_CLICK_USER_RAID:

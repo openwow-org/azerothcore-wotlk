@@ -233,7 +233,7 @@ class spell_winter_veil_shoot_air_rifle : public SpellScript
 
         if (GetSpellInfo()->Id == SPELL_AIR_RIFLE_HIT_TRIGGER)
         {
-            if (!caster->IsFriendlyTo(target))
+            if (!caster->IsPeaceful(target))
                 caster->CastSpell(target, SPELL_AIR_RIFLE_PELTED_DAMAGE, true, nullptr, nullptr, caster->GetGUID());
         }
         else

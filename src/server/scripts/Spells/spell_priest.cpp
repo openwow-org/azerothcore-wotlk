@@ -584,7 +584,7 @@ class spell_pri_penance : public SpellScript
 
             uint8 rank = GetSpellInfo()->GetRank();
 
-            if (caster->IsFriendlyTo(unitTarget))
+            if (caster->IsPeaceful(unitTarget))
                 caster->CastSpell(unitTarget, sSpellMgr->GetSpellWithRank(SPELL_PRIEST_PENANCE_R1_HEAL, rank), false);
             else
                 caster->CastSpell(unitTarget, sSpellMgr->GetSpellWithRank(SPELL_PRIEST_PENANCE_R1_DAMAGE, rank), false);
@@ -596,7 +596,7 @@ class spell_pri_penance : public SpellScript
         Unit* caster = GetCaster();
         if (Unit* target = GetExplTargetUnit())
         {
-            if (!caster->IsFriendlyTo(target))
+            if (!caster->IsPeaceful(target))
             {
                 if (!caster->IsValidAttackTarget(target))
                     return SPELL_FAILED_BAD_TARGETS;

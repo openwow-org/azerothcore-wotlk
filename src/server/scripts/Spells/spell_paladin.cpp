@@ -819,7 +819,7 @@ class spell_pal_holy_shock : public SpellScript
         if (Unit* unitTarget = GetHitUnit())
         {
             uint8 rank = GetSpellInfo()->GetRank();
-            if (caster->IsFriendlyTo(unitTarget))
+            if (caster->IsPeaceful(unitTarget))
                 caster->CastSpell(unitTarget, sSpellMgr->GetSpellWithRank(SPELL_PALADIN_HOLY_SHOCK_R1_HEALING, rank), true);
             else
                 caster->CastSpell(unitTarget, sSpellMgr->GetSpellWithRank(SPELL_PALADIN_HOLY_SHOCK_R1_DAMAGE, rank), true);
@@ -831,7 +831,7 @@ class spell_pal_holy_shock : public SpellScript
         Unit* caster = GetCaster();
         if (Unit* target = GetExplTargetUnit())
         {
-            if (!caster->IsFriendlyTo(target))
+            if (!caster->IsPeaceful(target))
             {
                 if (!caster->IsValidAttackTarget(target))
                     return SPELL_FAILED_BAD_TARGETS;
@@ -1026,7 +1026,7 @@ class spell_pal_righteous_defense : public SpellScript
 
         if (Unit* target = GetExplTargetUnit())
         {
-            if (!target->IsFriendlyTo(caster) || target->getAttackers().empty())
+            if (!target->IsPeaceful(caster) || target->getAttackers().empty())
                 return SPELL_FAILED_BAD_TARGETS;
         }
         else

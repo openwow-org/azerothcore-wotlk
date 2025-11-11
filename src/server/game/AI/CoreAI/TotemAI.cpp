@@ -99,7 +99,7 @@ void TotemAI::UpdateAI(uint32 /*diff*/)
     // Search victim if no, not attackable, or out of range, or friendly (possible in case duel end)
     if (!victim ||
             !victim->isTargetableForAttack(true, me) || !me->IsWithinDistInMap(victim, max_range) ||
-            me->IsFriendlyTo(victim) || !me->CanSeeOrDetect(victim))
+            me->IsPeaceful(victim) || !me->CanSeeOrDetect(victim))
     {
         victim = nullptr;
         Acore::NearestAttackableUnitInObjectRangeCheck u_check(me, me, max_range);

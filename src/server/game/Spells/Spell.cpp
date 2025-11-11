@@ -787,7 +787,7 @@ void Spell::SelectExplicitTargets()
         // check for explicit target redirection, for Grounding Totem for example
         if (m_spellInfo->GetExplicitTargetMask() & TARGET_FLAG_UNIT_ENEMY
                 || (m_spellInfo->GetExplicitTargetMask() & TARGET_FLAG_UNIT
-                    && (!m_spellInfo->IsPositive() || (!m_caster->IsFriendlyTo(target) && m_spellInfo->HasEffect(SPELL_EFFECT_DISPEL)))))
+                    && (!m_spellInfo->IsPositive() || (!m_caster->IsPeaceful(target) && m_spellInfo->HasEffect(SPELL_EFFECT_DISPEL)))))
         {
             Unit* redirect;
             switch (m_spellInfo->DmgClass)
@@ -2928,7 +2928,7 @@ void Spell::DoAllEffectOnTarget(TargetInfo* target)
 
     if (m_caster)
     {
-        if (missInfo != SPELL_MISS_EVADE && !m_caster->IsFriendlyTo(effectUnit) && (!m_spellInfo->IsPositive() || m_spellInfo->HasEffect(SPELL_EFFECT_DISPEL)))
+        if (missInfo != SPELL_MISS_EVADE && !m_caster->IsPeaceful(effectUnit) && (!m_spellInfo->IsPositive() || m_spellInfo->HasEffect(SPELL_EFFECT_DISPEL)))
         {
             m_caster->CombatStart(effectUnit, !(m_spellInfo->AttributesEx3 & SPELL_ATTR3_SUPRESS_TARGET_PROCS));
 
@@ -2957,7 +2957,7 @@ void Spell::DoAllEffectOnTarget(TargetInfo* target)
         }
     }
 
-    if (missInfo != SPELL_MISS_EVADE && effectUnit != m_caster && m_caster->IsFriendlyTo(effectUnit) && m_spellInfo->IsPositive() &&
+    if (missInfo != SPELL_MISS_EVADE && effectUnit != m_caster && m_caster->IsPeaceful(effectUnit) && m_spellInfo->IsPositive() &&
         effectUnit->IsInCombat() && !m_spellInfo->HasAttribute(SPELL_ATTR1_NO_THREAT))
     {
         m_caster->SetInCombatWith(effectUnit);
@@ -3063,7 +3063,7 @@ SpellMissInfo Spell::DoSpellHitOnUnit(Unit* unit, uint32 effectMask, bool scaleA
         {
             unit->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_HITBYSPELL);
         }
-        else if (m_caster->IsFriendlyTo(unit))
+        else if (m_caster->IsPeaceful(unit))
         {
             // for delayed spells ignore negative spells (after duel end) for friendly targets
             /// @todo: this cause soul transfer bugged
@@ -4092,7 +4092,7 @@ void Spell::_cast(bool skipCheck)
     // xinef: start combat at cast for delayed spells, only for explicit target
     if (Unit* target = m_targets.GetUnitTarget())
         if (m_caster->IsPlayer() || (m_caster->IsPet() && m_caster->IsControlledByPlayer()))
-            if (GetDelayMoment() > 0 && !m_caster->IsFriendlyTo(target) && !m_spellInfo->HasAura(SPELL_AURA_BIND_SIGHT) && (!m_spellInfo->IsPositive() || m_spellInfo->HasEffect(SPELL_EFFECT_DISPEL)))
+            if (GetDelayMoment() > 0 && !m_caster->IsPeaceful(target) && !m_spellInfo->HasAura(SPELL_AURA_BIND_SIGHT) && (!m_spellInfo->IsPositive() || m_spellInfo->HasEffect(SPELL_EFFECT_DISPEL)))
                 m_caster->CombatStartOnCast(target, !m_spellInfo->HasAttribute(SPELL_ATTR3_SUPRESS_TARGET_PROCS), GetDelayMoment() + 500); // xinef: increase this time so we dont leave and enter combat in a moment
 
     if (m_caster->IsPlayer())
@@ -5603,7 +5603,7 @@ void Spell::HandleThreatSpells()
         if (!target)
             continue;
 
-        bool IsFriendly = m_caster->IsFriendlyTo(target);
+        bool IsFriendly = m_caster->IsPeaceful(target);
         // positive spells distribute threat among all units that are in combat with target, like healing
         if (m_spellInfo->_IsPositiveSpell() && IsFriendly)
             target->getHostileRefMgr().threatAssist(m_caster, threatToAdd, m_spellInfo);
@@ -6087,7 +6087,7 @@ SpellCastResult Spell::CheckCast(bool strict)
         if (Unit* target = m_targets.GetUnitTarget())
         {
             // Xinef: do not allow to cast on hostile targets in sanctuary
-            if (!m_caster->IsFriendlyTo(target))
+            if (!m_caster->IsPeaceful(target))
             {
                 if (m_caster->IsInSanctuary() || target->IsInSanctuary())
                 {
@@ -6690,7 +6690,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                         return SPELL_FAILED_BAD_IMPLICIT_TARGETS;
 
                     // can be casted at non-friendly unit or own pet/charm
-                    if (m_caster->IsFriendlyTo(m_targets.GetUnitTarget()))
+                    if (m_caster->IsPeaceful(m_targets.GetUnitTarget()))
                         return SPELL_FAILED_TARGET_FRIENDLY;
 
                     break;
@@ -8997,7 +8997,7 @@ namespace Acore
                         return false;
                     break;
                 case TARGET_CHECK_CORPSE:
-                    if (_caster->IsFriendlyTo(unitTarget))
+                    if (_caster->IsPeaceful(unitTarget))
                         return false;
                     break;
                 default:
