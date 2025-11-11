@@ -25,6 +25,33 @@ endif()
 # Set projectname (must be done AFTER setting configurationtypes)
 project(AzerothCore VERSION 3.0.0 LANGUAGES CXX C)
 
+#// Leaving here as a reminder That probably gonna need a cargoworkspace to build for each application
+# Define cargo variables for bridge
+set(CARGO_MANIFEST ${CMAKE_SOURCE_DIR}/Cargo.toml)
+set(CARGO_TARGET_DIR ${CMAKE_BINARY_DIR}/target)
+
+if(CMAKE_BUILD_TYPE STREQUAL Debug)
+    set(CARGO_PROFILE dev)
+    set(CARGO_BUILD_FOLDER ${CARGO_TARGET_DIR}/debug)
+elseif(CMAKE_BUILD_TYPE STREQUAL RelWithDebInfo)
+    set(CARGO_PROFILE release-with-debug)
+    set(CARGO_BUILD_FOLDER ${CARGO_TARGET_DIR}/release-with-debug)
+else()
+    set(CARGO_PROFILE release)
+    set(CARGO_BUILD_FOLDER ${CARGO_TARGET_DIR}/release)
+endif()
+
+set(AZEROTHCORE_SOURCE_FILE ${CMAKE_SOURCE_DIR}/src/lib.rs)
+set(AZEROTHCORE_BRIDGE_CPP ${CARGO_TARGET_DIR}/cxxbridge/azerothcore/src/lib.rs.cc)
+set(AZEROTH_LIB ${CARGO_BUILD_FOLDER}/${CMAKE_STATIC_LIBRARY_PREFIX}azerothcore${CMAKE_STATIC_LIBRARY_SUFFIX})
+
+add_custom_command(
+        OUTPUT ${AZEROTHCORE_BRIDGE_CPP} ${AZEROTH_LIB}
+        COMMAND CARGO_TARGET_DIR=${CARGO_TARGET_DIR} cargo build --profile ${CARGO_PROFILE} --manifest-path ${CARGO_MANIFEST}
+        USES_TERMINAL
+        COMMENT "Running cargo..."
+)
+
 # add this options before PROJECT keyword
 set(CMAKE_DISABLE_SOURCE_CHANGES ON)
 set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)

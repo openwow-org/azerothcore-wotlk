@@ -116,17 +116,44 @@ foreach(APPLICATION_NAME ${APPLICATIONS_BUILD_LIST})
   endif()
 
   GetProjectNameOfApplicationName(${APPLICATION_NAME} APP_PROJECT_NAME)
+  
+    # Define cargo variables for bridge
+set(CARGO_MANIFEST ${CMAKE_SOURCE_DIR}/Cargo.toml)
+set(CARGO_TARGET_DIR ${CMAKE_BINARY_DIR}/target)
+
+if(CMAKE_BUILD_TYPE STREQUAL Debug)
+    set(CARGO_PROFILE dev)
+    set(CARGO_BUILD_FOLDER ${CARGO_TARGET_DIR}/debug)
+elseif(CMAKE_BUILD_TYPE STREQUAL RelWithDebInfo)
+    set(CARGO_PROFILE release-with-debug)
+    set(CARGO_BUILD_FOLDER ${CARGO_TARGET_DIR}/release-with-debug)
+else()
+    set(CARGO_PROFILE release)
+    set(CARGO_BUILD_FOLDER ${CARGO_TARGET_DIR}/release)
+endif()
+
+set(AZEROTHCORE_SOURCE_FILE ${CMAKE_SOURCE_DIR}/src/lib.rs)
+set(AZEROTHCORE_BRIDGE_CPP ${CARGO_TARGET_DIR}/cxxbridge/azerothcore/src/lib.rs.cc)
+set(AZEROTH_LIB ${CARGO_BUILD_FOLDER}/${CMAKE_STATIC_LIBRARY_PREFIX}azerothcore${CMAKE_STATIC_LIBRARY_SUFFIX})
+
+add_custom_command(
+        OUTPUT ${AZEROTHCORE_BRIDGE_CPP} ${AZEROTH_LIB}
+        COMMAND CARGO_TARGET_DIR=${CARGO_TARGET_DIR} cargo build --profile ${CARGO_PROFILE} --manifest-path ${CARGO_MANIFEST}
+        DEPENDS ${BLOBSTORE_SOURCE_FILE}
+        USES_TERMINAL
+        COMMENT "Running cargo..."
+)
 
   # Create the application project
   add_executable(${APP_PROJECT_NAME}
-    ${APP_PRIVATE_SOURCES}
+    ${APP_PRIVATE_SOURCES} ${AZEROTHCORE_BRIDGE_CPP}
           ../game/WowServices/CharacterServices.h)
 
   add_dependencies(${APP_PROJECT_NAME} revision.h)
 
   target_link_libraries(${APP_PROJECT_NAME}
     PRIVATE
-      acore-core-interface)
+      acore-core-interface ${AZEROTH_LIB})
 
   if (${APP_PROJECT_NAME} MATCHES "authserver")
     target_link_libraries(${APP_PROJECT_NAME}
@@ -163,7 +190,7 @@ foreach(APPLICATION_NAME ${APPLICATIONS_BUILD_LIST})
 
   target_include_directories(${APP_PROJECT_NAME}
     PUBLIC
-      ${CMAKE_CURRENT_SOURCE_DIR})
+      ${CMAKE_CURRENT_SOURCE_DIR} ${CARGO_TARGET_DIR}/cxxbridge/azerothcore/src/)
 
   target_include_directories(${APP_PROJECT_NAME}
     PUBLIC
