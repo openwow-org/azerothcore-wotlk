@@ -5580,7 +5580,7 @@ void Unit::GetDispellableAuraList(Unit* caster, uint32 dispelMask, DispelCharges
     if (dispelMask & (1 << DISPEL_DISEASE) && HasAura(50536))
         dispelMask &= ~(1 << DISPEL_DISEASE);
 
-    ReputationRank rank = GetReactionTo(caster, IsCharmed());
+    ReputationRank rank = UnitReaction(caster, IsCharmed());
     bool positive = rank >= REP_FRIENDLY;
 
     // Neutral unit not at war with caster should be treated as a friendly unit
@@ -10024,7 +10024,7 @@ void Unit::SetFaction(uint32 faction)
 }
 
 // function based on function Unit::UnitReaction from 13850 client
-ReputationRank Unit::GetReactionTo(Unit const* target, bool checkOriginalFaction /*= false*/) const
+ReputationRank Unit::UnitReaction(Unit const* target, bool checkOriginalFaction /*= false*/) const
 {
     // always friendly to self
     if (this == target)
@@ -10198,12 +10198,12 @@ ReputationRank Unit::GetFactionReactionTo(FactionTemplateEntry const* factionTem
 
 bool Unit::IsHostileTo(Unit const* unit) const
 {
-    return GetReactionTo(unit) <= REP_HOSTILE;
+    return UnitReaction(unit) <= REP_HOSTILE;
 }
 
 bool Unit::IsFriendlyTo(Unit const* unit) const
 {
-    return GetReactionTo(unit) >= REP_FRIENDLY;
+    return UnitReaction(unit) >= REP_FRIENDLY;
 }
 
 bool Unit::IsHostileToPlayers() const
@@ -13866,15 +13866,15 @@ bool Unit::_IsValidAttackTarget(Unit const* target, SpellInfo const* bySpell, Wo
 
     // CvC case - can attack each other only when one of them is hostile
     if (!HasUnitFlag(UNIT_FLAG_PLAYER_CONTROLLED) && !target->HasUnitFlag(UNIT_FLAG_PLAYER_CONTROLLED))
-        return GetReactionTo(target) <= REP_HOSTILE || target->GetReactionTo(this) <= REP_HOSTILE;
+        return UnitReaction(target) <= REP_HOSTILE || target->UnitReaction(this) <= REP_HOSTILE;
 
     // PvP, PvC, CvP case
     // can't attack friendly targets
-    ReputationRank repThisToTarget = GetReactionTo(target);
+    ReputationRank repThisToTarget = UnitReaction(target);
     ReputationRank repTargetToThis;
 
     if (repThisToTarget > REP_NEUTRAL
-            || (repTargetToThis = target->GetReactionTo(this)) > REP_NEUTRAL)
+            || (repTargetToThis = target->UnitReaction(this)) > REP_NEUTRAL)
         return false;
 
     // Not all neutral creatures can be attacked (even some unfriendly faction does not react aggresive to you, like Sporaggar)
@@ -13990,8 +13990,8 @@ bool Unit::_IsValidAssistTarget(Unit const* target, SpellInfo const* bySpell) co
     }
 
     // can't assist non-friendly targets
-    if (GetReactionTo(target) < REP_NEUTRAL
-            && target->GetReactionTo(this) < REP_NEUTRAL
+    if (UnitReaction(target) < REP_NEUTRAL
+            && target->UnitReaction(this) < REP_NEUTRAL
             && (!ToCreature() || !(ToCreature()->GetCreatureTemplate()->type_flags & CREATURE_TYPE_FLAG_TREAT_AS_RAID_UNIT)))
         return false;
 

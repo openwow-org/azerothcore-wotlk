@@ -834,7 +834,7 @@ public:
     void SetFaction(uint32 faction);
     FactionTemplateEntry const* GetFactionTemplateEntry() const;
 
-    ReputationRank GetReactionTo(Unit const* target, bool checkOriginalFaction = false) const;
+    ReputationRank UnitReaction(Unit const* target, bool checkOriginalFaction = false) const;
     ReputationRank GetFactionReactionTo(FactionTemplateEntry const* factionTemplateEntry, Unit const* target) const;
 
     bool IsHostileTo(Unit const* unit) const;

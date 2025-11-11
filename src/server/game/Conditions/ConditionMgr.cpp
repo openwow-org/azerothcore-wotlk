@@ -378,7 +378,7 @@ bool Condition::Meets(ConditionSourceInfo& sourceInfo)
             Unit* toUnit = toObject->ToUnit();
             Unit* unit   = object->ToUnit();
             if (toUnit && unit)
-                condMeets = (1 << unit->GetReactionTo(toUnit)) & ConditionValue2;
+                condMeets = (1 << unit->UnitReaction(toUnit)) & ConditionValue2;
         }
         break;
     }

@@ -2159,7 +2159,7 @@ Creature* Player::GetNPCIfCanInteractWith(WOWGUID guid, uint32 npcflagmask)
         return nullptr;
 
     // xinef: perform better check
-    if (creature->GetReactionTo(this) <= REP_UNFRIENDLY)
+    if (creature->UnitReaction(this) <= REP_UNFRIENDLY)
         return nullptr;
 
     // xinef: not needed, CORRECTLY checked above including forced reputations etc
