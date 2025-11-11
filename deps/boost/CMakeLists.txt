@@ -31,7 +31,8 @@ else()
   set(BOOST_REQUIRED_VERSION 1.74)
 endif()
 
-find_package(Boost ${BOOST_REQUIRED_VERSION} REQUIRED system filesystem program_options iostreams regex)
+# Boost.System is header-only since 1.69; do not require it explicitly.
+find_package(Boost ${BOOST_REQUIRED_VERSION} REQUIRED COMPONENTS filesystem program_options iostreams regex)
 
 if(NOT Boost_FOUND)
   if(NOT DEFINED ENV{Boost_ROOT} AND NOT DEFINED Boost_DIR AND NOT DEFINED BOOST_ROOT AND NOT DEFINED BOOSTROOT)
@@ -42,20 +43,20 @@ endif()
 add_library(boost INTERFACE)
 
 target_link_libraries(boost
-  INTERFACE
-    ${Boost_LIBRARIES})
+        INTERFACE
+        ${Boost_LIBRARIES})
 
 target_include_directories(boost
-  INTERFACE
-    ${Boost_INCLUDE_DIRS})
+        INTERFACE
+        ${Boost_INCLUDE_DIRS})
 
 target_compile_definitions(boost
-  INTERFACE
-    -DBOOST_DATE_TIME_NO_LIB
-    -DBOOST_REGEX_NO_LIB
-    -DBOOST_CHRONO_NO_LIB
-    -DBOOST_SERIALIZATION_NO_LIB
-    -DBOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE
-    -DBOOST_ASIO_NO_DEPRECATED
-    -DBOOST_SYSTEM_USE_UTF8
-    -DBOOST_BIND_NO_PLACEHOLDERS)
+        INTERFACE
+        -DBOOST_DATE_TIME_NO_LIB
+        -DBOOST_REGEX_NO_LIB
+        -DBOOST_CHRONO_NO_LIB
+        -DBOOST_SERIALIZATION_NO_LIB
+        -DBOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE
+        -DBOOST_ASIO_NO_DEPRECATED
+        -DBOOST_SYSTEM_USE_UTF8
+        -DBOOST_BIND_NO_PLACEHOLDERS)
